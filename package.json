@@ -1,23 +1,33 @@
 {
-  "name": "cat-app",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
-  "dependencies": {
-    "next": "10.0.8",
-    "react": "17.0.1",
-    "react-dom": "17.0.1"
-  },
-  "devDependencies": {
-    "@types/node": "^14.14.34",
-    "@types/react": "^17.0.3",
-    "autoprefixer": "^10.2.5",
-    "postcss": "^8.2.8",
-    "tailwindcss": "^2.0.3",
-    "typescript": "^4.2.3"
-  }
+    "name": "cat-app",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "codegen": "graphql-codegen --config codegen.yml",
+        "introspect": "gq https://cat-react-backend.herokuapp.com/v1/graphql -H \"X-Hasura-Admin-Secret: catapp123\" --introspect > schema.graphql"
+    },
+    "dependencies": {
+        "@apollo/client": "^3.3.12",
+        "graphql": "^15.5.0",
+        "next": "10.0.8",
+        "react": "17.0.1",
+        "react-dom": "17.0.1"
+    },
+    "devDependencies": {
+        "@graphql-codegen/cli": "1.21.3",
+        "@graphql-codegen/introspection": "1.18.1",
+        "@graphql-codegen/typescript": "1.21.1",
+        "@graphql-codegen/typescript-operations": "1.17.15",
+        "@graphql-codegen/typescript-react-apollo": "2.2.3",
+        "@types/node": "^14.14.34",
+        "@types/react": "^17.0.3",
+        "autoprefixer": "^10.2.5",
+        "graphqurl": "^0.3.3",
+        "postcss": "^8.2.8",
+        "tailwindcss": "^2.0.3",
+        "typescript": "^4.2.3"
+    }
 }
