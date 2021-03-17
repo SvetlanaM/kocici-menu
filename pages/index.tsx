@@ -4,9 +4,10 @@ import { GetCatsQuery } from '../generated/graphql';
 
 const CATS_QUERY = gql`
   query GetCats {
-    cats: cat {
+    cats: cat(limit: 10) {
       id
       name
+      age
     }
   }
 `;
@@ -23,7 +24,7 @@ function CatList() {
       {data.cats.map((cat) => (
         <div key={cat.id}>
           <p>
-            {cat.name} : {cat.__typename}
+            {cat.name} : {cat.age}
           </p>
         </div>
       ))}
