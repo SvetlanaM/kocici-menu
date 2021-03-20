@@ -1,6 +1,6 @@
-import Head from 'next/head';
 import { useQuery, gql } from '@apollo/client';
 import { GetCatsQuery } from '../generated/graphql';
+import Common from '../components/common';
 
 const CATS_QUERY = gql`
   query GetCats {
@@ -34,8 +34,8 @@ function CatList() {
 
 export default function Home() {
   return (
-    <div>
-      <CatList></CatList>
-    </div>
+    <>
+      <Common menuKey="dashboard" />
+    </>
   );
 }
