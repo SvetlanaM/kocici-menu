@@ -1,8 +1,15 @@
+import Link from 'next/link';
+
 const AddCat = () => {
   return (
-    <div className="w-full lg:w-1/2 pr-0">
-      <div className="p-6 bg-white">ueiruaeoisssruioa</div>
-      <div className="a"></div>
+    <div className="relative">
+      <div className="bg-yellow-light py-1.5 border rounded-1.2xl border-yellow flex pt-6 pb-6 pl-4 add-cat">
+        <Link href="/">
+          <a className="text-yellow-dark font-semibold text-normal break-words w-4/6 leading-tight">
+            Pridať novú mačku
+          </a>
+        </Link>
+      </div>
     </div>
   );
 };

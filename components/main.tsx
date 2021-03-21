@@ -4,10 +4,8 @@ const Main = ({ name }): JSX.Element => {
   const DynamicComponent = dynamic(() => import(`${name}`));
 
   return (
-    <div className="flex flex-col w-full">
-      <div className="flex flex-wrap mt-6 p-6 flex-shrink">
-        <DynamicComponent />
-      </div>
+    <div className="pt-9.5 p-8 w-full overflow-x-hidden border-t flex flex-col">
+      <DynamicComponent />
     </div>
   );
 };

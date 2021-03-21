@@ -17,11 +17,12 @@ module.exports = {
           darkest: '#3e3e70',
         },
         gray: {
+          lightest: '#e1e5ee',
           light: '#f0f2f7',
           DEFAULT: '#b3bacc',
         },
         yellow: {
-          lightest: 'fae3c3',
+          lightest: '#fae3c3',
           light: '#f3daba',
           dark: '#d49544',
         },
@@ -38,6 +39,9 @@ module.exports = {
       },
       borderColor: (theme) => ({
         yellow: theme('colors.yellow.lightest'),
+        purple: theme('colors.purple.light'),
+        gray: theme('colors.gray.light'),
+        gray_lightest: theme('colors.gray.lightest'),
       }),
     },
   },

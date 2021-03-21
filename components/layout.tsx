@@ -4,7 +4,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <Meta />
-      <div className="flex font-sans tracking-wider min-h-screen">
+      <div className="flex font-sans tracking-wide min-h-screen">
         {children}
       </div>
     </>

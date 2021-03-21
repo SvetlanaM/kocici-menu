@@ -1,16 +1,24 @@
 import StatisticSection from './statistic';
 
-const StatisticsSection = ({ data }) => {
+const StatisticsSection = ({ data, cols }) => {
   return (
-    <div className="row">
-      <div className="column">
+    <>
+      {/* tu bude nejaky cyklus a if na parne/neparne */}
+
+      <div className={`grid ${cols} grid-flow-col gap-11`}>
+        <StatisticSection
+          icon={data.icon}
+          title={data.title}
+          desc={data.desc}
+        />
+
         <StatisticSection
           icon={data.icon}
           title={data.title}
           desc={data.desc}
         />
       </div>
-    </div>
+    </>
   );
 };
 

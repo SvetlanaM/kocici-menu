@@ -1,11 +1,20 @@
 import CatSection from './cat';
 
-const CatsSection = ({ data }) => {
+const CatsSection = ({ data, rows }) => {
   return (
-    <div className="w-full lg:w-1/2 pr-0">
-      <div className="p-6 bg-white">
-        <CatSection name={data.name} />
-      </div>
+    <div className={`grid ${rows} gap-y-5 mt-7`}>
+      <CatSection
+        photo={data.photo}
+        name={data.name}
+        age={data.age}
+        type={data.type}
+      />
+      <CatSection
+        photo={data.photo}
+        name={data.name}
+        age={data.age}
+        type={data.type}
+      />
     </div>
   );
 };

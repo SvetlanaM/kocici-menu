@@ -9,24 +9,23 @@ import Title from '../title';
 const DashboardPage = () => {
   return (
     <>
-      <p>test</p>
-      <div className="w-50 m-12">
-        <Container>
-          <Title title="Top 5 produktov mojich maciek" />
+      <div className="container flex flex-wrap">
+        <div className="w-9/12">
+          <Title title="Moje najlepšie hodnotené produkty" />
           <TopFiveTable data={[]} />
-        </Container>
-        <StatisticsSection data={[]} />
-        <Container>
-          <Title title="Tipy a odporucania" />
-          <TipsSection data={[]} />
-        </Container>
-      </div>
-      <div className="w-50 m-12">
-        <Container>
-          <Title title="Moje macky" />
+          <Container flexType="flew-row">
+            <StatisticsSection data={[]} cols={'grid-cols-2'} />
+          </Container>
+          <Container flexType="flex-col">
+            <Title title="Tipy a odporúčania" />
+            <TipsSection data={[]} cols={'grid-cols-2'} />
+          </Container>
+        </div>
+        <div className="w-3/12 pl-7">
+          <Title title="Moje mačky" />
           <AddCat />
-        </Container>
-        <CatsSection data={[]} />
+          <CatsSection data={[]} rows={'grid-rows-1'} />
+        </div>
       </div>
     </>
   );

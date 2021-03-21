@@ -3,13 +3,13 @@ export const Config = Object.freeze({
     dashboard: {
       icon: 'dashboard.svg',
       url: '/',
-      name: 'Prehlad',
+      name: 'Prehľad',
       componentName: './dashboard/main-wrapper',
     },
     myCats: {
       icon: 'my_cats.svg',
       url: '',
-      name: 'Moje macky',
+      name: 'Moje mačky',
       componentName: 'MyCatPage',
     },
     products: {
@@ -27,7 +27,7 @@ export const Config = Object.freeze({
     fans: {
       icon: 'fans.svg',
       url: '',
-      name: 'Fanusikovia',
+      name: 'Fanúšikovia',
       componentName: 'FansPage',
     },
     settings: {
@@ -39,7 +39,7 @@ export const Config = Object.freeze({
     logout: {
       icon: 'logout.svg',
       url: '',
-      name: 'Odhlasit sa',
+      name: 'Odhlásiť sa',
       componentName: 'LogoutPage',
     },
   },

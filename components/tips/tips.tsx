@@ -1,10 +1,12 @@
 import TipSection from './tip';
 
-const TipsSection = ({ data }) => {
+const TipsSection = ({ data, cols }) => {
   return (
-    <div>
+    <div className={`grid ${cols} grid-flow-row gap-x-11`}>
       <TipSection title={data.title} link={data.link} />
-      <div>icon</div>
+      <TipSection title={data.title} link={data.link} />
+      <TipSection title={data.title} link={data.link} />
+      <TipSection title={data.title} link={data.link} />
     </div>
   );
 };
