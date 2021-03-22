@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-const CatSection = ({ key, name, type, age, photo }) => {
+const CatSection = ({ name, type, age, photo }) => {
   return (
     <div className="flex justify-between h-75 py-3 px-3 border-rounded-base border-gray small-purple-text text-left my-cat">
       <div className="flex">
