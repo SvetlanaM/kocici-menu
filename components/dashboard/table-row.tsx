@@ -19,7 +19,7 @@ const TableRow = ({ items }) => {
         />
       </td>
       <td>
-        <span className="text-base font-medium">Catessy</span>
+        <span className="base-medium-text">Catessy</span>
         <br />
         Kachna a jehněci
       </td>

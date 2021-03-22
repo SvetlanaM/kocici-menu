@@ -3,18 +3,18 @@ import Main from '../components/main';
 import Container from '../components/container';
 import Sidebar from '../components/sidebar/sidebar';
 import Head from 'next/head';
-import { Config } from './config';
+import { item, menu, MenuItem } from './config';
 
-const Common = ({ menuKey }) => {
+const Common = ({ menuKey }: { menuKey: MenuItem }) => {
   return (
     <>
       <Layout>
         <Head>
-          <title>{Config.menuLinks[menuKey].name}</title>
+          <title>{item(menuKey).name}</title>
         </Head>
-        <Sidebar menuLinks={Config.menuLinks} />
+        <Sidebar menuLinks={menu} />
         <Container>
-          <Main name={Config.menuLinks[menuKey].componentName} />
+          <Main name={item(menuKey).componentName} />
         </Container>
       </Layout>
     </>

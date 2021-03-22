@@ -5,7 +5,7 @@ const StatisticsSection = ({ data, cols }) => {
     <>
       {/* tu bude nejaky cyklus a if na parne/neparne */}
 
-      <div className={`grid ${cols} grid-flow-col gap-11`}>
+      <div className={`grid ${cols} gap-col-11`}>
         <StatisticSection
           icon={data.icon}
           title={data.title}

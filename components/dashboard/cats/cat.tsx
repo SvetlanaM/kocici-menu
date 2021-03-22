@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-const CatSection = ({ name, type, age, photo }) => {
+const CatSection = ({ key, name, type, age, photo }) => {
   return (
-    <div className="h-75 flex justify-between border rounded-1.2xl border-gray text-left text-purple text-sm py-3 px-3 my-cat">
+    <div className="flex justify-between h-75 py-3 px-3 border-rounded-base border-gray small-purple-text text-left my-cat">
       <div className="flex">
         <Image
           src="/stacy.png"
@@ -12,10 +12,10 @@ const CatSection = ({ name, type, age, photo }) => {
           width={65}
           quality={100}
         />
-        <div className="ml-3 flex flex-col justify-between">
-          <h4>Stacey {name}</h4>
-          <p className="font-light text-xs">domáca {type}</p>
-          <p className="font-light text-xs text-gray">2{age} roky</p>
+        <div className="flex-col-base justify-between ml-3">
+          <h4>{name}</h4>
+          <p className="small-light-text">{type}</p>
+          <p className="small-light-text text-gray">{age} roky</p>
         </div>
       </div>
       <Link href="/">

@@ -5,8 +5,29 @@ import TopFiveTable from './top-five-table';
 import CatsSection from './cats/cats';
 import Container from './container';
 import Title from '../title';
+import { useQuery, gql } from '@apollo/client';
+import { GetCatsQuery } from '../../generated/graphql';
+
+const CATS_QUERY = gql`
+  query GetCats {
+    cats: cat(limit: 10) {
+      id
+      name
+      age
+      type
+    }
+  }
+`;
+
+function CatList() {
+  const { loading, error, data } = useQuery<GetCatsQuery>(CATS_QUERY);
+
+  if (!data) return null;
+  return data.cats;
+}
 
 const DashboardPage = () => {
+  const catsData = CatList();
   return (
     <>
       <div className="container flex flex-wrap">
@@ -24,7 +45,7 @@ const DashboardPage = () => {
         <div className="w-3/12 pl-7">
           <Title title="Moje mačky" />
           <AddCat />
-          <CatsSection data={[]} rows={'grid-rows-1'} />
+          <CatsSection data={catsData} rows={'grid-rows-1'} />
         </div>
       </div>
     </>

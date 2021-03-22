@@ -3,9 +3,9 @@ import Link from 'next/link';
 const AddCat = () => {
   return (
     <div className="relative">
-      <div className="bg-yellow-light py-1.5 border rounded-1.2xl border-yellow flex pt-6 pb-6 pl-4 add-cat">
+      <div className="flex pt-6 pb-6 pl-4 border-rounded-base border-yellow bg-yellow-light add-cat">
         <Link href="/">
-          <a className="text-yellow-dark font-semibold text-normal break-words w-4/6 leading-tight">
+          <a className="w-4/6 text-normal leading-tight font-semibold text-yellow-dark break-words">
             Pridať novú mačku
           </a>
         </Link>

@@ -31,19 +31,15 @@ tbody tr td {
     border-bottom: 1px solid #f0f2f7;
 }
 
-.show-more::after {
-    content: url('../public/icons/more.svg');
-    margin-left: 7px;
-    top: 2px;
-    position: relative;
-}
-
 .more-info::after {
     content: url('../public/icons/more.svg');
     margin-left: 7px;
     float: right;
     top: 6px;
     position: relative;
+    .more {
+        float: right;
+    }
 }
 
 .add-cat::after {
@@ -51,4 +47,28 @@ tbody tr td {
     position: absolute;
     right: 4px;
     top: -17px;
+}
+
+@layer utilities {
+    .flex-col-base {
+        @apply flex flex-col;
+    }
+    .small-purple-text {
+        @apply text-sm text-purple;
+    }
+    .base-medium-text {
+        @apply text-base font-medium;
+    }
+    .small-light-text {
+        @apply font-light text-xs;
+    }
+}
+
+@layer components {
+    .border-rounded-base {
+        @apply border rounded-1.2xl;
+    }
+    .gap-col-11 {
+        @apply grid-flow-col gap-11;
+    }
 }

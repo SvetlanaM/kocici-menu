@@ -4,7 +4,7 @@ const Main = ({ name }): JSX.Element => {
   const DynamicComponent = dynamic(() => import(`${name}`));
 
   return (
-    <div className="pt-9.5 p-8 w-full overflow-x-hidden border-t flex flex-col">
+    <div className="w-full flex-col-base pt-9.5 p-8 overflow-x-hidden">
       <DynamicComponent />
     </div>
   );
