@@ -14,7 +14,7 @@ interface MenuItemType {
   icon: string;
   url: string;
   name: string;
-  componentName: () => JSX.Element;
+  componentName: ({ data }) => JSX.Element;
 }
 
 function getMenuItem(item: MenuItem): MenuItemType {

@@ -4,8 +4,15 @@ import Container from '../components/container';
 import Sidebar from '../components/sidebar/sidebar';
 import Head from 'next/head';
 import { item, menu, MenuItem } from './config';
+import { GetCatsQuery } from '../generated/graphql';
 
-const Common = ({ menuKey }: { menuKey: MenuItem }) => {
+const Common = ({
+  data,
+  menuKey,
+}: {
+  data: GetCatsQuery | null;
+  menuKey: MenuItem;
+}) => {
   return (
     <>
       <Layout>
@@ -14,7 +21,7 @@ const Common = ({ menuKey }: { menuKey: MenuItem }) => {
         </Head>
         <Sidebar menuLinks={menu} />
         <Container>
-          <Main name={item(menuKey).componentName} />
+          <Main name={item(menuKey).componentName} data={data} />
         </Container>
       </Layout>
     </>

@@ -4,7 +4,7 @@ const CatsSection = ({ data, rows }) => {
   return (
     <div className={`grid ${rows} gap-y-5 mt-7`}>
       {data &&
-        data.map((cat) => (
+        data.cats.map((cat) => (
           <CatSection
             key={cat.id}
             photo={cat.photo}

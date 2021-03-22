@@ -1,4 +1,5 @@
 import TableRow from './table-row';
+import Link from 'next/link';
 
 const TopFiveTable = ({ data }) => {
   return (
@@ -22,8 +23,10 @@ const TopFiveTable = ({ data }) => {
           <td className="py-5 pl-3.6 base-medium-text" colSpan={5}>
             + Pridať hodnotenie nového produktu
           </td>
-          <td className="pr-3.6 text-sm font-light text-gray text-right more-info">
-            Zobraziť všetky
+          <td className="pr-3.6 text-sm font-light text-gray text-right">
+            <Link href="/">
+              <a>Zobraziť všetky</a>
+            </Link>
           </td>
         </tr>
       </tfoot>
