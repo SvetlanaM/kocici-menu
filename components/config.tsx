@@ -1,3 +1,5 @@
+import DashboardPage from './dashboard/main-wrapper';
+
 export enum MenuItem {
   Dashboard,
   MyCats,
@@ -12,7 +14,7 @@ interface MenuItemType {
   icon: string;
   url: string;
   name: string;
-  componentName: string;
+  componentName: () => JSX.Element;
 }
 
 function getMenuItem(item: MenuItem): MenuItemType {
@@ -22,49 +24,49 @@ function getMenuItem(item: MenuItem): MenuItemType {
         icon: 'dashboard.svg',
         url: '/',
         name: 'Prehľad',
-        componentName: './dashboard/main-wrapper',
+        componentName: DashboardPage,
       };
     case MenuItem.MyCats:
       return {
         icon: 'my_cats.svg',
         url: '',
         name: 'Moje mačky',
-        componentName: 'MyCatPage',
+        componentName: DashboardPage,
       };
     case MenuItem.Products:
       return {
         icon: 'products.svg',
         url: '/products',
         name: 'Produkty',
-        componentName: 'ProductsPage',
+        componentName: DashboardPage,
       };
     case MenuItem.Tips:
       return {
         icon: 'tips.svg',
         url: '',
         name: 'Tipy',
-        componentName: 'TipsPage',
+        componentName: DashboardPage,
       };
     case MenuItem.Fans:
       return {
         icon: 'fans.svg',
         url: '',
         name: 'Fanúšikovia',
-        componentName: 'FansPage',
+        componentName: DashboardPage,
       };
     case MenuItem.Settings:
       return {
         icon: 'settings.svg',
         url: '',
         name: 'Nastavenia',
-        componentName: 'SettingsPage',
+        componentName: DashboardPage,
       };
     case MenuItem.Logout:
       return {
         icon: 'logout.svg',
         url: '',
         name: 'Odhlásiť sa',
-        componentName: 'LogoutPage',
+        componentName: DashboardPage,
       };
   }
 }
