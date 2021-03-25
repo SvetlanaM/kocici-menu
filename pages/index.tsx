@@ -16,15 +16,12 @@ const CATS_QUERY = gql`
 
 function CatList() {
   const { loading, error, data } = useQuery<GetCatsQuery>(CATS_QUERY);
-
-  if (!data) return null;
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error!</div>;
+  if (!data) return <div>No data!</div>;
   return data;
 }
 
 export default function Home() {
-  return (
-    <>
-      <Common menuKey={MenuItem.Dashboard} data={CatList()} />
-    </>
-  );
+  return <Common menuKey={MenuItem.Dashboard} data={CatList()} />;
 }

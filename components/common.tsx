@@ -14,17 +14,15 @@ const Common = ({
   menuKey: MenuItem;
 }) => {
   return (
-    <>
-      <Layout>
-        <Head>
-          <title>{item(menuKey).name}</title>
-        </Head>
-        <Sidebar menuLinks={menu} />
-        <Container>
-          <Main name={item(menuKey).componentName} data={data} />
-        </Container>
-      </Layout>
-    </>
+    <Layout>
+      <Head>
+        <title>{item(menuKey).name}</title>
+      </Head>
+      <Sidebar menuLinks={menu} />
+      <Container>
+        <Main name={item(menuKey).componentName} data={data} />
+      </Container>
+    </Layout>
   );
 };
 
