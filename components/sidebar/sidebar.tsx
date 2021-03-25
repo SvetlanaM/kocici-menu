@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import MenuItem from './menu-item';
-import { item } from '../config';
+import { getMenuItem } from '../config';
+import { useRouter } from 'next/router';
 
 const Sidebar = ({ menuLinks }): JSX.Element => {
+  const router = useRouter();
   return (
     <aside className="relative h-screen w-72 flex-col-base justify-between px-8.5 bg-purple-darkest">
       <div className="mt-9.5">
@@ -14,10 +16,11 @@ const Sidebar = ({ menuLinks }): JSX.Element => {
         <nav className="font-normal">
           {menuLinks.map((link) => (
             <MenuItem
-              icon={item(link).icon}
-              name={item(link).name}
-              url={item(link).url}
-              key={item(link).name}
+              active={router.pathname === getMenuItem(link).url}
+              icon={getMenuItem(link).icon}
+              name={getMenuItem(link).name}
+              url={getMenuItem(link).url}
+              key={getMenuItem(link).name}
             />
           ))}
         </nav>

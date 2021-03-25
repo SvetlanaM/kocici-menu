@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-const MenuItem = ({ icon, name, url }) => {
+const MenuItem = ({ icon, name, url, active }) => {
   return (
     <Link href={url}>
       <a className="flex pt-6 text-purple-light">
@@ -13,7 +13,7 @@ const MenuItem = ({ icon, name, url }) => {
             className="ml-5"
           />
         </div>
-        {name}
+        <span className={active ? 'underline' : ''}>{name}</span>
       </a>
     </Link>
   );

@@ -24,7 +24,7 @@ const DashboardPage = ({ data }) => {
         <div className="w-3/12 pl-7">
           <Title title="Moje mačky" />
           <AddCat />
-          <CatsSection {...data} rows={'grid-rows-1'} />
+          {/* <CatsSection {...data} rows={'grid-rows-1'} /> */}
         </div>
       </div>
     </>

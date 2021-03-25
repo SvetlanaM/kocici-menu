@@ -1,18 +1,10 @@
-import CatSection from './cat';
+import CatSection, { fragments } from './cat';
 
+export const fragment = fragments;
 const CatsSection = ({ cats, rows }) => {
   return (
     <div className={`grid ${rows} gap-y-5 mt-7`}>
-      {cats &&
-        cats.map((cat) => (
-          <CatSection
-            key={cat.id}
-            photo={cat.photo}
-            name={cat.name}
-            age={cat.age}
-            type={cat.type}
-          />
-        ))}
+      {cats && cats.map((cat) => <CatSection key={cat.id} cat={cat} />)}
     </div>
   );
 };

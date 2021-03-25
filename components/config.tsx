@@ -17,7 +17,7 @@ interface MenuItemType {
   componentName: ({ data }) => JSX.Element;
 }
 
-function getMenuItem(item: MenuItem): MenuItemType {
+export function getMenuItem(item: MenuItem): MenuItemType {
   switch (item) {
     case MenuItem.Dashboard:
       return {
@@ -70,8 +70,6 @@ function getMenuItem(item: MenuItem): MenuItemType {
       };
   }
 }
-
-export const item = getMenuItem;
 
 export const menu = [
   MenuItem.Dashboard,

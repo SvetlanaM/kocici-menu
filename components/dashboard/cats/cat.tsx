@@ -1,7 +1,17 @@
+import { gql } from '@apollo/client';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const CatSection = ({ name, type, age, photo }) => {
+export const fragments = gql`
+  fragment CatSectionFragment on cat {
+    age
+    id
+    name
+    type
+  }
+`;
+
+const CatSection = ({ cat: { name, type, age, photo } }) => {
   return (
     <div className="flex justify-between h-75 py-3 px-3 border-rounded-base border-gray small-purple-text text-left my-cat">
       <div className="flex">
