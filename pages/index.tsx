@@ -1,4 +1,3 @@
-import { GetCatsQuery } from '../generated/graphql';
 import { getMenuItem, menu, MenuItem } from '../components/config';
 import { useQuery, gql } from '@apollo/client';
 import AddCat from '../components/dashboard/cats/add-cat';
