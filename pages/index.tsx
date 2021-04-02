@@ -1,62 +1,80 @@
-import { getMenuItem, menu, MenuItem } from '../components/config';
-import { useQuery, gql } from '@apollo/client';
-import AddCat from '../components/dashboard/cats/add-cat';
-import CatsSection, {
-  fragment as CatSectionFragment,
-} from '../components/dashboard/cats/cats';
-import Common from '../components/common';
+import AddCatBox from '../components/add-cat-box';
+import CatsSection from '../components/cats-list';
 import Container from '../components/container';
-import Head from 'next/head';
-import InnerContainer from '../components/dashboard/container';
 import Layout from '../components/layout';
-import Main from '../components/main';
-import Sidebar from '../components/sidebar/sidebar';
-import StatisticsSection from '../components/statistics/statistics';
-import TipsSection from '../components/tips/tips';
+import Sidebar from '../components/sidebar';
+import StatisticsSection from '../components/statistics-list';
+import TipsSection from '../components/tips-list';
 import Title from '../components/title';
-import TopFiveTable from '../components/dashboard/top-five-table';
-import { GetCatsQuery } from '../generated/graphql';
+import TopFiveTable from '../components/top-five-table';
+import {
+  useGetDashboardQuery,
+  useGetCatsQuery,
+} from '../graphql/generated/graphql';
+import Header from '../components/head';
+import CenterContainer from '../components/center-container';
+import LeftContainer from '../components/left-container';
+import ErrorScreen from '../components/error-screen';
+import Loading from '../components/loading';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import getTitle from '../utils/get-title';
 
-const CATS_QUERY = gql`
-  query GetCats {
-    cats: cat(limit: 10) {
-      ...CatSectionFragment
-    }
-  }
-  ${CatSectionFragment}
-`;
+const CenterContainerQuery = () => {
+  const {
+    data: dashboardData,
+    error: dashboardError,
+    loading: dashboardLoading,
+  } = useGetDashboardQuery();
+
+  return (
+    <CenterContainer>
+      {dashboardLoading && <Loading />}
+      {dashboardError && <ErrorScreen error={dashboardError} />}
+      {dashboardData && (
+        <>
+          <TopFiveTable data={dashboardData.products} />
+          <StatisticsSection data={[]} cols={'grid-cols-2'} />
+          <TipsSection data={dashboardData.tips} cols={'grid-cols-2'} />
+        </>
+      )}
+    </CenterContainer>
+  );
+};
+
+const DashboardCatQuery = () => {
+  const {
+    loading: CatsLoading,
+    error: CatsError,
+    data: CatsData,
+  } = useGetCatsQuery();
+
+  if (CatsLoading || CatsError) return <div>...</div>;
+
+  return (
+    <CatsSection cats={CatsData ? CatsData.cats : []} rows={'grid-rows-1'} />
+  );
+};
+
+const pageTitle = getTitle('Prehľad');
 
 export default function Home() {
   return (
     <Layout>
-      <Head>
-        <title>{getMenuItem(MenuItem.Dashboard).name}</title>
-      </Head>
-      <Sidebar menuLinks={menu} />
+      <Header title={pageTitle} />
+      <Sidebar />
       <Container>
-        <Main<GetCatsQuery> query={CATS_QUERY}>
-          {(data) => (
-            <div className="container flex flex-wrap">
-              <div className="w-9/12">
-                <Title title="Moje najlepšie hodnotené produkty" />
-                <TopFiveTable data={[]} />
-                <InnerContainer flexType="flew-row">
-                  <StatisticsSection data={[]} cols={'grid-cols-2'} />
-                </InnerContainer>
-                <InnerContainer flexType="flex-col">
-                  <Title title="Tipy a odporúčania" />
-                  <TipsSection data={[]} cols={'grid-cols-2'} />
-                </InnerContainer>
-              </div>
-              <div className="w-3/12 pl-7">
-                <Title title="Moje mačky" />
-                <AddCat />
-                <CatsSection cats={data.cats} rows={'grid-rows-1'} />
-              </div>
-            </div>
-          )}
-        </Main>
+        <CenterContainerQuery />
+        <LeftContainer>
+          <Title title="Moje mačky" />
+          <AddCatBox />
+          <DashboardCatQuery />
+        </LeftContainer>
       </Container>
     </Layout>
   );
 }
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+});

@@ -3,17 +3,17 @@ import { GetCatsQuery } from '../generated/graphql';
 import Layout from '../components/layout';
 import Main from '../components/main';
 import Container from '../components/container';
-import Sidebar from '../components/sidebar/sidebar';
+import Sidebar from '../components/sidebar';
 import Head from 'next/head';
-import { getMenuItem, menu, MenuItem } from '../components/config';
+import { getMenuItem, menu, MenuItem } from '../components/menu';
 
 export default function Products() {
   return (
     <Layout>
       <Head>
-        <title>{getMenuItem(MenuItem.Dashboard).name}</title>
+        <title></title>
       </Head>
-      <Sidebar menuLinks={menu} />
+      <Sidebar />
       <Container>{/* <Main>{() => null}</Main> */}</Container>
     </Layout>
   );

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-const StatisticSection = ({ icon, title, desc }) => {
+const StatisticBox = ({ icon, title, desc }) => {
   return (
     <div className="flex pt-4 pb-4 pl-5 bg-gray-light border-rounded-base border-gray_lightest">
       <div>
@@ -16,4 +16,4 @@ const StatisticSection = ({ icon, title, desc }) => {
   );
 };
 
-export default StatisticSection;
+export default StatisticBox;

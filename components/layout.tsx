@@ -1,6 +1,10 @@
 import Meta from './meta';
 
-const Layout = ({ children }) => {
+type ContainerProps = {
+  children: React.ReactNode;
+};
+
+const Layout = ({ children }: ContainerProps) => {
   return (
     <>
       <Meta />

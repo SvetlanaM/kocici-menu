@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-const AddCat = () => {
+const AddCatBox = () => {
   return (
     <div className="relative">
       <div className="flex pt-6 pb-6 pl-4 border-rounded-base border-yellow bg-yellow-light add-cat">
@@ -14,4 +14,4 @@ const AddCat = () => {
   );
 };
 
-export default AddCat;
+export default AddCatBox;
