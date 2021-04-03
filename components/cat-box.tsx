@@ -20,6 +20,7 @@ const CatBox = ({ name, type, age, image_url }: CatFieldsFragmentFragment) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggleSlider = () => setIsOpen(!isOpen);
 
+  // toto je tu uplne zbytocne teraz
   const catImage = useMemo<string>(
     () => (image_url ? image_url : defaultImage),
     [image_url]
@@ -42,10 +43,16 @@ const CatBox = ({ name, type, age, image_url }: CatFieldsFragmentFragment) => {
             {age ? t('years.key', { count: age }) : '--'}
           </p>
         </div>
-        <button onClick={toggleSlider}>
+        <button
+          type="button"
+          onClick={toggleSlider}
+          aria-haspopup
+          aria-expanded={isOpen}
+          id={name}
+        >
           <Image src="/icons/down.svg" height={8} width={15} quality={100} />
         </button>
-        {isOpen ? <div>ssss</div> : null}
+        {isOpen ? <div aria-labelledby={name}></div> : null}
       </div>
     </div>
   );
