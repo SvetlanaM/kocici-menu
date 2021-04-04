@@ -12,12 +12,8 @@ const TipsList = ({ data, cols }: TipProps) => {
     <InnerContainer flexType="flex-col">
       <Title title="Tipy a odporúčania" />
       <div className={`grid ${cols} grid-flow-row gap-x-11`}>
-        {data.map((item, index) => (
-          <TipSection
-            name={`${index + 1}. ${item.name}`}
-            id={item.id}
-            key={item.id}
-          />
+        {data.map(({ id, ...item }, index) => (
+          <TipSection name={`${index + 1}. ${item.name}`} id={id} key={id} />
         ))}
       </div>
     </InnerContainer>
