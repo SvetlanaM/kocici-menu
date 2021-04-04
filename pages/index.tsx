@@ -29,6 +29,7 @@ const CenterContainerQuery = () => {
     variables: {
       limitProducts: PRODUCT_LIMIT,
       limitTips: TIP_LIMIT,
+      catIds: [1, 2],
     },
   });
 
@@ -38,7 +39,7 @@ const CenterContainerQuery = () => {
       {dashboardError && <ErrorScreen error={dashboardError} />}
       {dashboardData && (
         <>
-          <TopFiveTable data={dashboardData.products} />
+          <TopFiveTable data={dashboardData.reviews} />
           <StatisticsSection data={[]} cols={'grid-cols-2'} />
           <TipsSection data={dashboardData.tips} cols={'grid-cols-2'} />
         </>

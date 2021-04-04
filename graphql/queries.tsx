@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 import { CatFieldsFragment } from '../components/cat-box';
 import { TipFieldsFragment } from '../components/tip-box';
-import { ProductFieldsFragment } from '../components/table-row';
+import { ReviewFieldsFragment } from '../components/table-row';
 
 export const CATS_QUERY = gql`
   query GetCats {
@@ -13,12 +13,14 @@ export const CATS_QUERY = gql`
 `;
 
 export const DASHBOARD_QUERY = gql`
-  query GetDashboard($limitProducts: Int, $limitTips: Int) {
-    products: Product(
-      order_by: { review: desc, review_updated_date: desc }
+  query GetDashboard($limitProducts: Int, $limitTips: Int, $catIds: [Int!]) {
+    reviews: Review(
+      order_by: { review_type: desc, updated_at: desc }
+      where: { cat_id: { _in: $catIds } }
       limit: $limitProducts
     ) {
-      ...ProductFieldsFragment
+      ...ReviewFieldsFragment
+      id
     }
     tips: Tip(
       order_by: { created_at: desc }
@@ -28,6 +30,6 @@ export const DASHBOARD_QUERY = gql`
       ...TipFieldsFragment
     }
   }
-  ${ProductFieldsFragment}
+  ${ReviewFieldsFragment}
   ${TipFieldsFragment}
 `;

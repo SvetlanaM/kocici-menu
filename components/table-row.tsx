@@ -1,31 +1,31 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { gql } from '@apollo/client';
-import { ProductFieldsFragmentFragment } from '../graphql/generated/graphql';
+import { ReviewFieldsFragmentFragment } from '../graphql/generated/graphql';
 
-export const ProductFieldsFragment = gql`
-  fragment ProductFieldsFragment on Product {
-    id
-    name
-    image_url
-    price
-    brand {
+export const ReviewFieldsFragment = gql`
+  fragment ReviewFieldsFragment on Review {
+    product: Product {
+      id
       name
+      brand_type
+      price
+      image_url
     }
-    review
-    review_updated_date
+    cat: Cat {
+      id
+    }
+    updated_at
+    review_type
   }
 `;
 
 const TableRow = ({
-  name,
-  image_url,
-  price,
-  brand,
-  review,
-  review_updated_date,
-}: ProductFieldsFragmentFragment) => {
-  const [actualReview, setReview] = useState<number>(Number(review));
+  product,
+  updated_at,
+  review_type,
+}: ReviewFieldsFragmentFragment) => {
+  const [actualReview, setReview] = useState<number>(Number(review_type));
   const addMore = () => setReview((prev) => prev + 1);
   const addLess = () => setReview((prev) => prev - 1);
   const onLastValue = actualReview === 10;
@@ -35,21 +35,21 @@ const TableRow = ({
     <tr>
       <td className="pl-3.6 py-4">
         <Image
-          src={image_url}
-          alt={`${brand.name} - ${name}`}
+          src={product.image_url}
+          alt={`${product.brand_type} - ${product.name}`}
           width={55}
           height={55}
           quality={100}
         />
       </td>
       <td>
-        <span className="base-medium-text">{brand.name}</span>
+        <span className="base-medium-text">{product.brand_type}</span>
         <br />
-        {name}
+        {product.name}
       </td>
-      <td>{review_updated_date}</td>
+      <td>{updated_at}</td>
       <td>
-        {price} CZK
+        {product.price} CZK
         <br />
         na kg
       </td>
