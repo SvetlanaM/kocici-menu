@@ -13,14 +13,18 @@ export const CATS_QUERY = gql`
 `;
 
 export const DASHBOARD_QUERY = gql`
-  query GetDashboard {
+  query GetDashboard($limitProducts: Int, $limitTips: Int) {
     products: Product(
-      limit: 5
       order_by: { review: desc, review_updated_date: desc }
+      limit: $limitProducts
     ) {
       ...ProductFieldsFragment
     }
-    tips: Tip {
+    tips: Tip(
+      order_by: { created_at: desc }
+      where: { is_active: { _eq: true } }
+      limit: $limitTips
+    ) {
       ...TipFieldsFragment
     }
   }

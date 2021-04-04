@@ -18,13 +18,19 @@ import ErrorScreen from '../components/error-screen';
 import Loading from '../components/loading';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import getTitle from '../utils/get-title';
+import { PRODUCT_LIMIT, TIP_LIMIT } from '../utils/constants';
 
 const CenterContainerQuery = () => {
   const {
     data: dashboardData,
     error: dashboardError,
     loading: dashboardLoading,
-  } = useGetDashboardQuery();
+  } = useGetDashboardQuery({
+    variables: {
+      limitProducts: PRODUCT_LIMIT,
+      limitTips: TIP_LIMIT,
+    },
+  });
 
   return (
     <CenterContainer>
