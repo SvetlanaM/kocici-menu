@@ -28,8 +28,9 @@ export const CATS_QUERY = gql`
 export const DASHBOARD_QUERY = gql`
   query GetDashboard($limitProducts: Int, $limitTips: Int, $catIds: [Int!]) {
     reviews: Review(
-      order_by: { review_type: desc, updated_at: desc }
+      order_by: { product_id: desc, review_type: desc, updated_at: desc }
       where: { cat_id: { _in: $catIds } }
+      distinct_on: product_id
       limit: $limitProducts
     ) {
       ...ReviewFieldsFragment
