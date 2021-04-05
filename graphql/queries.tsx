@@ -4,8 +4,11 @@ import { TipFieldsFragment } from '../components/tip-box';
 import { ReviewFieldsFragment } from '../components/table-row';
 
 export const CATS_QUERY = gql`
-  query GetCats {
-    cats: Cat(order_by: { name: asc }, where: { is_active: { _eq: true } }) {
+  query GetCats($catIds: [Int!]) {
+    cats: Cat(
+      where: { _and: { is_active: { _eq: true }, id: { _in: $catIds } } }
+      order_by: { name: asc }
+    ) {
       ...CatFieldsFragment
     }
   }

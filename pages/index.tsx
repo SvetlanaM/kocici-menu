@@ -10,6 +10,7 @@ import TopFiveTable from '../components/top-five-table';
 import {
   useGetDashboardQuery,
   useGetCatsQuery,
+  GetCatsQueryVariables,
 } from '../graphql/generated/graphql';
 import Header from '../components/head';
 import CenterContainer from '../components/center-container';
@@ -21,6 +22,11 @@ import getTitle from '../utils/get-title';
 import { PRODUCT_LIMIT, TIP_LIMIT } from '../utils/constants';
 import { GeneralError } from '../components/error-screen';
 
+//tu budu akoze ziskane macky uzivatela
+const getCatVariables: GetCatsQueryVariables = {
+  catIds: [1, 2],
+};
+
 const CenterContainerQuery = () => {
   const {
     data: dashboardData,
@@ -30,7 +36,7 @@ const CenterContainerQuery = () => {
     variables: {
       limitProducts: PRODUCT_LIMIT,
       limitTips: TIP_LIMIT,
-      catIds: [1, 2],
+      catIds: getCatVariables.catIds,
     },
   });
 
@@ -56,7 +62,11 @@ const DashboardCatQuery = () => {
     loading: CatsLoading,
     error: CatsError,
     data: CatsData,
-  } = useGetCatsQuery();
+  } = useGetCatsQuery({
+    variables: {
+      catIds: getCatVariables.catIds,
+    },
+  });
 
   if (CatsLoading || CatsError) return <div>...</div>;
 
