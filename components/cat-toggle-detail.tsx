@@ -12,7 +12,7 @@ const CatToggleDetail = ({ catData }) => {
         <div className="px-3 pt-3.6">
           <Title title="Obľúbené produkty" fontSize="text-sm" />
           {reviews.map((item) => (
-            <FavouriteProducts product={item} />
+            <FavouriteProducts key={item.name} product={item} />
           ))}
         </div>
       )}
