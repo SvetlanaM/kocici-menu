@@ -4,12 +4,22 @@ import { TipFieldsFragment } from '../components/tip-box';
 import { ReviewFieldsFragment } from '../components/table-row';
 
 export const CATS_QUERY = gql`
-  query GetCats($catIds: [Int!]) {
+  query GetCats($catIds: [Int!], $withProducts: Boolean!) {
     cats: Cat(
       where: { _and: { is_active: { _eq: true }, id: { _in: $catIds } } }
       order_by: { name: asc }
     ) {
       ...CatFieldsFragment
+      reviews: Reviews(
+        order_by: { review_type: desc, updated_at: desc }
+        limit: 2
+      ) @include(if: $withProducts) {
+        products: Product {
+          brand_type
+          name
+          image_url
+        }
+      }
     }
   }
   ${CatFieldsFragment}

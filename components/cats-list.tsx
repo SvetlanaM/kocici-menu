@@ -8,7 +8,14 @@ interface CatSectionProps {
 const CatsList = ({ cats, rows }: CatSectionProps) => {
   return (
     <div className={`grid ${rows} gap-y-5 mt-7`}>
-      {cats && cats.map((cat) => <CatSection key={cat.id} {...cat} />)}
+      {cats &&
+        cats.map((cat) => (
+          <CatSection
+            key={cat.id}
+            CatFieldsFragment={cat}
+            reviews={cat.reviews}
+          />
+        ))}
     </div>
   );
 };

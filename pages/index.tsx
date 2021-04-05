@@ -11,6 +11,7 @@ import {
   useGetDashboardQuery,
   useGetCatsQuery,
   GetDashboardQueryVariables,
+  GetCatsQueryVariables,
 } from '../graphql/generated/graphql';
 import Header from '../components/head';
 import CenterContainer from '../components/center-container';
@@ -23,10 +24,15 @@ import { PRODUCT_LIMIT, TIP_LIMIT } from '../utils/constants';
 import { GeneralError } from '../components/error-screen';
 
 //tu budu akoze ziskane macky uzivatela
-const getCatVariables: GetDashboardQueryVariables = {
+const getDahsboardVariables: GetDashboardQueryVariables = {
   limitProducts: PRODUCT_LIMIT,
   limitTips: TIP_LIMIT,
-  catIds: [1, 2],
+  catIds: [2, 3],
+};
+
+const getCatVariables: GetCatsQueryVariables = {
+  catIds: [2, 3],
+  withProducts: true,
 };
 
 const CenterContainerQuery = () => {
@@ -36,9 +42,9 @@ const CenterContainerQuery = () => {
     loading: dashboardLoading,
   } = useGetDashboardQuery({
     variables: {
-      limitProducts: getCatVariables.limitProducts,
-      limitTips: getCatVariables.limitTips,
-      catIds: getCatVariables.catIds,
+      limitProducts: getDahsboardVariables.limitProducts,
+      limitTips: getDahsboardVariables.limitTips,
+      catIds: getDahsboardVariables.catIds,
     },
   });
 
@@ -67,6 +73,7 @@ const DashboardCatQuery = () => {
   } = useGetCatsQuery({
     variables: {
       catIds: getCatVariables.catIds,
+      withProducts: getCatVariables.withProducts,
     },
   });
 

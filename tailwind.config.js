@@ -43,6 +43,9 @@ module.exports = {
         gray: theme('colors.gray.light'),
         gray_lightest: theme('colors.gray.lightest'),
       }),
+      divideColor: (theme) => ({
+        gray_lightest: theme('colors.gray.lightest'),
+      }),
     },
   },
   variants: {

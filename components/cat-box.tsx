@@ -1,7 +1,10 @@
 import { gql } from '@apollo/client';
 import Image from 'next/image';
 import { useState, useMemo } from 'react';
-import { CatFieldsFragmentFragment } from '../graphql/generated/graphql';
+import {
+  CatFieldsFragmentFragment,
+  GetCatsQuery,
+} from '../graphql/generated/graphql';
 import { useTranslation } from 'next-i18next';
 import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
 import CatToggleDetail from './cat-toggle-detail';
@@ -14,35 +17,49 @@ export const CatFieldsFragment = gql`
     name
     type
     slug
+    doctor_email
   }
 `;
 
-const CatBox = ({ name, type, age, image_url }: CatFieldsFragmentFragment) => {
+interface CatBoxProps {
+  CatFieldsFragment: CatFieldsFragmentFragment;
+  reviews: GetCatsQuery['cats'];
+}
+
+const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
+  let catProducts = [];
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggleSlider = () => setIsOpen(!isOpen);
 
   // toto je tu uplne zbytocne teraz
   const catImage = useMemo<string>(
-    () => (image_url ? image_url : defaultImage),
-    [image_url]
+    () =>
+      CatFieldsFragment.image_url ? CatFieldsFragment.image_url : defaultImage,
+    [CatFieldsFragment.image_url]
   );
+
+  Object.keys(reviews).map((product) => {
+    catProducts.push(reviews[product].products);
+  });
 
   return (
     <div className="flex flex-col flex-no-wrap justify-between h-75 py-3 border-rounded-base border-gray small-purple-text text-left my-cat">
       <div className="flex flex-row px-3">
         <Image
-          alt={name}
+          alt={CatFieldsFragment.name}
           src={catImage}
           width={65}
           height={65}
           className="border-rounded-base"
         />
         <div className="flex-col-base justify-between ml-3">
-          <h4>{name}</h4>
-          <p className="small-light-text">{type}</p>
+          <h4>{CatFieldsFragment.name}</h4>
+          <p className="small-light-text">{CatFieldsFragment.type}</p>
           <p className="small-light-text text-gray">
-            {age ? t('years.key', { count: age }) : '--'}
+            {CatFieldsFragment.age
+              ? t('years.key', { count: CatFieldsFragment.age })
+              : '--'}
           </p>
         </div>
         <button
@@ -50,13 +67,33 @@ const CatBox = ({ name, type, age, image_url }: CatFieldsFragmentFragment) => {
           onClick={toggleSlider}
           aria-haspopup
           aria-expanded={isOpen}
-          id={name}
+          id={CatFieldsFragment.name}
+          className="focus:outline-none ml-auto"
         >
-          <Image src="/icons/down.svg" height={8} width={15} quality={100} />
+          {isOpen ? (
+            <Image
+              src="/icons/down.svg"
+              height={8}
+              width={15}
+              quality={100}
+              className="transform rotate-180"
+            />
+          ) : (
+            <Image src="/icons/down.svg" height={8} width={15} quality={100} />
+          )}
         </button>
-        {isOpen ? <div aria-labelledby={name}></div> : null}
       </div>
-      <CatToggleDetail data={[]} />
+      {isOpen ? (
+        <div aria-labelledby={CatFieldsFragment.name}>
+          <CatToggleDetail
+            catData={{
+              reviews: catProducts,
+              doctor_email: CatFieldsFragment.doctor_email,
+              specials: [],
+            }}
+          />
+        </div>
+      ) : null}
     </div>
   );
 };
