@@ -1,10 +1,9 @@
-import { ApolloError } from '@apollo/client';
-import { useCallback } from 'react'
-
+import { useCallback } from 'react';
+import { GeneralError } from '../components/error-screen';
 
 const useLogger = () => {
-    return useCallback((error: ApolloError) => {
-        console.log("Report this error: ", error.message || error.networkError?.message);
+    return useCallback((error: GeneralError) => {
+        console.log("Report this error: ", error.message);
     }, []);
 };
 

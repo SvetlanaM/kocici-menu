@@ -19,6 +19,7 @@ import Loading from '../components/loading';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import getTitle from '../utils/get-title';
 import { PRODUCT_LIMIT, TIP_LIMIT } from '../utils/constants';
+import { GeneralError } from '../components/error-screen';
 
 const CenterContainerQuery = () => {
   const {
@@ -36,7 +37,9 @@ const CenterContainerQuery = () => {
   return (
     <CenterContainer>
       {dashboardLoading && <Loading />}
-      {dashboardError && <ErrorScreen error={dashboardError} />}
+      {dashboardError && (
+        <ErrorScreen error={GeneralError.fromApolloError(dashboardError)} />
+      )}
       {dashboardData && (
         <>
           <TopFiveTable data={dashboardData.reviews} />

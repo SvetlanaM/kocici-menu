@@ -3,42 +3,34 @@ import { useEffect, useState } from 'react';
 import useLogger from '../hooks/useLogger';
 
 interface ErrorScreenProps {
-  error: ApolloError;
+  error: GeneralError;
+  defaultMessage: string;
 }
 
-const errorType = {
-  graphqlError: {
-    setCustomMessage() {
-      return 'Chyba 1';
-    },
-  },
-  networkError: {
-    setCustomMessage() {
-      return 'Chyba 2';
-    },
-  },
-};
+export class GeneralError {
+  constructor(
+    public error: Error,
+    public message: string | null = error.message,
+    public userMessage: string | null = null,
+    public imageURL: string | null = null
+  ) {}
 
-const ErrorScreen = ({ error }: ErrorScreenProps) => {
+  static fromApolloError(error: ApolloError): GeneralError {
+    return new this(error, error.networkError?.message || error.message);
+  }
+}
+
+const ErrorScreen = ({ error, defaultMessage }: ErrorScreenProps) => {
   const logger = useLogger();
-  const [errorMessage, setErrorMessage] = useState<string>('Neznama chyba');
+  const [errorMessage, setErrorMessage] = useState<string>(defaultMessage);
 
-  const getErrorMessage = (error: ApolloError): string => {
-    let errorResponse = errorMessage;
-    if (error.graphQLErrors) {
-      errorResponse = errorType.graphqlError.setCustomMessage();
-    }
-
-    if (error.networkError) {
-      errorResponse = errorType.networkError.setCustomMessage();
-    }
-
-    return errorResponse;
-  };
+  if (error.message) {
+    error.userMessage = 'Chyba v stahovani dat';
+  }
 
   useEffect(() => {
     logger(error);
-    setErrorMessage(getErrorMessage(error));
+    setErrorMessage(error.userMessage || defaultMessage);
   }, [logger, error, setErrorMessage]);
 
   return (
@@ -52,6 +44,10 @@ const ErrorScreen = ({ error }: ErrorScreenProps) => {
       </div>
     </>
   );
+};
+
+ErrorScreen.defaultProps = {
+  defaultMessage: 'Neznama chyba',
 };
 
 export default ErrorScreen;
