@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react';
 import { CatFieldsFragmentFragment } from '../graphql/generated/graphql';
 import { useTranslation } from 'next-i18next';
 import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
+import CatToggleDetail from './cat-toggle-detail';
 
 export const CatFieldsFragment = gql`
   fragment CatFieldsFragment on Cat {
@@ -28,8 +29,8 @@ const CatBox = ({ name, type, age, image_url }: CatFieldsFragmentFragment) => {
   );
 
   return (
-    <div className="flex justify-between h-75 py-3 px-3 border-rounded-base border-gray small-purple-text text-left my-cat">
-      <div className="flex flex-row">
+    <div className="flex flex-col flex-no-wrap justify-between h-75 py-3 border-rounded-base border-gray small-purple-text text-left my-cat">
+      <div className="flex flex-row px-3">
         <Image
           alt={name}
           src={catImage}
@@ -55,6 +56,7 @@ const CatBox = ({ name, type, age, image_url }: CatFieldsFragmentFragment) => {
         </button>
         {isOpen ? <div aria-labelledby={name}></div> : null}
       </div>
+      <CatToggleDetail data={[]} />
     </div>
   );
 };

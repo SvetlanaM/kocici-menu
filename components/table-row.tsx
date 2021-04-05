@@ -2,6 +2,8 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { gql } from '@apollo/client';
 import { ReviewFieldsFragmentFragment } from '../graphql/generated/graphql';
+import ProductImage from './product-image';
+import ProductName from './product-name';
 
 export const ReviewFieldsFragment = gql`
   fragment ReviewFieldsFragment on Review {
@@ -34,18 +36,13 @@ const TableRow = ({
   return (
     <tr>
       <td className="pl-3.6 py-4">
-        <Image
+        <ProductImage
           src={product.image_url}
           alt={`${product.brand_type} - ${product.name}`}
-          width={55}
-          height={55}
-          quality={100}
         />
       </td>
       <td>
-        <span className="base-medium-text">{product.brand_type}</span>
-        <br />
-        {product.name}
+        <ProductName brand={product.brand_type} name={product.name} />
       </td>
       <td>{updated_at}</td>
       <td>
