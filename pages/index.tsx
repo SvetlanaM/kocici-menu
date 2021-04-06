@@ -41,11 +41,7 @@ const CenterContainerQuery = () => {
     error: dashboardError,
     loading: dashboardLoading,
   } = useGetDashboardQuery({
-    variables: {
-      limitProducts: getDahsboardVariables.limitProducts,
-      limitTips: getDahsboardVariables.limitTips,
-      catIds: getDahsboardVariables.catIds,
-    },
+    variables: getDahsboardVariables,
   });
 
   return (
@@ -71,10 +67,7 @@ const DashboardCatQuery = () => {
     error: CatsError,
     data: CatsData,
   } = useGetCatsQuery({
-    variables: {
-      catIds: getCatVariables.catIds,
-      withProducts: getCatVariables.withProducts,
-    },
+    variables: getCatVariables,
   });
 
   if (CatsLoading || CatsError) return <div>...</div>;
