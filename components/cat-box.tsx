@@ -3,7 +3,8 @@ import Image from 'next/image';
 import { useState, useMemo } from 'react';
 import {
   CatFieldsFragmentFragment,
-  GetCatsQuery,
+  Product,
+  Review,
 } from '../graphql/generated/graphql';
 import { useTranslation } from 'next-i18next';
 import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
@@ -23,7 +24,7 @@ export const CatFieldsFragment = gql`
 
 interface CatBoxProps {
   CatFieldsFragment: CatFieldsFragmentFragment;
-  reviews: GetCatsQuery['cats'];
+  reviews: Array<Review & { products: Array<Product> }>;
 }
 
 const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
@@ -39,9 +40,7 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
     [CatFieldsFragment.image_url]
   );
 
-  Object.keys(reviews).map((product) => {
-    catProducts.push(reviews[product].products);
-  });
+  catProducts = Object.values(reviews).map((review) => review.products);
 
   const catData = {
     reviews: catProducts,
