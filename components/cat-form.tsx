@@ -1,6 +1,7 @@
 import { ChangeEvent, useCallback, useState } from 'react';
 import { Cat_Insert_Input } from '../graphql/generated/graphql';
 
+//pozeram s tym toolom ani neni treba
 export type CatInputData = Omit<Cat_Insert_Input, 'id' | 'image_url'>;
 
 interface CatFormInterface {
