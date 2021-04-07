@@ -1,10 +1,10 @@
 import AddCatBox from '../components/add-cat-box';
-import CatsSection from '../components/cats-list';
+import CatsList from '../components/cats-list';
 import Container from '../components/container';
 import Layout from '../components/layout';
 import Sidebar from '../components/sidebar';
-import StatisticsSection from '../components/statistics-list';
-import TipsSection from '../components/tips-list';
+import StatisticsList from '../components/statistics-list';
+import TipsList from '../components/tips-list';
 import Title from '../components/title';
 import TopFiveTable from '../components/top-five-table';
 import {
@@ -53,8 +53,8 @@ const CenterContainerQuery = () => {
       {dashboardData && (
         <>
           <TopFiveTable data={dashboardData.reviews} />
-          <StatisticsSection data={[]} cols={'grid-cols-2'} />
-          <TipsSection data={dashboardData.tips} cols={'grid-cols-2'} />
+          <StatisticsList data={[]} cols={'grid-cols-2'} />
+          <TipsList data={dashboardData.tips} cols={'grid-cols-2'} />
         </>
       )}
     </CenterContainer>
@@ -72,9 +72,7 @@ const DashboardCatQuery = () => {
 
   if (CatsLoading || CatsError) return <div>...</div>;
 
-  return (
-    <CatsSection cats={CatsData ? CatsData.cats : []} rows={'grid-rows-1'} />
-  );
+  return <CatsList cats={CatsData ? CatsData.cats : []} rows={'grid-rows-1'} />;
 };
 
 const pageTitle = getTitle('Prehľad');
