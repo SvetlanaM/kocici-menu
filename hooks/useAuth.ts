@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { setToken } from '../utils/token';
 
 export default function useAuth(forceAuthenticated = true) {
-  const auth0 = typeof window === 'undefined' ? {} : useAuth0();
+  const auth0 = useAuth0();
   useEffect(() => {
     if (auth0.isLoading) {
       return;
@@ -21,5 +21,5 @@ export default function useAuth(forceAuthenticated = true) {
     });
   }, [auth0]);
 
-  return { isLoading: auth0.isLoading };
+  return auth0;
 }
