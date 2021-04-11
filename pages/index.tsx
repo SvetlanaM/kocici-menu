@@ -22,6 +22,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import getTitle from '../utils/get-title';
 import { PRODUCT_LIMIT, TIP_LIMIT } from '../utils/constants';
 import { GeneralError } from '../components/error-screen';
+import { useAuth0 } from '@auth0/auth0-react';
 
 //tu budu akoze ziskane macky uzivatela
 const getDahsboardVariables: GetDashboardQueryVariables = {
@@ -78,6 +79,8 @@ const DashboardCatQuery = () => {
 const pageTitle = getTitle('Prehľad');
 
 export default function Home() {
+  const user = useAuth0();
+  console.log(user);
   return (
     <Layout>
       <Header title={pageTitle} />
