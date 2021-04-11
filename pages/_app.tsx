@@ -1,7 +1,7 @@
 import { AppProps } from 'next/app';
 import '../styles/globals.css';
 import { appWithTranslation } from 'next-i18next';
-import { Auth0Provider } from '@auth0/auth0-react';
+import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
 
 import {
   ApolloClient,
@@ -11,12 +11,14 @@ import {
   from,
   HttpLink,
 } from '@apollo/client';
+import { getToken } from '../utils/token';
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   operation.setContext(({ headers = {} }) => {
     return {
       headers: {
         ...headers,
+        token: getToken(),
         'x-hasura-admin-secret': process.env.NEXT_PUBLIC_HASURA_PASSWORD,
       },
     };
