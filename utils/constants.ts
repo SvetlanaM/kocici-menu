@@ -4,3 +4,7 @@ export const SVETA_EMAIL = 'svetlana@margetova.eu'
 export const PRODUCT_LIMIT = 5
 export const TIP_LIMIT = 4
 export const DEFAULT_TABLE_SORTING = 'review_type'
+export enum SortType {
+    ASC = 'ascending',
+    DESC = 'descending'
+  }

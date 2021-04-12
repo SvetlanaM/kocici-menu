@@ -1,3 +1,11 @@
+import TableHeadSortButton from '../components/table-head-sort-button';
+
+enum ColumnTypes {
+  UPDATED_AT = 'updated_at',
+  AVG_PRICE = 'price',
+  REVIEW_TYPE = 'review_type',
+}
+
 const TableHead = ({ sortedFunction, className }) => {
   return (
     <thead className="font-bold leading-normal">
@@ -5,112 +13,25 @@ const TableHead = ({ sortedFunction, className }) => {
         <th className="w-1/6 py-5"></th>
         <th className="w-1/4">Názov produktu</th>
         <th className="w-1/6">
-          <button
-            onClick={() => sortedFunction('updated_at')}
-            className={`${className(
-              'updated_at'
-            )} flex items-center font-bold leading-normal focus:outline-none`}
-          >
-            <div className="mr-1">Hodnotené</div>
-            <svg
-              width="7"
-              height="9"
-              viewBox="0 0 7 9"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M5.80715 5.50493L3.66415 7.61748V1.28271C3.66415 1.05845 3.48051 0.876465 3.25382 0.876465C3.02712 0.876465 2.84348 1.05848 2.84348 1.28271V7.61748L0.700478 5.50493C0.540006 5.34608 0.280421 5.34608 0.120354 5.50493C-0.040118 5.66378 -0.040118 5.92094 0.120354 6.07938L2.96374 8.88214C3.12178 9.03856 3.38626 9.04018 3.54427 8.88214L6.38765 6.07898C6.54812 5.92013 6.54772 5.66297 6.38765 5.50453C6.22724 5.34648 5.96722 5.34608 5.80715 5.50493Z"
-                fill="#4B4261"
-                className="down"
-              />
-            </svg>
-            <svg
-              width="7"
-              height="9"
-              viewBox="0 0 7 9"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6.63004 2.92109L3.78703 0.117923C3.62899 -0.0384963 3.36451 -0.0401172 3.2065 0.117923L0.363122 2.92109C0.20265 3.07994 0.203055 3.33709 0.363122 3.49554C0.523189 3.65439 0.78318 3.65439 0.943246 3.49554L3.08625 1.38299V7.71776C3.08625 7.94202 3.26989 8.124 3.49658 8.124C3.72328 8.124 3.90692 7.94199 3.90692 7.71776V1.38299L6.04992 3.49554C6.21039 3.65439 6.46998 3.65439 6.63004 3.49554C6.79048 3.33669 6.79048 3.07953 6.63004 2.92109Z"
-                fill="#4B4261"
-                className="up"
-              />
-            </svg>
-          </button>
+          <TableHeadSortButton
+            classNameFunction={className(ColumnTypes.UPDATED_AT)}
+            onClick={() => sortedFunction(ColumnTypes.UPDATED_AT)}
+            value="Hodnotené"
+          />
         </th>
         <th className="w-1/6">
-          <button
-            onClick={() => sortedFunction('price')}
-            className={`${className(
-              'price'
-            )} flex items-center font-bold leading-normal focus:outline-none`}
-          >
-            <div className="mr-1">Avg cena</div>
-            <svg
-              width="7"
-              height="9"
-              viewBox="0 0 7 9"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M5.80715 5.50493L3.66415 7.61748V1.28271C3.66415 1.05845 3.48051 0.876465 3.25382 0.876465C3.02712 0.876465 2.84348 1.05848 2.84348 1.28271V7.61748L0.700478 5.50493C0.540006 5.34608 0.280421 5.34608 0.120354 5.50493C-0.040118 5.66378 -0.040118 5.92094 0.120354 6.07938L2.96374 8.88214C3.12178 9.03856 3.38626 9.04018 3.54427 8.88214L6.38765 6.07898C6.54812 5.92013 6.54772 5.66297 6.38765 5.50453C6.22724 5.34648 5.96722 5.34608 5.80715 5.50493Z"
-                fill="#4B4261"
-                className="down"
-              />
-            </svg>
-            <svg
-              width="7"
-              height="9"
-              viewBox="0 0 7 9"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6.63004 2.92109L3.78703 0.117923C3.62899 -0.0384963 3.36451 -0.0401172 3.2065 0.117923L0.363122 2.92109C0.20265 3.07994 0.203055 3.33709 0.363122 3.49554C0.523189 3.65439 0.78318 3.65439 0.943246 3.49554L3.08625 1.38299V7.71776C3.08625 7.94202 3.26989 8.124 3.49658 8.124C3.72328 8.124 3.90692 7.94199 3.90692 7.71776V1.38299L6.04992 3.49554C6.21039 3.65439 6.46998 3.65439 6.63004 3.49554C6.79048 3.33669 6.79048 3.07953 6.63004 2.92109Z"
-                fill="#4B4261"
-                className="up"
-              />
-            </svg>
-          </button>
+          <TableHeadSortButton
+            classNameFunction={className(ColumnTypes.AVG_PRICE)}
+            onClick={() => sortedFunction(ColumnTypes.AVG_PRICE)}
+            value="Avg cena"
+          />
         </th>
         <th className="w">
-          <button
-            onClick={() => sortedFunction('review_type')}
-            className={`${className(
-              'review_type'
-            )} flex items-center font-bold leading-normal focus:outline-none`}
-          >
-            <div className="mr-1">Hodnotenie</div>
-            <svg
-              width="7"
-              height="9"
-              viewBox="0 0 7 9"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M5.80715 5.50493L3.66415 7.61748V1.28271C3.66415 1.05845 3.48051 0.876465 3.25382 0.876465C3.02712 0.876465 2.84348 1.05848 2.84348 1.28271V7.61748L0.700478 5.50493C0.540006 5.34608 0.280421 5.34608 0.120354 5.50493C-0.040118 5.66378 -0.040118 5.92094 0.120354 6.07938L2.96374 8.88214C3.12178 9.03856 3.38626 9.04018 3.54427 8.88214L6.38765 6.07898C6.54812 5.92013 6.54772 5.66297 6.38765 5.50453C6.22724 5.34648 5.96722 5.34608 5.80715 5.50493Z"
-                fill="#4B4261"
-                className="down"
-              />
-            </svg>
-            <svg
-              width="7"
-              height="9"
-              viewBox="0 0 7 9"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6.63004 2.92109L3.78703 0.117923C3.62899 -0.0384963 3.36451 -0.0401172 3.2065 0.117923L0.363122 2.92109C0.20265 3.07994 0.203055 3.33709 0.363122 3.49554C0.523189 3.65439 0.78318 3.65439 0.943246 3.49554L3.08625 1.38299V7.71776C3.08625 7.94202 3.26989 8.124 3.49658 8.124C3.72328 8.124 3.90692 7.94199 3.90692 7.71776V1.38299L6.04992 3.49554C6.21039 3.65439 6.46998 3.65439 6.63004 3.49554C6.79048 3.33669 6.79048 3.07953 6.63004 2.92109Z"
-                fill="#4B4261"
-                className="up"
-              />
-            </svg>
-          </button>
+          <TableHeadSortButton
+            classNameFunction={className(ColumnTypes.REVIEW_TYPE)}
+            onClick={() => sortedFunction(ColumnTypes.REVIEW_TYPE)}
+            value="Hodnotenie"
+          />
         </th>
         <th className="w-2/6 pl-8 pr-3.6 text-right">Súvisiace akcie</th>
       </tr>
