@@ -50,6 +50,14 @@ button:disabled {
     display: none;
 }
 
+button.ascending svg .down {
+    fill: #bdbde7;
+}
+
+button.descending svg .up {
+    fill: #bdbde7;
+}
+
 @layer utilities {
     .flex-col-base {
         @apply flex flex-col;
