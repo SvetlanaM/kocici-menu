@@ -1,6 +1,8 @@
 import { useMemo } from 'react';
 import {SortType} from '../utils/constants';
 
+
+
 const useSortableData = (inputData: Array<any>, sortedColumn: any, setSortedColumn: any, nestedColumn?: string) => {
   let sortedTable = [...inputData];
 
@@ -51,7 +53,7 @@ const useSortableData = (inputData: Array<any>, sortedColumn: any, setSortedColu
 
   
 
-  return { inputData: sortedTable, sortData, SortType };
+  return { inputData: sortedTable, sortData };
 }
 
 export default useSortableData;
