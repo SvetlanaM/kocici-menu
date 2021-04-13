@@ -13,7 +13,7 @@ const TipsList = ({ data, cols }: TipProps) => {
       <Title title="Tipy a odporúčania" />
       <div className={`grid ${cols} grid-flow-row gap-x-11`}>
         {data.map(({ id, ...item }, index) => (
-          <TipBox name={`${index + 1}. ${item.name}`} id={id} key={id} />
+          <TipBox name={`${index + 1}. ${item.name}`} {...item} key={id} />
         ))}
       </div>
     </InnerContainer>

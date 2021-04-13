@@ -17,7 +17,6 @@ export const CatFieldsFragment = gql`
     image_url
     name
     type
-    slug
     doctor_email
   }
 `;
