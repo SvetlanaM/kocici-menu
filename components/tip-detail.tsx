@@ -26,7 +26,7 @@ const TipDetailBox = ({
   return (
     <>
       <Header title={getTitle(name)} />
-      <div>
+      <div className="text-justify">
         <Title title={name} />
         <p className="text-sm font-light text-gray">
           Publikované: {formattedDate}

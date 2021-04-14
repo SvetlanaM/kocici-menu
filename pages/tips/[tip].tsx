@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import ErrorScreen from '../../components/error-screen';
 import Loading from '../../components/loading';
 import { GeneralError } from '../../components/error-screen';
+import Center from '../../components/center-container';
 
 const TipDetailQuery = () => {
   const router = useRouter();
@@ -23,10 +24,12 @@ const TipDetailQuery = () => {
 
   return (
     <Container>
-      {TipLoading && <Loading />}
-      {TipError && (
-        <ErrorScreen error={GeneralError.fromApolloError(TipError)} />
-      )}
+      <Center>
+        {TipLoading && <Loading />}
+        {TipError && (
+          <ErrorScreen error={GeneralError.fromApolloError(TipError)} />
+        )}
+      </Center>
       <TipDetailBox
         name={TipData?.tip?.name}
         updated_at={TipData?.tip?.updated_at}
