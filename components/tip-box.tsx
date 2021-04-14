@@ -10,11 +10,11 @@ export const TipFieldsFragment = gql`
   }
 `;
 
-const TipBox = ({ ...item }: TipFieldsFragmentFragment) => {
+const TipBox = ({ name, slug }: TipFieldsFragmentFragment) => {
   return (
     <div className="w-full pb-3.6 mb-4 border-b border-gray">
-      <Link href={`/tips/${encodeURIComponent(item.slug)}`}>
-        <a className="small-purple-text font-light more-info">{item.name}</a>
+      <Link href={`/tips/${encodeURIComponent(slug)}`}>
+        <a className="small-purple-text font-light more-info">{name}</a>
       </Link>
     </div>
   );

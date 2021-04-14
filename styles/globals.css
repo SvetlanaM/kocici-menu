@@ -12,6 +12,10 @@ a {
     text-decoration: none;
 }
 
+button:focus {
+    outline: none;
+}
+
 * {
     box-sizing: border-box;
 }
