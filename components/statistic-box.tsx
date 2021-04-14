@@ -11,14 +11,14 @@ export const StatFieldsFragment = gql`
   }
 `;
 
-type Extend = {
-  name: StatFieldsFragmentFragment;
+type ExtendType = {
+  name: StatFieldsFragmentFragment | string;
 } & {
   title: string;
   icon: string;
 };
 
-const StatisticBox = ({ icon, title, name }) => {
+const StatisticBox = ({ icon, title, name }: ExtendType) => {
   return (
     <div className="flex pt-4 pb-4 pl-5 bg-gray-light border-rounded-base border-gray_lightest">
       <div>

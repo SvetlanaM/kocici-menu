@@ -47,12 +47,12 @@ const CenterContainerQuery = () => {
 
   const extendedData = [
     {
-      name: '1789 CZK',
+      name: '--',
       icon: '/icons/avg_cost.svg',
       title: 'Priemerná mesačná spotreba',
     },
     {
-      name: dashboardData?.stats[0].brand_type,
+      name: String(dashboardData?.stats[0].brand_type) || '--',
       icon: '/icons/fav_brand.svg',
       title: 'Moja najpopulárnejšia značka',
     },

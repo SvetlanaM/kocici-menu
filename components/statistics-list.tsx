@@ -1,8 +1,12 @@
 import StatisticBox from './statistic-box';
 import InnerContainer from './inner-container';
-import { GetDashboardQuery } from '../graphql/generated/graphql';
 
-const StatisticsList = ({ data, cols }) => {
+interface StatisticsListProps {
+  data: Array<any>;
+  cols: string;
+}
+
+const StatisticsList = ({ data, cols }: StatisticsListProps) => {
   console.log(data);
   return (
     <InnerContainer flexType="flew-col">
