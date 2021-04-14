@@ -1,15 +1,21 @@
 import StatisticBox from './statistic-box';
 import InnerContainer from './inner-container';
+import { GetDashboardQuery } from '../graphql/generated/graphql';
 
 const StatisticsList = ({ data, cols }) => {
+  console.log(data);
   return (
     <InnerContainer flexType="flew-col">
-      {/* tu bude nejaky cyklus a if na parne/neparne */}
-
       <div className={`grid ${cols} grid-flow-row gap-x-11 w-full`}>
-        <StatisticBox icon={data.icon} title={data.title} desc={data.desc} />
-
-        <StatisticBox icon={data.icon} title={data.title} desc={data.desc} />
+        {data &&
+          data.map((item) => (
+            <StatisticBox
+              key={item.name}
+              icon={item.icon}
+              name={item.name}
+              title={item.title}
+            />
+          ))}
       </div>
     </InnerContainer>
   );

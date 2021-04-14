@@ -12,6 +12,7 @@ import {
   useGetCatsQuery,
   GetDashboardQueryVariables,
   GetCatsQueryVariables,
+  GetStatsQuery,
 } from '../graphql/generated/graphql';
 import Header from '../components/head';
 import CenterContainer from '../components/center-container';
@@ -44,6 +45,19 @@ const CenterContainerQuery = () => {
     variables: getDahsboardVariables,
   });
 
+  const extendedData = [
+    {
+      name: '1789 CZK',
+      icon: '/icons/avg_cost.svg',
+      title: 'Priemerná mesačná spotreba',
+    },
+    {
+      name: dashboardData?.stats[0].brand_type,
+      icon: '/icons/fav_brand.svg',
+      title: 'Moja najpopulárnejšia značka',
+    },
+  ];
+
   return (
     <CenterContainer>
       {dashboardLoading && <Loading />}
@@ -53,7 +67,7 @@ const CenterContainerQuery = () => {
       {dashboardData && (
         <>
           <TopFiveTable data={dashboardData.reviews} />
-          <StatisticsList data={[]} cols={'grid-cols-2'} />
+          <StatisticsList data={extendedData} cols={'grid-cols-2'} />
           <TipsList data={dashboardData.tips} cols={'grid-cols-2'} />
         </>
       )}

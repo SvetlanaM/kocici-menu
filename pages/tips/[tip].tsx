@@ -29,14 +29,14 @@ const TipDetailQuery = () => {
         {TipError && (
           <ErrorScreen error={GeneralError.fromApolloError(TipError)} />
         )}
+        <TipDetailBox
+          name={TipData?.tip?.name}
+          updated_at={TipData?.tip?.updated_at}
+          description={TipData?.tip?.description!}
+          slug={TipData?.tip?.slug!}
+          id={TipData?.tip?.id!}
+        />
       </Center>
-      <TipDetailBox
-        name={TipData?.tip?.name}
-        updated_at={TipData?.tip?.updated_at}
-        description={TipData?.tip?.description!}
-        slug={TipData?.tip?.slug!}
-        id={TipData?.tip?.id!}
-      />
     </Container>
   );
 };

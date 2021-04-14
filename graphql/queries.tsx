@@ -3,6 +3,7 @@ import { CatFieldsFragment } from '../components/cat-box';
 import { TipFieldsFragment } from '../components/tip-box';
 import { ReviewFieldsFragment } from '../components/table-row';
 import { TipDetailFieldsFragment } from '../components/tip-detail';
+import { StatFieldsFragment } from '../components/statistic-box';
 
 export const CATS_QUERY = gql`
   query GetCats($catIds: [Int!], $withProducts: Boolean!) {
@@ -44,9 +45,13 @@ export const DASHBOARD_QUERY = gql`
     ) {
       ...TipFieldsFragment
     }
+    stats: brand_fav_type(distinct_on: brand_type, limit: 1) {
+      ...StatFieldsFragment
+    }
   }
   ${ReviewFieldsFragment}
   ${TipFieldsFragment}
+  ${StatFieldsFragment}
 `;
 
 export const TIP_DETAIL_QUERY = gql`
@@ -56,4 +61,13 @@ export const TIP_DETAIL_QUERY = gql`
     }
   }
   ${TipDetailFieldsFragment}
+`;
+
+export const STATS_QUERY = gql`
+  query GetStats {
+    stats: brand_fav_type(distinct_on: brand_type, limit: 1) {
+      ...StatFieldsFragment
+    }
+  }
+  ${StatFieldsFragment}
 `;
