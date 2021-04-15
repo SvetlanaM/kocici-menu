@@ -12,14 +12,19 @@ import Layout from '../../components/layout';
 import Sidebar from '../../components/sidebar';
 import Center from '../../components/center-container';
 import Header from '../../components/head';
+import getTitle from '../../utils/get-title';
+import Title from '../../components/title';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useRouter } from 'next/router';
 
-const CreateCat = () => {
+export default function CreateCat() {
+  const router = useRouter();
   const [createCat, { error, data }] = useMutation<
     AddCatMutation,
     AddCatMutationVariables
   >(ADD_CAT);
 
-  const handleSubmit = useCallback(
+  const handleSubmit1 = useCallback(
     async (catData: Cat_Insert_Input) => {
       const variables: AddCatMutationVariables = {
         cat: {
@@ -27,6 +32,10 @@ const CreateCat = () => {
           age: catData.age ?? null,
           user_id: catData.user_id,
           doctor_email: catData.doctor_email ?? null,
+          nickname: catData.nickname ?? null,
+          weight: catData.weight ?? null,
+          type: catData.type ?? null,
+          note: catData.note ?? null,
         },
       };
 
@@ -45,17 +54,24 @@ const CreateCat = () => {
     [createCat]
   );
 
+  const title = 'Pridať novú mačku';
+
   return (
     <Layout>
-      <Header title="Pridat macku" />
+      <Header title={getTitle(title)} />
       <Sidebar />
       <Container>
         <Center>
-          <CatForm handleSubmit={handleSubmit} submitText="Pridat" />
+          <Title title={title} />
+          <CatForm handleSubmit1={handleSubmit1} submitText="Pridat" />
         </Center>
       </Container>
     </Layout>
   );
-};
+}
 
-export default CreateCat;
+export const getStaticProps = async ({ locale }: any) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+});

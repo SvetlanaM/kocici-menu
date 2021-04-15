@@ -12,7 +12,6 @@ import {
   useGetCatsQuery,
   GetDashboardQueryVariables,
   GetCatsQueryVariables,
-  GetStatsQuery,
 } from '../graphql/generated/graphql';
 import Header from '../components/head';
 import CenterContainer from '../components/center-container';

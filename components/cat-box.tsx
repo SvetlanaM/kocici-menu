@@ -59,7 +59,9 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
         />
         <div className="flex-col-base justify-between ml-3">
           <h4>{CatFieldsFragment.name}</h4>
-          <p className="small-light-text">{CatFieldsFragment.type}</p>
+          <p className="small-light-text">
+            {t(CatFieldsFragment.type || 'CAT_TYPE_NULL')}
+          </p>
           <p className="small-light-text text-gray">
             {CatFieldsFragment.age
               ? t('years.key', { count: CatFieldsFragment.age })

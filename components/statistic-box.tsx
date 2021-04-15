@@ -13,7 +13,6 @@ export const StatFieldsFragment = gql`
 
 type ExtendType = {
   name: StatFieldsFragmentFragment | string;
-} & {
   title: string;
   icon: string;
 };

@@ -3,5 +3,8 @@
         "key_0": "{{count}} rok",
         "key_1": "{{count}} roky",
         "key_2": "{{count}} rokov"
-    }
+    },
+    "DOMACA_TYPE": "domáca",
+    "SIAMSKA_TYPE": "siamská",
+    "CAT_TYPE_NULL": "neuvedene"
 }
