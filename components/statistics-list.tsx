@@ -7,7 +7,6 @@ interface StatisticsListProps {
 }
 
 const StatisticsList = ({ data, cols }: StatisticsListProps) => {
-  console.log(data);
   return (
     <InnerContainer flexType="flew-col">
       <div className={`grid ${cols} grid-flow-row gap-x-11 w-full`}>

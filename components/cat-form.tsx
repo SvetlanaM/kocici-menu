@@ -40,8 +40,6 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
         if (success) {
           console.log('jupiii');
           router.push('/');
-        } else {
-          alert('Data sa nepodarilo poslat');
         }
       });
     },
@@ -166,18 +164,18 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
             </div>
           </div>
         </fieldset>
-        <fieldset>
+        {/* <fieldset>
           <legend className="pb-4 font-light text-gray">
             Specialne poziadavky
           </legend>
         </fieldset>
         <fieldset>
           <legend className="pb-4 font-light text-gray">Oblubene jedla</legend>
-        </fieldset>
+        </fieldset> */}
         <fieldset>
-          <div className="flex flex-col w-full">
+          <div className="flex flex-col w-full mt-2">
             <label className="mb-1">
-              <span className="mt-2 base-medium-text font-light text-purple mb-1">
+              <span className="mt-3 base-medium-text font-light text-purple mb-1">
                 Poznamka
               </span>
             </label>
@@ -190,7 +188,15 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
             ></textarea>
           </div>
         </fieldset>
-        <button>{submitText}</button>
+        <button
+          onClick={() => router.back()}
+          className="text-purple font-medium float-left mt-5"
+        >
+          {'< Speť'}
+        </button>
+        <button className="float-right mb-5 py-1.5 w-1/4 mt-5 border-rounded-base font-medium text-center text-white bg-purple">
+          {submitText}
+        </button>
       </form>
     </>
   );

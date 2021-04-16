@@ -18,8 +18,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useRouter } from 'next/router';
 
 export default function CreateCat() {
-  const router = useRouter();
-  const [createCat, { error, data }] = useMutation<
+  const [createCat, { error }] = useMutation<
     AddCatMutation,
     AddCatMutationVariables
   >(ADD_CAT);
@@ -40,8 +39,8 @@ export default function CreateCat() {
       };
 
       try {
-        await createCat({ variables });
-        if (data && data.insert_Cat) {
+        const result = await createCat({ variables });
+        if (result.data?.insert_Cat?.returning) {
           return true;
         } else {
           <p>{error?.message}</p>;
@@ -63,7 +62,7 @@ export default function CreateCat() {
       <Container>
         <Center>
           <Title title={title} />
-          <CatForm handleSubmit1={handleSubmit1} submitText="Pridat" />
+          <CatForm handleSubmit1={handleSubmit1} submitText={title} />
         </Center>
       </Container>
     </Layout>

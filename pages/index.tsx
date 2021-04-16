@@ -27,11 +27,11 @@ import { GeneralError } from '../components/error-screen';
 const getDahsboardVariables: GetDashboardQueryVariables = {
   limitProducts: PRODUCT_LIMIT,
   limitTips: TIP_LIMIT,
-  catIds: [2, 3],
+  user_id: 1,
 };
 
 const getCatVariables: GetCatsQueryVariables = {
-  catIds: [2, 3],
+  user_id: 1,
   withProducts: true,
 };
 

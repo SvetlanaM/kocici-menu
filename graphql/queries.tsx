@@ -6,9 +6,9 @@ import { TipDetailFieldsFragment } from '../components/tip-detail';
 import { StatFieldsFragment } from '../components/statistic-box';
 
 export const CATS_QUERY = gql`
-  query GetCats($catIds: [Int!], $withProducts: Boolean!) {
+  query GetCats($user_id: Int, $withProducts: Boolean!) {
     cats: Cat(
-      where: { _and: { is_active: { _eq: true }, id: { _in: $catIds } } }
+      where: { _and: { is_active: { _eq: true }, user_id: { _eq: $user_id } } }
       order_by: { name: asc }
     ) {
       ...CatFieldsFragment
@@ -28,10 +28,10 @@ export const CATS_QUERY = gql`
 `;
 
 export const DASHBOARD_QUERY = gql`
-  query GetDashboard($limitProducts: Int, $limitTips: Int, $catIds: [Int!]) {
+  query GetDashboard($limitProducts: Int, $limitTips: Int, $user_id: Int) {
     reviews: Review(
       order_by: { product_id: desc, review_type: desc, updated_at: desc }
-      where: { cat_id: { _in: $catIds } }
+      where: { Cat: { user_id: { _eq: $user_id } } }
       distinct_on: product_id
       limit: $limitProducts
     ) {
