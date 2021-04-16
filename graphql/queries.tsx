@@ -12,16 +12,6 @@ export const CATS_QUERY = gql`
       order_by: { name: asc }
     ) {
       ...CatFieldsFragment
-      reviews: Reviews(
-        order_by: { review_type: desc, updated_at: desc }
-        limit: 2
-      ) @include(if: $withProducts) {
-        products: Product {
-          brand_type
-          name
-          image_url
-        }
-      }
     }
   }
   ${CatFieldsFragment}

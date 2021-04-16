@@ -5,6 +5,7 @@ import Title from './title';
 
 const CatToggleDetail = ({ catData }) => {
   const { reviews, doctor_email, specials } = catData;
+  console.log(reviews);
   return (
     <div className="flex flex-col grid grid-rows divide-y divide-gray_lightest pt-3.6 font-light">
       <div></div>
