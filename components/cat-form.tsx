@@ -24,7 +24,7 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<CatInputData>();
 
   const onSubmit = useCallback(
@@ -50,15 +50,17 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
     [handleSubmit1]
   );
 
-  const catTypeOptions = Object.values(catTypes)
-    .sort()
-    .map((item) => {
-      return (
-        <option value={item} key={item}>
-          {t(item || 'CAT_TYPE_NULL')}
-        </option>
-      );
-    });
+  const catTypeOptions = useMemo(() => {
+    return Object.values(catTypes)
+      .sort()
+      .map((item) => {
+        return (
+          <option value={item} key={item}>
+            {t(item || 'CAT_TYPE_NULL')}
+          </option>
+        );
+      });
+  }, [catTypes]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
@@ -81,7 +83,9 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
               placeholder="Meno macky do 100 znakov"
               errors={errors.name}
             />
-            {errors.name && <FormErrorMessage error={errors.name?.message} />}
+            {errors.name && isDirty && (
+              <FormErrorMessage error={errors.name?.message} />
+            )}
           </FormInputWrapper>
           <FormInputWrapper>
             <FormInputLabel name="Prezyvka macky" />
