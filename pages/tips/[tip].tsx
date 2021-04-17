@@ -8,6 +8,8 @@ import ErrorScreen from '../../components/error-screen';
 import Loading from '../../components/loading';
 import { GeneralError } from '../../components/error-screen';
 import Center from '../../components/center-container';
+import Header from '../../components/head';
+import getTitle from '../../utils/get-title';
 
 const TipDetailQuery = () => {
   const router = useRouter();
@@ -29,6 +31,7 @@ const TipDetailQuery = () => {
         {TipError && (
           <ErrorScreen error={GeneralError.fromApolloError(TipError)} />
         )}
+        <Header title={getTitle(TipData?.tip?.name) || '...'} />
         <TipDetailBox
           name={TipData?.tip?.name}
           updated_at={TipData?.tip?.updated_at}
