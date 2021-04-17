@@ -5,6 +5,7 @@ import { ReviewFieldsFragmentFragment } from '../graphql/generated/graphql';
 import ProductImage from './product-image';
 import ProductName from './product-name';
 import DateFormatObject from '../utils/get-format-date';
+import ReactTooltip from 'react-tooltip';
 
 export const ReviewFieldsFragment = gql`
   fragment ReviewFieldsFragment on Review {
@@ -67,7 +68,19 @@ const TableRow = ({
       <td className="pr-3.6">
         <div className="flex justify-end">
           <div className="mr-3">
-            <Image src="/icons/related_products.svg" width={35} height={35} />
+            <a data-tip data-for="relatedProducts">
+              <Image src="/icons/related_products.svg" width={35} height={35} />
+            </a>
+            <ReactTooltip
+              id="relatedProducts"
+              place="bottom"
+              textColor="white"
+              backgroundColor="#3E3E70"
+              effect="solid"
+              data-offset="{'top': 30}"
+            >
+              {'Suvisiace produkty'}
+            </ReactTooltip>
           </div>
           <div>
             <Image
