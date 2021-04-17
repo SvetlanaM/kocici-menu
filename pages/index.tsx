@@ -12,6 +12,8 @@ import {
   useGetCatsQuery,
   GetDashboardQueryVariables,
   GetCatsQueryVariables,
+  GetCatsQuery,
+  GetDashboardQuery,
 } from '../graphql/generated/graphql';
 import Header from '../components/head';
 import CenterContainer from '../components/center-container';
@@ -65,7 +67,7 @@ const CenterContainerQuery = () => {
       )}
       {dashboardData && (
         <>
-          <TopFiveTable data={dashboardData.reviews} />
+          <TopFiveTable data={dashboardData?.reviews} />
           <StatisticsList data={extendedData} cols={'grid-cols-2'} />
           <TipsList data={dashboardData.tips} cols={'grid-cols-2'} />
         </>

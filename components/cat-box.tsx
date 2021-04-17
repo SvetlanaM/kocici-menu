@@ -14,6 +14,9 @@ export const CatFieldsFragment = gql`
     name
     type
     doctor_email
+    specials: SpecialRequirements {
+      name
+    }
     reviews: Reviews(
       order_by: { review_type: desc, updated_at: desc }
       limit: 2
@@ -47,10 +50,11 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
 
   catProducts = Object.values(reviews!).map((review) => review.products);
 
+  console.log();
   const catData = {
     reviews: catProducts,
     doctor_email: CatFieldsFragment.doctor_email,
-    specials: [],
+    specials: CatFieldsFragment.specials,
   };
 
   return (

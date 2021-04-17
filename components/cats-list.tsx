@@ -1,6 +1,5 @@
 import { GetCatsQuery } from '../graphql/generated/graphql';
 import CatBox from './cat-box';
-import { gql } from '@apollo/client';
 
 interface CatSectionProps {
   cats: GetCatsQuery['cats'];

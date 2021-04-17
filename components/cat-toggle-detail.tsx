@@ -3,9 +3,8 @@ import SpecialRequirements from './special-requirements';
 import DoctorExportButton from './doctor-export-button';
 import Title from './title';
 
-const CatToggleDetail = ({ catData }) => {
+const CatToggleDetail = ({ catData }: any) => {
   const { reviews, doctor_email, specials } = catData;
-  console.log(reviews);
   return (
     <div className="flex flex-col grid grid-rows divide-y divide-gray_lightest pt-3.6 font-light">
       <div></div>
@@ -19,7 +18,13 @@ const CatToggleDetail = ({ catData }) => {
       )}
       <div className="px-3 py-3.6">
         <Title title="Špeciálne požiadavky" fontSize="text-sm" />
-        <SpecialRequirements />
+        <div className="flex">
+          <ul>
+            {specials.map((item) => (
+              <SpecialRequirements name={item.name} key={item.name} />
+            ))}
+          </ul>
+        </div>
       </div>
       {doctor_email && (
         <div className="pt-3.6 px-3">

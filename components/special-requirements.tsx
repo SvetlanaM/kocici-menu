@@ -1,13 +1,5 @@
-import Title from './title';
-
-const SpecialRequirements = () => {
-  return (
-    <div className="flex">
-      <ul>
-        <li>- dieta</li>
-      </ul>
-    </div>
-  );
+const SpecialRequirements = ({ name }) => {
+  return <li>- {name}</li>;
 };
 
 export default SpecialRequirements;
