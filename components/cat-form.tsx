@@ -100,11 +100,11 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
             <FormInputLabel name="Vek macky" />
             <FormInput
               registerRules={{
-                ...register('age', { min: 1, max: 30, required: false }),
+                ...register('age', { min: 0.5, max: 30, required: false }),
               }}
               type="number"
               errors={errors.age}
-              placeholder="Vek od 0,5 do roka rokov"
+              placeholder="Vek od 0,5 do 30 rokov"
             />
             {errors.age && <FormErrorMessage error="Vek od 0,5 do 30 rokov" />}
           </FormInputWrapper>
