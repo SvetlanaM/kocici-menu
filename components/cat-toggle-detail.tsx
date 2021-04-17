@@ -16,16 +16,18 @@ const CatToggleDetail = ({ catData }: any) => {
           ))}
         </div>
       )}
-      <div className="px-3 py-3.6">
-        <Title title="Špeciálne požiadavky" fontSize="text-sm" />
-        <div className="flex">
-          <ul>
-            {specials.map((item) => (
-              <SpecialRequirements name={item.name} key={item.name} />
-            ))}
-          </ul>
+      {specials && (
+        <div className="px-3 py-3.6">
+          <Title title="Špeciálne požiadavky" fontSize="text-sm" />
+          <div className="flex">
+            <ul>
+              {specials.map((item) => (
+                <SpecialRequirements name={item.name} key={item.name} />
+              ))}
+            </ul>
+          </div>
         </div>
-      </div>
+      )}
       {doctor_email && (
         <div className="pt-3.6 px-3">
           <DoctorExportButton email={doctor_email} />

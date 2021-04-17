@@ -50,11 +50,27 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
 
   catProducts = Object.values(reviews!).map((review) => review.products);
 
-  console.log();
+  const updatedSpecials =
+    CatFieldsFragment.specials.length > 3
+      ? [
+          ...CatFieldsFragment.specials.slice(0, 3),
+          {
+            name: `... ${t('next_count.key', {
+              count: CatFieldsFragment.specials.length - 3,
+            })} ${CatFieldsFragment.specials.length - 3} ${t(
+              'requirements_count.key',
+              {
+                count: CatFieldsFragment.specials.length - 3,
+              }
+            )}`,
+          },
+        ]
+      : CatFieldsFragment.specials;
+
   const catData = {
     reviews: catProducts,
     doctor_email: CatFieldsFragment.doctor_email,
-    specials: CatFieldsFragment.specials,
+    specials: updatedSpecials,
   };
 
   return (

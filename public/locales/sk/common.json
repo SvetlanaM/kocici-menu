@@ -6,5 +6,13 @@
     },
     "DOMACA_TYPE": "domáca",
     "SIAMSKA_TYPE": "siamská",
-    "CAT_TYPE_NULL": "neuvedene"
+    "CAT_TYPE_NULL": "neuvedene",
+    "requirements_count": {
+        "key": "požiadavka",
+        "key_plural": "požiadavky"
+    },
+    "next_count": {
+        "key": "ďalšia",
+        "key_plural": "ďalšie"
+    }
 }
