@@ -1,13 +1,17 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import {
-  Cat_Insert_Input,
+  Cat_Insert_Input as CatInputData,
   CatTypeEnum_Enum as catTypes,
 } from '../graphql/generated/graphql';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
-//pozeram s tym toolom ani neni treba
-export type CatInputData = Omit<Cat_Insert_Input, 'id' | 'image_url'>;
+import FormErrorMessage from './form-error-message';
+import FormLegend from './form-legend';
+import FormInputWrapper from './form-input-wrapper';
+import FormInputLabel from './form-input-label';
+import FormInput from './form-input';
+import FormSelectBox from './form-select-box';
 
 interface CatFormInterface {
   handleSubmit1: { (cat: CatInputData): Promise<boolean> };
@@ -57,148 +61,107 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
     });
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-        <fieldset>
-          <legend className="pb-4 font-light text-gray">
-            Základné informácie
-          </legend>
-          <div className="grid grid-cols-2 gap-10">
-            <div className="flex flex-col w-full">
-              <label className="mb-1">
-                <span className="base-medium-text font-light text-purple mb-1">
-                  Meno macky*
-                </span>
-              </label>
-              <input
-                {...register('name', { required: true, maxLength: 100 })}
-                className={`mb-3 mt-2 text-purple block border-rounded-base ${
-                  errors.name ? 'border-red-400' : 'border-gray'
-                }
-              focus:outline-none focus:bg-white focus:border-gray
-              focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray`}
-                type="text"
-              ></input>
-              <span className="block text-red-400 mb-3">
-                {errors.name && 'Meno macky je povinne'}
-              </span>
-            </div>
-            <div className="flex flex-col w-full">
-              <label className="mb-1">
-                <span className="mt-2 base-medium-text font-light text-purple mb-1">
-                  Prezyvka macky
-                </span>
-              </label>
-              <input
-                {...register('nickname', { required: false })}
-                className="mb-3 mt-2 text-purple block border-rounded-base border-gray 
-              focus:outline-none focus:bg-white focus:border-gray
-              focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray"
-                type="text"
-              ></input>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-10">
-            <div className="flex flex-col w-full">
-              <label className="mb-1">
-                <span className="mt-2 base-medium-text font-light text-purple mb-1">
-                  Vek macky
-                </span>
-              </label>
-              <input
-                {...register('age', { min: 1, max: 30, required: false })}
-                placeholder="od 1 do 30 rokov"
-                className="w-full mb-3 mt-2 text-purple block border-rounded-base border-gray 
-              focus:outline-none focus:bg-white focus:border-gray
-              focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray"
-                type="number"
-              ></input>
-              {errors.age && 'Vek od 1 do 30 rokov'}
-            </div>
-            <div className="flex flex-col w-full">
-              <label className="mb-1">
-                <span className="mt-2 base-medium-text font-light text-purple mb-1">
-                  Váha mačky
-                </span>
-              </label>
-              <input
-                {...register('weight', { required: false })}
-                className="w-full mb-3 mt-2 text-purple block border-rounded-base border-gray 
-              focus:outline-none focus:bg-white focus:border-gray
-              focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray"
-                type="number"
-              ></input>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-10 mt-3">
-            <div className="flex flex-col w-full">
-              <label className="mb-1">
-                <span className="mt-2 base-medium-text font-light text-purple mb-1">
-                  Email veterinara
-                </span>
-              </label>
-              <input
-                {...register('doctor_email', { required: false })}
-                placeholder="email@email.cz"
-                type="email"
-                className="w-full mb-3 mt-2 text-purple block border-rounded-base border-gray 
-              focus:outline-none focus:bg-white focus:border-gray
-              focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray"
-              ></input>
-              {errors.doctor_email && 'Email v zlom formate'}
-            </div>
-            <div className="flex flex-col w-full">
-              <label className="mb-1">
-                <span className="mt-2 base-medium-text font-light text-purple mb-1">
-                  Typ macky
-                </span>
-              </label>
-              <select
-                {...register('type', { required: false })}
-                className="w-full mb-3 mt-2 text-purple block border-rounded-base border-gray 
-              focus:outline-none focus:bg-white focus:border-gray
-              focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray"
-              >
-                {catTypeOptions}
-              </select>
-            </div>
-          </div>
-        </fieldset>
-        {/* <fieldset>
-          <legend className="pb-4 font-light text-gray">
-            Specialne poziadavky
-          </legend>
+    <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+      <fieldset>
+        <FormLegend name="Zakladne informacie" />
+        <div className="grid grid-cols-2 gap-10">
+          <FormInputWrapper>
+            <FormInputLabel name="Meno macky*" />
+            <FormInput
+              registerRules={{
+                ...register('name', {
+                  required: { value: true, message: 'Meno macky je povinne' },
+                  maxLength: {
+                    value: 100,
+                    message: 'Meno macky je max do 100 znakov',
+                  },
+                }),
+              }}
+              type="text"
+              placeholder="Meno macky do 100 znakov"
+              errors={errors.name}
+            />
+            {errors.name && <FormErrorMessage error={errors.name?.message} />}
+          </FormInputWrapper>
+          <FormInputWrapper>
+            <FormInputLabel name="Prezyvka macky" />
+            <FormInput
+              registerRules={{ ...register('nickname', { required: false }) }}
+              type="text"
+            />
+          </FormInputWrapper>
+        </div>
+        <div className="grid grid-cols-2 gap-10">
+          <FormInputWrapper>
+            <FormInputLabel name="Vek macky" />
+            <FormInput
+              registerRules={{
+                ...register('age', { min: 1, max: 30, required: false }),
+              }}
+              type="number"
+              errors={errors.age}
+              placeholder="Vek od 0,5 do roka rokov"
+            />
+            {errors.age && <FormErrorMessage error="Vek od 0,5 do 30 rokov" />}
+          </FormInputWrapper>
+          <FormInputWrapper>
+            <FormInputLabel name="Vaha macky" />
+            <FormInput
+              registerRules={{ ...register('weight', { required: false }) }}
+              type="number"
+              placeholder="1,5 kg"
+            />
+          </FormInputWrapper>
+        </div>
+        <div className="grid grid-cols-2 gap-10 mt-3">
+          <FormInputWrapper>
+            <FormInputLabel name="Email veterinara" />
+            <FormInput
+              registerRules={{
+                ...register('doctor_email', { required: false }),
+              }}
+              type="email"
+              placeholder="email@email.sk"
+            />
+          </FormInputWrapper>
+          <FormInputWrapper>
+            <FormInputLabel name="Typ macky" />
+            <FormSelectBox
+              registerRules={{ ...register('type', { required: false }) }}
+            >
+              {catTypeOptions}
+            </FormSelectBox>
+          </FormInputWrapper>
+        </div>
+      </fieldset>
+      {/* <fieldset>
+          <FormLegend name="Specialne poziadavky" />
         </fieldset>
         <fieldset>
-          <legend className="pb-4 font-light text-gray">Oblubene jedla</legend>
+          <FormLegend name="Oblubene jedla" />
         </fieldset> */}
-        <fieldset>
-          <div className="flex flex-col w-full mt-2">
-            <label className="mb-1">
-              <span className="mt-3 base-medium-text font-light text-purple mb-1">
-                Poznamka
-              </span>
-            </label>
-            <textarea
-              {...register('note', { required: false })}
-              placeholder="Dodatocne poznamky"
-              className="w-full mb-3 mt-2 text-purple block border-rounded-base border-gray 
+      <fieldset>
+        <div className="flex flex-col w-full mt-2">
+          <FormInputLabel name="Poznamka" />
+          <textarea
+            {...register('note', { required: false })}
+            placeholder="Dodatocne poznamky"
+            className="w-full mb-3 mt-2 text-purple block border-rounded-base border-gray 
               focus:outline-none focus:bg-white focus:border-gray
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray"
-            ></textarea>
-          </div>
-        </fieldset>
-        <button
-          onClick={() => router.back()}
-          className="text-purple font-medium float-left mt-5"
-        >
-          {'< Speť'}
-        </button>
-        <button className="float-right mb-5 py-1.5 w-1/4 mt-5 border-rounded-base font-medium text-center text-white bg-purple">
-          {submitText}
-        </button>
-      </form>
-    </>
+          ></textarea>
+        </div>
+      </fieldset>
+      <button
+        onClick={() => router.back()}
+        className="text-purple font-medium float-left mt-5"
+      >
+        {'< Speť'}
+      </button>
+      <button className="text-white bg-purple-darkest float-right mb-5 py-1.5 w-1/4 mt-5 border-rounded-base font-medium text-center">
+        {submitText}
+      </button>
+    </form>
   );
 };
 
