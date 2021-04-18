@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
 import { gql } from '@apollo/client';
 import { ReviewFieldsFragmentFragment } from '../graphql/generated/graphql';
 import ProductImage from './product-image';
 import ProductName from './product-name';
 import DateFormatObject from '../utils/get-format-date';
 import ReactTooltip from 'react-tooltip';
+import StarIcon from './star-icon';
 
 export const ReviewFieldsFragment = gql`
   fragment ReviewFieldsFragment on Review {
@@ -29,12 +29,8 @@ const TableRow = ({
   updated_at,
   review_type,
 }: ReviewFieldsFragmentFragment) => {
-  const [actualReview, setReview] = useState<number>(Number(review_type));
-  const addMore = () => setReview((prev) => prev + 1);
-  const addLess = () => setReview((prev) => prev - 1);
-  const onLastValue = actualReview === 10;
-  const onFirstValue = actualReview === 1;
   const formattedDate = DateFormatObject(updated_at).formatWithReplace();
+  const reviewArray = [1, 2, 3, 4, 5];
   return (
     <tr>
       <td className="pl-3.6 py-4">
@@ -56,14 +52,16 @@ const TableRow = ({
         na kg
       </td>
       <td className="text-center">
-        <button onClick={addMore} disabled={onLastValue}>
-          Up
-        </button>
-        {actualReview}
-        <button onClick={addLess} disabled={onFirstValue}>
-          Down
-        </button>
-        <br />z 10
+        <div className="flex flex-row justify-items-center justify-center">
+          {reviewArray.map((review, key) => (
+            <span className="mr-1">
+              <StarIcon
+                key={key}
+                isChecked={review <= Number(review_type) ? true : false}
+              />
+            </span>
+          ))}
+        </div>
       </td>
       <td className="pr-3.6">
         <div className="flex justify-end">
