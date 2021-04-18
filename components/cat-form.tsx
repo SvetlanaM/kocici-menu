@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   Cat_Insert_Input as CatInputData,
   CatTypeEnum_Enum as catTypes,
@@ -64,6 +64,11 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
         );
       });
   }, [catTypes]);
+
+  const returnHandler = (e: React.ChangeEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    router.back();
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
@@ -158,7 +163,8 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
         </div>
       </fieldset>
       <button
-        onClick={() => router.back()}
+        type="button"
+        onClick={returnHandler}
         className="text-purple font-medium float-left mt-5"
       >
         {'< Speť'}
