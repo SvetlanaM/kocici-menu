@@ -23,6 +23,7 @@ import getTitle from '../utils/get-title';
 import { PRODUCT_LIMIT, TIP_LIMIT } from '../utils/constants';
 import { GeneralError } from '../components/error-screen';
 import setUppercaseTitle from '../utils/set-uppercase-title';
+import { useEffect } from 'react';
 //tu budu akoze ziskane macky uzivatela
 const getDahsboardVariables: GetDashboardQueryVariables = {
   limitProducts: PRODUCT_LIMIT,

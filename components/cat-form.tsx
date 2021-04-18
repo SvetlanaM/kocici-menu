@@ -12,7 +12,6 @@ import FormInputWrapper from './form-input-wrapper';
 import FormInputLabel from './form-input-label';
 import FormInput from './form-input';
 import FormSelectBox from './form-select-box';
-import ErrorScreen, { GeneralError } from './error-screen';
 
 interface CatFormInterface {
   handleSubmit1: { (cat: CatInputData): Promise<boolean> };
@@ -65,7 +64,7 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
       });
   }, [catTypes]);
 
-  const returnHandler = (e: React.ChangeEvent<HTMLButtonElement>) => {
+  const returnHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     router.back();
   };

@@ -26,8 +26,8 @@ const Sidebar = () => {
           ))}
         </nav>
       </div>
-      <div className="mb-5 py-1.5 border-rounded-base border-purple font-medium text-center text-purple-light">
-        <Link href={SVETA_EMAIL}>
+      <div className="mb-5 py-1.5 border-rounded-base border-purple font-medium text-center text-purple-light transition duration-500 ease-in hover:bg-purple-light hover:text-white">
+        <Link href={`mailto:${SVETA_EMAIL}`}>
           <a>Napíšte mi</a>
         </Link>
       </div>
