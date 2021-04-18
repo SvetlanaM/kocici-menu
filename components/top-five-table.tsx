@@ -39,8 +39,9 @@ const TopFiveTable = ({ data }: TopFiveTableProps) => {
       <table className="table-auto border-rounded-base border-gray small-purple-text text-left">
         <TableHead sortedFunction={sortData} className={getClassName} />
         <tbody className="font-light">
-          {inputData &&
-            inputData.map((row) => <TableRow {...row} key={row.id} />)}
+          {inputData
+            ? inputData.map((row) => <TableRow {...row} key={row.id} />)
+            : 'Ziadne produkty'}
         </tbody>
         <TableFooter />
       </table>
