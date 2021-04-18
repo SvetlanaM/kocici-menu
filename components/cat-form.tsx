@@ -13,6 +13,7 @@ import FormInputLabel from './form-input-label';
 import FormInput from './form-input';
 import FormSelectBox from './form-select-box';
 import BackButton from '../components/back-button';
+import SubmitButton from '../components/submit-button';
 
 export type CatInputData = Omit<Cat_Insert_Input, 'CatTypeEnum'>;
 interface CatFormInterface {
@@ -159,9 +160,7 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
         </div>
       </fieldset>
       <BackButton url={'/'} />
-      <button className="text-white bg-purple-darkest float-right mb-5 py-1.5 w-1/4 mt-5 border-rounded-base font-medium text-center">
-        {submitText}
-      </button>
+      <SubmitButton text={submitText} />
     </form>
   );
 };

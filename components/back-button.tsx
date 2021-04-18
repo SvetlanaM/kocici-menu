@@ -1,4 +1,3 @@
-import router from 'next/router';
 import Link from 'next/link';
 
 interface Props {
