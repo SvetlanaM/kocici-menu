@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import {
-  Cat_Insert_Input as CatInputData,
+  Cat_Insert_Input,
   CatTypeEnum_Enum as catTypes,
 } from '../graphql/generated/graphql';
 import { useForm } from 'react-hook-form';
@@ -13,6 +13,7 @@ import FormInputLabel from './form-input-label';
 import FormInput from './form-input';
 import FormSelectBox from './form-select-box';
 
+export type CatInputData = Omit<Cat_Insert_Input, 'CatTypeEnum'>;
 interface CatFormInterface {
   handleSubmit1: { (cat: CatInputData): Promise<boolean> };
   submitText: string;
@@ -25,7 +26,7 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CatInputData>();
+  } = useForm();
 
   const onSubmit = useCallback(
     (data) => {
