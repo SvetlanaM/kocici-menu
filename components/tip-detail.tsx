@@ -4,7 +4,7 @@ import { TipDetailFragmentFragment } from '../graphql/generated/graphql';
 import { TipFieldsFragment } from '../components/tip-box';
 import router from 'next/router';
 import DateFormatObject from '../utils/get-format-date';
-
+import BackButton from '../components/back-button';
 export const TipDetailFieldsFragment = gql`
   fragment TipDetailFragment on Tip {
     ...TipFieldsFragment
@@ -33,9 +33,7 @@ const TipDetailBox = ({
           __html: description,
         }}
       ></div>
-      <button onClick={() => router.back()} className="text-purple font-medium">
-        {'< Speť'}
-      </button>
+      <BackButton url={'/'} />
     </div>
   );
 };

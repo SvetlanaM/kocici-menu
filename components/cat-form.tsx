@@ -12,6 +12,7 @@ import FormInputWrapper from './form-input-wrapper';
 import FormInputLabel from './form-input-label';
 import FormInput from './form-input';
 import FormSelectBox from './form-select-box';
+import BackButton from '../components/back-button';
 
 export type CatInputData = Omit<Cat_Insert_Input, 'CatTypeEnum'>;
 interface CatFormInterface {
@@ -64,11 +65,6 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
         );
       });
   }, [catTypes]);
-
-  const returnHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    router.back();
-  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
@@ -162,13 +158,7 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
           ></textarea>
         </div>
       </fieldset>
-      <button
-        type="button"
-        onClick={returnHandler}
-        className="text-purple font-medium float-left mt-5"
-      >
-        {'< Speť'}
-      </button>
+      <BackButton url={'/'} />
       <button className="text-white bg-purple-darkest float-right mb-5 py-1.5 w-1/4 mt-5 border-rounded-base font-medium text-center">
         {submitText}
       </button>
