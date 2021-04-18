@@ -24,7 +24,7 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty },
+    formState: { errors },
   } = useForm<CatInputData>();
 
   const onSubmit = useCallback(
@@ -83,9 +83,7 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
               placeholder="Meno macky do 100 znakov"
               errors={errors.name}
             />
-            {errors.name && isDirty && (
-              <FormErrorMessage error={errors.name?.message} />
-            )}
+            {errors.name && <FormErrorMessage error={errors.name?.message} />}
           </FormInputWrapper>
           <FormInputWrapper>
             <FormInputLabel name="Prezyvka macky" />

@@ -83,6 +83,7 @@ const DashboardCatQuery = () => {
     data: CatsData,
   } = useGetCatsQuery({
     variables: getCatVariables,
+    fetchPolicy: 'no-cache',
   });
 
   if (CatsLoading || CatsError) return <div>...</div>;

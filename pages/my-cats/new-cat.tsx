@@ -15,10 +15,9 @@ import Header from '../../components/head';
 import getTitle from '../../utils/get-title';
 import Title from '../../components/title';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useRouter } from 'next/router';
 
 export default function CreateCat() {
-  const [createCat, { error }] = useMutation<
+  const [createCat, { error, loading, data }] = useMutation<
     AddCatMutation,
     AddCatMutationVariables
   >(ADD_CAT);
@@ -37,6 +36,10 @@ export default function CreateCat() {
           note: catData.note ?? null,
         },
       };
+
+      if (loading) {
+        return <div>...</div>;
+      }
 
       try {
         const result = await createCat({ variables });

@@ -8,7 +8,7 @@ const CatToggleDetail = ({ catData }: any) => {
   return (
     <div className="flex flex-col grid grid-rows divide-y divide-gray_lightest pt-3.6 font-light">
       <div></div>
-      {reviews && (
+      {reviews && reviews.length > 0 && (
         <div className="px-3 pt-3.6">
           <Title title="Obľúbené produkty" fontSize="text-sm" />
           {reviews.map((item) => (
@@ -16,7 +16,7 @@ const CatToggleDetail = ({ catData }: any) => {
           ))}
         </div>
       )}
-      {specials && (
+      {specials && specials.length > 0 && (
         <div className="px-3 py-3.6">
           <Title title="Špeciálne požiadavky" fontSize="text-sm" />
           <div className="flex">

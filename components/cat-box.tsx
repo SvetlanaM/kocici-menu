@@ -94,33 +94,35 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
               : '--'}
           </p>
         </div>
-        {catData && (
-          <button
-            type="button"
-            onClick={toggleSlider}
-            aria-haspopup
-            aria-expanded={isOpen}
-            id={CatFieldsFragment.name}
-            className="focus:outline-none ml-auto"
-          >
-            {isOpen ? (
-              <Image
-                src="/icons/down.svg"
-                height={8}
-                width={15}
-                quality={100}
-                className="transform rotate-180"
-              />
-            ) : (
-              <Image
-                src="/icons/down.svg"
-                height={8}
-                width={15}
-                quality={100}
-              />
-            )}
-          </button>
-        )}
+        {catData.doctor_email !== '' &&
+          catData.reviews.length > 0 &&
+          catData.specials.length > 0 && (
+            <button
+              type="button"
+              onClick={toggleSlider}
+              aria-haspopup
+              aria-expanded={isOpen}
+              id={CatFieldsFragment.name}
+              className="focus:outline-none ml-auto"
+            >
+              {isOpen ? (
+                <Image
+                  src="/icons/down.svg"
+                  height={8}
+                  width={15}
+                  quality={100}
+                  className="transform rotate-180"
+                />
+              ) : (
+                <Image
+                  src="/icons/down.svg"
+                  height={8}
+                  width={15}
+                  quality={100}
+                />
+              )}
+            </button>
+          )}
       </div>
       {isOpen ? (
         <div aria-labelledby={CatFieldsFragment.name}>
