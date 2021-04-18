@@ -1,9 +1,8 @@
 import { gql } from '@apollo/client';
 import Image from 'next/image';
-import {
-  GetDashboardQuery,
-  StatFieldsFragmentFragment,
-} from '../graphql/generated/graphql';
+import { StatFieldsFragmentFragment } from '../graphql/generated/graphql';
+import getEshopUrl from '../utils/get-eshop-url';
+import Link from 'next/link';
 
 export const StatFieldsFragment = gql`
   fragment StatFieldsFragment on brand_fav_type {
@@ -25,7 +24,15 @@ const StatisticBox = ({ icon, title, name }: ExtendType) => {
       </div>
       <div className="flex-col-base justify-center ml-6 leading-tight">
         <h4 className="mb-1.2 font-semibold text-gray">{title}</h4>
-        <p className="small-purple-text">{name}</p>
+        <p className="small-purple-text">
+          <a
+            target="_blank"
+            href={getEshopUrl(String(name))}
+            rel="noopener noreferrer"
+          >
+            {name}
+          </a>
+        </p>
       </div>
     </div>
   );
