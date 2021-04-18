@@ -1,5 +1,6 @@
 import ProductImage from './product-image';
 import ProductName from './product-name';
+import setUppercaseTitle from '../utils/set-uppercase-title';
 
 const FavouriteProducts = ({ product }) => {
   return (
@@ -10,7 +11,10 @@ const FavouriteProducts = ({ product }) => {
         className="ml-3"
       />
       <div className="ml-3.6">
-        <ProductName brand={product.brand_type} name={product.name} />
+        <ProductName
+          brand={setUppercaseTitle(product.brand_type)}
+          name={setUppercaseTitle(product.name)}
+        />
       </div>
     </div>
   );

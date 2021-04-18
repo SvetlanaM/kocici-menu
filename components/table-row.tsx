@@ -6,6 +6,7 @@ import ProductName from './product-name';
 import DateFormatObject from '../utils/get-format-date';
 import ReactTooltip from 'react-tooltip';
 import StarIcon from './star-icon';
+import setUppercaseTitle from '../utils/set-uppercase-title';
 
 export const ReviewFieldsFragment = gql`
   fragment ReviewFieldsFragment on Review {
@@ -40,7 +41,10 @@ const TableRow = ({
         />
       </td>
       <td>
-        <ProductName brand={product.brand_type} name={product.name} />
+        <ProductName
+          brand={setUppercaseTitle(product.brand_type)}
+          name={setUppercaseTitle(product.name)}
+        />
       </td>
       <td>
         Pred <br />

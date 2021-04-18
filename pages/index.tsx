@@ -22,7 +22,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import getTitle from '../utils/get-title';
 import { PRODUCT_LIMIT, TIP_LIMIT } from '../utils/constants';
 import { GeneralError } from '../components/error-screen';
-
+import setUppercaseTitle from '../utils/set-uppercase-title';
 //tu budu akoze ziskane macky uzivatela
 const getDahsboardVariables: GetDashboardQueryVariables = {
   limitProducts: PRODUCT_LIMIT,
@@ -51,7 +51,8 @@ const CenterContainerQuery = () => {
       title: 'Priemerná mesačná spotreba',
     },
     {
-      name: String(dashboardData?.stats[0].brand_type) || '--',
+      name:
+        setUppercaseTitle(String(dashboardData?.stats[0].brand_type)) || '--',
       icon: '/icons/fav_brand.svg',
       title: 'Moja najpopulárnejšia značka',
     },

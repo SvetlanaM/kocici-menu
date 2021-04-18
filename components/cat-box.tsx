@@ -5,6 +5,7 @@ import { CatFieldsFragmentFragment } from '../graphql/generated/graphql';
 import { useTranslation } from 'next-i18next';
 import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
 import CatToggleDetail from './cat-toggle-detail';
+import setUppercaseTitle from '../utils/set-uppercase-title';
 
 export const CatFieldsFragment = gql`
   fragment CatFieldsFragment on Cat {
@@ -77,7 +78,7 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
     <div className="flex flex-col flex-no-wrap justify-between h-75 py-3 border-rounded-base border-gray small-purple-text text-left my-cat">
       <div className="flex flex-row px-3">
         <Image
-          alt={CatFieldsFragment.name}
+          alt={setUppercaseTitle(CatFieldsFragment.name)}
           src={catImage}
           width={65}
           height={65}
