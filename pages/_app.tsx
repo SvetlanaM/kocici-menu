@@ -18,7 +18,6 @@ const authMiddleware = new ApolloLink((operation, forward) => {
     return {
       headers: {
         ...headers,
-        token: getToken(),
         'x-hasura-admin-secret': process.env.NEXT_PUBLIC_HASURA_PASSWORD,
       },
     };
