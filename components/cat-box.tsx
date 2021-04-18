@@ -6,6 +6,7 @@ import { useTranslation } from 'next-i18next';
 import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
 import CatToggleDetail from './cat-toggle-detail';
 import setUppercaseTitle from '../utils/set-uppercase-title';
+import { ARRAY_REQUIREMENTS_LENGTH as arrayLength } from '../utils/constants';
 
 export const CatFieldsFragment = gql`
   fragment CatFieldsFragment on Cat {
@@ -51,19 +52,17 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
 
   catProducts = Object.values(reviews!).map((review) => review.products);
 
+  const arrayDiff = CatFieldsFragment.specials.length - arrayLength;
   const updatedSpecials =
-    CatFieldsFragment.specials.length > 3
+    CatFieldsFragment.specials.length > arrayLength
       ? [
-          ...CatFieldsFragment.specials.slice(0, 3),
+          ...CatFieldsFragment.specials.slice(0, arrayLength),
           {
             name: `... ${t('next_count.key', {
-              count: CatFieldsFragment.specials.length - 3,
-            })} ${CatFieldsFragment.specials.length - 3} ${t(
-              'requirements_count.key',
-              {
-                count: CatFieldsFragment.specials.length - 3,
-              }
-            )}`,
+              count: arrayDiff,
+            })} ${arrayDiff} ${t('requirements_count.key', {
+              count: arrayDiff,
+            })}`,
           },
         ]
       : CatFieldsFragment.specials;

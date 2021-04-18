@@ -7,4 +7,5 @@ export const DEFAULT_TABLE_SORTING = 'review_type'
 export enum SortType {
     ASC = 'ascending',
     DESC = 'descending'
-  }
+}
+export const ARRAY_REQUIREMENTS_LENGTH = 3
