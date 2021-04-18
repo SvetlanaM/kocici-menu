@@ -18,6 +18,10 @@ export class GeneralError {
   static fromApolloError(error: ApolloError): GeneralError {
     return new this(error, error.networkError?.message || error.message);
   }
+
+  static fromString(message: string): GeneralError {
+    return new this(new Error(message));
+  }
 }
 
 const ErrorScreen = ({ error, defaultMessage }: ErrorScreenProps) => {

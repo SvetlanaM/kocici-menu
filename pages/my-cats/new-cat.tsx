@@ -37,16 +37,11 @@ export default function CreateCat() {
         },
       };
 
-      if (loading) {
-        return <div>...</div>;
-      }
-
       try {
         const result = await createCat({ variables });
         if (result.data?.insert_Cat?.returning) {
           return true;
         } else {
-          <p>{error?.message}</p>;
           return false;
         }
       } catch (e) {

@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import {
   Cat_Insert_Input as CatInputData,
   CatTypeEnum_Enum as catTypes,
@@ -12,6 +12,7 @@ import FormInputWrapper from './form-input-wrapper';
 import FormInputLabel from './form-input-label';
 import FormInput from './form-input';
 import FormSelectBox from './form-select-box';
+import ErrorScreen, { GeneralError } from './error-screen';
 
 interface CatFormInterface {
   handleSubmit1: { (cat: CatInputData): Promise<boolean> };
@@ -40,15 +41,14 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
         note: data.note,
       };
 
-      handleSubmit1(catInput)
-        .then((success: boolean) => {
-          if (success) {
-            console.log('jupiii');
-          }
-        })
-        .then(() => {
+      handleSubmit1(catInput).then((success: boolean) => {
+        if (success) {
+          console.log('jupiii');
           router.push('/');
-        });
+        } else {
+          alert('Data sa nepodarilo ulozit');
+        }
+      });
     },
     [handleSubmit1]
   );
