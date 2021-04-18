@@ -40,12 +40,15 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
         note: data.note,
       };
 
-      handleSubmit1(catInput).then((success: boolean) => {
-        if (success) {
-          console.log('jupiii');
+      handleSubmit1(catInput)
+        .then((success: boolean) => {
+          if (success) {
+            console.log('jupiii');
+          }
+        })
+        .then(() => {
           router.push('/');
-        }
-      });
+        });
     },
     [handleSubmit1]
   );

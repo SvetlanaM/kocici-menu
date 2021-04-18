@@ -35,7 +35,11 @@ export const DASHBOARD_QUERY = gql`
     ) {
       ...TipFieldsFragment
     }
-    stats: brand_fav_type(distinct_on: brand_type, limit: 1) {
+    stats: brand_fav_type(
+      distinct_on: brand_type
+      limit: 1
+      where: { id: { _eq: $user_id } }
+    ) {
       ...StatFieldsFragment
     }
   }
@@ -54,8 +58,12 @@ export const TIP_DETAIL_QUERY = gql`
 `;
 
 export const STATS_QUERY = gql`
-  query GetStats {
-    stats: brand_fav_type(distinct_on: brand_type, limit: 1) {
+  query GetStats($user_id: Int) {
+    stats: brand_fav_type(
+      distinct_on: brand_type
+      limit: 1
+      where: { id: { _eq: $user_id } }
+    ) {
       ...StatFieldsFragment
     }
   }
