@@ -1,4 +1,3 @@
-import { React } from '@ungap/global-this';
 import Head from 'next/head';
 
 const Header = ({ title }) => {

@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
 
 interface MenuItemProps {
   icon: string;
@@ -11,12 +12,28 @@ interface MenuItemProps {
 const activeLinkStyle = 'text-purple-light';
 
 const MenuItem = ({ icon, name, url, active }: MenuItemProps) => {
+  const hoverIcon = `/icons/${icon}-purple.svg`;
+  const basicIcon = `/icons/${icon}.svg`;
+  const [isHover, setIsHover] = useState(basicIcon);
+
+  const showHover = () => {
+    setIsHover((prevState) => {
+      if (prevState === basicIcon) {
+        return hoverIcon;
+      } else return basicIcon;
+    });
+  };
+
   return (
     <Link href={url}>
-      <a className={`flex pt-6 text-gray-100 hover:${activeLinkStyle}`}>
+      <a
+        className={`flex pt-6 text-gray-100 hover:${activeLinkStyle}`}
+        onMouseEnter={showHover}
+        onMouseLeave={showHover}
+      >
         <div className="mr-5 menu-icon">
           <Image
-            src={`/icons/${icon}`}
+            src={active ? hoverIcon : isHover}
             width={20}
             height={20}
             className="ml-5"

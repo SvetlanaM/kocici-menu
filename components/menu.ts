@@ -1,37 +1,37 @@
 export const MenuLinks = Object.freeze({
   items: [
     {
-      icon: 'dashboard.svg',
+      icon: 'dashboard',
       url: '/',
       name: 'Prehľad',
     },
     {
-      icon: 'my_cats.svg',
+      icon: 'my_cats',
       url: '',
       name: 'Moje mačky',
     },
     {
-      icon: 'products.svg',
+      icon: 'products',
       url: '/products',
       name: 'Produkty',
     },
     {
-      icon: 'tips.svg',
+      icon: 'tips',
       url: '',
       name: 'Tipy',
     },
     {
-      icon: 'fans.svg',
+      icon: 'fans',
       url: '',
       name: 'Fanúšikovia',
     },
     {
-      icon: 'settings.svg',
+      icon: 'settings',
       url: '',
       name: 'Nastavenia',
     },
     {
-      icon: 'logout.svg',
+      icon: 'logout',
       url: '',
       name: 'Odhlásiť sa',
     },
