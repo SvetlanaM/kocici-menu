@@ -28,7 +28,7 @@ const TipDetailBox = ({
     return [
       {
         path: '/',
-        name: 'Dashboard',
+        name: 'Prehľad',
       },
       {
         path: `/tips/${name}`,

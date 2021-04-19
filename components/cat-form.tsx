@@ -171,7 +171,7 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
           ></textarea>
           <span className="text-sm font-light text-gray">
             {watchedNote !== undefined && watchedNote.length <= 500
-              ? `Ostava ${500 - watchedNote?.length} z 500`
+              ? `Ostava ${500 - watchedNote?.length} znakov z 500`
               : null}
           </span>
           {errors.note && <FormErrorMessage error={errors.note} />}

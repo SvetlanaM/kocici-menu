@@ -59,7 +59,7 @@ export default function CreateCat() {
     return [
       {
         path: '/',
-        name: 'Dashboard',
+        name: 'Prehľad',
       },
       {
         path: `/my-cats/new-cat`,
