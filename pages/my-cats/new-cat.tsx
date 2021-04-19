@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import CatForm from '../../components/cat-form';
 import {
   AddCatMutation,
@@ -15,6 +15,8 @@ import Header from '../../components/head';
 import getTitle from '../../utils/get-title';
 import Title from '../../components/title';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import Breadcrumbs from '../../components/breadcrumbs';
+import Breadcrumb from '../../utils/breadcrumb';
 
 export default function CreateCat() {
   const [createCat, { error, loading, data }] = useMutation<
@@ -53,6 +55,19 @@ export default function CreateCat() {
 
   const title = 'Pridať novú mačku';
 
+  const breadcrumbs: Breadcrumb[] = useMemo(() => {
+    return [
+      {
+        path: '/',
+        name: 'Dashboard',
+      },
+      {
+        path: `/my-cats/new-cat`,
+        name: title,
+      },
+    ];
+  }, [createCat]);
+
   return (
     <Layout>
       <Header title={getTitle(title)} />
@@ -60,6 +75,7 @@ export default function CreateCat() {
       <Container>
         <Center>
           <Title title={title} />
+          <Breadcrumbs breadcrumbs={breadcrumbs} />
           <CatForm handleSubmit1={handleSubmit1} submitText={title} />
         </Center>
       </Container>

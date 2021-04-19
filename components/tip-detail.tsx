@@ -2,9 +2,12 @@ import { gql } from '@apollo/client';
 import Title from './title';
 import { TipDetailFragmentFragment } from '../graphql/generated/graphql';
 import { TipFieldsFragment } from '../components/tip-box';
-import router from 'next/router';
 import DateFormatObject from '../utils/get-format-date';
 import BackButton from '../components/back-button';
+import Breadcrumbs from '../components/breadcrumbs';
+import Breadcrumb from '../utils/breadcrumb';
+import { useMemo } from 'react';
+
 export const TipDetailFieldsFragment = gql`
   fragment TipDetailFragment on Tip {
     ...TipFieldsFragment
@@ -21,9 +24,23 @@ const TipDetailBox = ({
 }: TipDetailFragmentFragment) => {
   const formattedDate = DateFormatObject(updated_at).formatDate();
 
+  const breadcrumbs: Breadcrumb[] = useMemo(() => {
+    return [
+      {
+        path: '/',
+        name: 'Dashboard',
+      },
+      {
+        path: `/tips/${name}`,
+        name: name,
+      },
+    ];
+  }, [name, description, updated_at]);
+
   return (
     <div className="text-justify">
       <Title title={name} />
+      <Breadcrumbs breadcrumbs={breadcrumbs} />
       <p className="text-sm font-light text-gray">
         Publikované: {formattedDate}
       </p>

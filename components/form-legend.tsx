@@ -1,5 +1,5 @@
 const FormLegend = ({ name }) => {
-  return <legend className="pb-4 font-light text-gray">{name}</legend>;
+  return <legend className="pb-4 font-semibold text-purple">{name}</legend>;
 };
 
 export default FormLegend;
