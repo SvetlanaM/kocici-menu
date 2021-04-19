@@ -42,7 +42,7 @@ const TableRow = ({
       </td>
       <td>
         <ProductName
-          brand={setUppercaseTitle(product.brand_type)}
+          brand={setUppercaseTitle(product.brand_type || '')}
           name={setUppercaseTitle(product.name)}
         />
       </td>

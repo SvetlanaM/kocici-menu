@@ -14,6 +14,7 @@ import FormInput from './form-input';
 import FormSelectBox from './form-select-box';
 import BackButton from '../components/back-button';
 import SubmitButton from '../components/submit-button';
+import ErrorScreen from './error-screen';
 
 export type CatInputData = Omit<Cat_Insert_Input, 'CatTypeEnum'>;
 interface CatFormInterface {
@@ -27,8 +28,12 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm();
+
+  const noteInputName = 'note';
+  const watchedNote: string | undefined = watch(noteInputName);
 
   const onSubmit = useCallback(
     (data) => {
@@ -151,12 +156,25 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
         <div className="flex flex-col w-full mt-2">
           <FormInputLabel name="Poznamka" />
           <textarea
-            {...register('note', { required: false })}
-            placeholder="Dodatocne poznamky"
+            maxLength={500}
+            {...register('note', {
+              required: false,
+              maxLength: {
+                value: 498,
+                message: 'Maximalne 500 znakov',
+              },
+            })}
+            placeholder="Dodatocne poznamky. Maximalne 500 znakov."
             className="w-full mb-3 mt-2 text-purple block border-rounded-base border-gray 
               focus:outline-none focus:bg-white focus:border-gray
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray"
           ></textarea>
+          <span className="text-sm font-light text-gray">
+            {watchedNote !== undefined && watchedNote.length <= 500
+              ? `Ostava ${500 - watchedNote?.length} z 500`
+              : null}
+          </span>
+          {errors.note && <FormErrorMessage error={errors.note} />}
         </div>
       </fieldset>
       <BackButton url={'/'} />
