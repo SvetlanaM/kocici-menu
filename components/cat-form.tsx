@@ -160,7 +160,7 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
             {...register('note', {
               required: false,
               maxLength: {
-                value: 498,
+                value: 500,
                 message: 'Maximalne 500 znakov',
               },
             })}
