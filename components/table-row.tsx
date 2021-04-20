@@ -72,7 +72,12 @@ const TableRow = ({
         <div className="flex justify-end">
           <div className="mr-3">
             <a data-tip data-for="relatedProducts">
-              <Image src="/icons/related_products.svg" width={35} height={35} />
+              <Image
+                src="/icons/related_products.svg"
+                width={35}
+                height={35}
+                priority
+              />
             </a>
             <ReactTooltip
               id="relatedProducts"
@@ -90,6 +95,7 @@ const TableRow = ({
               src="/icons/change_stars.svg"
               width={35}
               height={35}
+              priority
               className="ml-40"
             />
           </div>

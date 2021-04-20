@@ -15,6 +15,7 @@ const ProductImage = ({ src, alt, ...otherProps }: ProductImageProps) => {
       height={55}
       quality={100}
       {...otherProps}
+      priority
     />
   );
 };

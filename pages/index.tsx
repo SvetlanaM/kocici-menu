@@ -23,7 +23,7 @@ import getTitle from '../utils/get-title';
 import { PRODUCT_LIMIT, TIP_LIMIT } from '../utils/constants';
 import { GeneralError } from '../components/error-screen';
 import setUppercaseTitle from '../utils/set-uppercase-title';
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 
 //tu budu akoze ziskane macky uzivatela
 const getDashboardVariables: GetDashboardQueryVariables = {
@@ -46,7 +46,6 @@ const CenterContainerQuery = () => {
     loading: dashboardLoading,
   } = useGetDashboardQuery({
     variables: getDashboardVariables,
-    fetchPolicy: 'cache-and-network',
   });
 
   const extendedData = [
@@ -65,7 +64,7 @@ const CenterContainerQuery = () => {
 
   const handleReviewAdded = () => {
     router.push('/');
-  }
+  };
 
   return (
     <CenterContainer>
@@ -75,7 +74,12 @@ const CenterContainerQuery = () => {
       )}
       {dashboardData && (
         <>
-          <TopFiveTable reviews={dashboardData?.reviews} selectCats={dashboardData?.selectCats} selectProducts={dashboardData?.selectProducts} onReviewSaveSuccess={handleReviewAdded}/>
+          <TopFiveTable
+            reviews={dashboardData?.reviews}
+            selectCats={dashboardData?.selectCats}
+            selectProducts={dashboardData?.selectProducts}
+            onReviewSaveSuccess={handleReviewAdded}
+          />
           <StatisticsList data={extendedData} cols={'grid-cols-2'} />
           <TipsList data={dashboardData.tips} cols={'grid-cols-2'} />
         </>
