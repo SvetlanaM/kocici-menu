@@ -44,7 +44,7 @@ const TableRow = ({
       <td>
         <ProductName
           brand={setUppercaseTitle(product.brand_type || '')}
-          name={setUppercaseTitle(truncateText(product.name, 15))}
+          name={setUppercaseTitle(truncateText(product.name, 35))}
         />
       </td>
       <td>
