@@ -4,6 +4,7 @@ import { TipFieldsFragment } from '../components/tip-box';
 import { ReviewFieldsFragment } from '../components/table-row';
 import { TipDetailFieldsFragment } from '../components/tip-detail';
 import { StatFieldsFragment } from '../components/statistic-box';
+import { SelectCatFields, SelectProductFields } from "../components/add-product-review-form";
 
 export const CATS_QUERY = gql`
   query GetCats($user_id: Int, $withProducts: Boolean!) {
@@ -42,10 +43,21 @@ export const DASHBOARD_QUERY = gql`
     ) {
       ...StatFieldsFragment
     }
+    selectCats: Cat(
+      where: { _and: { is_active: { _eq: true }, user_id: { _eq: $user_id } } }
+      order_by: { name: asc }
+    ) {
+      ...SelectCatFields
+    }
+    selectProducts: Product {
+      ...SelectProductFields
+    }
   }
   ${ReviewFieldsFragment}
   ${TipFieldsFragment}
   ${StatFieldsFragment}
+  ${SelectCatFields}
+  ${SelectProductFields}
 `;
 
 export const TIP_DETAIL_QUERY = gql`

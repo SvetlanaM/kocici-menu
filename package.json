@@ -13,6 +13,8 @@
         "@apollo/client": "^3.3.12",
         "@auth0/auth0-react": "^1.4.0",
         "@tailwindcss/forms": "^0.3.2",
+        "@types/react-modal": "^3.12.0",
+        "@types/react-select": "^4.0.15",
         "graphql": "^15.5.0",
         "moment": "^2.29.1",
         "next": "10.0.8",
@@ -24,6 +26,7 @@
         "react-hook-form": "^7.1.0",
         "react-i18next": "^11.8.12",
         "react-modal": "^3.13.1",
+        "react-select": "^4.3.0",
         "react-tooltip": "^4.2.17"
     },
     "devDependencies": {
