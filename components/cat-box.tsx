@@ -82,6 +82,7 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
           width={65}
           height={65}
           className="border-rounded-base"
+          priority
         />
         <div className="flex-col-base justify-between ml-3">
           <h4>{CatFieldsFragment.name}</h4>
