@@ -1,3 +1,3 @@
-export default function truncateText(text: string) {
-  return text.length > 45 ? text.substring(0, 42) + '...' : text;
+export default function truncateText(text: string, textLength:number) {
+  return text.length > textLength ? text.substring(0, textLength-3) + '...' : text;
 }

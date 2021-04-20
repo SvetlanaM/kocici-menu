@@ -7,6 +7,7 @@ import DateFormatObject from '../utils/get-format-date';
 import ReactTooltip from 'react-tooltip';
 import StarIcon from './star-icon';
 import setUppercaseTitle from '../utils/set-uppercase-title';
+import truncateText from '../utils/truncate-text';
 
 export const ReviewFieldsFragment = gql`
   fragment ReviewFieldsFragment on Review {
@@ -43,7 +44,7 @@ const TableRow = ({
       <td>
         <ProductName
           brand={setUppercaseTitle(product.brand_type || '')}
-          name={setUppercaseTitle(product.name)}
+          name={setUppercaseTitle(truncateText(product.name, 15))}
         />
       </td>
       <td>

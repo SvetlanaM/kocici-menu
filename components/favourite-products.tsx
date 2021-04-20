@@ -1,6 +1,7 @@
 import ProductImage from './product-image';
 import ProductName from './product-name';
 import setUppercaseTitle from '../utils/set-uppercase-title';
+import truncateText from '../utils/truncate-text';
 
 const FavouriteProducts = ({ product }) => {
   return (
@@ -13,7 +14,7 @@ const FavouriteProducts = ({ product }) => {
       <div className="ml-3.6">
         <ProductName
           brand={setUppercaseTitle(product.brand_type)}
-          name={setUppercaseTitle(product.name)}
+          name={setUppercaseTitle(truncateText(product.name, 20))}
         />
       </div>
     </div>

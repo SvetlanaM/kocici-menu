@@ -14,7 +14,7 @@ const TipsList = ({ data, cols }: TipProps) => {
       <div className={`grid ${cols} grid-flow-row gap-x-11`}>
         {data.map(({ id, ...item }, index) => (
           <TipBox
-            name={truncateText(`${index + 1}. ${item.name}`)}
+            name={truncateText(`${index + 1}. ${item.name}`, 45)}
             slug={item.slug}
             id={id}
             key={id}
