@@ -1,7 +1,7 @@
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import SubmitButton from './submit-button';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import {
   AddReviewMutation,
   AddReviewMutationVariables,
@@ -13,23 +13,7 @@ import {
 import Select from 'react-select';
 import NeutralButton from './neutral-button';
 import { ADD_REVIEW } from '../graphql/mutations';
-
-export const SelectProductFields = gql`
-  fragment SelectProductFields on Product {
-    id
-    name
-    brand_type
-    image_url
-  }
-`;
-
-export const SelectCatFields = gql`
-  fragment SelectCatFields on Cat {
-    id
-    name
-    image_url
-  }
-`;
+import { DASHBOARD_QUERY } from '../graphql/queries';
 
 interface AddProductReviewFormProps {
   selectCats: GetDashboardQuery['selectCats'];
@@ -53,7 +37,9 @@ const AddProductReviewForm = ({
   const [createReview, { error, loading, data }] = useMutation<
     AddReviewMutation,
     AddReviewMutationVariables
-  >(ADD_REVIEW);
+  >(ADD_REVIEW, {
+    refetchQueries: [{ query: DASHBOARD_QUERY }],
+  });
 
   const onSubmit = (data: any) => {
     const reviewInput: Review_Insert_Input = {
@@ -81,47 +67,85 @@ const AddProductReviewForm = ({
     { value: 5, label: '5 (Najlepšie)' },
   ];
 
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      padding: 10,
+      color: state.isSelected ? 'white' : '#3E3E70',
+      background: state.isSelected ? '#BDBDE7' : 'white',
+    }),
+    singleValue: (provided, state) => {
+      const opacity = state.isDisabled ? 0.5 : 1;
+      const transition = 'opacity 300ms';
+
+      return { ...provided, opacity, transition, outline };
+    },
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-      <Controller
-        name="product"
-        control={control}
-        render={({ field }) => (
-          <Select<SelectProductFieldsFragment>
-            {...field}
-            options={selectProducts.slice(0, 100)}
-            getOptionValue={(product: SelectProductFieldsFragment) =>
-              product.id.toString()
-            }
-            getOptionLabel={(product: SelectProductFieldsFragment) =>
-              product.name
-            }
+      <div
+        className={`mb-3 mt-2 text-purple block border-rounded-base
+              focus:outline-none focus:bg-white focus:border-gray
+              focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray`}
+      >
+        <Controller
+          name="product"
+          control={control}
+          render={({ field }) => (
+            <Select<SelectProductFieldsFragment>
+              {...field}
+              styles={customStyles}
+              options={selectProducts.slice(0, 100)}
+              getOptionValue={(product: SelectProductFieldsFragment) =>
+                product.id.toString()
+              }
+              getOptionLabel={(product: SelectProductFieldsFragment) =>
+                product.name
+              }
+            />
+          )}
+        />
+      </div>
+      <div className="flex justify-between">
+        <div
+          className={`mb-3 mt-2 text-purple block border-rounded-base
+              focus:outline-none focus:bg-white focus:border-gray
+              focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray w-1/2 mr-5`}
+        >
+          <Controller
+            name="cat"
+            control={control}
+            styles={customStyles}
+            render={({ field }) => (
+              <Select<SelectCatFieldsFragment>
+                {...field}
+                options={selectCats}
+                getOptionValue={(cat: SelectCatFieldsFragment) =>
+                  cat.id.toString()
+                }
+                getOptionLabel={(cat: SelectCatFieldsFragment) => cat.name}
+              />
+            )}
           />
-        )}
-      />
-
-      <Controller
-        name="cat"
-        control={control}
-        render={({ field }) => (
-          <Select<SelectCatFieldsFragment>
-            {...field}
-            options={selectCats}
-            getOptionValue={(cat: SelectCatFieldsFragment) => cat.id.toString()}
-            getOptionLabel={(cat: SelectCatFieldsFragment) => cat.name}
+        </div>
+        <div
+          className={`mb-3 mt-2 text-purple block border-rounded-base
+              focus:outline-none focus:bg-white focus:border-gray
+              focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray w-1/2`}
+        >
+          <Controller
+            name="rating"
+            control={control}
+            styles={customStyles}
+            render={({ field }) => (
+              <Select<RatingOption> {...field} options={ratingOptions} />
+            )}
           />
-        )}
-      />
+        </div>
+      </div>
 
-      <Controller
-        name="rating"
-        control={control}
-        render={({ field }) => (
-          <Select<RatingOption> {...field} options={ratingOptions} />
-        )}
-      />
-
-      <NeutralButton title="Zpět" onClick={onBackAction} />
+      <NeutralButton title="Spet" onClick={onBackAction} />
       <SubmitButton text="Uložiť" />
     </form>
   );

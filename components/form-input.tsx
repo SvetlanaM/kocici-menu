@@ -14,7 +14,7 @@ const FormInput = ({
   return (
     <input
       {...registerRules}
-      className={`mb-3 mt-2 text-purple block border-rounded-base ${
+      className={`form-input mb-3 mt-2 text-purple block border-rounded-base ${
         errors ? 'border-red-400' : 'border-gray'
       }
               focus:outline-none focus:bg-white focus:border-gray

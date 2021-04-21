@@ -85,3 +85,10 @@ button.descending svg .up {
         @apply grid-flow-col gap-11;
     }
 }
+
+.ReactModal__Content:focus,
+.css-yk16xz-control:focus,
+.css-b8ldur-Input:focus,
+input:focus {
+    outline: none;
+}

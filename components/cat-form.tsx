@@ -165,7 +165,7 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
               },
             })}
             placeholder="Dodatocne poznamky. Maximalne 500 znakov."
-            className="w-full mb-3 mt-2 text-purple block border-rounded-base border-gray 
+            className="form-textarea w-full mb-3 mt-2 text-purple block border-rounded-base border-gray 
               focus:outline-none focus:bg-white focus:border-gray
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray"
           ></textarea>

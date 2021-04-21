@@ -4,7 +4,6 @@ import { TipFieldsFragment } from '../components/tip-box';
 import { ReviewFieldsFragment } from '../components/table-row';
 import { TipDetailFieldsFragment } from '../components/tip-detail';
 import { StatFieldsFragment } from '../components/statistic-box';
-import { SelectCatFields, SelectProductFields } from "../components/add-product-review-form";
 
 export const CATS_QUERY = gql`
   query GetCats($user_id: Int, $withProducts: Boolean!) {
@@ -16,6 +15,23 @@ export const CATS_QUERY = gql`
     }
   }
   ${CatFieldsFragment}
+`;
+
+export const SelectProductFields = gql`
+  fragment SelectProductFields on Product {
+    id
+    name
+    brand_type
+    image_url
+  }
+`;
+
+export const SelectCatFields = gql`
+  fragment SelectCatFields on Cat {
+    id
+    name
+    image_url
+  }
 `;
 
 export const DASHBOARD_QUERY = gql`
