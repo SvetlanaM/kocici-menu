@@ -4,7 +4,7 @@ import { GetDashboardQuery } from '../graphql/generated/graphql';
 import TableHead from './table-head';
 import TableFooter from './table-footer';
 import useSortableData from '../hooks/useSortableData';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   DEFAULT_TABLE_SORTING as default_sort,
   SortType,
@@ -36,9 +36,9 @@ const TopFiveTable = ({
     'product'
   );
 
-  useEffect(() => {
+  useMemo(() => {
     setSortedColumn(rules);
-  }, [onReviewSaveSuccess]);
+  }, [onReviewSaveSuccess, reviews]);
 
   const getClassName = (name: string) => {
     if (!sortedColumn) {

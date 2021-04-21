@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import AddProductReviewModal from "./add-product-review-modal";
-import { useState } from "react";
-import { GetDashboardQuery } from "../graphql/generated/graphql";
+import AddProductReviewModal from './add-product-review-modal';
+import { useState } from 'react';
+import { GetDashboardQuery } from '../graphql/generated/graphql';
 
 interface TableFooterProps {
   selectCats: GetDashboardQuery['selectCats'];
@@ -9,16 +9,20 @@ interface TableFooterProps {
   onSaveSuccess: () => void;
 }
 
-const TableFooter = ({ selectCats, selectProducts, onSaveSuccess }: TableFooterProps) => {
+const TableFooter = ({
+  selectCats,
+  selectProducts,
+  onSaveSuccess,
+}: TableFooterProps) => {
   const [modalIsOpen, setIsOpen] = useState(false);
 
   const openModal = () => {
     setIsOpen(true);
-  }
+  };
 
-  const closeModal= () => {
-    setIsOpen(false)
-  }
+  const closeModal = () => {
+    setIsOpen(false);
+  };
 
   return (
     <tfoot>
@@ -27,12 +31,16 @@ const TableFooter = ({ selectCats, selectProducts, onSaveSuccess }: TableFooterP
           <Link href="/">
             <a onClick={openModal}>+ Pridať hodnotenie nového produktu</a>
           </Link>
-          <AddProductReviewModal isOpen={modalIsOpen} closeModal={closeModal} selectCats={selectCats} selectProducts={selectProducts} onSaveSuccess={onSaveSuccess}/>
+          <AddProductReviewModal
+            isOpen={modalIsOpen}
+            closeModal={closeModal}
+            selectCats={selectCats}
+            selectProducts={selectProducts}
+            onSaveSuccess={onSaveSuccess}
+          />
         </td>
         <td className="pr-3.6 text-sm font-light text-gray text-right">
-          <Link href="/">
-            <a>Zobraziť všetky</a>
-          </Link>
+          Zobraziť všetky
         </td>
       </tr>
     </tfoot>

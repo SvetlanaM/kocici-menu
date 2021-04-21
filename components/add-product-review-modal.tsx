@@ -22,7 +22,7 @@ const AddProductReviewModal = ({
       isOpen={isOpen}
       onRequestClose={closeModal}
       contentLabel="Add product review"
-      className="w-1/2 py-7 px-10 m-auto bg-white border-rounded-base mt-20"
+      className="w-1/2 py-7 px-10 m-auto bg-white border-rounded-base center-modal"
     >
       <div className="flex justify-between mb-5">
         <h2 className="font-bold text-purple leading-normal text-center">

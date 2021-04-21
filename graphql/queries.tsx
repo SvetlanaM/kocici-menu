@@ -37,9 +37,8 @@ export const SelectCatFields = gql`
 export const DASHBOARD_QUERY = gql`
   query GetDashboard($limitProducts: Int, $limitTips: Int, $user_id: Int) {
     reviews: Review(
-      order_by: { product_id: desc, review_type: desc, updated_at: desc }
+      order_by: { review_type: desc, updated_at: desc }
       where: { Cat: { user_id: { _eq: $user_id } } }
-      distinct_on: product_id
       limit: $limitProducts
     ) {
       ...ReviewFieldsFragment
