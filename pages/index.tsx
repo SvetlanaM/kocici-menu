@@ -50,6 +50,7 @@ const CenterContainerQuery = () => {
     loading: dashboardLoading,
   } = useGetDashboardQuery({
     variables: getDashboardVariables,
+    fetchPolicy: 'cache-and-network',
   });
 
   const extendedData = [

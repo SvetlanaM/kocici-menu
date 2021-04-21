@@ -13,7 +13,7 @@ import {
 import Select from 'react-select';
 import NeutralButton from './neutral-button';
 import { ADD_REVIEW } from '../graphql/mutations';
-import { DASHBOARD_QUERY } from '../graphql/queries';
+import { CATS_QUERY, DASHBOARD_QUERY } from '../graphql/queries';
 
 interface AddProductReviewFormProps {
   selectCats: GetDashboardQuery['selectCats'];
@@ -78,9 +78,14 @@ const AddProductReviewForm = ({
       const opacity = state.isDisabled ? 0.5 : 1;
       const transition = 'opacity 300ms';
 
-      return { ...provided, opacity, transition, outline };
+      return { ...provided, opacity, transition };
     },
   };
+
+  const productsCopy = [...selectProducts];
+  const randomProducts = productsCopy
+    .sort(() => Math.random() - Math.random())
+    .slice(0, 2000);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
@@ -96,7 +101,7 @@ const AddProductReviewForm = ({
             <Select<SelectProductFieldsFragment>
               {...field}
               styles={customStyles}
-              options={selectProducts.slice(0, 100)}
+              options={randomProducts}
               getOptionValue={(product: SelectProductFieldsFragment) =>
                 product.id.toString()
               }
