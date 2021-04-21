@@ -61,15 +61,14 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
   );
 
   const catTypeOptions = useMemo(() => {
-    return Object.values(catTypes)
-      .sort()
-      .map((item) => {
-        return (
-          <option value={item} key={item}>
-            {t(item || 'CAT_TYPE_NULL')}
-          </option>
-        );
-      });
+    let newEnum = ['CAT_TYPE_NULL', ...Object.values(catTypes).sort()];
+    return newEnum.map((item) => {
+      return (
+        <option value={item} key={item}>
+          {t(item || 'CAT_TYPE_NULL')}
+        </option>
+      );
+    });
   }, [catTypes]);
 
   return (
