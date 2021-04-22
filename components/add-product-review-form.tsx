@@ -121,10 +121,10 @@ const AddProductReviewForm = ({
           <Controller
             name="cat"
             control={control}
-            styles={customStyles}
             render={({ field }) => (
               <Select<SelectCatFieldsFragment>
                 {...field}
+                styles={customStyles}
                 options={selectCats}
                 getOptionValue={(cat: SelectCatFieldsFragment) =>
                   cat.id.toString()
@@ -142,9 +142,12 @@ const AddProductReviewForm = ({
           <Controller
             name="rating"
             control={control}
-            styles={customStyles}
             render={({ field }) => (
-              <Select<RatingOption> {...field} options={ratingOptions} />
+              <Select<RatingOption>
+                {...field}
+                styles={customStyles}
+                options={ratingOptions}
+              />
             )}
           />
         </div>

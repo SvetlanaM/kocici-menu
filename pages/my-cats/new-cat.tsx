@@ -17,6 +17,7 @@ import Title from '../../components/title';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Breadcrumbs from '../../components/breadcrumbs';
 import Breadcrumb from '../../utils/breadcrumb';
+import setUppercaseTitle from '../../utils/set-uppercase-title';
 
 export default function CreateCat() {
   const [createCat, { error, loading, data }] = useMutation<
@@ -28,7 +29,7 @@ export default function CreateCat() {
     async (catData: Cat_Insert_Input) => {
       const variables: AddCatMutationVariables = {
         cat: {
-          name: catData.name,
+          name: setUppercaseTitle(catData.name || ''),
           age: catData.age ?? null,
           user_id: catData.user_id,
           doctor_email: catData.doctor_email ?? null,
