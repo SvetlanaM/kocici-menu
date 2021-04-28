@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import SubmitButton from './submit-button';
 import { useMutation } from '@apollo/client';
@@ -14,6 +14,7 @@ import Select from 'react-select';
 import NeutralButton from './neutral-button';
 import { ADD_REVIEW } from '../graphql/mutations';
 import { CATS_QUERY, DASHBOARD_QUERY } from '../graphql/queries';
+import MenuItem from './menu-item';
 
 interface AddProductReviewFormProps {
   selectCats: GetDashboardQuery['selectCats'];
@@ -32,6 +33,7 @@ const AddProductReviewForm = ({
     handleSubmit,
     control,
     formState: { errors },
+    watch,
   } = useForm();
 
   const [createReview, { error, loading, data }] = useMutation<
@@ -82,10 +84,51 @@ const AddProductReviewForm = ({
     },
   };
 
+  const [searchProducts, setSearchProducts] = useState<
+    Array<SelectProductFieldsFragment>
+  >([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const [reviewType, setReviewType] = useState('');
   const productsCopy = [...selectProducts];
-  const randomProducts = productsCopy
-    .sort(() => Math.random() - Math.random())
-    .slice(0, 2000);
+
+  useEffect(() => {
+    if (searchTerm.length > 3) {
+      const results = productsCopy.filter((item) =>
+        item.name.toLowerCase().includes(searchTerm)
+      );
+      if (results.length > 1000) {
+        setSearchProducts([]);
+      } else {
+        setSearchProducts(results);
+      }
+    } else {
+      setSearchProducts([]);
+    }
+  }, [searchTerm]);
+
+  useEffect(() => {
+    handleReviewCombination(watchedCat, watchedProduct),
+      [watchedCat, watchedProduct];
+  });
+
+  const productInput = 'product';
+  const watchedProduct: string | undefined = watch(productInput);
+  const catInput = 'cat';
+  const watchedCat: string | undefined = watch(catInput);
+
+  const handleReviewCombination = (Cat, product_id) => {
+    if (Cat) {
+      setReviewType(
+        String(
+          Cat.reviews.filter((item) => item.product_id === product_id.id).pop()
+            ?.review_type || ''
+        )
+      );
+    }
+  };
+
+  console.log(reviewType);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
@@ -95,21 +138,28 @@ const AddProductReviewForm = ({
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray`}
       >
         <Controller
-          name="product"
-          control={control}
           render={({ field }) => (
             <Select<SelectProductFieldsFragment>
               {...field}
               styles={customStyles}
-              options={randomProducts}
+              options={searchProducts}
               getOptionValue={(product: SelectProductFieldsFragment) =>
                 product.id.toString()
               }
               getOptionLabel={(product: SelectProductFieldsFragment) =>
                 product.name
               }
+              rules={{ required: true }}
+              onInputChange={(e) => {
+                setSearchTerm(e);
+              }}
+              placeholder="Vyhladajte nazov produktu od 3 znakov"
+              value={watchedProduct}
             />
           )}
+          name="product"
+          control={control}
+          defaultValue={null}
         />
       </div>
       <div className="flex justify-between">
@@ -130,6 +180,8 @@ const AddProductReviewForm = ({
                   cat.id.toString()
                 }
                 getOptionLabel={(cat: SelectCatFieldsFragment) => cat.name}
+                rules={{ required: true }}
+                placeholder="Vyber macky"
               />
             )}
           />
@@ -147,8 +199,10 @@ const AddProductReviewForm = ({
                 {...field}
                 styles={customStyles}
                 options={ratingOptions}
+                inputValue={reviewType}
               />
             )}
+            defaultValue={Number(reviewType)}
           />
         </div>
       </div>

@@ -31,6 +31,10 @@ export const SelectCatFields = gql`
     id
     name
     image_url
+    reviews: Reviews {
+      product_id
+      review_type
+    }
   }
 `;
 
