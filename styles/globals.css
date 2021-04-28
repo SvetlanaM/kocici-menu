@@ -51,7 +51,7 @@ tbody tr td {
 }
 
 button:disabled {
-    display: none;
+    background-color: #B3BACC;
 }
 
 button.ascending svg .down {

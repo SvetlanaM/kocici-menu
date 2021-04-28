@@ -14,7 +14,8 @@ import Select from 'react-select';
 import NeutralButton from './neutral-button';
 import { ADD_REVIEW } from '../graphql/mutations';
 import { CATS_QUERY, DASHBOARD_QUERY } from '../graphql/queries';
-import MenuItem from './menu-item';
+
+import FormSelectBox from './form-select-box';
 
 interface AddProductReviewFormProps {
   selectCats: GetDashboardQuery['selectCats'];
@@ -34,6 +35,7 @@ const AddProductReviewForm = ({
     control,
     formState: { errors },
     watch,
+    register,
   } = useForm();
 
   const [createReview, { error, loading, data }] = useMutation<
@@ -44,6 +46,7 @@ const AddProductReviewForm = ({
   });
 
   const onSubmit = (data: any) => {
+    console.log(data);
     const reviewInput: Review_Insert_Input = {
       cat_id: Number(data.cat.id),
       product_id: Number(data.product.id),
@@ -89,8 +92,13 @@ const AddProductReviewForm = ({
   >([]);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const [reviewType, setReviewType] = useState('');
+  const [reviewType, setReviewType] = useState<string>('');
   const productsCopy = [...selectProducts];
+  const productInput = 'product';
+  const watchedProduct: SelectProductFieldsFragment = watch(productInput);
+  const catInput = 'cat';
+  const watchedCat: SelectCatFieldsFragment = watch(catInput);
+  const watchedReview: RatingOption = watch('rating');
 
   useEffect(() => {
     if (searchTerm.length > 3) {
@@ -108,27 +116,22 @@ const AddProductReviewForm = ({
   }, [searchTerm]);
 
   useEffect(() => {
-    handleReviewCombination(watchedCat, watchedProduct),
-      [watchedCat, watchedProduct];
-  });
+    handleReviewCombination(watchedCat, watchedProduct);
+  }, [watchedCat, watchedProduct, watchedReview, reviewType]);
 
-  const productInput = 'product';
-  const watchedProduct: string | undefined = watch(productInput);
-  const catInput = 'cat';
-  const watchedCat: string | undefined = watch(catInput);
-
-  const handleReviewCombination = (Cat, product_id) => {
-    if (Cat) {
+  const handleReviewCombination = (
+    cat: SelectCatFieldsFragment,
+    product: SelectProductFieldsFragment
+  ) => {
+    if (cat && product) {
       setReviewType(
         String(
-          Cat.reviews.filter((item) => item.product_id === product_id.id).pop()
+          cat.reviews.filter((item) => item.product_id === product.id).pop()
             ?.review_type || ''
         )
       );
     }
   };
-
-  console.log(reviewType);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
@@ -155,6 +158,7 @@ const AddProductReviewForm = ({
               }}
               placeholder="Vyhladajte nazov produktu od 3 znakov"
               value={watchedProduct}
+              noOptionsMessage={() => 'Ziadne dalsie vysledky'}
             />
           )}
           name="product"
@@ -182,6 +186,7 @@ const AddProductReviewForm = ({
                 getOptionLabel={(cat: SelectCatFieldsFragment) => cat.name}
                 rules={{ required: true }}
                 placeholder="Vyber macky"
+                noOptionsMessage={() => 'Ziadne dalsie vysledky'}
               />
             )}
           />
@@ -199,16 +204,24 @@ const AddProductReviewForm = ({
                 {...field}
                 styles={customStyles}
                 options={ratingOptions}
-                inputValue={reviewType}
+                noOptionsMessage={() => 'Ziadne dalsie vysledky'}
+                isDisabled={reviewType !== '' ? true : false}
+                placeholder="Vyber hodnotenia"
               />
             )}
-            defaultValue={Number(reviewType)}
           />
         </div>
       </div>
 
+      {reviewType !== '' ? (
+        <span className="flex text-red-500">
+          Pre macku {watchedCat.name} a krmivo {watchedProduct.name} uz mate
+          vybrane hodnotenie {reviewType}
+        </span>
+      ) : null}
+
       <NeutralButton title="Spet" onClick={onBackAction} />
-      <SubmitButton text="Uložiť" />
+      <SubmitButton text="Uložiť" disabled={reviewType !== ''} />
     </form>
   );
 };
