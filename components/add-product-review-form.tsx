@@ -141,9 +141,10 @@ const AddProductReviewForm = ({
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray`}
       >
         <Controller
-          render={({ field }) => (
+          render={({ field, fieldState }) => (
             <Select<SelectProductFieldsFragment>
               {...field}
+              {...fieldState}
               styles={customStyles}
               options={searchProducts}
               getOptionValue={(product: SelectProductFieldsFragment) =>
@@ -152,7 +153,6 @@ const AddProductReviewForm = ({
               getOptionLabel={(product: SelectProductFieldsFragment) =>
                 product.name
               }
-              rules={{ required: true }}
               onInputChange={(e) => {
                 setSearchTerm(e);
               }}
@@ -163,6 +163,7 @@ const AddProductReviewForm = ({
           )}
           name="product"
           control={control}
+          rules={{ required: true }}
           defaultValue={null}
         />
       </div>
@@ -175,6 +176,7 @@ const AddProductReviewForm = ({
           <Controller
             name="cat"
             control={control}
+            rules={{ required: true }}
             render={({ field }) => (
               <Select<SelectCatFieldsFragment>
                 {...field}
@@ -199,6 +201,7 @@ const AddProductReviewForm = ({
           <Controller
             name="rating"
             control={control}
+            rules={{ required: true }}
             render={({ field }) => (
               <Select<RatingOption>
                 {...field}

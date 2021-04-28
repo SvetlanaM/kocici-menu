@@ -27,7 +27,7 @@ const StatisticBox = ({ icon, title, name }: ExtendType) => {
         <p className="small-purple-text">
           <a
             target="_blank"
-            href={getEshopUrl(String(name))}
+            href={name !== '--' ? getEshopUrl(String(name)) : null}
             rel="noopener noreferrer"
           >
             {name}

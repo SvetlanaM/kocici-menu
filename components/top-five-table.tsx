@@ -28,9 +28,15 @@ const TopFiveTable = ({
     direction: SortType.DESC,
   };
 
+  const uniqueReviews = Array.from(
+    new Set(reviews.map((item) => item.product.name))
+  ).map((name) => {
+    return reviews.find((item) => item.product.name === name);
+  });
+
   const [sortedColumn, setSortedColumn] = useState(rules);
   const { inputData, sortData } = useSortableData(
-    reviews,
+    uniqueReviews,
     sortedColumn,
     setSortedColumn,
     'product'
