@@ -5,6 +5,14 @@ export const ADD_CAT = gql`
     insert_Cat(objects: [$cat]) {
       returning {
         id
+        age
+        image_url
+        name
+        type
+        doctor_email
+        specials: SpecialRequirements {
+          name
+        }
       }
     }
   }
@@ -14,7 +22,18 @@ export const ADD_REVIEW = gql`
   mutation AddReview($review: Review_insert_input!) {
     insert_Review(objects: [$review]) {
       returning {
-        id
+        product: Product {
+          id
+          name
+          brand_type
+          price
+          image_url
+        }
+        cat: Cat {
+          id
+        }
+        updated_at
+        review_type
       }
     }
   }

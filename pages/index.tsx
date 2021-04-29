@@ -32,7 +32,6 @@ import { ADD_REVIEW } from '../graphql/mutations';
 
 //tu budu akoze ziskane macky uzivatela
 const getDashboardVariables: GetDashboardQueryVariables = {
-  limitProducts: PRODUCT_LIMIT,
   limitTips: TIP_LIMIT,
   user_id: 1,
 };
@@ -50,7 +49,6 @@ const CenterContainerQuery = () => {
     loading: dashboardLoading,
   } = useGetDashboardQuery({
     variables: getDashboardVariables,
-    fetchPolicy: 'cache-and-network',
   });
 
   const extendedData = [
@@ -100,7 +98,6 @@ const DashboardCatQuery = () => {
     data: CatsData,
   } = useGetCatsQuery({
     variables: getCatVariables,
-    fetchPolicy: 'no-cache',
   });
 
   if (CatsLoading || CatsError) return <div>...</div>;

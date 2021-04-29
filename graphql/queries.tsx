@@ -39,11 +39,10 @@ export const SelectCatFields = gql`
 `;
 
 export const DASHBOARD_QUERY = gql`
-  query GetDashboard($limitProducts: Int, $limitTips: Int, $user_id: Int) {
+  query GetDashboard($limitTips: Int, $user_id: Int) {
     reviews: Review(
       order_by: { review_type: desc, updated_at: desc }
       where: { Cat: { user_id: { _eq: $user_id } } }
-      limit: $limitProducts
     ) {
       ...ReviewFieldsFragment
       id
@@ -55,11 +54,7 @@ export const DASHBOARD_QUERY = gql`
     ) {
       ...TipFieldsFragment
     }
-    stats: brand_fav_type(
-      distinct_on: brand_type
-      limit: 1
-      where: { id: { _eq: $user_id } }
-    ) {
+    stats: brand_fav_type(limit: 1, where: { id: { _eq: $user_id } }) {
       ...StatFieldsFragment
     }
     selectCats: Cat(

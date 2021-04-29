@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import SubmitButton from './submit-button';
-import { useMutation } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 import {
   AddReviewMutation,
   AddReviewMutationVariables,
@@ -14,6 +14,7 @@ import Select from 'react-select';
 import NeutralButton from './neutral-button';
 import { ADD_REVIEW } from '../graphql/mutations';
 import { CATS_QUERY, DASHBOARD_QUERY } from '../graphql/queries';
+import { ReviewFieldsFragmentFragment } from '../graphql/generated/graphql';
 
 import FormSelectBox from './form-select-box';
 
@@ -41,19 +42,69 @@ const AddProductReviewForm = ({
   const [createReview, { error, loading, data }] = useMutation<
     AddReviewMutation,
     AddReviewMutationVariables
-  >(ADD_REVIEW, {
-    refetchQueries: [{ query: DASHBOARD_QUERY }],
-  });
+  >(ADD_REVIEW);
 
   const onSubmit = (data: any) => {
-    console.log(data);
     const reviewInput: Review_Insert_Input = {
       cat_id: Number(data.cat.id),
       product_id: Number(data.product.id),
       review_type: data.rating.value.toString(),
     };
 
-    createReview({ variables: { review: reviewInput } }).then((data) => {
+    createReview({
+      variables: { review: reviewInput },
+      update: (store, { data }) => {
+        const reviewsData = store.readQuery({
+          query: DASHBOARD_QUERY,
+          variables: {
+            limitTips: 4,
+            user_id: 1,
+          },
+        });
+
+        const catData = store.readQuery({
+          query: CATS_QUERY,
+          variables: {
+            user_id: 1,
+            withProducts: true,
+          },
+        });
+
+        store.writeQuery({
+          query: DASHBOARD_QUERY,
+          variables: {
+            limitTips: 4,
+            user_id: 1,
+          },
+          data: {
+            reviews: [
+              ...reviewsData.reviews,
+              ...data!.insert_Review?.returning,
+            ],
+          },
+        });
+
+        const newCats = catData.cats.map((cat) => {
+          const reviews = data!.insert_Review?.returning.filter(
+            (review) => review.cat.id === cat.id
+          );
+
+          return { ...cat, reviews: { ...cat.reviews, ...reviews } };
+        });
+
+        store.writeQuery({
+          query: CATS_QUERY,
+          variables: {
+            user_id: 1,
+            withProducts: true,
+          },
+          data: {
+            ...catData,
+            cats: newCats,
+          },
+        });
+      },
+    }).then((data) => {
       onSuccess();
       onBackAction();
     });

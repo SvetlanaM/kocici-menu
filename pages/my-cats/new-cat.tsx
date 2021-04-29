@@ -18,6 +18,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Breadcrumbs from '../../components/breadcrumbs';
 import Breadcrumb from '../../utils/breadcrumb';
 import setUppercaseTitle from '../../utils/set-uppercase-title';
+import { CATS_QUERY } from '../../graphql/queries';
 
 export default function CreateCat() {
   const [createCat, { error, loading, data }] = useMutation<
@@ -41,10 +42,34 @@ export default function CreateCat() {
       };
 
       try {
-        const result = await createCat({ variables });
+        const result = await createCat({
+          variables,
+          update: (store, { data }) => {
+            const catData = store.readQuery({
+              query: CATS_QUERY,
+              variables: {
+                user_id: 1,
+                withProducts: true,
+              },
+            });
+
+            store.writeQuery({
+              query: CATS_QUERY,
+              variables: {
+                user_id: 1,
+                withProducts: true,
+              },
+              data: {
+                cats: [...catData.cats, ...data!.insert_Cat?.returning],
+                reviews: [],
+              },
+            });
+          },
+        });
         if (result.data?.insert_Cat?.returning) {
           return true;
         } else {
+          console.log(error);
           return false;
         }
       } catch (e) {
