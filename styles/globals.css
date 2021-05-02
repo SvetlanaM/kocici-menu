@@ -99,3 +99,7 @@ input:focus {
     top: 50%;
     transform: translate(-50%, -50%);
 }
+
+.select-photo {
+    margin-top: -8px;
+}

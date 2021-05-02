@@ -10,26 +10,51 @@ import {
   SelectCatFieldsFragment,
   SelectProductFieldsFragment,
 } from '../graphql/generated/graphql';
-import Select from 'react-select';
+import Select, { components } from 'react-select';
 import NeutralButton from './neutral-button';
 import { ADD_REVIEW } from '../graphql/mutations';
 import { CATS_QUERY, DASHBOARD_QUERY } from '../graphql/queries';
 import { ReviewFieldsFragmentFragment } from '../graphql/generated/graphql';
-
+import FormInputLabel from './form-input-label';
 import FormSelectBox from './form-select-box';
-
+import { SVETA_EMAIL } from '../utils/constants';
+import Link from 'next/link';
+import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
 interface AddProductReviewFormProps {
   selectCats: GetDashboardQuery['selectCats'];
   selectProducts: GetDashboardQuery['selectProducts'];
   onBackAction: () => void;
   onSuccess: () => void;
+  props?: any;
 }
+
+const Option = ({ children, ...props }) => {
+  return (
+    <components.Option {...props}>
+      <div className="float-left mt-0 mr-3 select-photo">
+        {props.data.__typename === 'Cat' ? (
+          <img
+            src={props.data.image_url || defaultImage}
+            className="rounded-full h-10 w-10"
+          />
+        ) : props.data.__typename === 'Product' ? (
+          <img
+            src={props.data.image_url || defaultImage}
+            className="h-10 w-10"
+          />
+        ) : null}
+      </div>
+      {children}
+    </components.Option>
+  );
+};
 
 const AddProductReviewForm = ({
   selectCats,
   selectProducts,
   onBackAction,
   onSuccess,
+  props,
 }: AddProductReviewFormProps) => {
   const {
     handleSubmit,
@@ -124,18 +149,64 @@ const AddProductReviewForm = ({
   ];
 
   const customStyles = {
-    option: (provided, state) => ({
-      ...provided,
-      padding: 10,
-      color: state.isSelected ? 'white' : '#3E3E70',
-      background: state.isSelected ? '#BDBDE7' : 'white',
+    control: (styles, { isHovered, isFocused, isDisabled }) => ({
+      ...styles,
+      display: 'flex',
+      color: '#4B4261',
+      border: isHovered ? null : '1px solid #E1E5EE',
+      backgroundColor: isDisabled ? 'white' : null,
+      // This line disable the blue border
+      boxShadow: isFocused ? '1px solid #E1E5EE' : 0,
+      '&:hover': {
+        border: isFocused ? null : '1px solid #B3BACC',
+      },
     }),
-    singleValue: (provided, state) => {
-      const opacity = state.isDisabled ? 0.5 : 1;
-      const transition = 'opacity 300ms';
-
-      return { ...provided, opacity, transition };
+    option: (styles, { isDisabled, isFocused, isSelected }) => {
+      const color = '#4B4261';
+      return {
+        ...styles,
+        padding: 20,
+        borderBottom: '1px solid #E1E5EE',
+        color: isDisabled
+          ? '#4B4261'
+          : isSelected
+          ? '#B3BACC'
+          : isFocused
+          ? '#BDBDE7'
+          : '#4B4261',
+        cursor: isDisabled ? 'not-allowed' : 'default',
+        backgroundColor: isDisabled
+          ? 'red'
+          : isSelected
+          ? 'white'
+          : isFocused
+          ? 'white'
+          : null,
+        ':active': {
+          ...styles[':active'],
+          backgroundColor: !isDisabled && (isSelected ? null : 'white'),
+        },
+      };
     },
+    input: (styles, { isFocused }) => {
+      return {
+        ...styles,
+        color: '#4B4261',
+      };
+    },
+    placeholder: (styles) => ({
+      ...styles,
+      color: '#B3BACC',
+      fontWeight: 'light',
+    }),
+    singleValue: (styles) => ({
+      ...styles,
+      color: '#4B4261',
+    }),
+    noOptionsMessage: (styles) => ({
+      ...styles,
+      color: '#4B4261',
+    }),
   };
 
   const [searchProducts, setSearchProducts] = useState<
@@ -152,7 +223,7 @@ const AddProductReviewForm = ({
   const watchedReview: RatingOption = watch('rating');
 
   useEffect(() => {
-    if (searchTerm.length > 3) {
+    if (searchTerm.length >= 3) {
       const results = productsCopy.filter((item) =>
         item.name.toLowerCase().includes(searchTerm)
       );
@@ -186,69 +257,74 @@ const AddProductReviewForm = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-      <div
-        className={`mb-3 mt-2 text-purple block border-rounded-base
-              focus:outline-none focus:bg-white focus:border-gray
-              focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray`}
-      >
-        <Controller
-          render={({ field, fieldState }) => (
-            <Select<SelectProductFieldsFragment>
-              {...field}
-              {...fieldState}
-              styles={customStyles}
-              options={searchProducts}
-              getOptionValue={(product: SelectProductFieldsFragment) =>
-                product.id.toString()
-              }
-              getOptionLabel={(product: SelectProductFieldsFragment) =>
-                product.name
-              }
-              onInputChange={(e) => {
-                setSearchTerm(e);
-              }}
-              placeholder="Vyhladajte nazov produktu od 3 znakov"
-              value={watchedProduct}
-              noOptionsMessage={() => 'Ziadne dalsie vysledky'}
-            />
-          )}
-          name="product"
-          control={control}
-          rules={{ required: true }}
-          defaultValue={null}
-        />
+      <div className="mb-2 mt-4 flex justify-between">
+        <FormInputLabel name="Produkt*" />
+        <div className="text-purple-light text-xs mt-1.5 pl-0.5">
+          Nenasli ste hladany produkt?{' '}
+          <Link href={`mailto: ${SVETA_EMAIL}`}>
+            <a className="hover:underline">Napiste mi :)</a>
+          </Link>
+        </div>
       </div>
-      <div className="flex justify-between">
-        <div
-          className={`mb-3 mt-2 text-purple block border-rounded-base
-              focus:outline-none focus:bg-white focus:border-gray
-              focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray w-1/2 mr-5`}
-        >
+      <Controller
+        render={({ field, fieldState }) => (
+          <Select<SelectProductFieldsFragment>
+            {...field}
+            {...fieldState}
+            styles={customStyles}
+            options={searchProducts}
+            {...props}
+            components={{ Option }}
+            getOptionValue={(product: SelectProductFieldsFragment) =>
+              product.id.toString()
+            }
+            getOptionLabel={(product: SelectProductFieldsFragment) =>
+              product.name
+            }
+            onInputChange={(e) => {
+              setSearchTerm(e);
+            }}
+            placeholder="Vyhladat produkt od 3 znakov"
+            value={watchedProduct}
+            noOptionsMessage={() => 'Ziadne dalsie vysledky'}
+          />
+        )}
+        name="product"
+        control={control}
+        rules={{ required: true }}
+        defaultValue={null}
+      />
+      <div className="flex justify-between my-6">
+        <div className="w-full pr-3">
+          <div className="mb-2">
+            <FormInputLabel name="Macka*" />
+          </div>
           <Controller
             name="cat"
             control={control}
             rules={{ required: true }}
+            defaultValue={selectCats[0]}
             render={({ field }) => (
               <Select<SelectCatFieldsFragment>
                 {...field}
                 styles={customStyles}
                 options={selectCats}
+                {...props}
+                components={{ Option }}
                 getOptionValue={(cat: SelectCatFieldsFragment) =>
                   cat.id.toString()
                 }
                 getOptionLabel={(cat: SelectCatFieldsFragment) => cat.name}
-                rules={{ required: true }}
-                placeholder="Vyber macky"
+                placeholder="Vyhladat/Vybrat macku"
                 noOptionsMessage={() => 'Ziadne dalsie vysledky'}
               />
             )}
           />
         </div>
-        <div
-          className={`mb-3 mt-2 text-purple block border-rounded-base
-              focus:outline-none focus:bg-white focus:border-gray
-              focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray w-1/2`}
-        >
+        <div className="w-full pl-3">
+          <div className="mb-2">
+            <FormInputLabel name="Hodnotenie*" />
+          </div>
           <Controller
             name="rating"
             control={control}
@@ -260,7 +336,7 @@ const AddProductReviewForm = ({
                 options={ratingOptions}
                 noOptionsMessage={() => 'Ziadne dalsie vysledky'}
                 isDisabled={reviewType !== '' ? true : false}
-                placeholder="Vyber hodnotenia"
+                placeholder={reviewType || 'Vybrat hodnotenie (1-5)'}
               />
             )}
           />
