@@ -225,7 +225,7 @@ const AddProductReviewForm = ({
   useEffect(() => {
     if (searchTerm.length >= 3) {
       const results = productsCopy.filter((item) =>
-        item.name.toLowerCase().includes(searchTerm)
+        item.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
       if (results.length > 1000) {
         setSearchProducts([]);
