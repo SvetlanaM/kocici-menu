@@ -1,7 +1,7 @@
 import { AppProps } from 'next/app';
 import '../styles/globals.css';
 import { appWithTranslation } from 'next-i18next';
-import { Auth0Provider, useAuth0 } from '@auth0/auth0-react';
+import { IdentityContextProvider } from 'react-netlify-identity';
 
 import {
   ApolloClient,
@@ -38,15 +38,11 @@ export const ApiClient = new ApolloClient({
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Auth0Provider
-      domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN!}
-      clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID!}
-      redirectUri={typeof window === 'undefined' ? '/' : window.location.origin}
-    >
+    <IdentityContextProvider url="https://schejbal.io/">
       <ApolloProvider client={ApiClient}>
         <Component {...pageProps} />
       </ApolloProvider>
-    </Auth0Provider>
+    </IdentityContextProvider>
   );
 }
 

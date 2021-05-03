@@ -23,6 +23,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import getTitle from '../utils/get-title';
 import { PRODUCT_LIMIT, TIP_LIMIT } from '../utils/constants';
 import { GeneralError } from '../components/error-screen';
+import useAuth from '../hooks/useAuth';
 
 //tu budu akoze ziskane macky uzivatela
 const getDahsboardVariables: GetDashboardQueryVariables = {
@@ -52,7 +53,8 @@ const CenterContainerQuery = () => {
       title: 'Priemerná mesačná spotreba',
     },
     {
-      name: String(dashboardData?.stats[0].brand_type) || '--',
+      // name: String(dashboardData?.stats[0].brand_type) || '--',
+      name: '?',
       icon: '/icons/fav_brand.svg',
       title: 'Moja najpopulárnejšia značka',
     },
@@ -92,6 +94,7 @@ const DashboardCatQuery = () => {
 const pageTitle = getTitle('Prehľad');
 
 export default function Home() {
+  useAuth();
   return (
     <Layout>
       <Header title={pageTitle} />
