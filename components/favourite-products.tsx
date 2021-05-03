@@ -1,7 +1,7 @@
 import ProductImage from './product-image';
 import ProductName from './product-name';
 
-const FavouriteProducts = ({ product }) => {
+const FavouriteProducts = ({ product }: any) => {
   return (
     <div className="flex pb-3.6 justify-start items-center">
       <ProductImage

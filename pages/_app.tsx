@@ -1,6 +1,6 @@
 import { AppProps } from 'next/app';
 import '../styles/globals.css';
-import { appWithTranslation } from 'next-i18next';
+// import { appWithTranslation } from 'next-i18next';
 import { IdentityContextProvider } from 'react-netlify-identity';
 
 import {
@@ -38,7 +38,7 @@ export const ApiClient = new ApolloClient({
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <IdentityContextProvider url="https://schejbal.io/">
+    <IdentityContextProvider url="https://catappcopy.netlify.app/">
       <ApolloProvider client={ApiClient}>
         <Component {...pageProps} />
       </ApolloProvider>
@@ -46,4 +46,5 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default appWithTranslation(MyApp);
+// export default appWithTranslation(MyApp);
+export default MyApp;

@@ -19,7 +19,7 @@ import CenterContainer from '../components/center-container';
 import LeftContainer from '../components/left-container';
 import ErrorScreen from '../components/error-screen';
 import Loading from '../components/loading';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+// import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import getTitle from '../utils/get-title';
 import { PRODUCT_LIMIT, TIP_LIMIT } from '../utils/constants';
 import { GeneralError } from '../components/error-screen';
@@ -110,8 +110,9 @@ export default function Home() {
     </Layout>
   );
 }
-export const getStaticProps = async ({ locale }: any) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-});
+
+// export const getStaticProps = async ({ locale }: any) => ({
+//   props: {
+//     ...(await serverSideTranslations(locale, ['common'])),
+//   },
+// });

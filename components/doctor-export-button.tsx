@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-const DoctorExportButton = ({ email }) => {
+const DoctorExportButton = ({ email }: any) => {
   return (
     <Link href={`mailto: ${email}`}>
       <a className="flex justify-between">

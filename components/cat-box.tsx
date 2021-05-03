@@ -1,11 +1,6 @@
 import { gql } from '@apollo/client';
 import Image from 'next/image';
 import { useState, useMemo } from 'react';
-import {
-  CatFieldsFragmentFragment,
-  Product,
-  Review,
-} from '../graphql/generated/graphql';
 import { useTranslation } from 'next-i18next';
 import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
 import CatToggleDetail from './cat-toggle-detail';
@@ -22,11 +17,11 @@ export const CatFieldsFragment = gql`
 `;
 
 interface CatBoxProps {
-  CatFieldsFragment: CatFieldsFragmentFragment;
-  reviews: Array<Review & { products: Array<Product> }>;
+  CatFieldsFragment: any;
+  reviews: Array<any>;
 }
 
-const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
+const CatBox = ({ CatFieldsFragment, reviews }: any) => {
   let catProducts = [];
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -39,7 +34,7 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
     [CatFieldsFragment.image_url]
   );
 
-  catProducts = Object.values(reviews).map((review) => review.products);
+  catProducts = Object.values(reviews).map((review: any) => review.products);
 
   const catData = {
     reviews: catProducts,

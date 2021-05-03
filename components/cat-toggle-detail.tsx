@@ -3,7 +3,7 @@ import SpecialRequirements from './special-requirements';
 import DoctorExportButton from './doctor-export-button';
 import Title from './title';
 
-const CatToggleDetail = ({ catData }) => {
+const CatToggleDetail = ({ catData }: any) => {
   const { reviews, doctor_email, specials } = catData;
   return (
     <div className="flex flex-col grid grid-rows divide-y divide-gray_lightest pt-3.6 font-light">
@@ -11,7 +11,7 @@ const CatToggleDetail = ({ catData }) => {
       {reviews && (
         <div className="px-3 pt-3.6">
           <Title title="Obľúbené produkty" fontSize="text-sm" />
-          {reviews.map((item) => (
+          {reviews.map((item: any) => (
             <FavouriteProducts key={item.name} product={item} />
           ))}
         </div>
