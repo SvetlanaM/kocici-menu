@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import Image from 'next/image';
+import Image from '../components/image';
 import { useState, useMemo } from 'react';
 import { CatFieldsFragmentFragment } from '../graphql/generated/graphql';
 import { useTranslation } from 'next-i18next';
@@ -81,8 +81,7 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
           src={catImage}
           width={65}
           height={65}
-          className="border-rounded-base"
-          priority
+          className="border-rounded-base object-cover"
         />
         <div className="flex-col-base justify-between ml-3">
           <h4>{CatFieldsFragment.name}</h4>

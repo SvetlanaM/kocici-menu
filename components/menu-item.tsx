@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from '../components/image';
 import { useState } from 'react';
 
 interface MenuItemProps {
@@ -31,13 +31,12 @@ const MenuItem = ({ icon, name, url, active }: MenuItemProps) => {
         onMouseEnter={showHover}
         onMouseLeave={showHover}
       >
-        <div className="mr-5 menu-icon">
+        <div className="menu-icon">
           <Image
             src={active ? hoverIcon : isHover}
             width={20}
             height={20}
-            className="ml-5"
-            priority
+            className="ml-0 mr-5"
           />
         </div>
         <span className={active ? activeLinkStyle : ''}>{name}</span>

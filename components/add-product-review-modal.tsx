@@ -1,7 +1,7 @@
 import Modal from 'react-modal';
 import AddProductReviewForm from './add-product-review-form';
 import { GetDashboardQuery } from '../graphql/generated/graphql';
-import Image from 'next/image';
+import Image from '../components/image';
 interface AddProductReviewModalProps {
   isOpen: boolean;
   closeModal: () => void;

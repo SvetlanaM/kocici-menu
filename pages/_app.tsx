@@ -12,6 +12,7 @@ import {
   HttpLink,
 } from '@apollo/client';
 import { getToken } from '../utils/token';
+import { useEffect } from 'react';
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   operation.setContext(({ headers = {} }) => {

@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from '../components/image';
 import { gql } from '@apollo/client';
 import { ReviewFieldsFragmentFragment } from '../graphql/generated/graphql';
 import ProductImage from './product-image';
@@ -72,12 +72,7 @@ const TableRow = ({
         <div className="flex justify-end">
           <div className="mr-3">
             <a data-tip data-for="relatedProducts">
-              <Image
-                src="/icons/related_products.svg"
-                width={35}
-                height={35}
-                priority
-              />
+              <Image src="/icons/related_products.svg" width={35} height={35} />
             </a>
             <ReactTooltip
               id="relatedProducts"
@@ -95,8 +90,7 @@ const TableRow = ({
               src="/icons/change_stars.svg"
               width={35}
               height={35}
-              priority
-              className="ml-40"
+              className="ml-0"
             />
           </div>
         </div>

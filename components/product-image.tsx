@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from '../components/image';
 
 interface ProductImageProps {
   src: string;
@@ -15,7 +15,6 @@ const ProductImage = ({ src, alt, ...otherProps }: ProductImageProps) => {
       height={55}
       quality={100}
       {...otherProps}
-      priority
     />
   );
 };

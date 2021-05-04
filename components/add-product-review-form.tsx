@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import SubmitButton from './submit-button';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import {
   AddReviewMutation,
   AddReviewMutationVariables,
@@ -14,9 +14,7 @@ import Select, { components } from 'react-select';
 import NeutralButton from './neutral-button';
 import { ADD_REVIEW } from '../graphql/mutations';
 import { CATS_QUERY, DASHBOARD_QUERY } from '../graphql/queries';
-import { ReviewFieldsFragmentFragment } from '../graphql/generated/graphql';
 import FormInputLabel from './form-input-label';
-import FormSelectBox from './form-select-box';
 import { SVETA_EMAIL } from '../utils/constants';
 import Link from 'next/link';
 import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
@@ -25,7 +23,7 @@ interface AddProductReviewFormProps {
   selectProducts: GetDashboardQuery['selectProducts'];
   onBackAction: () => void;
   onSuccess: () => void;
-  props?: any;
+  props?: Array<string>;
 }
 
 const Option = ({ children, ...props }) => {
@@ -56,15 +54,9 @@ const AddProductReviewForm = ({
   onSuccess,
   props,
 }: AddProductReviewFormProps) => {
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-    watch,
-    register,
-  } = useForm();
+  const { handleSubmit, control, watch } = useForm();
 
-  const [createReview, { error, loading, data }] = useMutation<
+  const [createReview] = useMutation<
     AddReviewMutation,
     AddReviewMutationVariables
   >(ADD_REVIEW);

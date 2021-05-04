@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import Image from 'next/image';
+import Image from '../components/image';
 import { StatFieldsFragmentFragment } from '../graphql/generated/graphql';
 import getEshopUrl from '../utils/get-eshop-url';
 import Link from 'next/link';
