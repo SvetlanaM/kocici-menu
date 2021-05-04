@@ -5,7 +5,7 @@ import getEshopUrl from '../utils/get-eshop-url';
 import Link from 'next/link';
 
 export const StatFieldsFragment = gql`
-  fragment StatFieldsFragment on brand_fav_type {
+  fragment StatFieldsFragment on brand_fav_type1 {
     brand_type
   }
 `;

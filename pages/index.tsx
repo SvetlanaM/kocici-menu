@@ -32,15 +32,16 @@ import setUppercaseTitle from '../utils/set-uppercase-title';
 import { useRouter } from 'next/router';
 import { useMutation } from '@apollo/client';
 import { ADD_REVIEW } from '../graphql/mutations';
+import useAuth from '../hooks/useAuth';
 
 //tu budu akoze ziskane macky uzivatela
 const getDashboardVariables: GetDashboardQueryVariables = {
   limitTips: TIP_LIMIT,
-  user_id: 1,
+  user_id: '3e761b4e-acf7-11eb-8529-0242ac130003',
 };
 
 const getCatVariables: GetCatsQueryVariables = {
-  user_id: 1,
+  user_id: '3e761b4e-acf7-11eb-8529-0242ac130003',
   withProducts: true,
 };
 
@@ -62,7 +63,7 @@ const CenterContainerQuery = () => {
     },
     {
       name:
-        setUppercaseTitle(String(dashboardData?.stats[0].brand_type)) || '--',
+        setUppercaseTitle(String(dashboardData?.stats[0]?.brand_type)) || '--',
       icon: '/icons/fav_brand.svg',
       title: 'Moja najpopulárnejšia značka',
     },
@@ -111,6 +112,7 @@ const DashboardCatQuery = () => {
 const pageTitle = getTitle('Prehľad');
 
 export default function Home() {
+  useAuth();
   return (
     <Layout>
       <Header title={pageTitle} />
