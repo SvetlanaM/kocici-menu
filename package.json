@@ -7,7 +7,7 @@
         "build": "next build",
         "start": "next start",
         "codegen": "graphql-codegen --config codegen.yml",
-        "introspect": "gq https://cat-react-backend.herokuapp.com/v1/graphql -H \"X-Hasura-Admin-Secret: $HASURA_PASSWORD\" --introspect > schema.graphql"
+        "introspect": "gq https://cat-react-backend.herokuapp.com/v1/graphql -H \"X-Hasura-Admin-Secret: catapp123\" --introspect > schema.graphql"
     },
     "dependencies": {
         "@apollo/client": "^3.3.12",
