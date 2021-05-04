@@ -36,7 +36,8 @@ const handler = async function (event) {
     },
   });
 
-
+  console.log(requestBodyString)
+  console.log("test")
   await axios.post<UserType>(process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT || '', {
       headers: {
         "Content-Type": "application/json",
