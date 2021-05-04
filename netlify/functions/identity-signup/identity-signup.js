@@ -87,6 +87,7 @@ exports.handler = async function (event, context) {
     mutation InsertUser($email: String!, $id: uuid!) {
         insert_User_one(object:{id: $id, email: $email}) {
           id
+          email
         }
     }    
   `,
@@ -105,7 +106,7 @@ exports.handler = async function (event, context) {
       body: responseBodyString,
       headers: {
         'Content-Type': 'application/json',
-        'x-hasura-admin-secret': process.env.HASURA_SECRET,
+        'x-hasura-admin-secret': 'catapp123',
       },
     }
   );
