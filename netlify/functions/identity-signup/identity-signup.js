@@ -4,12 +4,12 @@
 // more:
 // https://www.netlify.com/blog/2019/02/21/the-role-of-roles-and-how-to-set-them-in-netlify-identity/
 // https://www.netlify.com/docs/functions/#identity-and-functions
-import axios from 'axios';
+// import axios from 'axios';
 
-// interface UserType {
-//   id: string;
-//   email: string;
-// }
+// // interface UserType {
+// //   id: string;
+// //   email: string;
+// // }
 
 const handler = async function (event) {
   console.log('test');
@@ -24,11 +24,11 @@ const handler = async function (event) {
 
   const requestBodyString = JSON.stringify({
     query: `
-    mutation InsertUser($email: String!, $id: String!){
-      insert_users(objects: {id: $id, email: $email}) {
-        id
-      }
-    }    
+    mutation InsertUser($email: String!, $id: uuid!) {
+        insert_User_one(object:{id: $id, email: $email}) {
+          id
+        }
+    }
   `,
     variables: {
       id: user.id,
