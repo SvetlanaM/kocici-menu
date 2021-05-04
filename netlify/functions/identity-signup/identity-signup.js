@@ -6,20 +6,20 @@
 // https://www.netlify.com/docs/functions/#identity-and-functions
 import axios from 'axios';
 
-
-interface UserType {
-  id: string,
-  email: string,
-};
+// interface UserType {
+//   id: string;
+//   email: string;
+// }
 
 const handler = async function (event) {
+  console.log('test');
   const data = JSON.parse(event.body);
   const { user } = data;
 
   const responseBody = {
     user_metadata: {
-      ...user.user_metadata
-    }
+      ...user.user_metadata,
+    },
   };
 
   const requestBodyString = JSON.stringify({
@@ -36,20 +36,24 @@ const handler = async function (event) {
     },
   });
 
-  console.log(requestBodyString)
-  console.log("test")
-  await axios.post<UserType>(process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT || '', {
-      headers: {
-        "Content-Type": "application/json",
-        "x-hasura-admin-secret":
-          process.env.HASURA_PASSWORD
-      },
-      body: requestBodyString
-    }).then(response => {
-      console.log(response)
-    }, (error) => {
-      console.log(error)
-    })
+  await axios({
+    method: 'post',
+    url: process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT || '',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-hasura-admin-secret': process.env.HASURA_PASSWORD,
+    },
+    body: requestBodyString,
+  }).then(
+    (response) => {
+      console.log(response);
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+
+  console.log(requestBodyString);
 
   return {
     statusCode: 200,
