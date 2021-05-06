@@ -7,7 +7,6 @@ const createJWT = (user_id) => {
     process.env.JWT_SECRET_KEY +
     '\n-----END RSA PRIVATE KEY-----';
 
-  console.log(secretKey);
   const payload = {
     sub: user_id,
     iat: 1516239022,
@@ -43,7 +42,7 @@ exports.handler = async function (event, context) {
 
   const responseBodyString = JSON.stringify({
     query: `
-    mutation InsertUser($email: String!, $id: uuid!) {
+    mutation InsertUser($email: String!, $id: String) {
         insert_User_one(object:{id: $id, email: $email}) {
           id
           email
@@ -65,7 +64,7 @@ exports.handler = async function (event, context) {
       body: responseBodyString,
       headers: {
         'Content-Type': 'application/json',
-        'x-hasura-admin-secret': 'catapp123',
+        'x-hasura-admin-secret': process.env.HASURA_PASSWORD,
       },
     }
   );
