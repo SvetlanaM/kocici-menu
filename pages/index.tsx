@@ -37,11 +37,11 @@ import useAuth from '../hooks/useAuth';
 //tu budu akoze ziskane macky uzivatela
 const getDashboardVariables: GetDashboardQueryVariables = {
   limitTips: TIP_LIMIT,
-  user_id: '3e761b4e-acf7-11eb-8529-0242ac130003',
+  user_id: '604efb7d-cc7f-4d7a-9c73-90d6eb2daa6d',
 };
 
 const getCatVariables: GetCatsQueryVariables = {
-  user_id: '3e761b4e-acf7-11eb-8529-0242ac130003',
+  user_id: '604efb7d-cc7f-4d7a-9c73-90d6eb2daa6d',
   withProducts: true,
 };
 

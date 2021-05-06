@@ -2,6 +2,7 @@ import { AppProps } from 'next/app';
 import '../styles/globals.css';
 import { appWithTranslation } from 'next-i18next';
 import { IdentityContextProvider } from 'react-netlify-identity';
+import { useIdentityContext } from 'react-netlify-identity';
 
 import {
   ApolloClient,
@@ -15,11 +16,12 @@ import { getToken } from '../utils/token';
 import { useEffect } from 'react';
 
 const authMiddleware = new ApolloLink((operation, forward) => {
+  const { user } = useIdentityContext();
   operation.setContext(({ headers = {} }) => {
     return {
       headers: {
         ...headers,
-        'x-hasura-admin-secret': process.env.NEXT_PUBLIC_HASURA_PASSWORD,
+        Authorization: 'Bearer ' + String(user?.user_metadata.my_token),
       },
     };
   });
