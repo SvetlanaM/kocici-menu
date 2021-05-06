@@ -12,9 +12,6 @@ import {
   useGetCatsQuery,
   GetDashboardQueryVariables,
   GetCatsQueryVariables,
-  Review_Insert_Input,
-  AddReviewMutationVariables,
-  AddReviewMutation,
 } from '../graphql/generated/graphql';
 import Header from '../components/head';
 import CenterContainer from '../components/center-container';
@@ -26,12 +23,10 @@ import Loading from '../components/loading';
 //   Locale,
 // } from 'next-i18next/serverSideTranslations';
 import getTitle from '../utils/get-title';
-import { PRODUCT_LIMIT, TIP_LIMIT } from '../utils/constants';
+import { TIP_LIMIT } from '../utils/constants';
 import { GeneralError } from '../components/error-screen';
 import setUppercaseTitle from '../utils/set-uppercase-title';
 import { useRouter } from 'next/router';
-import { useMutation } from '@apollo/client';
-import { ADD_REVIEW } from '../graphql/mutations';
 import useAuth from '../hooks/useAuth';
 
 //tu budu akoze ziskane macky uzivatela
