@@ -15,7 +15,7 @@ import NeutralButton from './neutral-button';
 import { ADD_REVIEW } from '../graphql/mutations';
 import { CATS_QUERY, DASHBOARD_QUERY } from '../graphql/queries';
 import FormInputLabel from './form-input-label';
-import { SVETA_EMAIL } from '../utils/constants';
+import { SVETA_EMAIL, TIP_LIMIT } from '../utils/constants';
 import Link from 'next/link';
 import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
 interface AddProductReviewFormProps {
@@ -70,57 +70,15 @@ const AddProductReviewForm = ({
 
     createReview({
       variables: { review: reviewInput },
-      update: (store, { data }) => {
-        const reviewsData = store.readQuery({
+      refetchQueries: [
+        {
           query: DASHBOARD_QUERY,
           variables: {
-            limitTips: 4,
-            user_id: 1,
+            limitTips: TIP_LIMIT,
+            user_id: 'a11d3f2b-296b-4637-807f-4c7207ab45ce',
           },
-        });
-
-        const catData = store.readQuery({
-          query: CATS_QUERY,
-          variables: {
-            user_id: 1,
-            withProducts: true,
-          },
-        });
-
-        store.writeQuery({
-          query: DASHBOARD_QUERY,
-          variables: {
-            limitTips: 4,
-            user_id: 1,
-          },
-          data: {
-            reviews: [
-              ...reviewsData.reviews,
-              ...data!.insert_Review?.returning,
-            ],
-          },
-        });
-
-        const newCats = catData.cats.map((cat) => {
-          const reviews = data!.insert_Review?.returning.filter(
-            (review) => review.cat.id === cat.id
-          );
-
-          return { ...cat, reviews: { ...cat.reviews, ...reviews } };
-        });
-
-        store.writeQuery({
-          query: CATS_QUERY,
-          variables: {
-            user_id: 1,
-            withProducts: true,
-          },
-          data: {
-            ...catData,
-            cats: newCats,
-          },
-        });
-      },
+        },
+      ],
     }).then((data) => {
       onSuccess();
       onBackAction();
