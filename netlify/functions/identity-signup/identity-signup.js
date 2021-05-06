@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-import jwt from 'jsonwebtoken';
+const jwt = require('jsonwebtoken');
 
 const createJWT = (user_id) => {
   const secretKey =
@@ -34,10 +34,10 @@ exports.handler = async function (event, context) {
           ? ['editor']
           : ['visitor'],
       my_user_info: 'this is some user info',
-      my_token: createJWT(user.id),
     },
     user_metadata: {
       ...user.user_metadata, // append current user metadata
+      my_token: createJWT(user.id),
     },
   };
 
