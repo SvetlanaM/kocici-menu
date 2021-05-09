@@ -55,8 +55,6 @@ exports.handler = async function (event, context) {
     },
   });
 
-  console.log(responseBodyString);
-
   const result = await fetch(
     process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT,
     {
@@ -71,7 +69,6 @@ exports.handler = async function (event, context) {
   const { errors, data } = await result.json();
 
   if (errors) {
-    console.log(errors);
     return {
       statusCode: 500,
       body: 'Something is wrong',

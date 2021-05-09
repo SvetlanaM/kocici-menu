@@ -22,7 +22,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "netlify/functions/identity-signup/identity-signup.js"  ],
   "exclude": [
     "node_modules"
   ]

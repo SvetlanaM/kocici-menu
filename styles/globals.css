@@ -103,3 +103,7 @@ input:focus {
 .select-photo {
     margin-top: -8px;
 }
+
+.stats-img {
+    height: 75px;
+}

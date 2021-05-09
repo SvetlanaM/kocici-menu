@@ -19,6 +19,7 @@ import Breadcrumbs from '../../components/breadcrumbs';
 import Breadcrumb from '../../utils/breadcrumb';
 import setUppercaseTitle from '../../utils/set-uppercase-title';
 import { CATS_QUERY } from '../../graphql/queries';
+import { getUser } from '../../utils/user';
 
 export default function CreateCat() {
   const [createCat, { error, loading, data }] = useMutation<
@@ -48,7 +49,7 @@ export default function CreateCat() {
             const catData = store.readQuery({
               query: CATS_QUERY,
               variables: {
-                user_id: 1,
+                user_id: getUser(),
                 withProducts: true,
               },
             });
@@ -56,7 +57,7 @@ export default function CreateCat() {
             store.writeQuery({
               query: CATS_QUERY,
               variables: {
-                user_id: 1,
+                user_id: getUser(),
                 withProducts: true,
               },
               data: {

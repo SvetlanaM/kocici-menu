@@ -18,6 +18,8 @@ import FormInputLabel from './form-input-label';
 import { SVETA_EMAIL } from '../utils/constants';
 import Link from 'next/link';
 import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
+import { getUser } from '../utils/user';
+import { TIP_LIMIT } from '../utils/constants';
 interface AddProductReviewFormProps {
   selectCats: GetDashboardQuery['selectCats'];
   selectProducts: GetDashboardQuery['selectProducts'];
@@ -70,57 +72,66 @@ const AddProductReviewForm = ({
 
     createReview({
       variables: { review: reviewInput },
-      update: (store, { data }) => {
-        const reviewsData = store.readQuery({
+      refetchQueries: [
+        {
           query: DASHBOARD_QUERY,
           variables: {
-            limitTips: 4,
-            user_id: 1,
+            limitTips: TIP_LIMIT,
+            user_id: getUser(),
           },
-        });
+        },
+      ],
+      // update: (store, { data }) => {
+      //   const reviewsData = store.readQuery({
+      //     query: DASHBOARD_QUERY,
+      //     variables: {
+      //       limitTips: TIP_LIMIT,
+      //       user_id: getUser(),
+      //     },
+      //   });
 
-        const catData = store.readQuery({
-          query: CATS_QUERY,
-          variables: {
-            user_id: 1,
-            withProducts: true,
-          },
-        });
+      //   const catData = store.readQuery({
+      //     query: CATS_QUERY,
+      //     variables: {
+      //       user_id: getUser(),
+      //       withProducts: true,
+      //     },
+      //   });
 
-        store.writeQuery({
-          query: DASHBOARD_QUERY,
-          variables: {
-            limitTips: 4,
-            user_id: 1,
-          },
-          data: {
-            reviews: [
-              ...reviewsData.reviews,
-              ...data!.insert_Review?.returning,
-            ],
-          },
-        });
+      //   store.writeQuery({
+      //     query: DASHBOARD_QUERY,
+      //     variables: {
+      //       limitTips: TIP_LIMIT,
+      //       user_id: getUser(),
+      //     },
+      //     data: {
+      //       reviews: [
+      //         ...reviewsData.reviews,
+      //         ...data!.insert_Review?.returning,
+      //       ],
+      //     },
+      //   });
 
-        const newCats = catData.cats.map((cat) => {
-          const reviews = data!.insert_Review?.returning.filter(
-            (review) => review.cat.id === cat.id
-          );
+      //   const newCats = catData.cats.map((cat) => {
+      //     const reviews = data!.insert_Review?.returning.filter(
+      //       (review) => review.cat.id === cat.id
+      //     );
 
-          return { ...cat, reviews: { ...cat.reviews, ...reviews } };
-        });
+      //     return { ...cat, reviews: { ...cat.reviews, ...reviews } };
+      //   });
 
-        store.writeQuery({
-          query: CATS_QUERY,
-          variables: {
-            user_id: 1,
-            withProducts: true,
-          },
-          data: {
-            ...catData,
-            cats: newCats,
-          },
-        });
-      },
+      //   store.writeQuery({
+      //     query: CATS_QUERY,
+      //     variables: {
+      //       user_id: getUser(),
+      //       withProducts: true,
+      //     },
+      //     data: {
+      //       ...catData,
+      //       cats: newCats,
+      //     },
+      //   });
+      // },
     }).then((data) => {
       onSuccess();
       onBackAction();
@@ -343,7 +354,7 @@ const AddProductReviewForm = ({
       ) : null}
 
       <NeutralButton title="Spet" onClick={onBackAction} />
-      <SubmitButton text="Uložiť" disabled={reviewType !== ''} />
+      <SubmitButton text="Uložiť" disabled={reviewType !== ''} size="w-1/4" />
     </form>
   );
 };

@@ -2,7 +2,8 @@ import { AppProps } from 'next/app';
 import '../styles/globals.css';
 import { appWithTranslation } from 'next-i18next';
 import { IdentityContextProvider } from 'react-netlify-identity';
-import { useIdentityContext } from 'react-netlify-identity';
+import { getToken } from '../utils/token';
+import ProtectedRoutes from '../utils/protected-routes';
 
 import {
   ApolloClient,
@@ -12,16 +13,14 @@ import {
   from,
   HttpLink,
 } from '@apollo/client';
-import { getToken } from '../utils/token';
-import { useEffect } from 'react';
 
 const authMiddleware = new ApolloLink((operation, forward) => {
-  const { user } = useIdentityContext();
+  const token = getToken();
   operation.setContext(({ headers = {} }) => {
     return {
       headers: {
         ...headers,
-        Authorization: 'Bearer ' + String(user?.user_metadata.my_token),
+        Authorization: 'Bearer ' + token,
       },
     };
   });
@@ -38,11 +37,13 @@ export const ApiClient = new ApolloClient({
   link: from([authMiddleware, httpLink]),
 });
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <IdentityContextProvider url="https://gracious-yalow-39710f.netlify.app/">
       <ApolloProvider client={ApiClient}>
-        <Component {...pageProps} />
+        <ProtectedRoutes router={router}>
+          <Component {...pageProps} />
+        </ProtectedRoutes>
       </ApolloProvider>
     </IdentityContextProvider>
   );

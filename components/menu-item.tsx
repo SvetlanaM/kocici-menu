@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import Image from '../components/image';
 import { useState } from 'react';
+import { useIdentityContext } from 'react-netlify-identity';
+import router from 'next/router';
 
 interface MenuItemProps {
   icon: string;
@@ -9,12 +11,12 @@ interface MenuItemProps {
   active: boolean;
 }
 
-const activeLinkStyle = 'text-purple-light';
-
 const MenuItem = ({ icon, name, url, active }: MenuItemProps) => {
   const hoverIcon = `/icons/${icon}-purple.svg`;
   const basicIcon = `/icons/${icon}.svg`;
   const [isHover, setIsHover] = useState(basicIcon);
+  const activeLinkStyle = 'text-purple-light';
+  const { logoutUser } = useIdentityContext();
 
   const showHover = () => {
     setIsHover((prevState) => {
@@ -24,7 +26,31 @@ const MenuItem = ({ icon, name, url, active }: MenuItemProps) => {
     });
   };
 
-  return (
+  const logout = () => {
+    logoutUser()
+      .then(() => router.push('/user/login'))
+      .catch((err) => alert('Nepodarilo sa uzivatela odhlasit ' + err));
+  };
+
+  return icon === 'logout' ? (
+    <button onClick={logout}>
+      <a
+        className={`flex pt-6 text-gray-100 hover:${activeLinkStyle}`}
+        onMouseEnter={showHover}
+        onMouseLeave={showHover}
+      >
+        <div className="menu-icon">
+          <Image
+            src={active ? hoverIcon : isHover}
+            width={20}
+            height={20}
+            className="ml-0 mr-5"
+          />
+        </div>
+        <span className={active ? activeLinkStyle : ''}>{name}</span>
+      </a>
+    </button>
+  ) : (
     <Link href={url}>
       <a
         className={`flex pt-6 text-gray-100 hover:${activeLinkStyle}`}

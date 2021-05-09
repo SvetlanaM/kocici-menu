@@ -15,6 +15,7 @@ import FormSelectBox from './form-select-box';
 import BackButton from '../components/back-button';
 import SubmitButton from '../components/submit-button';
 import ErrorScreen from './error-screen';
+import { getUser } from '../utils/user';
 
 export type CatInputData = Omit<Cat_Insert_Input, 'CatTypeEnum'>;
 interface CatFormInterface {
@@ -40,7 +41,7 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
       const catInput: CatInputData = {
         age: Number(data.age),
         name: data.name,
-        user_id: 1,
+        user_id: getUser(),
         doctor_email: data.doctor_email,
         nickname: data.nickname,
         weight: Number(data.weight),
@@ -177,7 +178,7 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
         </div>
       </fieldset>
       <BackButton url={'/'} />
-      <SubmitButton text={submitText} />
+      <SubmitButton text={submitText} disabled={false} size="w-1/4" />
     </form>
   );
 };
