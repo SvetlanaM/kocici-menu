@@ -41,11 +41,11 @@ export const ApiClient = new ApolloClient({
 function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <IdentityContextProvider url="https://gracious-yalow-39710f.netlify.app/">
-      <ApolloProvider client={ApiClient}>
-        {/* <ProtectedRoutes router={router}> */}
-        <Component {...pageProps} />
-        {/* </ProtectedRoutes> */}
-      </ApolloProvider>
+      <ProtectedRoutes router={router}>
+        <ApolloProvider client={ApiClient}>
+          <Component {...pageProps} />
+        </ApolloProvider>
+      </ProtectedRoutes>
     </IdentityContextProvider>
   );
 }

@@ -35,6 +35,7 @@ const getDashboardVariables: GetDashboardQueryVariables = {
   user_id: getUser(),
 };
 
+console.log(getUser());
 const getCatVariables: GetCatsQueryVariables = {
   user_id: getUser(),
   withProducts: true,
@@ -107,7 +108,6 @@ const pageTitle = getTitle('Prehľad');
 
 export default function Home() {
   useAuth();
-  console.log(useAuth().isAuthenticated, useAuth().user);
   return (
     <Layout>
       <Header title={pageTitle} />

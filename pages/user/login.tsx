@@ -6,12 +6,15 @@ import AuthLeftContainer from '../../components/auth-left-container';
 import Image from '../../components/image';
 import AuthForm from '../../components/auth-form';
 import Link from 'next/link';
+import useAuth from '../../hooks/useAuth';
 
 export default function Login() {
   const link = {
     url: '/user/register',
     name: 'Registrovat',
   };
+
+  useAuth();
 
   return (
     <Layout>

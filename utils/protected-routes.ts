@@ -1,11 +1,10 @@
-import { useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
-import Loading from '../components/loading';
+
 
 const isBrowser = () => typeof window !== 'undefined'
 
 const ProtectedRoutes = ({ router, children }) => {
-  const isAuthenticated = useAuth().isAuthenticated
+  const { user, isAuthenticated } = useAuth()
 
   let unprotectedRoutes = [
     '/user/login',
@@ -15,7 +14,7 @@ const ProtectedRoutes = ({ router, children }) => {
   let pathIsProtected = unprotectedRoutes.indexOf(router.pathname) === -1;
 
  
-  if (isBrowser() && !isAuthenticated && pathIsProtected) {
+  if (isBrowser() && !isAuthenticated && pathIsProtected && !user) {
     router.push('/user/login')
   }
  
