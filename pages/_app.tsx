@@ -16,6 +16,7 @@ import {
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   const token = getToken();
+  console.log(token);
   operation.setContext(({ headers = {} }) => {
     return {
       headers: {
@@ -41,9 +42,9 @@ function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <IdentityContextProvider url="https://gracious-yalow-39710f.netlify.app/">
       <ApolloProvider client={ApiClient}>
-        <ProtectedRoutes router={router}>
-          <Component {...pageProps} />
-        </ProtectedRoutes>
+        {/* <ProtectedRoutes router={router}> */}
+        <Component {...pageProps} />
+        {/* </ProtectedRoutes> */}
       </ApolloProvider>
     </IdentityContextProvider>
   );

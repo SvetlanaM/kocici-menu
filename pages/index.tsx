@@ -107,6 +107,7 @@ const pageTitle = getTitle('Prehľad');
 
 export default function Home() {
   useAuth();
+  console.log(useAuth().isAuthenticated, useAuth().user);
   return (
     <Layout>
       <Header title={pageTitle} />
