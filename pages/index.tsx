@@ -106,6 +106,7 @@ const DashboardCatQuery = () => {
 const pageTitle = getTitle('Prehľad');
 
 export default function Home() {
+  useAuth();
   return (
     <Layout>
       <Header title={pageTitle} />
