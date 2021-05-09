@@ -15,13 +15,11 @@ import {
 } from '@apollo/client';
 
 const authMiddleware = new ApolloLink((operation, forward) => {
-  const token = getToken();
-  console.log(token);
   operation.setContext(({ headers = {} }) => {
     return {
       headers: {
         ...headers,
-        Authorization: 'Bearer ' + token,
+        Authorization: 'Bearer ' + getToken(),
       },
     };
   });

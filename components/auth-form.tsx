@@ -14,6 +14,7 @@ import { setToken } from '../utils/token';
 import { useIdentityContext } from 'react-netlify-identity';
 import { useState } from 'react';
 import Modal from 'react-modal';
+import useAuth from '../hooks/useAuth';
 
 interface AuthFormProps {
   submitText: string;
@@ -43,7 +44,7 @@ const AuthForm = ({
       signupUser(data.email, data.password, {
         data: 'signed up thru react-netlify-identity',
       })
-        .then((user) => setToken(String(user?.user_metadata.my_token)))
+        .then(() => useAuth())
         .then(() =>
           setSuccessMessage('Registracia uspesna. Potvrdte emailovu adresu.')
         )
@@ -52,7 +53,7 @@ const AuthForm = ({
 
     if (authMethod === 'loginUser') {
       loginUser(data.email, data.password)
-        .then((user) => setToken(String(user?.user_metadata.my_token)))
+        .then(() => useAuth())
         .then(() => router.push('/'))
         .catch((err) => setMessage(err.message));
     }
