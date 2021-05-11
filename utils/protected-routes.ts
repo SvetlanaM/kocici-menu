@@ -4,7 +4,7 @@ import useAuth from '../hooks/useAuth';
 const isBrowser = () => typeof window !== 'undefined'
 
 const ProtectedRoutes = ({ router, children }) => {
-  const { isAuthenticated, } = useAuth()
+  const { isAuthenticated } = useAuth()
   
 
   let unprotectedRoutes = [
