@@ -35,7 +35,7 @@ const MenuItem = ({ icon, name, url, active }: MenuItemProps) => {
   return icon === 'logout' ? (
     <button onClick={logout}>
       <a
-        className={`flex pt-6 text-gray-100 hover:${activeLinkStyle}`}
+        className={`flex pt-6 text-gray-100 hover:text-purple-light`}
         onMouseEnter={showHover}
         onMouseLeave={showHover}
       >
@@ -53,7 +53,7 @@ const MenuItem = ({ icon, name, url, active }: MenuItemProps) => {
   ) : (
     <Link href={url}>
       <a
-        className={`flex pt-6 text-gray-100 hover:${activeLinkStyle}`}
+        className={`flex pt-6 text-gray-100 hover:text-purple-light`}
         onMouseEnter={showHover}
         onMouseLeave={showHover}
       >
