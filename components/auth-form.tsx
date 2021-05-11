@@ -44,7 +44,6 @@ const AuthForm = ({
       signupUser(data.email, data.password, {
         data: 'signed up thru react-netlify-identity',
       })
-        .then(() => useAuth())
         .then(() =>
           setSuccessMessage('Registracia uspesna. Potvrdte emailovu adresu.')
         )
@@ -53,7 +52,6 @@ const AuthForm = ({
 
     if (authMethod === 'loginUser') {
       loginUser(data.email, data.password)
-        .then(() => useAuth())
         .then(() => router.push('/'))
         .catch((err) => setMessage(err.message));
     }

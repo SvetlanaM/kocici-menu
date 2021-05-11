@@ -4,7 +4,8 @@ import useAuth from '../hooks/useAuth';
 const isBrowser = () => typeof window !== 'undefined'
 
 const ProtectedRoutes = ({ router, children }) => {
-  const { user, isAuthenticated } = useAuth()
+  const { isAuthenticated, } = useAuth()
+  
 
   let unprotectedRoutes = [
     '/user/login',
@@ -14,7 +15,7 @@ const ProtectedRoutes = ({ router, children }) => {
   let pathIsProtected = unprotectedRoutes.indexOf(router.pathname) === -1;
 
  
-  if (isBrowser() && !isAuthenticated && pathIsProtected && !user) {
+  if (isBrowser() && !isAuthenticated &&  pathIsProtected) {
     router.push('/user/login')
   }
  

@@ -26,8 +26,8 @@ import getTitle from '../utils/get-title';
 import { TIP_LIMIT } from '../utils/constants';
 import { GeneralError } from '../components/error-screen';
 import setUppercaseTitle from '../utils/set-uppercase-title';
-import useAuth from '../hooks/useAuth';
 import { getUser } from '../utils/user';
+import useAuth from '../hooks/useAuth';
 
 //tu budu akoze ziskane macky uzivatela
 const getDashboardVariables: GetDashboardQueryVariables = {
@@ -35,7 +35,6 @@ const getDashboardVariables: GetDashboardQueryVariables = {
   user_id: getUser(),
 };
 
-console.log(getUser());
 const getCatVariables: GetCatsQueryVariables = {
   user_id: getUser(),
   withProducts: true,
@@ -47,7 +46,10 @@ const CenterContainerQuery = () => {
     error: dashboardError,
     loading: dashboardLoading,
   } = useGetDashboardQuery({
-    variables: getDashboardVariables,
+    variables: {
+      user_id: (getDashboardVariables.user_id = getUser()),
+      limitTips: TIP_LIMIT,
+    },
   });
 
   const extendedData = [
@@ -96,7 +98,10 @@ const DashboardCatQuery = () => {
     error: CatsError,
     data: CatsData,
   } = useGetCatsQuery({
-    variables: getCatVariables,
+    variables: {
+      user_id: (getCatVariables.user_id = getUser()),
+      withProducts: true,
+    },
   });
 
   if (CatsLoading || CatsError) return <div>...</div>;
@@ -107,7 +112,7 @@ const DashboardCatQuery = () => {
 const pageTitle = getTitle('Prehľad');
 
 export default function Home() {
-  useAuth();
+  // useAuth();
   return (
     <Layout>
       <Header title={pageTitle} />

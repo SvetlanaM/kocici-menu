@@ -14,8 +14,6 @@ export default function Login() {
     name: 'Registrovat',
   };
 
-  useAuth();
-
   return (
     <Layout>
       <Header title="Prihlasit sa" />
