@@ -13,8 +13,8 @@ export default function useAuth() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-    setToken(String(user?.user_metadata.my_token))
-    setUser(user?.id || '')
+      setToken(String(user?.user_metadata.my_token))
+      setUser(user?.id || '')
   }
   }, [auth, user]);
   return { isAuthenticated: auth && auth.isLoggedIn && auth.isConfirmedUser, user: user };

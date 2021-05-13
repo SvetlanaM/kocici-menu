@@ -16,7 +16,7 @@ const ProtectedRoutes = ({ router, children }) => {
 
  
   if (isBrowser() && !isAuthenticated &&  pathIsProtected) {
-    router.replace('/user/login')
+    router.push('/user/login')
     return null;
   }
  

@@ -112,8 +112,8 @@ const DashboardCatQuery = () => {
 const pageTitle = getTitle('Prehľad');
 
 export default function Home() {
-  // useAuth();
-  return (
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? (
     <Layout>
       <Header title={pageTitle} />
       <Sidebar />
@@ -126,6 +126,8 @@ export default function Home() {
         </LeftContainer>
       </Container>
     </Layout>
+  ) : (
+    <Loading />
   );
 }
 
