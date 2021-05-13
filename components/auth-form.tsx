@@ -1,21 +1,15 @@
 import { useForm } from 'react-hook-form';
-import { SVETA_EMAIL } from '../utils/constants';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import FormErrorMessage from './form-error-message';
-import FormLegend from './form-legend';
 import FormInputWrapper from './form-input-wrapper';
 import FormInputLabel from './form-input-label';
 import FormInput from './form-input';
-import FormSelectBox from './form-select-box';
-import BackButton from '../components/back-button';
 import SubmitButton from '../components/submit-button';
-import { setToken } from '../utils/token';
+
 import { useIdentityContext } from 'react-netlify-identity';
 import { useState } from 'react';
-import Modal from 'react-modal';
-import useAuth from '../hooks/useAuth';
 
+import i18next from 'i18next';
 interface AuthFormProps {
   submitText: string;
   passwordPlaceholder: string;
@@ -34,6 +28,30 @@ const AuthForm = ({
     formState: { errors },
   } = useForm();
 
+  i18next.init({
+    resources: {
+      sk: {
+        translation: {
+          invalid_grant_email_not_confirmed: 'Email nie je potvrdeny.',
+          a_user_with_this_email_address_has_already_been_registered:
+            'Uzivatel s touto emailovou adresou uz existuje. Zadajte inu.',
+          invalid_grant_no_user_found_with_that_email_or_password_invalid:
+            'Pouzivatel s touto adresou nenajdeny alebo zle zadane heslo.',
+        },
+      },
+    },
+  });
+
+  const convertErrString = (message: string) => {
+    let newMessage = message
+      .replaceAll(':', '')
+      .replaceAll(' ', '_')
+      .replaceAll(',', '')
+      .replaceAll('.', '')
+      .toLowerCase();
+    return newMessage.toLowerCase();
+  };
+
   const [message, setMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
@@ -47,13 +65,25 @@ const AuthForm = ({
         .then(() =>
           setSuccessMessage('Registracia uspesna. Potvrdte emailovu adresu.')
         )
-        .catch((err) => setMessage(err.message));
+        .then(() => setMessage(''))
+        .catch((err) => setMessage(i18next.t(convertErrString(err.message))));
     }
 
     if (authMethod === 'loginUser') {
       loginUser(data.email, data.password)
-        .then(() => router.push('/'))
-        .catch((err) => setMessage(err.message));
+        .then((data) => router.push('/'))
+        .catch((err) => setMessage(i18next.t(convertErrString(err.message))));
+    }
+  };
+
+  const hasUppercaseLetter = (value: string) => {
+    if (authMethod === 'signupUser') {
+      for (let char of value) {
+        if (char.toUpperCase() === char && !/^\d+$/.test(char)) {
+          return true;
+        }
+        return false;
+      }
     }
   };
 
@@ -91,6 +121,9 @@ const AuthForm = ({
               registerRules={{
                 ...register('password', {
                   required: { value: true, message: 'Heslo je povinne' },
+                  validate: {
+                    hasUppercaseLetter: hasUppercaseLetter,
+                  },
                   minLength: {
                     value: 8,
                     message: 'Heslo musi mat najmenej 8 znakov',
@@ -104,6 +137,12 @@ const AuthForm = ({
             {errors.password && (
               <FormErrorMessage error={errors.password?.message} />
             )}
+            {errors.password &&
+              errors.password.type === 'hasUppercaseLetter' && (
+                <FormErrorMessage
+                  error={'Heslo musi obsahovat aspon jedno velke pismeno'}
+                />
+              )}
           </FormInputWrapper>
         </div>
         <SubmitButton text={submitText} disabled={false} size="w-full" />

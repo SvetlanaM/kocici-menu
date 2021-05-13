@@ -16,6 +16,7 @@ import BackButton from '../components/back-button';
 import SubmitButton from '../components/submit-button';
 import ErrorScreen from './error-screen';
 import { getUser } from '../utils/user';
+import sk from '../public/locales/sk/common.json';
 
 export type CatInputData = Omit<Cat_Insert_Input, 'CatTypeEnum'>;
 interface CatFormInterface {
@@ -66,7 +67,7 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
     return newEnum.map((item) => {
       return (
         <option value={item} key={item}>
-          {t(item || 'CAT_TYPE_NULL')}
+          {t(sk[item] || sk['CAT_TYPE_NULL'])}
         </option>
       );
     });

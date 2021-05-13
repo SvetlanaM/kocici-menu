@@ -23,7 +23,7 @@ const AuthRightContainer = ({
   footerLinks,
 }: AuthRightContainerProps) => {
   return (
-    <div className="w-1/2 flex items-start py-16 px-20 flex-col h-screen text-purple">
+    <div className="w-1/2 flex items-start py-16 px-20 flex-col min-h-screen text-purple">
       <Link href="/">
         <a className="font-logo font-bold text-lg uppercase text-purple-dark">
           {APP_NAME}
@@ -47,9 +47,6 @@ const AuthRightContainer = ({
           </Link>
         </div>
       )}
-      <div className="mt-5 text-purple-light text-sm font-light">
-        {footerLinks}
-      </div>
     </div>
   );
 };

@@ -80,6 +80,13 @@ const AddProductReviewForm = ({
             user_id: getUser(),
           },
         },
+        {
+          query: CATS_QUERY,
+          variables: {
+            withProducts: true,
+            user_id: getUser(),
+          },
+        },
       ],
       // update: (store, { data }) => {
       //   const reviewsData = store.readQuery({

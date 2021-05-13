@@ -1,6 +1,5 @@
 import { AppProps } from 'next/app';
 import '../styles/globals.css';
-import { appWithTranslation } from 'next-i18next';
 import { IdentityContextProvider } from 'react-netlify-identity';
 import { getToken } from '../utils/token';
 import { getUser } from '../utils/user';
@@ -19,13 +18,10 @@ const authMiddleware = new ApolloLink((operation, forward) => {
   operation.setContext(({ headers = {} }) => {
     const token = getToken();
     const user = getUser();
-    // console.log(token);
-    // console.log(user);
     return {
       headers: {
         ...headers,
         user,
-        // user_id: user,
         Authorization: 'Bearer ' + token,
       },
     };
@@ -56,5 +52,3 @@ function MyApp({ Component, pageProps, router }: AppProps) {
 }
 
 export default MyApp;
-
-// export default appWithTranslation(MyApp);

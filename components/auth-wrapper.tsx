@@ -3,7 +3,7 @@ type AuthWrapperProps = {
 };
 
 const AuthWrapper = ({ children }: AuthWrapperProps) => {
-  return <div className="flex w-full h-screen">{children}</div>;
+  return <div className="flex w-full justify-items-stretch">{children}</div>;
 };
 
 export default AuthWrapper;

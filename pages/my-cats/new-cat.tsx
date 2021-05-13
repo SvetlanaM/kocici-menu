@@ -109,9 +109,3 @@ export default function CreateCat() {
     </Layout>
   );
 }
-
-// export const getStaticProps = async ({ locale }: any) => ({
-//   props: {
-//     ...(await serverSideTranslations(locale, ['common'])),
-//   },
-// });

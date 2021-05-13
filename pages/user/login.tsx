@@ -5,18 +5,17 @@ import AuthRightContainer from '../../components/auth-right-container';
 import AuthLeftContainer from '../../components/auth-left-container';
 import Image from '../../components/image';
 import AuthForm from '../../components/auth-form';
-import Link from 'next/link';
-import useAuth from '../../hooks/useAuth';
+import getTitle from '../../utils/get-title';
 
 export default function Login() {
   const link = {
     url: '/user/register',
-    name: 'Registrovat',
+    name: 'Registrovať',
   };
 
   return (
     <Layout>
-      <Header title="Prihlasit sa" />
+      <Header title={getTitle('Prihlásiť sa')} />
       <AuthWrapper>
         <AuthRightContainer
           title="Ahoj!"

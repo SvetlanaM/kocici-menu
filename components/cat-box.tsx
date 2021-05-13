@@ -7,6 +7,8 @@ import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
 import CatToggleDetail from './cat-toggle-detail';
 import setUppercaseTitle from '../utils/set-uppercase-title';
 import { ARRAY_REQUIREMENTS_LENGTH as arrayLength } from '../utils/constants';
+import i18next from 'i18next';
+import sk from '../public/locales/sk/common.json';
 
 export const CatFieldsFragment = gql`
   fragment CatFieldsFragment on Cat {
@@ -39,6 +41,23 @@ interface CatBoxProps {
 
 const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
   let catProducts = [];
+
+  i18next.init({
+    lng: 'sk',
+    debug: false,
+    resources: {
+      sk: {
+        translation: {
+          years: {
+            key_0: '{{count}} rok',
+            key_1: '{{count}} roky',
+            key_2: '{{count}} rokov',
+          },
+        },
+      },
+    },
+  });
+
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggleSlider = () => setIsOpen(!isOpen);
@@ -58,9 +77,9 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
       ? [
           ...CatFieldsFragment.specials.slice(0, arrayLength),
           {
-            name: `... ${t('next_count.key', {
+            name: `... ${t(sk.next_count.key, {
               count: arrayDiff,
-            })} ${arrayDiff} ${t('requirements_count.key', {
+            })} ${arrayDiff} ${t(sk.requirements_count.key, {
               count: arrayDiff,
             })}`,
           },
@@ -81,16 +100,18 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
           src={catImage}
           width={65}
           height={65}
-          className="border-rounded-base object-cover"
+          className="border-rounded-base object-cover cat-image"
         />
         <div className="flex-col-base justify-between ml-3">
           <h4>{CatFieldsFragment.name}</h4>
           <p className="small-light-text">
-            {t(CatFieldsFragment.type || 'CAT_TYPE_NULL')}
+            {t(sk[CatFieldsFragment.type] || sk['CAT_TYPE_NULL'])}
           </p>
           <p className="small-light-text text-gray">
             {CatFieldsFragment.age
-              ? t('years.key', { count: CatFieldsFragment.age })
+              ? i18next.t('years.key', {
+                  count: CatFieldsFragment.age,
+                })
               : '--'}
           </p>
         </div>

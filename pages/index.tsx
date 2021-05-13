@@ -59,8 +59,7 @@ const CenterContainerQuery = () => {
       title: 'Priemerná mesačná spotreba',
     },
     {
-      name:
-        setUppercaseTitle(String(dashboardData?.stats[0]?.brand_type)) || '--',
+      name: setUppercaseTitle('Feringa'),
       icon: '/icons/fav_brand.svg',
       title: 'Moja najpopulárnejšia značka',
     },
@@ -112,8 +111,7 @@ const DashboardCatQuery = () => {
 const pageTitle = getTitle('Prehľad');
 
 export default function Home() {
-  const { isAuthenticated } = useAuth();
-  return isAuthenticated ? (
+  return (
     <Layout>
       <Header title={pageTitle} />
       <Sidebar />
@@ -126,13 +124,5 @@ export default function Home() {
         </LeftContainer>
       </Container>
     </Layout>
-  ) : (
-    <Loading />
   );
 }
-
-// export const getStaticProps = async ({ locale }: any) => ({
-//   props: {
-//     ...(await serverSideTranslations(locale, ['common'])),
-//   },
-// });

@@ -5,12 +5,12 @@ import AuthRightContainer from '../../components/auth-right-container';
 import AuthLeftContainer from '../../components/auth-left-container';
 import Image from '../../components/image';
 import AuthForm from '../../components/auth-form';
-import Link from 'next/link';
+import getTitle from '../../utils/get-title';
 
 export default function Register() {
   const link = {
     url: '/user/login',
-    name: 'Prihlasit',
+    name: 'Prihlásiť',
   };
 
   const registerProItems = [
@@ -20,9 +20,10 @@ export default function Register() {
     'Cats is a 2019 musical fantasy film based',
     'Budget of $80 – $100 million, and is estimated to have lost',
   ];
+
   return (
     <Layout>
-      <Header title="Registrovat sa" />
+      <Header title={getTitle('Registrovať sa')} />
       <AuthWrapper>
         <AuthRightContainer
           title="Začni vytvorením účtu"
