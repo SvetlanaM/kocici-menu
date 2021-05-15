@@ -8,9 +8,9 @@ interface ProductNameProps {
 const ProductName = ({ brand, name }: ProductNameProps) => {
   return (
     <>
-      <span className="base-medium-text">{brand}</span>
+      <span className="base-medium-text text-purple">{brand}</span>
       <br />
-      <span>{name}</span>
+      <span className="small-purple-text">{name}</span>
     </>
   );
 };

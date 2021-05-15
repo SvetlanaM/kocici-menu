@@ -7,7 +7,7 @@ export const MenuLinks = Object.freeze({
     },
     {
       icon: 'my_cats',
-      url: '',
+      url: '/my-cats',
       name: 'Moje mačky',
     },
     {
@@ -20,11 +20,11 @@ export const MenuLinks = Object.freeze({
       url: '',
       name: 'Tipy',
     },
-    {
-      icon: 'fans',
-      url: '',
-      name: 'Fanúšikovia',
-    },
+    // {
+    //   icon: 'fans',
+    //   url: '',
+    //   name: 'Fanúšikovia',
+    // },
     {
       icon: 'settings',
       url: '',

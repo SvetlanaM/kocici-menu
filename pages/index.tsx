@@ -18,16 +18,11 @@ import CenterContainer from '../components/center-container';
 import LeftContainer from '../components/left-container';
 import ErrorScreen from '../components/error-screen';
 import Loading from '../components/loading';
-// import {
-//   serverSideTranslations,
-//   Locale,
-// } from 'next-i18next/serverSideTranslations';
 import getTitle from '../utils/get-title';
 import { TIP_LIMIT } from '../utils/constants';
 import { GeneralError } from '../components/error-screen';
 import setUppercaseTitle from '../utils/set-uppercase-title';
 import { getUser } from '../utils/user';
-import useAuth from '../hooks/useAuth';
 
 //tu budu akoze ziskane macky uzivatela
 const getDashboardVariables: GetDashboardQueryVariables = {

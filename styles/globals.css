@@ -115,3 +115,7 @@ input:focus {
 .ReactModal__Overlay.ReactModal__Overlay--after-open {
     background-color: rgba(0, 0, 0, 0.75) !important;
 }
+
+.cat-detail-box {
+    height: 90px;
+}
