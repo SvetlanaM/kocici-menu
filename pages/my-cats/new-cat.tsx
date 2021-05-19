@@ -22,10 +22,8 @@ import { CATS_QUERY } from '../../graphql/queries';
 import { getUser } from '../../utils/user';
 
 export default function CreateCat() {
-  const [createCat, { error, loading, data }] = useMutation<
-    AddCatMutation,
-    AddCatMutationVariables
-  >(ADD_CAT);
+  const [createCat, { error, loading, data }] =
+    useMutation<AddCatMutation, AddCatMutationVariables>(ADD_CAT);
 
   const handleSubmit1 = useCallback(
     async (catData: Cat_Insert_Input) => {
@@ -39,6 +37,8 @@ export default function CreateCat() {
           weight: catData.weight ?? null,
           type: catData.type ?? null,
           note: catData.note ?? null,
+          color: catData.color ?? null,
+          daily_food: catData.daily_food ?? null,
         },
       };
 

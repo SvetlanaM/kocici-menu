@@ -10,6 +10,8 @@ export const ADD_CAT = gql`
         name
         type
         doctor_email
+        color
+        daily_food
         specials: SpecialRequirements {
           name
         }

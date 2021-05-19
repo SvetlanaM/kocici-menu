@@ -4,9 +4,10 @@ import { TipFieldsFragment } from '../components/tip-box';
 import { ReviewFieldsFragment } from '../components/table-row';
 import { TipDetailFieldsFragment } from '../components/tip-detail';
 import { StatFieldsFragment } from '../components/statistic-box';
+import { CatDetailFieldsFragment } from '../pages/my-cats';
 
 export const CATS_QUERY = gql`
-  query GetCats($user_id: String, $withProducts: Boolean!) {
+  query GetCats($user_id: String, $withProducts: Boolean!, $limit: Int) {
     cats: Cat(
       where: { _and: { is_active: { _eq: true }, user_id: { _eq: $user_id } } }
       order_by: { name: asc }
@@ -17,6 +18,18 @@ export const CATS_QUERY = gql`
   ${CatFieldsFragment}
 `;
 
+export const CATS_DETAIL_QUERY = gql`
+  query GetCatDetail(
+    $user_id: String
+    $withProducts: Boolean! = true
+    $limit: Int
+  ) {
+    cat: Cat {
+      ...CatDetailFieldsFragment
+    }
+  }
+  ${CatDetailFieldsFragment}
+`;
 export const SelectProductFields = gql`
   fragment SelectProductFields on Product {
     id

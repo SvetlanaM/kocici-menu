@@ -1,29 +1,29 @@
 import Image from '../components/image';
+import { CatDetailFieldsFragmentFragment } from '../graphql/generated/graphql';
+import CatBasicInfo from '../components/cat-basic-info';
 
-const CatDetailInfoBox = (data) => {
+interface CatDetailInfoBoxProps {
+  data: CatDetailFieldsFragmentFragment;
+}
+const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
   return (
     <div className="grid grid-cols-4 divide-x divide-gray_lightest border-rounded-base border-gray">
       <div className="flex small-purple-text text-left my-cat">
-        <div className="flex flex-row px-3 align-middle items-center justify-between cat-detail-box">
-          <Image src="/icons/default.svg" />
-          <div className="flex-col-base ml-3">
-            <h4>Stacy</h4>
-            <p className="small-light-text">domaca</p>
-            <p className="small-light-text text-gray">4 roky</p>
-          </div>
+        <div className="flex flex-row px-3 align-middle py-3 justify-between cat-detail-box">
+          <CatBasicInfo cat={data} />
         </div>
       </div>
       <div className="flex small-purple-text text-left my-cat">
         <div className="px-5">
           <ul className="small-light-text justify-evenly flex flex-col cat-detail-box">
             <li>
-              <span className="text-gray">Pohlavie:</span> Macka
+              <span className="text-gray">Pohlavie:</span> --
             </li>
             <li>
-              <span className="text-gray">Prezyvka:</span> Stacy 2
+              <span className="text-gray">Prezyvka:</span> {data.nickname}
             </li>
             <li>
-              <span className="text-gray">Farba:</span> cierno-biela
+              <span className="text-gray">Farba:</span> {data.color || '--'}
             </li>
           </ul>
         </div>
@@ -32,13 +32,14 @@ const CatDetailInfoBox = (data) => {
         <div className="px-5">
           <ul className="small-light-text justify-evenly flex flex-col cat-detail-box">
             <li>
-              <span className="text-gray">Vaha:</span> 7 kg
+              <span className="text-gray">Vaha:</span> {data.weight || '--'} kg
             </li>
             <li>
               <span className="text-gray">Email doktora:</span> --
             </li>
             <li>
-              <span className="text-gray">Denna davka:</span> 2,5 kg
+              <span className="text-gray">Denna davka:</span>{' '}
+              {data.daily_food || '--'} kg
             </li>
           </ul>
         </div>

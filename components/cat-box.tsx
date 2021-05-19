@@ -1,14 +1,12 @@
 import { gql } from '@apollo/client';
 import Image from '../components/image';
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { CatFieldsFragmentFragment } from '../graphql/generated/graphql';
 import { useTranslation } from 'next-i18next';
-import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
 import CatToggleDetail from './cat-toggle-detail';
-import setUppercaseTitle from '../utils/set-uppercase-title';
 import { ARRAY_REQUIREMENTS_LENGTH as arrayLength } from '../utils/constants';
-import i18next from 'i18next';
 import sk from '../public/locales/sk/common.json';
+import CatBasicInfo from './cat-basic-info';
 
 export const CatFieldsFragment = gql`
   fragment CatFieldsFragment on Cat {
@@ -23,7 +21,7 @@ export const CatFieldsFragment = gql`
     }
     reviews: Reviews(
       order_by: { review_type: desc, updated_at: desc }
-      limit: 2
+      limit: $limit
     ) @include(if: $withProducts) {
       products: Product {
         brand_type
@@ -42,32 +40,9 @@ interface CatBoxProps {
 const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
   let catProducts = [];
 
-  i18next.init({
-    lng: 'sk',
-    debug: false,
-    resources: {
-      sk: {
-        translation: {
-          years: {
-            key_0: '{{count}} rok',
-            key_1: '{{count}} roky',
-            key_2: '{{count}} rokov',
-          },
-        },
-      },
-    },
-  });
-
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggleSlider = () => setIsOpen(!isOpen);
-
-  // FIXME: toto je tu uplne zbytocne teraz
-  const catImage = useMemo<string>(
-    () =>
-      CatFieldsFragment.image_url ? CatFieldsFragment.image_url : defaultImage,
-    [CatFieldsFragment.image_url]
-  );
 
   catProducts = Object.values(reviews!).map((review) => review.products);
 
@@ -95,26 +70,7 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
   return (
     <div className="flex flex-col flex-no-wrap justify-between h-75 py-3 border-rounded-base border-gray small-purple-text text-left my-cat">
       <div className="flex flex-row px-3">
-        <Image
-          alt={setUppercaseTitle(CatFieldsFragment.name)}
-          src={catImage}
-          width={65}
-          height={65}
-          className="border-rounded-base object-cover cat-image"
-        />
-        <div className="flex-col-base justify-between ml-3">
-          <h4>{CatFieldsFragment.name}</h4>
-          <p className="small-light-text">
-            {t(sk[CatFieldsFragment.type] || sk['CAT_TYPE_NULL'])}
-          </p>
-          <p className="small-light-text text-gray">
-            {CatFieldsFragment.age
-              ? i18next.t('years.key', {
-                  count: CatFieldsFragment.age,
-                })
-              : '--'}
-          </p>
-        </div>
+        <CatBasicInfo cat={CatFieldsFragment} />
         {(catData.doctor_email !== null ||
           catData.reviews.length > 0 ||
           catData.specials.length > 0) && (

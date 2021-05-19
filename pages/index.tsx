@@ -23,6 +23,7 @@ import { TIP_LIMIT } from '../utils/constants';
 import { GeneralError } from '../components/error-screen';
 import setUppercaseTitle from '../utils/set-uppercase-title';
 import { getUser } from '../utils/user';
+import { getToken } from '../utils/token';
 
 //tu budu akoze ziskane macky uzivatela
 const getDashboardVariables: GetDashboardQueryVariables = {
@@ -95,6 +96,7 @@ const DashboardCatQuery = () => {
     variables: {
       user_id: (getCatVariables.user_id = getUser()),
       withProducts: true,
+      limit: 2,
     },
   });
 

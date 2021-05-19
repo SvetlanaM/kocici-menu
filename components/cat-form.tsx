@@ -48,6 +48,8 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
         weight: Number(data.weight),
         type: data.type,
         note: data.note,
+        color: data.color,
+        daily_food: data.daily_food,
       };
 
       handleSubmit1(catInput).then((success: boolean) => {
@@ -118,11 +120,28 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
             {errors.age && <FormErrorMessage error="Vek od 0,5 do 30 rokov" />}
           </FormInputWrapper>
           <FormInputWrapper>
+            <FormInputLabel name="Farba macky" />
+            <FormInput
+              registerRules={{ ...register('color', { required: false }) }}
+              type="text"
+            />
+          </FormInputWrapper>
+        </div>
+        <div className="grid grid-cols-2 gap-10">
+          <FormInputWrapper>
             <FormInputLabel name="Vaha macky" />
             <FormInput
               registerRules={{ ...register('weight', { required: false }) }}
               type="number"
               placeholder="1,5 kg"
+            />
+          </FormInputWrapper>
+          <FormInputWrapper>
+            <FormInputLabel name="Denna davka" />
+            <FormInput
+              registerRules={{ ...register('daily_food', { required: false }) }}
+              type="number"
+              placeholder="700g/denne"
             />
           </FormInputWrapper>
         </div>

@@ -1,50 +1,55 @@
 import Title from '../components/title';
 import { Bar } from 'react-chartjs-2';
 
-const data = {
-  labels: ['Januar', 'Februar', 'Marec', 'April', 'Maj', 'Jun'],
-  datasets: [
-    {
-      label: 'Granule',
-      data: [12, 19, 3, 5, 2, 3],
-      backgroundColor: '#BDBDE7',
-      borderRadius: '5',
-      fill: true,
-    },
-    {
-      label: 'Ostatne',
-      data: [2, 3, 20, 5, 1, 4],
-      backgroundColor: '#E1E5EE',
-      borderRadius: '5',
-      fill: true,
-    },
-  ],
-};
+interface CatDetailCostChartProps {
+  data1: number[];
+  data2: number[];
+}
 
-const options = {
-  scales: {
-    yAxes: [
+const CatDetailCostChart = ({ data1, data2 }: CatDetailCostChartProps) => {
+  const mergeData = [...data1, ...data2];
+
+  const data = {
+    labels: ['Januar', 'Februar', 'Marec', 'April', 'Maj', 'Jun'],
+    datasets: [
       {
+        label: 'Granule',
+        data: data1,
+        backgroundColor: '#BDBDE7',
+        borderRadius: '5',
+        fill: true,
+      },
+      {
+        label: 'Ostatne',
+        data: data2,
+        backgroundColor: '#E1E5EE',
+        borderRadius: '5',
+        fill: true,
+      },
+    ],
+  };
+
+  const options = {
+    scales: {
+      y: {
+        // defining min and max so hiding the dataset does not change scale range
+        min: Math.floor(Math.min.apply(Math, mergeData) / 10) * 10 - 500,
+        max: Math.floor(Math.max.apply(Math, mergeData) / 10) * 10,
         backdropColor: '#000',
         color: '#E1E5EE',
-        stacked: false,
         ticks: {
-          beginAtZero: false,
-          stepSize: 50,
+          beginAtZero: true,
+          stepSize: 1000,
         },
       },
-    ],
-    xAxes: [
-      {
-        backdropColor: '#000',
-        color: '#E1E5EE',
-        stacked: false,
+    },
+    plugins: {
+      legend: {
+        position: 'bottom',
+        align: 'end',
       },
-    ],
-  },
-};
-
-const CatDetailCostChart = () => {
+    },
+  };
   return (
     <div className="mt-5">
       <Title title="Prehlad nakladov" />

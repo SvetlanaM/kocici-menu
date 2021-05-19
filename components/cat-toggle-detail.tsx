@@ -9,7 +9,7 @@ const CatToggleDetail = ({ catData }: any) => {
     <div className="flex-col grid grid-rows divide-y divide-gray_lightest pt-3.6 font-light">
       <div></div>
       {reviews && reviews.length > 0 && (
-        <div className="px-3 pt-3.6">
+        <div className="px-3 pt-3.6 pb-3.6">
           <Title title="Obľúbené produkty" fontSize="text-sm" />
           {reviews.map((item) => (
             <FavouriteProducts key={item.name} product={item} />
