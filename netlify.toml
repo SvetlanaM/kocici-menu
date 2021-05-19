@@ -1,4 +1,4 @@
 [build]
-  command = "yarn introspect && yarn codegen && CI= yarn build"
+  command = "yarn introspect && yarn codegen && yarn build"
   functions = "netlify/functions"
   publish = "out"

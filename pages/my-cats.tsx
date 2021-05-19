@@ -35,7 +35,7 @@ const CatDetailQuery = () => {
     loading: catLoading,
   } = useGetCatDetailQuery({
     variables: {
-      user_id: '4e4d828d-33b9-4f05-a315-622f21e6d5ed',
+      user_id: getUser(),
       limit: 5,
     },
   });
