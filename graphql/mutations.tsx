@@ -40,3 +40,30 @@ export const ADD_REVIEW = gql`
     }
   }
 `;
+
+export const UPDATE_CAT = gql`
+  mutation UpdateCat($id: Int, $cats: Cat_set_input) {
+    update_Cat(where: { id: { _eq: $id } }, _set: $cats) {
+      affected_rows
+      returning {
+        id
+        name
+        age
+        note
+        type
+        weight
+        daily_food
+        color
+        nickname
+      }
+    }
+  }
+`;
+
+export const DELETE_CAT = gql`
+  mutation DeleteCat($id: Int!) {
+    delete_Cat_by_pk(id: $id) {
+      id
+    }
+  }
+`;

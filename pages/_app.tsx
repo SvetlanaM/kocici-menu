@@ -14,15 +14,18 @@ import {
   HttpLink,
 } from '@apollo/client';
 
+import { setContext } from '@apollo/client/link/context';
+
 const authMiddleware = new ApolloLink((operation, forward) => {
-  operation.setContext(({ headers = {} }) => {
-    const token = getToken();
+  operation.setContext(({ headers }) => {
     const user = getUser();
+    const token = getToken();
+
     return {
       headers: {
-        ...headers,
-        user,
         Authorization: 'Bearer ' + token,
+        user,
+        ...headers,
       },
     };
   });
@@ -36,17 +39,17 @@ const httpLink = new HttpLink({
 
 export const ApiClient = new ApolloClient({
   cache: new InMemoryCache(),
-  link: from([authMiddleware, httpLink]),
+  link: authMiddleware.concat(httpLink),
 });
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <IdentityContextProvider url="https://gracious-yalow-39710f.netlify.app/">
-      <ApolloProvider client={ApiClient}>
-        <ProtectedRoutes router={router}>
+      <ProtectedRoutes router={router}>
+        <ApolloProvider client={ApiClient}>
           <Component {...pageProps} />
-        </ProtectedRoutes>
-      </ApolloProvider>
+        </ApolloProvider>
+      </ProtectedRoutes>
     </IdentityContextProvider>
   );
 }

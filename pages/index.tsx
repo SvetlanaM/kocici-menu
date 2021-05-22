@@ -12,6 +12,7 @@ import {
   useGetCatsQuery,
   GetDashboardQueryVariables,
   GetCatsQueryVariables,
+  useGetCatDetailQuery,
 } from '../graphql/generated/graphql';
 import Header from '../components/head';
 import CenterContainer from '../components/center-container';
@@ -24,6 +25,7 @@ import { GeneralError } from '../components/error-screen';
 import setUppercaseTitle from '../utils/set-uppercase-title';
 import { getUser } from '../utils/user';
 import { getToken } from '../utils/token';
+import CatDetailContainer from '../components/cat-detail-container';
 
 //tu budu akoze ziskane macky uzivatela
 const getDashboardVariables: GetDashboardQueryVariables = {
@@ -94,7 +96,7 @@ const DashboardCatQuery = () => {
     data: CatsData,
   } = useGetCatsQuery({
     variables: {
-      user_id: (getCatVariables.user_id = getUser()),
+      user_id: getUser(),
       withProducts: true,
       limit: 2,
     },

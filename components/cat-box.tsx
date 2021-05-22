@@ -16,6 +16,10 @@ export const CatFieldsFragment = gql`
     name
     type
     doctor_email
+    color
+    daily_food
+    weight
+    nickname
     specials: SpecialRequirements {
       name
     }
@@ -27,6 +31,9 @@ export const CatFieldsFragment = gql`
         brand_type
         name
         image_url
+        reviewhistory {
+          review_type
+        }
       }
     }
   }

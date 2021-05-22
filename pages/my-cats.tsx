@@ -10,25 +10,18 @@ import CatDetailContainer from '../components/cat-detail-container';
 import ErrorScreen from '../components/error-screen';
 import Loading from '../components/loading';
 import { GeneralError } from '../components/error-screen';
-import { getUser } from '../utils/user';
+import { getUser, setUser } from '../utils/user';
 import CatDetailSpecials from '../components/cat-detail-specials';
 import { gql } from '@apollo/client';
 import { CatFieldsFragment } from '../components/cat-box';
-import { useGetCatDetailQuery } from '../graphql/generated/graphql';
-
-export const CatDetailFieldsFragment = gql`
-  fragment CatDetailFieldsFragment on Cat {
-    ...CatFieldsFragment
-    color
-    daily_food
-    weight
-    nickname
-  }
-  ${CatFieldsFragment}
-`;
+import {
+  GetCatDetailQueryVariables,
+  useGetCatDetailQuery,
+} from '../graphql/generated/graphql';
+import useAuth from '../hooks/useAuth';
+import { useEffect, useState } from 'react';
 
 const CatDetailQuery = () => {
-  let user = getUser();
   const {
     data: catData,
     error: catError,
@@ -37,6 +30,9 @@ const CatDetailQuery = () => {
     variables: {
       user_id: getUser(),
       limit: 5,
+      withProducts: true,
+      limitProducts: 5,
+      brand_type: 'Feringa',
     },
   });
 
@@ -46,6 +42,7 @@ const CatDetailQuery = () => {
       {catError && (
         <ErrorScreen error={GeneralError.fromApolloError(catError)} />
       )}
+
       {catData && <CatDetailContainer cats={catData.cat} />}
     </CenterContainer>
   );

@@ -3,6 +3,7 @@ import Image from '../components/image';
 import { useState } from 'react';
 import { useIdentityContext } from 'react-netlify-identity';
 import router from 'next/router';
+import { ApiClient } from '../pages/_app';
 
 interface MenuItemProps {
   icon: string;
@@ -29,6 +30,7 @@ const MenuItem = ({ icon, name, url, active }: MenuItemProps) => {
   const logout = () => {
     logoutUser()
       .then(() => router.push('/user/login'))
+      .then(() => ApiClient.resetStore())
       .catch((err) => alert('Nepodarilo sa uzivatela odhlasit ' + err));
   };
 

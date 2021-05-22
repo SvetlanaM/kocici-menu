@@ -58,10 +58,8 @@ const AddProductReviewForm = ({
 }: AddProductReviewFormProps) => {
   const { handleSubmit, control, watch } = useForm();
 
-  const [createReview] = useMutation<
-    AddReviewMutation,
-    AddReviewMutationVariables
-  >(ADD_REVIEW);
+  const [createReview] =
+    useMutation<AddReviewMutation, AddReviewMutationVariables>(ADD_REVIEW);
 
   const onSubmit = (data: any) => {
     const reviewInput: Review_Insert_Input = {
@@ -85,6 +83,7 @@ const AddProductReviewForm = ({
           variables: {
             withProducts: true,
             user_id: getUser(),
+            limit: 2,
           },
         },
       ],

@@ -1,7 +1,10 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import {
   Cat_Insert_Input,
+  Cat_Set_Input,
   CatTypeEnum_Enum as catTypes,
+  CatFieldsFragmentFragment,
+  GetCatByIdQuery,
 } from '../graphql/generated/graphql';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -20,17 +23,21 @@ import sk from '../public/locales/sk/common.json';
 
 export type CatInputData = Omit<Cat_Insert_Input, 'CatTypeEnum'>;
 interface CatFormInterface {
-  handleSubmit1: { (cat: CatInputData): Promise<boolean> };
+  handleSubmit1: {
+    (cat: CatInputData | Cat_Set_Input): Promise<boolean>;
+  };
   submitText: string;
+  catData?: CatFieldsFragmentFragment;
 }
 
-const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
+const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
   const { t } = useTranslation();
   const router = useRouter();
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -39,7 +46,7 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
 
   const onSubmit = useCallback(
     (data) => {
-      const catInput: CatInputData = {
+      const catInput: CatInputData | Cat_Set_Input = {
         age: Number(data.age),
         name: data.name,
         user_id: getUser(),
@@ -49,13 +56,18 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
         type: data.type,
         note: data.note,
         color: data.color,
-        daily_food: data.daily_food,
+        daily_food: Number(data.daily_food),
+        id: catData ? catData.id : null,
       };
 
       handleSubmit1(catInput).then((success: boolean) => {
         if (success) {
           console.log('jupiii');
-          router.push('/');
+          if (catData) {
+            router.push('/my-cats');
+          } else {
+            router.push('/');
+          }
         } else {
           alert('Data sa nepodarilo ulozit');
         }
@@ -74,6 +86,15 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
       );
     });
   }, [catTypes]);
+
+  useEffect(() => {
+    if (catData) {
+      let fields = Object.keys(catData).slice(1);
+      for (let field of fields) {
+        setValue(field, catData[field]);
+      }
+    }
+  }, [catData]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
@@ -103,6 +124,7 @@ const CatForm = ({ handleSubmit1, submitText }: CatFormInterface) => {
             <FormInput
               registerRules={{ ...register('nickname', { required: false }) }}
               type="text"
+              // defaultValue={catData.nickname}
             />
           </FormInputWrapper>
         </div>

@@ -3,6 +3,7 @@ interface FormInputProps {
   errors?: any;
   type: string;
   placeholder?: string;
+  defaultValue?: any;
 }
 
 const FormInput = ({
@@ -10,6 +11,7 @@ const FormInput = ({
   errors,
   type,
   placeholder,
+  defaultValue,
 }: FormInputProps) => {
   return (
     <input
@@ -21,6 +23,7 @@ const FormInput = ({
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray`}
       type={type}
       placeholder={placeholder}
+      defaultValue={defaultValue}
     ></input>
   );
 };

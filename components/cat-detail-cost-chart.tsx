@@ -1,5 +1,6 @@
 import Title from '../components/title';
 import { Bar } from 'react-chartjs-2';
+import moment from 'moment';
 
 interface CatDetailCostChartProps {
   data1: number[];
@@ -8,19 +9,36 @@ interface CatDetailCostChartProps {
 
 const CatDetailCostChart = ({ data1, data2 }: CatDetailCostChartProps) => {
   const mergeData = [...data1, ...data2];
+  const allMonths = [
+    'Január',
+    'Február',
+    'Marec',
+    'Apríl',
+    'Máj',
+    'Jún',
+    'Júl',
+    'August',
+    'September',
+    'Október',
+    'November',
+    'December',
+  ];
+
+  const currentMonth = moment(moment(), 'YYYY/MM/DD').format('M');
+  const currentYear = moment(moment(), 'YYYY/MM/DD').format('Y');
 
   const data = {
-    labels: ['Januar', 'Februar', 'Marec', 'April', 'Maj', 'Jun'],
+    labels: allMonths.slice(0, Number(currentMonth)),
     datasets: [
       {
-        label: 'Granule',
+        label: 'Jedlo',
         data: data1,
         backgroundColor: '#BDBDE7',
         borderRadius: '5',
         fill: true,
       },
       {
-        label: 'Ostatne',
+        label: 'Ostatné',
         data: data2,
         backgroundColor: '#E1E5EE',
         borderRadius: '5',
@@ -33,8 +51,8 @@ const CatDetailCostChart = ({ data1, data2 }: CatDetailCostChartProps) => {
     scales: {
       y: {
         // defining min and max so hiding the dataset does not change scale range
-        min: Math.floor(Math.min.apply(Math, mergeData) / 10) * 10 - 500,
-        max: Math.floor(Math.max.apply(Math, mergeData) / 10) * 10,
+        min: 500,
+        max: 4500,
         backdropColor: '#000',
         color: '#E1E5EE',
         ticks: {
@@ -52,7 +70,7 @@ const CatDetailCostChart = ({ data1, data2 }: CatDetailCostChartProps) => {
   };
   return (
     <div className="mt-5">
-      <Title title="Prehlad nakladov" />
+      <Title title={`Prehľad nákladov za rok ${currentYear}`} />
       <Bar data={data} options={options} />
     </div>
   );
