@@ -57,7 +57,7 @@ const CenterContainerQuery = () => {
       title: 'Priemerná mesačná spotreba',
     },
     {
-      name: setUppercaseTitle('Feringa'),
+      name: 'Feringa',
       icon: '/icons/fav_brand.svg',
       title: 'Moja najpopulárnejšia značka',
     },

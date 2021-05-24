@@ -29,10 +29,12 @@ export const CatFieldsFragment = gql`
     ) @include(if: $withProducts) {
       products: Product {
         brand_type
+        id
         name
         image_url
         reviewhistory {
           review_type
+          cat_id
         }
       }
     }

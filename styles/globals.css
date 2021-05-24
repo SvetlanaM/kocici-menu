@@ -119,3 +119,9 @@ input:focus {
 .cat-detail-box {
     height: 90px;
 }
+
+.canvas-graph canvas {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+}

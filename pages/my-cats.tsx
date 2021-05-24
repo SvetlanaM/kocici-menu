@@ -17,6 +17,7 @@ import { CatFieldsFragment } from '../components/cat-box';
 import {
   GetCatDetailQueryVariables,
   useGetCatDetailQuery,
+  useGetProductsQuery,
 } from '../graphql/generated/graphql';
 import useAuth from '../hooks/useAuth';
 import { useEffect, useState } from 'react';
@@ -31,20 +32,27 @@ const CatDetailQuery = () => {
       user_id: getUser(),
       limit: 5,
       withProducts: true,
-      limitProducts: 5,
-      brand_type: 'Feringa',
     },
   });
 
-  return (
-    <CenterContainer>
-      {catLoading && <Loading />}
-      {catError && (
-        <ErrorScreen error={GeneralError.fromApolloError(catError)} />
-      )}
+  const { data: productData } = useGetProductsQuery();
 
-      {catData && <CatDetailContainer cats={catData.cat} />}
-    </CenterContainer>
+  return (
+    <>
+      <CenterContainer>
+        {catLoading && <Loading />}
+        {catError && (
+          <ErrorScreen error={GeneralError.fromApolloError(catError)} />
+        )}
+      </CenterContainer>
+
+      {productData && catData && (
+        <CatDetailContainer
+          cats={catData.cat}
+          products={productData.products}
+        />
+      )}
+    </>
   );
 };
 const pageTitle = getTitle('Moje macky');
@@ -56,11 +64,6 @@ export default function MyCats() {
       <Sidebar />
       <Container>
         <CatDetailQuery />
-        <LeftContainer>
-          <div className="mt-9.5">
-            <AddCatBox />
-          </div>
-        </LeftContainer>
       </Container>
     </Layout>
   );

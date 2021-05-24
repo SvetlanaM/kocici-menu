@@ -3,17 +3,25 @@ import { Controller, useForm } from 'react-hook-form';
 import SubmitButton from './submit-button';
 import { useMutation } from '@apollo/client';
 import {
+  AddReviewHistoryMutation,
+  AddReviewHistoryMutationVariables,
   AddReviewMutation,
   AddReviewMutationVariables,
+  CatDetailFieldsFragmentFragment,
   GetDashboardQuery,
+  ReviewHistory_Insert_Input,
   Review_Insert_Input,
   SelectCatFieldsFragment,
   SelectProductFieldsFragment,
 } from '../graphql/generated/graphql';
 import Select, { components } from 'react-select';
 import NeutralButton from './neutral-button';
-import { ADD_REVIEW } from '../graphql/mutations';
-import { CATS_QUERY, DASHBOARD_QUERY } from '../graphql/queries';
+import { ADD_REVIEW, ADD_REVIEW_HISTORY } from '../graphql/mutations';
+import {
+  CATS_DETAIL_QUERY,
+  CATS_QUERY,
+  DASHBOARD_QUERY,
+} from '../graphql/queries';
 import FormInputLabel from './form-input-label';
 import { SVETA_EMAIL } from '../utils/constants';
 import Link from 'next/link';
@@ -22,9 +30,10 @@ import { getUser } from '../utils/user';
 import { TIP_LIMIT } from '../utils/constants';
 interface AddProductReviewFormProps {
   selectCats: GetDashboardQuery['selectCats'];
+
   selectProducts: GetDashboardQuery['selectProducts'];
   onBackAction: () => void;
-  onSuccess: () => void;
+  onSuccess?: () => void;
   props?: Array<string>;
 }
 
@@ -61,12 +70,27 @@ const AddProductReviewForm = ({
   const [createReview] =
     useMutation<AddReviewMutation, AddReviewMutationVariables>(ADD_REVIEW);
 
+  const [createReviewHistory] =
+    useMutation<AddReviewHistoryMutation, AddReviewHistoryMutationVariables>(
+      ADD_REVIEW_HISTORY
+    );
+
   const onSubmit = (data: any) => {
     const reviewInput: Review_Insert_Input = {
       cat_id: Number(data.cat.id),
       product_id: Number(data.product.id),
       review_type: data.rating.value.toString(),
     };
+
+    const reviewHistoryInput: ReviewHistory_Insert_Input = {
+      cat_id: Number(data.cat.id),
+      product_id: Number(data.product.id),
+      review_type: data.rating.value.toString(),
+    };
+
+    createReviewHistory({
+      variables: { review_history: reviewHistoryInput },
+    });
 
     createReview({
       variables: { review: reviewInput },
@@ -76,6 +100,16 @@ const AddProductReviewForm = ({
           variables: {
             limitTips: TIP_LIMIT,
             user_id: getUser(),
+          },
+        },
+        {
+          query: CATS_DETAIL_QUERY,
+          variables: {
+            user_id: getUser(),
+            limit: 5,
+            withProducts: true,
+            limitProducts: 5,
+            brand_type: 'Feringa',
           },
         },
         {
@@ -250,11 +284,14 @@ const AddProductReviewForm = ({
     handleReviewCombination(watchedCat, watchedProduct);
   }, [watchedCat, watchedProduct, watchedReview, reviewType]);
 
+  console.log(reviewType);
   const handleReviewCombination = (
     cat: SelectCatFieldsFragment,
     product: SelectProductFieldsFragment
   ) => {
     if (cat && product) {
+      console.log(cat);
+      console.log(product);
       setReviewType(
         String(
           cat.reviews.filter((item) => item.product_id === product.id).pop()
@@ -269,9 +306,9 @@ const AddProductReviewForm = ({
       <div className="mb-2 mt-4 flex justify-between">
         <FormInputLabel name="Produkt*" />
         <div className="text-purple-light text-xs mt-1.5 pl-0.5">
-          Nenasli ste hladany produkt?{' '}
+          Nenašli ste hľadaný produkt?{' '}
           <Link href={`mailto: ${SVETA_EMAIL}`}>
-            <a className="hover:underline">Napiste mi :)</a>
+            <a className="hover:underline">Napíšte mi :)</a>
           </Link>
         </div>
       </div>
@@ -293,9 +330,9 @@ const AddProductReviewForm = ({
             onInputChange={(e) => {
               setSearchTerm(e);
             }}
-            placeholder="Vyhladat produkt od 3 znakov"
+            placeholder="Vyhľadať produkt od 3 znakov"
             value={watchedProduct}
-            noOptionsMessage={() => 'Ziadne dalsie vysledky'}
+            noOptionsMessage={() => 'Žiadne ďalšie výsledky'}
           />
         )}
         name="product"
@@ -306,7 +343,7 @@ const AddProductReviewForm = ({
       <div className="flex justify-between my-6">
         <div className="w-full pr-3">
           <div className="mb-2">
-            <FormInputLabel name="Macka*" />
+            <FormInputLabel name="Mačka*" />
           </div>
           <Controller
             name="cat"
@@ -324,8 +361,8 @@ const AddProductReviewForm = ({
                   cat.id.toString()
                 }
                 getOptionLabel={(cat: SelectCatFieldsFragment) => cat.name}
-                placeholder="Vyhladat/Vybrat macku"
-                noOptionsMessage={() => 'Ziadne dalsie vysledky'}
+                placeholder="Vyhľadať/Vybrať mačku"
+                noOptionsMessage={() => 'Žiadne ďaľsie výsledky'}
               />
             )}
           />
@@ -343,9 +380,9 @@ const AddProductReviewForm = ({
                 {...field}
                 styles={customStyles}
                 options={ratingOptions}
-                noOptionsMessage={() => 'Ziadne dalsie vysledky'}
+                noOptionsMessage={() => 'Žiadne ďaľšie výsledky'}
                 isDisabled={reviewType !== '' ? true : false}
-                placeholder={reviewType || 'Vybrat hodnotenie (1-5)'}
+                placeholder={reviewType || 'Vybrať hodnotenie (1-5)'}
               />
             )}
           />
@@ -354,12 +391,12 @@ const AddProductReviewForm = ({
 
       {reviewType !== '' ? (
         <span className="flex text-red-500">
-          Pre macku {watchedCat.name} a krmivo {watchedProduct.name} uz mate
-          vybrane hodnotenie {reviewType}
+          Pre mačku {watchedCat.name} a krmivo {watchedProduct.name} už máte
+          vybrané hodnotenie {reviewType}
         </span>
       ) : null}
 
-      <NeutralButton title="Spet" onClick={onBackAction} />
+      <NeutralButton title="Späť" onClick={onBackAction} />
       <SubmitButton text="Uložiť" disabled={reviewType !== ''} size="w-1/4" />
     </form>
   );

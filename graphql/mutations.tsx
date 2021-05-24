@@ -41,6 +41,19 @@ export const ADD_REVIEW = gql`
   }
 `;
 
+export const ADD_REVIEW_HISTORY = gql`
+  mutation AddReviewHistory($review_history: ReviewHistory_insert_input!) {
+    insert_ReviewHistory(objects: [$review_history]) {
+      returning {
+        id
+        product_id
+        review_type
+        cat_id
+      }
+    }
+  }
+`;
+
 export const UPDATE_CAT = gql`
   mutation UpdateCat($id: Int, $cats: Cat_set_input) {
     update_Cat(where: { id: { _eq: $id } }, _set: $cats) {

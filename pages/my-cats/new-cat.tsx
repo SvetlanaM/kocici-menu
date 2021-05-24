@@ -83,7 +83,7 @@ export default function CreateCat() {
     async (catData: Cat_Insert_Input) => {
       const variables: AddCatMutationVariables = {
         cat: {
-          name: setUppercaseTitle(catData.name || ''),
+          name: catData.name || '',
           age: catData.age ?? null,
           user_id: catData.user_id,
           doctor_email: catData.doctor_email ?? null,
@@ -127,7 +127,7 @@ export default function CreateCat() {
   const updateMyCat = useCallback(
     async (catData: Cat_Set_Input) => {
       const setCatInput: Cat_Set_Input = {
-        name: setUppercaseTitle(catData.name || ''),
+        name: catData.name || '',
         age: catData.age ?? null,
         user_id: catData.user_id,
         doctor_email: catData.doctor_email ?? null,
@@ -175,7 +175,7 @@ export default function CreateCat() {
   const editOrAddStrings = {
     title: [`Pridať novú mačku`, `Upraviť mačku`],
     name: ['Prehľad', 'Moje mačky'],
-    path: ['Prehľad', '/my-cats'],
+    path: ['/', '/my-cats'],
     path2: ['/my-cats/new-cat', '/my-cats/[:id]'],
   };
 

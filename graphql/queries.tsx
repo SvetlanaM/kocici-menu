@@ -4,6 +4,7 @@ import { TipFieldsFragment } from '../components/tip-box';
 import { ReviewFieldsFragment } from '../components/table-row';
 import { TipDetailFieldsFragment } from '../components/tip-detail';
 import { StatFieldsFragment } from '../components/statistic-box';
+import { ProductFieldsFragment } from '../components/cat-detail-product-table';
 // import { CatDetailFieldsFragment } from '../pages/my-cats';
 
 export const CATS_QUERY = gql`
@@ -27,19 +28,20 @@ export const CAT_BY_PK = gql`
   ${CatFieldsFragment}
 `;
 
+export const PRODUCT_QUERY = gql`
+  query getProducts {
+    products: Product {
+      ...ProductFieldsFragment
+    }
+  }
+  ${ProductFieldsFragment}
+`;
+
 export const CatDetailFieldsFragment = gql`
   fragment CatDetailFieldsFragment on Cat {
     ...CatFieldsFragment
-    reccommeded: Reviews(
-      order_by: { review_type: desc, updated_at: desc }
-      where: { Product: { brand_type: { _eq: $brand_type } } }
-      limit: $limitProducts
-    ) {
-      ...ReviewFieldsFragment
-    }
   }
   ${CatFieldsFragment}
-  ${ReviewFieldsFragment}
 `;
 
 export const CATS_DETAIL_QUERY = gql`
@@ -49,7 +51,6 @@ export const CATS_DETAIL_QUERY = gql`
     $limit: Int
     $brand_type: String
     $limitProducts: Int
-    $cat_id: Int
   ) {
     cat: Cat(
       where: { _and: { is_active: { _eq: true }, user_id: { _eq: $user_id } } }

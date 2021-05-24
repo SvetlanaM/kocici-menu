@@ -1,4 +1,6 @@
+import { useMemo } from 'react';
 import Image from '../components/image';
+import { DEFAULT_PRODUCT_IMAGE as defaultImage } from '../utils/constants';
 
 interface ProductImageProps {
   src: string;
@@ -7,9 +9,10 @@ interface ProductImageProps {
 }
 
 const ProductImage = ({ src, alt, ...otherProps }: ProductImageProps) => {
+  const productImage = useMemo<string>(() => (src ? src : defaultImage), [src]);
   return (
     <Image
-      src={src}
+      src={productImage}
       alt={alt}
       width={55}
       height={55}

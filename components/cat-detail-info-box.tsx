@@ -7,18 +7,20 @@ import {
 import CatBasicInfo from '../components/cat-basic-info';
 import Link from 'next/link';
 import RemoveConfirmationModal from '../components/remove-confirmation-modal';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { DELETE_CAT } from '../graphql/mutations';
 import router, { Router } from 'next/router';
 import { CATS_DETAIL_QUERY, CATS_QUERY } from '../graphql/queries';
 import { TIP_LIMIT } from '../utils/constants';
 import { getUser } from '../utils/user';
+import { useMemo } from 'react';
 interface CatDetailInfoBoxProps {
   data: CatDetailFieldsFragmentFragment;
 }
 const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [catId, setCatId] = useState<number>(data.id);
 
   const openModal = () => {
     setIsOpen(true);
@@ -46,28 +48,30 @@ const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
     ],
   });
 
-  const deleteMyCat = useCallback(async () => {
-    try {
-      const result = await deleteCat({
-        variables: {
-          id: data.id,
-        },
-      });
-      if (result.data?.delete_Cat_by_pk.id) {
-        return true;
-      } else {
+  const deleteMyCat = useCallback(
+    async (catMainId: number) => {
+      try {
+        const result = await deleteCat({
+          variables: {
+            id: catMainId,
+          },
+        });
+        if (result.data?.delete_Cat_by_pk.id) {
+          return true;
+        } else {
+          return false;
+        }
+      } catch (e) {
+        console.log(e);
         return false;
       }
-    } catch (e) {
-      console.log(e);
-      return false;
-    }
-  }, [deleteCat]);
+    },
+    [deleteCat]
+  );
 
-  const afterDeletion = () => {
-    deleteMyCat();
-    deleteMyCat().then(() => closeModal());
-  };
+  const afterDeletion = useCallback(() => {
+    deleteMyCat(catId).then(() => closeModal());
+  }, [catId]);
 
   return (
     <div className="grid grid-cols-4 divide-x divide-gray_lightest border-rounded-base border-gray">
@@ -99,7 +103,12 @@ const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
               <span className="text-gray">Váha:</span> {data.weight || '--'} kg
             </li>
             <li>
-              <span className="text-gray">Email doktora:</span> --
+              <span className="text-gray">Email doktora:</span>
+              {data.doctor_email && (
+                <Link href={`mailto: ${data.doctor_email}`}>
+                  <a> Napísať</a>
+                </Link>
+              )}
             </li>
             <li>
               <span className="text-gray">Denná dávka:</span>{' '}
@@ -121,7 +130,14 @@ const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
           <Image src="/icons/delete.svg" height={20} width={20} />
           <p className="uppercase text-gray text-sm ml-2 font-light">
             <Link href="/my-cats">
-              <a onClick={openModal}>Vymazať mačku</a>
+              <a
+                onClick={() => {
+                  openModal();
+                  setCatId(data.id);
+                }}
+              >
+                Vymazať mačku
+              </a>
             </Link>
           </p>
           <RemoveConfirmationModal

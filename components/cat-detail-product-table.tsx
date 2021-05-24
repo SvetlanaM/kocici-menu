@@ -1,32 +1,72 @@
 import ProductImage from './product-image';
 import ProductName from './product-name';
+import Image from './image';
 import Title from './title';
 import { Line } from 'react-chartjs-2';
 import FavouriteProducts from './favourite-products';
+import { gql } from '@apollo/client';
+import { useEffect, useState } from 'react';
+import {
+  CatDetailFieldsFragmentFragment,
+  CatFieldsFragmentFragment,
+  GetCatDetailQuery,
+  GetProductsQuery,
+  ProductFieldsFragmentFragment,
+  SelectCatFieldsFragment,
+} from '../graphql/generated/graphql';
+import AddProductReviewModal from './add-product-review-modal';
+import Link from 'next/link';
 
-const CatDetailProductTable = ({ data, name, title, catReviews }) => {
-  console.log(catReviews[0]);
+export const ProductFieldsFragment = gql`
+  fragment ProductFieldsFragment on Product {
+    brand_type
+    name
+    image_url
+    id
+  }
+`;
 
+interface CatDetailProductTableProps {
+  data: GetProductsQuery['products'];
+  name: string;
+  title: string;
+  catReviews: Array<any>;
+  shuffleData?: () => void;
+  cats?: SelectCatFieldsFragment;
+  products?: GetProductsQuery['products'];
+}
+
+const CatDetailProductTable = ({
+  data,
+  name,
+  title,
+  catReviews,
+  shuffleData,
+  cats,
+  products,
+}: CatDetailProductTableProps) => {
   const data1 = (order: number) => {
     return {
       labels: ['1', '2', '3', '4', '5'],
       datasets: [
         {
-          label: '',
           data: catReviews[order],
           fill: false,
-          backgroundColor: '#3E3E70',
-          borderColor: '#3E3E70',
-          borderWidth: '1',
-          showLine: true,
+          borderColor: '#9595bc',
+          tension: 0,
         },
       ],
     };
   };
 
+  const handleReviewAdded = () => {
+    //return router.reload();
+  };
+
   const options = {
+    responsive: true,
     layout: {
-      padding: 20,
+      padding: 5,
     },
     animation: false,
     plugins: {
@@ -42,9 +82,7 @@ const CatDetailProductTable = ({ data, name, title, catReviews }) => {
       display: false,
     },
     scales: {
-      display: false,
       x: {
-        // defining min and max so hiding the dataset does not change scale range
         display: false,
         backdropColor: '#000',
         color: '#E1E5EE',
@@ -60,45 +98,99 @@ const CatDetailProductTable = ({ data, name, title, catReviews }) => {
         },
       },
       y: {
-        // defining min and max so hiding the dataset does not change scale range
         backdropColor: '#000',
-
-        grid: {
-          display: false,
-          drawOnChartArea: false,
-          lineWidth: 0,
-        },
+        min: 0,
+        max: 8,
         color: '#E1E5EE',
         display: false,
         ticks: {
-          display: false,
-          beginAtZero: false,
-          stepSize: 0.5,
+          display: true,
+          beginAtZero: true,
+          stepSize: 20,
+          min: 0,
+          max: 6,
         },
       },
     },
   };
 
+  const [modalIsOpen, setIsOpen] = useState(false);
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
   return (
-    <div className="mt-5">
-      <Title title={`${title} produkty mačky ${name}`} />
-      {data && data.length > 0 && (
+    <div className="mt-5 w-full">
+      <div className="flex flex-row justify-between pr-5 align-middle items-baseline">
+        <Title title={`${title} produkty ${name}`} />
+        {title === 'Navrhované' ? (
+          <button
+            onClick={() => {
+              shuffleData();
+            }}
+          >
+            <Image src="/icons/reload.svg" height={15} width={15} />
+          </button>
+        ) : (
+          <>
+            <Link href="/my-cats">
+              <a onClick={openModal} className="text-gray">
+                + Pridať
+              </a>
+            </Link>
+            <AddProductReviewModal
+              isOpen={modalIsOpen}
+              closeModal={closeModal}
+              selectCats={cats}
+              selectProducts={products}
+              onSaveSuccess={handleReviewAdded}
+            />
+          </>
+        )}
+      </div>
+      {data && data.length > 0 ? (
         <div className="border-rounded-base border-gray">
           <div className="grid divide-y divide-gray_lightest">
             {data.map((item, index) => (
               <>
-                <div className="pt-2 flex pb-1 justify-start items-center">
-                  <div className="w-2/3">
+                <div className="pt-2 flex pb-1 justify-between items-center">
+                  <div className="w-full">
                     <FavouriteProducts key={item} product={item} />
                   </div>
-                  <div className="w-2/4 ml-auto float-auto">
-                    {item.reviewhistory && item.reviewhistory.length > 0 && (
+                  <div className="canvas-graph">
+                    {item.reviewhistory && item.reviewhistory.length > 0 ? (
                       <Line data={data1(index)} options={options} />
+                    ) : (
+                      <>
+                        <Link href="/my-cats">
+                          <a onClick={openModal} className="text-gray">
+                            <Image
+                              src="/icons/add-review.svg"
+                              width={30}
+                              className="mr-10"
+                            />
+                          </a>
+                        </Link>
+                      </>
                     )}
                   </div>
                 </div>
               </>
             ))}
+          </div>
+        </div>
+      ) : (
+        <div className="border-rounded-base border-gray">
+          <div className="flex flex-col justify-between items-center px-8 pt-5 pb-4">
+            <Image src="/icons/no-reviews.svg" width={150} />
+            <h1 className="font-semibold text-gray mt-4">
+              {`Žiadne ${title.toLowerCase()} produkty`}
+            </h1>
           </div>
         </div>
       )}

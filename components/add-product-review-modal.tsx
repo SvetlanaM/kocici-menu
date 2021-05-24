@@ -26,15 +26,15 @@ const AddProductReviewModal = ({
     >
       <div className="flex flex-col justify-between text-purple leading-normal">
         <h2 className="font-medium text-2xl">
-          Pridat hodnotenie noveho produktu
+          Pridať hodnotenie nového produktu
         </h2>
         <div className="flex justify-between items-center">
           <div className="font-light text-sm w-4/6 pr-3.6">
             Hodnotenie nového produktu v{' '}
             <span className="text-purple-light">3 super easy krokoch.</span>
             <p className="mt-3">
-              Hodnotenie je mozne pridat iba pre produkt, ktory macka nema
-              hodnoteny, inak je editovatelny v detaily macky.
+              Hodnotenie je možné pridať iba pre produkt, ktorý mačka nemá
+              hodnotený, inak je editovateľný v detaily mačky.
             </p>
           </div>
           <div className="w-2/6">

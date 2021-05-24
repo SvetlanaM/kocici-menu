@@ -62,7 +62,7 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
 
       handleSubmit1(catInput).then((success: boolean) => {
         if (success) {
-          console.log('jupiii');
+          console.log('jupiii2');
           if (catData) {
             router.push('/my-cats');
           } else {
@@ -99,28 +99,28 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
       <fieldset>
-        <FormLegend name="Zakladne informacie" />
+        <FormLegend name="Základné informácie" />
         <div className="grid grid-cols-2 gap-10">
           <FormInputWrapper>
-            <FormInputLabel name="Meno macky*" />
+            <FormInputLabel name="Meno mačky*" />
             <FormInput
               registerRules={{
                 ...register('name', {
-                  required: { value: true, message: 'Meno macky je povinne' },
+                  required: { value: true, message: 'Meno mačky je povinné' },
                   maxLength: {
                     value: 100,
-                    message: 'Meno macky je max do 100 znakov',
+                    message: 'Meno mačky je max do 100 znakov',
                   },
                 }),
               }}
               type="text"
-              placeholder="Meno macky do 100 znakov"
+              placeholder="Meno mačky do 100 znakov"
               errors={errors.name}
             />
             {errors.name && <FormErrorMessage error={errors.name?.message} />}
           </FormInputWrapper>
           <FormInputWrapper>
-            <FormInputLabel name="Prezyvka macky" />
+            <FormInputLabel name="Prezývka mačky" />
             <FormInput
               registerRules={{ ...register('nickname', { required: false }) }}
               type="text"
@@ -130,7 +130,7 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
         </div>
         <div className="grid grid-cols-2 gap-10">
           <FormInputWrapper>
-            <FormInputLabel name="Vek macky" />
+            <FormInputLabel name="Vek mačky" />
             <FormInput
               registerRules={{
                 ...register('age', { min: 0.5, max: 30, required: false }),
@@ -142,7 +142,7 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
             {errors.age && <FormErrorMessage error="Vek od 0,5 do 30 rokov" />}
           </FormInputWrapper>
           <FormInputWrapper>
-            <FormInputLabel name="Farba macky" />
+            <FormInputLabel name="Farba mačky" />
             <FormInput
               registerRules={{ ...register('color', { required: false }) }}
               type="text"
@@ -151,7 +151,7 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
         </div>
         <div className="grid grid-cols-2 gap-10">
           <FormInputWrapper>
-            <FormInputLabel name="Vaha macky" />
+            <FormInputLabel name="Váha mačky" />
             <FormInput
               registerRules={{ ...register('weight', { required: false }) }}
               type="number"
@@ -159,7 +159,7 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
             />
           </FormInputWrapper>
           <FormInputWrapper>
-            <FormInputLabel name="Denna davka" />
+            <FormInputLabel name="Denná dávka" />
             <FormInput
               registerRules={{ ...register('daily_food', { required: false }) }}
               type="number"
@@ -169,7 +169,7 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
         </div>
         <div className="grid grid-cols-2 gap-10 mt-3">
           <FormInputWrapper>
-            <FormInputLabel name="Email veterinara" />
+            <FormInputLabel name="Email veterinára" />
             <FormInput
               registerRules={{
                 ...register('doctor_email', { required: false }),
@@ -179,7 +179,7 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
             />
           </FormInputWrapper>
           <FormInputWrapper>
-            <FormInputLabel name="Typ macky" />
+            <FormInputLabel name="Typ mačky" />
             <FormSelectBox
               registerRules={{ ...register('type', { required: false }) }}
             >
@@ -196,24 +196,24 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
         </fieldset> */}
       <fieldset>
         <div className="flex flex-col w-full mt-2">
-          <FormInputLabel name="Poznamka" />
+          <FormInputLabel name="Poznámka" />
           <textarea
             maxLength={500}
             {...register('note', {
               required: false,
               maxLength: {
                 value: 500,
-                message: 'Maximalne 500 znakov',
+                message: 'Maximálne 500 znakov',
               },
             })}
-            placeholder="Dodatocne poznamky. Maximalne 500 znakov."
+            placeholder="Dodatočné poznámky. Maximálne 500 znakov."
             className="form-textarea w-full mb-3 mt-2 text-purple block border-rounded-base border-gray 
               focus:outline-none focus:bg-white focus:border-gray
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray"
           ></textarea>
           <span className="text-sm font-light text-gray">
             {watchedNote !== undefined && watchedNote.length <= 500
-              ? `Ostava ${500 - watchedNote?.length} znakov z 500`
+              ? `Ostáva ${500 - watchedNote?.length} znakov z 500`
               : null}
           </span>
           {errors.note && <FormErrorMessage error={errors.note} />}

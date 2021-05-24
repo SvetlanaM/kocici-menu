@@ -8,6 +8,7 @@ import ReactTooltip from 'react-tooltip';
 import StarIcon from './star-icon';
 import setUppercaseTitle from '../utils/set-uppercase-title';
 import truncateText from '../utils/truncate-text';
+import { useMemo } from 'react';
 
 export const ReviewFieldsFragment = gql`
   fragment ReviewFieldsFragment on Review {
@@ -33,6 +34,7 @@ const TableRow = ({
 }: ReviewFieldsFragmentFragment) => {
   const formattedDate = DateFormatObject(updated_at).formatWithReplace();
   const reviewArray = [1, 2, 3, 4, 5];
+
   return (
     <tr>
       <td className="pl-3.6 py-4">
@@ -43,8 +45,11 @@ const TableRow = ({
       </td>
       <td>
         <ProductName
-          brand={setUppercaseTitle(product.brand_type || '')}
-          name={setUppercaseTitle(truncateText(product.name, 35))}
+          brand={product.brand_type}
+          name={setUppercaseTitle(
+            truncateText(product.name, 30),
+            product.brand_type
+          )}
         />
       </td>
       <td>
@@ -87,7 +92,7 @@ const TableRow = ({
           </div>
           <div>
             <Image
-              src="/icons/change_stars.svg"
+              src="/icons/add-review.svg"
               width={35}
               height={35}
               className="ml-0"
