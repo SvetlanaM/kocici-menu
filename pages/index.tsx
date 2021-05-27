@@ -80,6 +80,9 @@ const CenterContainerQuery = () => {
             selectCats={dashboardData?.selectCats}
             selectProducts={dashboardData?.selectProducts}
             onReviewSaveSuccess={handleReviewAdded}
+            numberOfProducts={5}
+            title={`Top 5 najlepšie hodnotených produktov zo ${dashboardData?.reviews.length}`}
+            footerType="HOMEPAGE"
           />
           <StatisticsList data={extendedData} cols={'grid-cols-2'} />
           <TipsList data={dashboardData.tips} cols={'grid-cols-2'} />

@@ -27,7 +27,7 @@ const TableFooter = ({
   return (
     <tfoot>
       <tr>
-        <td className="py-5 pl-3.6 base-medium-text" colSpan={5}>
+        <td className="py-3 pl-3.6 base-medium-text" colSpan={5}>
           <Link href="/">
             <a onClick={openModal}>+ Pridať hodnotenie nového produktu</a>
           </Link>
@@ -40,7 +40,9 @@ const TableFooter = ({
           />
         </td>
         <td className="pr-3.6 text-sm font-light text-gray text-right">
-          Zobraziť všetky
+          <Link href="/products">
+            <a>Zobraziť všetky</a>
+          </Link>
         </td>
       </tr>
     </tfoot>

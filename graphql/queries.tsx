@@ -82,6 +82,19 @@ export const SelectCatFields = gql`
   }
 `;
 
+export const REVIEWS_QUERY = gql`
+  query GetReviews($user_id: String) {
+    reviews: Review(
+      order_by: { review_type: desc, updated_at: desc }
+      where: { Cat: { user_id: { _eq: $user_id } } }
+    ) {
+      ...ReviewFieldsFragment
+      id
+    }
+  }
+  ${ReviewFieldsFragment}
+`;
+
 export const DASHBOARD_QUERY = gql`
   query GetDashboard($limitTips: Int, $user_id: String) {
     reviews: Review(

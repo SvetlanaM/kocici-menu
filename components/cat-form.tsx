@@ -151,7 +151,7 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
         </div>
         <div className="grid grid-cols-2 gap-10">
           <FormInputWrapper>
-            <FormInputLabel name="Váha mačky" />
+            <FormInputLabel name="Váha mačky v kg" />
             <FormInput
               registerRules={{ ...register('weight', { required: false }) }}
               type="number"
@@ -159,7 +159,7 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
             />
           </FormInputWrapper>
           <FormInputWrapper>
-            <FormInputLabel name="Denná dávka" />
+            <FormInputLabel name="Denná dávka v g" />
             <FormInput
               registerRules={{ ...register('daily_food', { required: false }) }}
               type="number"

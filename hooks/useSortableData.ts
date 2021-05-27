@@ -3,7 +3,7 @@ import {SortType} from '../utils/constants';
 
 
 
-const useSortableData = (inputData: Array<any>, sortedColumn: any, setSortedColumn: any, nestedColumn?: string) => {
+const useSortableData = (inputData: Array<any>, sortedColumn: any, setSortedColumn: any, nestedColumn?: string, resetAfterSort?: () => void) => {
   let sortedTable = [...inputData];
 
   useMemo(() => {
@@ -47,8 +47,13 @@ const useSortableData = (inputData: Array<any>, sortedColumn: any, setSortedColu
     ) {
       direction = SortType.DESC;
     }
+    
+    if (typeof resetAfterSort !== 'undefined') {
+      resetAfterSort()
+    }
 
     setSortedColumn({ column, direction });
+    
   };
 
   

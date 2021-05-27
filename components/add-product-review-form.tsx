@@ -363,6 +363,7 @@ const AddProductReviewForm = ({
                 getOptionLabel={(cat: SelectCatFieldsFragment) => cat.name}
                 placeholder="Vyhľadať/Vybrať mačku"
                 noOptionsMessage={() => 'Žiadne ďaľsie výsledky'}
+                isDisabled={selectCats.length === 1 ? true : false}
               />
             )}
           />

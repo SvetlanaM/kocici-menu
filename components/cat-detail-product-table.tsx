@@ -126,7 +126,7 @@ const CatDetailProductTable = ({
 
   return (
     <div className="mt-5 w-full">
-      <div className="flex flex-row justify-between pr-5 align-middle items-baseline">
+      <div className="flex flex-row justify-between align-middle items-start text-gray">
         <Title title={`${title} produkty ${name}`} />
         {title === 'Navrhované' ? (
           <button
@@ -134,13 +134,16 @@ const CatDetailProductTable = ({
               shuffleData();
             }}
           >
-            <Image src="/icons/reload.svg" height={15} width={15} />
+            <div className="inline-flex">
+              <Image src="/icons/reload.svg" height={15} width={15} />{' '}
+              <span className="ml-2">Nové produkty</span>
+            </div>
           </button>
         ) : (
           <>
             <Link href="/my-cats">
               <a onClick={openModal} className="text-gray">
-                + Pridať
+                + Pridať hodnotenie
               </a>
             </Link>
             <AddProductReviewModal
