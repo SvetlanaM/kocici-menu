@@ -70,6 +70,13 @@ export const SelectProductFields = gql`
   }
 `;
 
+export const SelectBrandTypeFields = gql`
+  fragment SelectBrandTypeFields on BrandType {
+    value
+    comment
+  }
+`;
+
 export const SelectCatFields = gql`
   fragment SelectCatFields on Cat {
     id
@@ -91,8 +98,19 @@ export const REVIEWS_QUERY = gql`
       ...ReviewFieldsFragment
       id
     }
+    selectCats: Cat(
+      where: { _and: { is_active: { _eq: true }, user_id: { _eq: $user_id } } }
+      order_by: { name: asc }
+    ) {
+      ...SelectCatFields
+    }
+    selectBrands: BrandType(order_by: { comment: asc }) {
+      ...SelectBrandTypeFields
+    }
   }
   ${ReviewFieldsFragment}
+  ${SelectCatFields}
+  ${SelectBrandTypeFields}
 `;
 
 export const DASHBOARD_QUERY = gql`

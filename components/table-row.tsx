@@ -8,7 +8,6 @@ import ReactTooltip from 'react-tooltip';
 import StarIcon from './star-icon';
 import setUppercaseTitle from '../utils/set-uppercase-title';
 import truncateText from '../utils/truncate-text';
-import { useMemo } from 'react';
 
 export const ReviewFieldsFragment = gql`
   fragment ReviewFieldsFragment on Review {
@@ -21,6 +20,7 @@ export const ReviewFieldsFragment = gql`
     }
     cat: Cat {
       id
+      name
     }
     updated_at
     review_type
@@ -36,8 +36,8 @@ const TableRow = ({
   const reviewArray = [1, 2, 3, 4, 5];
 
   return (
-    <tr>
-      <td className="pl-3.6 py-4">
+    <tr className="h-20">
+      <td className="flex flex-row justify-center h-20 py-3">
         <ProductImage
           src={product.image_url}
           alt={`${product.brand_type} - ${product.name}`}

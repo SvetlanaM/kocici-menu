@@ -28,6 +28,7 @@ import Link from 'next/link';
 import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
 import { getUser } from '../utils/user';
 import { TIP_LIMIT } from '../utils/constants';
+import { customStyles as style } from '../utils/form-styles';
 interface AddProductReviewFormProps {
   selectCats: GetDashboardQuery['selectCats'];
 
@@ -191,66 +192,7 @@ const AddProductReviewForm = ({
     { value: 5, label: '5 (Najlepšie)' },
   ];
 
-  const customStyles = {
-    control: (styles, { isHovered, isFocused, isDisabled }) => ({
-      ...styles,
-      display: 'flex',
-      color: '#4B4261',
-      border: isHovered ? null : '1px solid #E1E5EE',
-      backgroundColor: isDisabled ? 'white' : null,
-      // This line disable the blue border
-      boxShadow: isFocused ? '1px solid #E1E5EE' : 0,
-      '&:hover': {
-        border: isFocused ? null : '1px solid #B3BACC',
-      },
-    }),
-    option: (styles, { isDisabled, isFocused, isSelected }) => {
-      const color = '#4B4261';
-      return {
-        ...styles,
-        padding: 20,
-        borderBottom: '1px solid #E1E5EE',
-        color: isDisabled
-          ? '#4B4261'
-          : isSelected
-          ? '#B3BACC'
-          : isFocused
-          ? '#BDBDE7'
-          : '#4B4261',
-        cursor: isDisabled ? 'not-allowed' : 'default',
-        backgroundColor: isDisabled
-          ? 'red'
-          : isSelected
-          ? 'white'
-          : isFocused
-          ? 'white'
-          : null,
-        ':active': {
-          ...styles[':active'],
-          backgroundColor: !isDisabled && (isSelected ? null : 'white'),
-        },
-      };
-    },
-    input: (styles, { isFocused }) => {
-      return {
-        ...styles,
-        color: '#4B4261',
-      };
-    },
-    placeholder: (styles) => ({
-      ...styles,
-      color: '#B3BACC',
-      fontWeight: 'light',
-    }),
-    singleValue: (styles) => ({
-      ...styles,
-      color: '#4B4261',
-    }),
-    noOptionsMessage: (styles) => ({
-      ...styles,
-      color: '#4B4261',
-    }),
-  };
+  const customStyles = style;
 
   const [searchProducts, setSearchProducts] = useState<
     Array<SelectProductFieldsFragment>
@@ -340,7 +282,7 @@ const AddProductReviewForm = ({
         rules={{ required: true }}
         defaultValue={null}
       />
-      <div className="flex justify-between my-6">
+      <div className="flex justify-between my-6 mb-10">
         <div className="w-full pr-3">
           <div className="mb-2">
             <FormInputLabel name="Mačka*" />

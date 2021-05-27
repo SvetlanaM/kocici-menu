@@ -49,7 +49,7 @@ const PaginationTable = ({
   console.log(offsetStart, offsetNumber);
 
   return (
-    <>
+    <div className="w-full">
       <Title title={title} />
 
       <Table
@@ -65,7 +65,7 @@ const PaginationTable = ({
         offsetNumber={offsetStart}
         resetAfterSort={resetAfterSort}
       />
-    </>
+    </div>
   );
 };
 

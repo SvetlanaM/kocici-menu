@@ -125,3 +125,8 @@ input:focus {
     height: 100px;
     margin-right: 20px;
 }
+
+.css-1s9yiwq-option:last-child,
+.css-1eajbx8-option:hover:last-child {
+    border-bottom: none;
+}

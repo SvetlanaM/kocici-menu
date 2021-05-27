@@ -14,7 +14,7 @@ const SubmitButton = (props: Props): JSX.Element => (
     onClick={props.onClick}
     className={`text-white ${props.color} ${
       props.size
-    } float-right mb-5 py-1.5 mt-5 border-rounded-base font-medium text-center transition duration-500 ease-in ${
+    } float-right mb-5 py-1.5 h-10 border-rounded-base font-medium text-center transition duration-500 ease-in ${
       props.disabled ? null : props.hover
     }`}
     disabled={props.disabled}

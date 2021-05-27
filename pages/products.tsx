@@ -1,16 +1,15 @@
 import Container from '../components/container';
 import Layout from '../components/layout';
 import Sidebar from '../components/sidebar';
-import PaginationTable from '../components/pagination-table';
 import { useGetReviewsQuery } from '../graphql/generated/graphql';
 import Header from '../components/head';
 import CenterContainer from '../components/center-container';
-import LeftContainer from '../components/left-container';
 import ErrorScreen from '../components/error-screen';
 import Loading from '../components/loading';
 import getTitle from '../utils/get-title';
 import { GeneralError } from '../components/error-screen';
 import { getUser } from '../utils/user';
+import FilterForm from '../components/filter-form';
 
 const Products = () => {
   const {
@@ -22,22 +21,26 @@ const Products = () => {
       user_id: getUser(),
     },
   });
+
   return (
-    <CenterContainer>
-      {reviewsLoading && <Loading />}
-      {reviewsError && (
-        <ErrorScreen error={GeneralError.fromApolloError(reviewsError)} />
-      )}
+    <Container>
+      <CenterContainer>
+        {reviewsLoading && <Loading />}
+        {reviewsError && (
+          <ErrorScreen error={GeneralError.fromApolloError(reviewsError)} />
+        )}
+      </CenterContainer>
+
       {reviewsData && (
         <>
-          <PaginationTable
+          <FilterForm
+            selectCats={reviewsData.selectCats}
+            selectBrands={reviewsData.selectBrands}
             reviews={reviewsData?.reviews}
-            numberOfProducts={reviewsData?.reviews.length}
-            title={`Všetky hodnotené produkty: ${reviewsData?.reviews.length}`}
           />
         </>
       )}
-    </CenterContainer>
+    </Container>
   );
 };
 
@@ -48,9 +51,7 @@ export default function Home() {
     <Layout>
       <Header title={pageTitle} />
       <Sidebar />
-      <Container>
-        <Products />
-      </Container>
+      <Products />
     </Layout>
   );
 }
