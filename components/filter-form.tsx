@@ -15,7 +15,9 @@ import PaginationTable from '../components/pagination-table';
 import { customStyles as style } from '../utils/form-styles';
 import { useState } from 'react';
 import { useEffect } from 'react';
-
+import CenterContainer from '../components/center-container';
+import LeftContainer from '../components/left-container';
+import Title from './title';
 interface FilterFormProps {
   selectCats: GetReviewsQuery['selectCats'];
   selectBrands: GetReviewsQuery['selectBrands'];
@@ -101,85 +103,89 @@ const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
 
   return (
     <>
-      <form className="w-full flex flex-row justify-between mb-5">
-        <div className="w-1/3 mr-5">
-          <Controller
-            render={({ field, fieldState }) => (
-              <Select<SelectBrandTypeFieldsFragment, true>
-                {...field}
-                {...fieldState}
-                isMulti
-                options={selectBrands}
-                styles={customStyles}
-                getOptionValue={(brand: SelectBrandTypeFieldsFragment) =>
-                  brand.value.toString()
-                }
-                getOptionLabel={(brand: SelectBrandTypeFieldsFragment) =>
-                  brand.comment
-                }
-                placeholder="Podľa značky"
-                noOptionsMessage={() => 'Žiadne ďalšie výsledky'}
-              />
-            )}
-            name="brand"
-            control={control}
-            defaultValue={[]}
-          />
-        </div>
-        <div className="w-1/3 mr-5">
-          <Controller
-            render={({ field, fieldState }) => (
-              <Select<SelectCatFieldsFragment, true>
-                {...field}
-                isMulti
-                options={selectCats}
-                styles={customStyles}
-                getOptionValue={(cat: SelectCatFieldsFragment) =>
-                  cat.id.toString()
-                }
-                getOptionLabel={(cat: SelectCatFieldsFragment) => cat.name}
-                placeholder="Podľa mačky"
-                noOptionsMessage={() => 'Žiadne ďalšie výsledky'}
-              />
-            )}
-            name="cat"
-            control={control}
-            defaultValue={[]}
-          />
-        </div>
-        <div className="w-1/3 mr-5">
-          <Controller
-            name="rating"
-            control={control}
-            defaultValue={[]}
-            render={({ field }) => (
-              <Select<RatingOption, true>
-                {...field}
-                isMulti
-                styles={customStyles}
-                options={ratingOptions}
-                noOptionsMessage={() => 'Žiadne ďaľšie výsledky'}
-                placeholder={'Podľa hodnotenia'}
-              />
-            )}
-          />
-        </div>
-        <SubmitButton
-          text="Resetovať"
-          size="w-1/4"
-          color="bg-red-500"
-          onClick={resetFilter}
-          hover="hover:bg-red-800"
+      <CenterContainer>
+        <PaginationTable
+          reviews={reviewData}
+          numberOfProducts={reviewData.length}
+          title={`Všetky ${
+            reviewData === reviews ? 'hodnotené' : 'filtrované'
+          } produkty: ${reviewData.length}`}
         />
-      </form>
-
-      <PaginationTable
-        reviews={reviewData}
-        numberOfProducts={reviewData.length}
-        title={`Všetky ${
-          reviewData === reviews ? 'hodnotené' : 'filtrované'
-        } produkty: ${reviewData.length}`}
-      />
+      </CenterContainer>
+      <LeftContainer>
+        <Title title="Filtrovať" />
+        <form className="w-full flex flex-col justify-between mb-5">
+          <div className="mb-5">
+            <Controller
+              render={({ field, fieldState }) => (
+                <Select<SelectBrandTypeFieldsFragment, true>
+                  {...field}
+                  {...fieldState}
+                  isMulti
+                  options={selectBrands}
+                  styles={customStyles}
+                  getOptionValue={(brand: SelectBrandTypeFieldsFragment) =>
+                    brand.value.toString()
+                  }
+                  getOptionLabel={(brand: SelectBrandTypeFieldsFragment) =>
+                    brand.comment
+                  }
+                  placeholder="Podľa značky"
+                  noOptionsMessage={() => 'Žiadne ďalšie výsledky'}
+                />
+              )}
+              name="brand"
+              control={control}
+              defaultValue={[]}
+            />
+          </div>
+          <div className="mb-5">
+            <Controller
+              render={({ field, fieldState }) => (
+                <Select<SelectCatFieldsFragment, true>
+                  {...field}
+                  isMulti
+                  options={selectCats}
+                  styles={customStyles}
+                  getOptionValue={(cat: SelectCatFieldsFragment) =>
+                    cat.id.toString()
+                  }
+                  getOptionLabel={(cat: SelectCatFieldsFragment) => cat.name}
+                  placeholder="Podľa mačky"
+                  noOptionsMessage={() => 'Žiadne ďalšie výsledky'}
+                />
+              )}
+              name="cat"
+              control={control}
+              defaultValue={[]}
+            />
+          </div>
+          <div className="mb-5">
+            <Controller
+              name="rating"
+              control={control}
+              defaultValue={[]}
+              render={({ field }) => (
+                <Select<RatingOption, true>
+                  {...field}
+                  isMulti
+                  styles={customStyles}
+                  options={ratingOptions}
+                  noOptionsMessage={() => 'Žiadne ďaľšie výsledky'}
+                  placeholder={'Podľa hodnotenia'}
+                />
+              )}
+            />
+          </div>
+          <SubmitButton
+            text="Resetovať"
+            size="w-full"
+            color="bg-red-500"
+            onClick={resetFilter}
+            hover="hover:bg-red-800"
+          />
+        </form>
+      </LeftContainer>
     </>
   );
 };

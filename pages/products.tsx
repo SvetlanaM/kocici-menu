@@ -24,13 +24,7 @@ const Products = () => {
 
   return (
     <Container>
-      <CenterContainer>
-        {reviewsLoading && <Loading />}
-        {reviewsError && (
-          <ErrorScreen error={GeneralError.fromApolloError(reviewsError)} />
-        )}
-      </CenterContainer>
-
+      <CenterContainer>{reviewsLoading && <Loading />}</CenterContainer>
       {reviewsData && (
         <>
           <FilterForm

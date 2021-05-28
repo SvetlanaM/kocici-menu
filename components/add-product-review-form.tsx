@@ -333,7 +333,7 @@ const AddProductReviewForm = ({
       </div>
 
       {reviewType !== '' ? (
-        <span className="flex text-red-500">
+        <span className="flex text-red-500 mb-4">
           Pre mačku {watchedCat.name} a krmivo {watchedProduct.name} už máte
           vybrané hodnotenie {reviewType}
         </span>
