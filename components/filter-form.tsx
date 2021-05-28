@@ -32,37 +32,35 @@ const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
 
   const watchedBrand: GetReviewsQuery['selectBrands'] = watch('brand');
   const watchedCat: GetReviewsQuery['selectCats'] = watch('cat');
-  const watchedRating: GetReviewsQuery['reviews'] = watch('rating');
+  const watchedRating: RatingOption = watch('rating');
 
   useEffect(() => onFilter(), [watchedBrand, watchedCat, watchedRating]);
 
   const onFilter = () => {
-    const catFilterData = reviews.filter((review) =>
-      watchedCat && watchedCat.length > 0
-        ? Object.values(watchedCat)
-            .map((cat) => cat.id)
-            .includes(review.cat.id)
-        : watchedCat
-    );
+    let catFilterData = reviews;
+    if (watchedCat && watchedCat.length > 0) {
+      catFilterData = reviews.filter((review) =>
+        Object.values(watchedCat)
+          .map((cat) => cat.id)
+          .includes(review.cat.id)
+      );
+    }
 
-    const reviewFilterData = reviews.filter((review) =>
-      watchedRating && watchedRating.length > 0
-        ? Object.values(watchedRating)
-            .map((rating) => String(rating.value))
-            .includes(review.review_type)
-        : watchedRating
-    );
-    const brandFilterData = reviews.filter((review) =>
-      watchedBrand && watchedBrand.length > 0
-        ? Object.values(watchedBrand)
-            .map((brand: BrandType) => brand.comment)
-            .includes(review.product.brand_type)
-        : watchedBrand
-    );
+    if (watchedRating && watchedRating.length > 0) {
+      catFilterData = catFilterData.filter((review) =>
+        Object.values(watchedRating)
+          .map((rating) => String(rating.value))
+          .includes(review.review_type)
+      );
+    }
 
-    const filteredArray = catFilterData
-      .filter((value) => reviewFilterData.includes(value))
-      .filter((value) => brandFilterData.includes(value));
+    if (watchedBrand && watchedBrand.length > 0) {
+      catFilterData = catFilterData.filter((review) =>
+        Object.values(watchedBrand)
+          .map((brand: BrandType) => brand.comment)
+          .includes(review.product.brand_type)
+      );
+    }
 
     if (watchedCat !== undefined) {
       if (
@@ -72,7 +70,7 @@ const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
       ) {
         setReviewData(reviews);
       } else {
-        setReviewData(filteredArray);
+        setReviewData(catFilterData);
       }
     }
   };
