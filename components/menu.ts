@@ -17,7 +17,7 @@ export const MenuLinks = Object.freeze({
     },
     {
       icon: 'tips',
-      url: '',
+      url: '/tips',
       name: 'Tipy',
     },
     // {

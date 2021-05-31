@@ -100,7 +100,7 @@ const AuthForm = ({
         </div>
       )}
       <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-        <div className="">
+        <div className="mb-7">
           <FormInputWrapper>
             <FormInputLabel name="Email*" />
             <FormInput

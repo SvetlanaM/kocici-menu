@@ -157,3 +157,13 @@ export const TIP_DETAIL_QUERY = gql`
   }
   ${TipDetailFieldsFragment}
 `;
+
+export const TIPS_QUERY = gql`
+  query getTips {
+    tips: Tip(order_by: { updated_at: desc }) {
+      top_article
+      ...TipFieldsFragment
+    }
+  }
+  ${TipFieldsFragment}
+`;

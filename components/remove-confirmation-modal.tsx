@@ -27,7 +27,7 @@ const RemoveConfirmationModal = ({
         <h2 className="font-medium text-2xl">
           Potvrdiť vymazanie mačky {rest} :(
         </h2>
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center mb-5">
           <div className="font-light text-sm w-full pr-3.6">
             Naozaj chcete vymazať mačku {rest}? Vymazanie je trvalé a nie je
             možné ho vrátiť späť.

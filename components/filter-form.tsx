@@ -175,13 +175,15 @@ const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
               )}
             />
           </div>
-          <SubmitButton
-            text="Resetovať"
-            size="w-full"
-            color="bg-red-500"
-            onClick={resetFilter}
-            hover="hover:bg-red-800"
-          />
+          {reviewData !== reviews ? (
+            <SubmitButton
+              text="Resetovať"
+              size="w-full"
+              color="bg-red-500"
+              onClick={resetFilter}
+              hover="hover:bg-red-800"
+            />
+          ) : null}
         </form>
       </LeftContainer>
     </>

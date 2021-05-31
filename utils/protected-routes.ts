@@ -13,6 +13,7 @@ const ProtectedRoutes = ({ router, children }) => {
   let unprotectedRoutes = [
     '/user/login',
     '/user/register',
+   
   ];
 
   let pathIsProtected = unprotectedRoutes.indexOf(router.pathname) === -1;

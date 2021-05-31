@@ -30,7 +30,7 @@ const MenuItem = ({ icon, name, url, active }: MenuItemProps) => {
   const logout = () => {
     logoutUser()
       .then(() => router.push('/user/login'))
-      .then(() => ApiClient.resetStore())
+      // .then(() => ApiClient.resetStore())
       .catch((err) => alert('Nepodarilo sa uzivatela odhlasit ' + err));
   };
 
