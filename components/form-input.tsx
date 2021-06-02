@@ -1,9 +1,11 @@
 interface FormInputProps {
-  registerRules: any;
+  registerRules?: any;
   errors?: any;
   type: string;
   placeholder?: string;
   defaultValue?: any;
+  width?: string;
+  onChange?: (e) => void;
 }
 
 const FormInput = ({
@@ -12,11 +14,13 @@ const FormInput = ({
   type,
   placeholder,
   defaultValue,
+  width,
+  onChange,
 }: FormInputProps) => {
   return (
     <input
       {...registerRules}
-      className={`form-input mb-3 mt-2 text-purple block border-rounded-base ${
+      className={`form-input mb-3 mt-2 text-purple block border-rounded-base ${width} ${
         errors ? 'border-red-400' : 'border-gray'
       }
               focus:outline-none focus:bg-white focus:border-gray
@@ -24,6 +28,7 @@ const FormInput = ({
       type={type}
       placeholder={placeholder}
       defaultValue={defaultValue}
+      onChange={onChange}
     ></input>
   );
 };

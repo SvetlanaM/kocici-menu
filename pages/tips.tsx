@@ -10,7 +10,7 @@ import { GeneralError } from '../components/error-screen';
 import TopTipsList from '../components/top-tips-list';
 import { useGetTipsQuery } from '../graphql/generated/graphql';
 import { getToken } from '../utils/token';
-import { getUser } from '../utils/user';
+import TipsList from '../components/tips-list';
 
 const TipsQuery = () => {
   const {
@@ -61,6 +61,9 @@ const TipsQuery = () => {
       );
     });
 
+  const tips =
+    tipData && tipData.tips.filter((tip) => !topArticles.includes(tip));
+
   return (
     <>
       <CenterContainer>
@@ -69,7 +72,12 @@ const TipsQuery = () => {
           <ErrorScreen error={GeneralError.fromApolloError(tipError)} />
         )}
       </CenterContainer>
-      {tipData && user && <TopTipsList data={top} cols={'grid-cols-2'} />}
+      {tipData && (
+        <>
+          <TopTipsList data={top} cols={'grid-cols-2'} />
+          <TipsList data={tips} cols={'grid-cols-1'} isOnDashboard={false} />
+        </>
+      )}
     </>
   );
 };

@@ -85,7 +85,11 @@ const CenterContainerQuery = () => {
             footerType="HOMEPAGE"
           />
           <StatisticsList data={extendedData} cols={'grid-cols-2'} />
-          <TipsList data={dashboardData.tips} cols={'grid-cols-2'} />
+          <TipsList
+            data={dashboardData.tips}
+            cols={'grid-cols-2'}
+            isOnDashboard={true}
+          />
         </>
       )}
     </CenterContainer>

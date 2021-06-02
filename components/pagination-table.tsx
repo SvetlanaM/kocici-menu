@@ -15,7 +15,7 @@ const PaginationTable = ({
   numberOfProducts,
 }: PaginationTableProps) => {
   const offset = 3;
-  const allPageNumber = Math.round(numberOfProducts / offset);
+  const allPageNumber = Math.ceil(numberOfProducts / offset);
   const reviewsCopy = [...reviews];
   const [actualPageNumber, setActualPageNumber] = useState<number>(1);
   const [offsetNumber, setOffsetNumber] = useState<number>(offset);
@@ -45,8 +45,6 @@ const PaginationTable = ({
       setOffsetStartNumber(offsetStart - offset);
     }
   };
-
-  console.log(offsetStart, offsetNumber);
 
   return (
     <div className="w-full">

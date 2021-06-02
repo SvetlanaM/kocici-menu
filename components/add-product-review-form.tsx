@@ -29,6 +29,7 @@ import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
 import { getUser } from '../utils/user';
 import { TIP_LIMIT } from '../utils/constants';
 import { customStyles as style } from '../utils/form-styles';
+import useSearch from '../hooks/useSearch';
 interface AddProductReviewFormProps {
   selectCats: GetDashboardQuery['selectCats'];
 
@@ -207,26 +208,12 @@ const AddProductReviewForm = ({
   const watchedCat: SelectCatFieldsFragment = watch(catInput);
   const watchedReview: RatingOption = watch('rating');
 
-  useEffect(() => {
-    if (searchTerm.length >= 3) {
-      const results = productsCopy.filter((item) =>
-        item.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      if (results.length > 1000) {
-        setSearchProducts([]);
-      } else {
-        setSearchProducts(results);
-      }
-    } else {
-      setSearchProducts([]);
-    }
-  }, [searchTerm]);
+  useSearch(searchTerm, productsCopy, setSearchProducts);
 
   useEffect(() => {
     handleReviewCombination(watchedCat, watchedProduct);
   }, [watchedCat, watchedProduct, watchedReview, reviewType]);
 
-  console.log(reviewType);
   const handleReviewCombination = (
     cat: SelectCatFieldsFragment,
     product: SelectProductFieldsFragment

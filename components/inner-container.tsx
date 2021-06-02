@@ -4,7 +4,9 @@ type ContainerProps = {
 };
 
 const InnerContainer = ({ children, flexType }: ContainerProps) => {
-  return <section className={`flex ${flexType} mt-9.5`}>{children}</section>;
+  return (
+    <section className={`flex ${flexType} mt-9.5 w-full`}>{children}</section>
+  );
 };
 
 export default InnerContainer;
