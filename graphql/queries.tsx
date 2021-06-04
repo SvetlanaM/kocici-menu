@@ -5,7 +5,10 @@ import { ReviewFieldsFragment } from '../components/table-row';
 import { TipDetailFieldsFragment } from '../components/tip-detail';
 import { StatFieldsFragment } from '../components/statistic-box';
 import { ProductFieldsFragment } from '../components/cat-detail-product-table';
-// import { CatDetailFieldsFragment } from '../pages/my-cats';
+import {
+  UserStatsFieldFragment,
+  UserFieldFragment,
+} from '../components/user-stats';
 
 export const CATS_QUERY = gql`
   query GetCats($user_id: String, $withProducts: Boolean!, $limit: Int) {
@@ -129,7 +132,7 @@ export const DASHBOARD_QUERY = gql`
     ) {
       ...TipFieldsFragment
     }
-    stats: brand_fav_type1(limit: 1, where: { user_id: { _eq: "123" } }) {
+    stats: brand_fav_type(where: { id: { _eq: $user_id } }) {
       ...StatFieldsFragment
     }
     selectCats: Cat(
@@ -156,6 +159,30 @@ export const TIP_DETAIL_QUERY = gql`
     }
   }
   ${TipDetailFieldsFragment}
+`;
+
+export const USER_STATS_QUERY = gql`
+  query GetUserStats($user_id: String!, $updated_at: timestamptz) {
+    user_stats(where: { id: { _eq: $user_id } }) {
+      ...UserStatsFieldFragment
+    }
+    stats: brand_fav_type(where: { id: { _eq: $user_id } }) {
+      ...StatFieldsFragment
+    }
+    reviews_count: Review_aggregate(
+      where: { updated_at: { _gt: $updated_at } }
+    ) {
+      aggregate {
+        count
+      }
+    }
+    user_data: User(where: { id: { _eq: $user_id } }) {
+      ...UserFieldFragment
+    }
+  }
+  ${UserStatsFieldFragment}
+  ${StatFieldsFragment}
+  ${UserFieldFragment}
 `;
 
 export const TIPS_QUERY = gql`

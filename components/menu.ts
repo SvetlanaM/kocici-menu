@@ -27,7 +27,7 @@ export const MenuLinks = Object.freeze({
     // },
     {
       icon: 'settings',
-      url: '',
+      url: '/settings',
       name: 'Nastavenia',
     },
     {

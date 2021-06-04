@@ -5,6 +5,8 @@ const setUppercaseTitle = (title: string, brand?: string): string => {
     let smallTitle = title.toLowerCase().replace(" ", "")
     let removedBrandName = smallTitle.replace(smallBrand, '') || title
     finalTitle = removedBrandName[0].toUpperCase() + removedBrandName.slice(1 - removedBrandName.length)
+  } else {
+    finalTitle = title[0].toUpperCase() + title.slice(1 - title.length)
   }
   return finalTitle
 }

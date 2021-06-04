@@ -83,7 +83,7 @@ const TipsQuery = () => {
 };
 const pageTitle = getTitle('Tipy');
 
-export default function MyCats() {
+export default function Tips() {
   return (
     <Layout>
       <Header title={pageTitle} />

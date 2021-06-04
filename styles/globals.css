@@ -130,3 +130,7 @@ input:focus {
 .css-1eajbx8-option:hover:last-child {
     border-bottom: none;
 }
+
+.tips-list:last-child {
+    border-bottom: none;
+}

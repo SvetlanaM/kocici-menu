@@ -57,7 +57,7 @@ const CenterContainerQuery = () => {
       title: 'Priemerná mesačná spotreba',
     },
     {
-      name: 'Feringa',
+      name: (dashboardData && dashboardData.stats[0].brand_type) || '--',
       icon: '/icons/fav_brand.svg',
       title: 'Moja najpopulárnejšia značka',
     },

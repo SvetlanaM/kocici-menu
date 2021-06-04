@@ -33,7 +33,7 @@ const TipBox = ({
   readingTime,
 }: TipBoxInterface) => {
   return (
-    <div className="w-full pb-3.6 mb-4 border-b border-gray">
+    <div className="w-full pb-3.6 mb-4 border-b border-gray tips-list">
       <Link href={`/tips/${encodeURIComponent(slug)}`}>
         <a className="small-purple-text font-light flex flex-row items-center justify-between">
           <div>

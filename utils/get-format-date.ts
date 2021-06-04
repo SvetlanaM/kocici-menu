@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-const DateFormatObject = (_date: Date) => {
+const DateFormatObject = (_date?: Date) => {
   moment.locale('sk');
   return {
     _date,
@@ -12,6 +12,12 @@ const DateFormatObject = (_date: Date) => {
     },
     formatWithReplace() {
       return this.formatDateToText().replace('pred', '')
+    },
+    lastWeek() {
+      return moment().subtract(7, "days").format("YYYY-MM-DD");
+    },
+    formatDateTime() {
+      return moment(_date).format("DD. MM. YYYY HH:MM")
     }
   }
 }

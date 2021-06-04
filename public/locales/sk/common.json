@@ -4,6 +4,7 @@
         "key_1": "{{count}} roky",
         "key_2": "{{count}} rokov"
     },
+
     "DOMACA_TYPE": "domáca",
     "SIAMSKA_TYPE": "siamská",
     "ABESINSKA_VALUE": "abesínska",
