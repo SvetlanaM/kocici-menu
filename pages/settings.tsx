@@ -13,6 +13,7 @@ import LeftContainer from '../components/left-container';
 import { useGetUserStatsQuery } from '../graphql/generated/graphql';
 import { getUser } from '../utils/user';
 import DateFormatObject from '../utils/get-format-date';
+import UploadImage from '../components/upload-image';
 
 const UserStatsQuery = () => {
   const lastWeek = DateFormatObject().lastWeek();

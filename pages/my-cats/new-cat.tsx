@@ -93,6 +93,7 @@ export default function CreateCat() {
           note: catData.note ?? null,
           color: catData.color ?? null,
           daily_food: catData.daily_food ?? null,
+          image_url: catData.image_url ?? null,
         },
       };
 

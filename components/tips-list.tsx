@@ -27,7 +27,6 @@ const TipsList = ({ data, cols, isOnDashboard }: TipProps) => {
 
   useSearch(searchTerm, data, setSearchTips, false);
 
-  console.log(searchTips);
   return (
     <InnerContainer flexType="flex-col">
       <div className="flex flex-row justify-between mb-2 items-center">

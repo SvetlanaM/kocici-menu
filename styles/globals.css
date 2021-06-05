@@ -110,6 +110,7 @@ input:focus {
 
 .cat-image {
     height: 65px;
+    width: 65px;
 }
 
 .ReactModal__Overlay.ReactModal__Overlay--after-open {

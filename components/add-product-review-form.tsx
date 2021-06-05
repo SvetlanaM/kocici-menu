@@ -219,8 +219,6 @@ const AddProductReviewForm = ({
     product: SelectProductFieldsFragment
   ) => {
     if (cat && product) {
-      console.log(cat);
-      console.log(product);
       setReviewType(
         String(
           cat.reviews.filter((item) => item.product_id === product.id).pop()

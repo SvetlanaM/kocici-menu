@@ -1,12 +1,11 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Cat_Insert_Input,
   Cat_Set_Input,
   CatTypeEnum_Enum as catTypes,
   CatFieldsFragmentFragment,
-  GetCatByIdQuery,
 } from '../graphql/generated/graphql';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
 import FormErrorMessage from './form-error-message';
@@ -17,9 +16,11 @@ import FormInput from './form-input';
 import FormSelectBox from './form-select-box';
 import BackButton from '../components/back-button';
 import SubmitButton from '../components/submit-button';
-import ErrorScreen from './error-screen';
 import { getUser } from '../utils/user';
 import sk from '../public/locales/sk/common.json';
+import UploadImage from './upload-image';
+import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
+import { useS3Upload } from 'next-s3-upload';
 
 export type CatInputData = Omit<Cat_Insert_Input, 'CatTypeEnum'>;
 interface CatFormInterface {
@@ -31,6 +32,13 @@ interface CatFormInterface {
 }
 
 const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
+  const catImage = useMemo<string>(
+    () => (catData && catData.image_url ? catData.image_url : defaultImage),
+    [catData]
+  );
+  const [imageUrl, setImageUrl] = useState<string>(catImage);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { FileInput, openFileDialog, uploadToS3 } = useS3Upload();
   const { t } = useTranslation();
   const router = useRouter();
   const {
@@ -38,11 +46,34 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
     handleSubmit,
     watch,
     setValue,
+    control,
     formState: { errors },
   } = useForm();
 
   const noteInputName = 'note';
   const watchedNote: string | undefined = watch(noteInputName);
+
+  const handleFileChange = async (file: File) => {
+    setIsLoading(true);
+    if (checkFileType(file)) {
+      let { url } = await uploadToS3(file);
+      setImageUrl(url);
+      setIsLoading(false);
+    } else {
+      alert('Nepodporovaný formát');
+    }
+  };
+
+  const fileTypes = ['png', 'jpg', 'gif', 'webp', 'jpeg'];
+  const checkFileType = (file: File) => {
+    let value = file.name;
+    let fileType = value.substring(value.lastIndexOf('.') + 1, value.length);
+    if (fileTypes.indexOf(fileType) > -1) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   const onSubmit = useCallback(
     (data) => {
@@ -58,6 +89,7 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
         color: data.color,
         daily_food: Number(data.daily_food),
         id: catData ? catData.id : null,
+        image_url: imageUrl,
       };
 
       handleSubmit1(catInput).then((success: boolean) => {
@@ -73,7 +105,7 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
         }
       });
     },
-    [handleSubmit1]
+    [handleSubmit1, imageUrl]
   );
 
   const catTypeOptions = useMemo(() => {
@@ -100,6 +132,36 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
       <fieldset>
         <FormLegend name="Základné informácie" />
+        <div>
+          <UploadImage
+            imageUrl={imageUrl}
+            openFileDialog={openFileDialog}
+            isLoading={isLoading}
+          />
+          <Controller
+            name="cat_image"
+            control={control}
+            rules={{
+              required: false,
+              validate: {
+                checkFileType: checkFileType,
+              },
+            }}
+            render={() => (
+              <FileInput
+                onChange={handleFileChange}
+                type="file"
+                accept="image/png, image/jpeg, image/jpg, image/webp, image/gif"
+              />
+            )}
+            {...(errors.cat_image &&
+              errors.cat_image.type === 'checkFileType' && (
+                <FormErrorMessage
+                  error={`Nahrajte subor v jednom z tychto formatov ${fileTypes}`}
+                />
+              ))}
+          />
+        </div>
         <div className="grid grid-cols-2 gap-10">
           <FormInputWrapper>
             <FormInputLabel name="Meno mačky*" />
@@ -219,8 +281,10 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
           {errors.note && <FormErrorMessage error={errors.note} />}
         </div>
       </fieldset>
-      <BackButton url={'/'} />
-      <SubmitButton text={submitText} disabled={false} size="w-1/4" />
+      <div className="mt-8">
+        <BackButton url={'/'} />
+        <SubmitButton text={submitText} disabled={false} size="w-1/4" />
+      </div>
     </form>
   );
 };
