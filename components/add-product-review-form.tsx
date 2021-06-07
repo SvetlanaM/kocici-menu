@@ -42,11 +42,11 @@ interface AddProductReviewFormProps {
 const Option = ({ children, ...props }) => {
   return (
     <components.Option {...props}>
-      <div className="float-left mt-0 mr-3 select-photo">
+      <div className="float-left mt-0 mr-3 select-photo h-10 w-10">
         {props.data.__typename === 'Cat' ? (
           <img
             src={props.data.image_url || defaultImage}
-            className="rounded-full h-10 w-10"
+            className="rounded-full h-10 w-10 object-cover"
           />
         ) : props.data.__typename === 'Product' ? (
           <img
@@ -228,17 +228,19 @@ const AddProductReviewForm = ({
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
-      <div className="mb-2 mt-4 flex justify-between">
-        <ProductController
-          searchProducts={searchProducts}
-          watchedProduct={watchedProduct}
-          onInputChange={(e) => {
-            setSearchTerm(e);
-          }}
-          name="product"
-          control={control}
-          showHint={true}
-        />
+      <div className="mb-2 mt-4">
+        <div className="w-full">
+          <ProductController
+            searchProducts={searchProducts}
+            watchedProduct={watchedProduct}
+            onInputChange={(e) => {
+              setSearchTerm(e);
+            }}
+            name="product"
+            control={control}
+            showHint={true}
+          />
+        </div>
       </div>
       <div className="flex justify-between my-6 mb-10">
         <div className="w-full pr-3">

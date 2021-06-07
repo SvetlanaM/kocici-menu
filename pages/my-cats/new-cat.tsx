@@ -95,6 +95,8 @@ export default function CreateCat() {
       },
     });
 
+    const { data: productData } = useGetProductsQuery();
+
     return (
       <Center>
         {catLoading && <Loading />}
@@ -103,11 +105,12 @@ export default function CreateCat() {
         )}
         <Title title={title} />
         <Breadcrumbs breadcrumbs={breadcrumbs} />
-        {catData && (
+        {catData && productData && (
           <CatForm
             handleSubmit1={handleSubmit1}
             submitText={title}
             catData={catData.cat}
+            products={productData.products}
           />
         )}
       </Center>

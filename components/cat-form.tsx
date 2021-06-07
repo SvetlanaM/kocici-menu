@@ -76,7 +76,30 @@ const CatForm = ({
     setValue,
     control,
     formState: { errors },
-  } = useForm({ mode: 'onBlur' });
+  } = useForm({
+    defaultValues: {
+      name: catData && catData.name,
+      nickname: catData && catData.nickname,
+      age: catData && catData.age,
+      color: catData && catData.color,
+      weight: catData && catData.weight,
+      cat_image: catData && catData.image_url,
+      daily_food: catData && catData.daily_food,
+      doctor_email: catData && catData.doctor_email,
+      note: '',
+      type: catData && catData.type,
+      fieldArray:
+        catData &&
+        catData.reviews.map((item) => {
+          return {
+            rating: item.products.reviewhistory.map(
+              (item) => item.review_type
+            )[0],
+            product: item.products.name,
+          };
+        }),
+    },
+  });
 
   let index;
   const { fields, append, remove } = useFieldArray({
@@ -187,14 +210,14 @@ const CatForm = ({
     });
   }, [catTypes]);
 
-  useEffect(() => {
-    if (catData) {
-      let fields = Object.keys(catData).slice(1);
-      for (let field of fields) {
-        setValue(field, catData[field]);
-      }
-    }
-  }, [catData]);
+  // useEffect(() => {
+  //   if (catData) {
+  //     let fields1 = Object.keys(catData).slice(1);
+  //     for (let field of fields1) {
+  //       setValue(field, catData[field]);
+  //     }
+  //   }
+  // }, [catData]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
@@ -335,22 +358,22 @@ const CatForm = ({
                     setSearchTerm(e);
                   }}
                   name={`fieldArray.${index}.product`}
+                  {...register(`fieldArray.${index}.product` as const)}
+                  defaultValue={field.product}
                   control={control}
                   showHint={false}
-                  {...register(`fieldArray.${index}.product` as const)}
                 />
               </div>
               <div className="pl-0 w-2/6">
                 <RatingController
                   name={`fieldArray.${index}.rating`}
                   control={control}
+                  defaultValue={field.rating}
                   isDisabled={false}
                   placeholder={'Vybrať hodnotenie (1-5)'}
-                  defaultValue={5}
                   {...register(`fieldArray.${index}.rating` as const)}
                 />
               </div>
-
               <button
                 type="button"
                 className="mt-8 text-red-500"

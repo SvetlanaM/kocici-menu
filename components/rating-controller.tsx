@@ -7,10 +7,10 @@ const customStyles = style;
 interface RatingControllerProps {
   props?: Array<string>;
   name: string;
-  control: Control<FieldValues>;
+  control?: Control<FieldValues>;
   isDisabled?: boolean;
   placeholder?: string;
-  defaultValue?: number;
+  defaultValue?: string;
 }
 interface RatingOption {
   value: number;
@@ -49,7 +49,7 @@ const RatingController = ({
             options={ratingOptions}
             noOptionsMessage={() => 'Žiadne ďaľšie výsledky'}
             isDisabled={isDisabled}
-            placeholder={placeholder}
+            placeholder={defaultValue}
           />
         )}
       />

@@ -13,12 +13,15 @@ const customStyles = style;
 const Option = ({ children, ...props }) => {
   return (
     <components.Option {...props}>
-      <div className="float-left mt-0 mr-3 select-photo">
+      <div className="mr-3 flex flex-row items-center">
         {props.data.__typename === 'Product' && (
-          <img src={props.data.image_url} className="h-10 w-10" />
+          <img
+            src={props.data.image_url}
+            className="object-fill h-10 w-10 mr-4 float-right"
+          />
         )}
+        {children}
       </div>
-      {children}
     </components.Option>
   );
 };
@@ -29,8 +32,9 @@ interface ProductControllerProps {
   watchedProduct?: SelectProductFieldsFragment;
   props?: Array<string>;
   name: string;
-  control: Control<FieldValues>;
+  control?: Control<FieldValues>;
   showHint: boolean;
+  defaultValue?: string;
 }
 
 const ProductController = ({
@@ -41,17 +45,20 @@ const ProductController = ({
   name,
   control,
   showHint,
+  defaultValue,
 }: ProductControllerProps) => {
   return (
     <>
       {showHint ? (
         <>
-          <FormInputLabel name="Produkt*" />
-          <div className="text-purple-light text-xs mt-1.5 pl-0.5">
-            Nenašli ste hľadaný produkt?{' '}
-            <Link href={`mailto: ${SVETA_EMAIL}`}>
-              <a className="hover:underline">Napíšte mi :)</a>
-            </Link>
+          <div className="flex justify-between mb-3">
+            <FormInputLabel name="Produkt*" />
+            <div className="text-purple-light text-xs mt-1.5 pl-0.5">
+              Nenašli ste hľadaný produkt?{' '}
+              <Link href={`mailto: ${SVETA_EMAIL}`}>
+                <a className="hover:underline">Napíšte mi :)</a>
+              </Link>
+            </div>
           </div>
         </>
       ) : (
@@ -76,7 +83,7 @@ const ProductController = ({
               product.name
             }
             onInputChange={onInputChange}
-            placeholder="Vyhľadať produkt od 3 znakov"
+            placeholder={defaultValue}
             value={watchedProduct}
             noOptionsMessage={() => 'Žiadne ďalšie výsledky'}
           />
@@ -84,7 +91,7 @@ const ProductController = ({
         name={name}
         control={control}
         rules={{ required: true }}
-        defaultValue={null}
+        defaultValue={defaultValue}
       />
     </>
   );
