@@ -20,6 +20,26 @@ export const ADD_CAT = gql`
   }
 `;
 
+export const ADD_REVIEW_BULK = gql`
+  mutation AddReviewBulk($reviews: [Review_insert_input!]!) {
+    insert_Review(objects: $reviews) {
+      returning {
+        product: Product {
+          id
+          name
+          brand_type
+          price
+          image_url
+        }
+        cat: Cat {
+          id
+        }
+        updated_at
+        review_type
+      }
+    }
+  }
+`;
 export const ADD_REVIEW = gql`
   mutation AddReview($review: Review_insert_input!) {
     insert_Review(objects: [$review]) {
@@ -36,6 +56,21 @@ export const ADD_REVIEW = gql`
         }
         updated_at
         review_type
+      }
+    }
+  }
+`;
+
+export const ADD_REVIEW_HISTORY_BULK = gql`
+  mutation AddReviewHistoryBulk(
+    $review_history: [ReviewHistory_insert_input!]!
+  ) {
+    insert_ReviewHistory(objects: $review_history) {
+      returning {
+        id
+        product_id
+        review_type
+        cat_id
       }
     }
   }

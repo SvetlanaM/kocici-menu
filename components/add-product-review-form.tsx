@@ -7,7 +7,6 @@ import {
   AddReviewHistoryMutationVariables,
   AddReviewMutation,
   AddReviewMutationVariables,
-  CatDetailFieldsFragmentFragment,
   GetDashboardQuery,
   ReviewHistory_Insert_Input,
   Review_Insert_Input,
@@ -21,20 +20,21 @@ import {
   CATS_DETAIL_QUERY,
   CATS_QUERY,
   DASHBOARD_QUERY,
+  USER_STATS_QUERY,
 } from '../graphql/queries';
 import FormInputLabel from './form-input-label';
-import { SVETA_EMAIL } from '../utils/constants';
-import Link from 'next/link';
 import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
 import { getUser } from '../utils/user';
 import { TIP_LIMIT } from '../utils/constants';
 import { customStyles as style } from '../utils/form-styles';
 import useSearch from '../hooks/useSearch';
+import ProductController from './product-controller';
+import RatingController from './rating-controller';
 interface AddProductReviewFormProps {
-  selectCats: GetDashboardQuery['selectCats'];
+  selectCats?: GetDashboardQuery['selectCats'];
 
   selectProducts: GetDashboardQuery['selectProducts'];
-  onBackAction: () => void;
+  onBackAction?: () => void;
   onSuccess?: () => void;
   props?: Array<string>;
 }
@@ -122,6 +122,12 @@ const AddProductReviewForm = ({
             limit: 2,
           },
         },
+        {
+          query: USER_STATS_QUERY,
+          variables: {
+            user_id: getUser(),
+          },
+        },
       ],
       // update: (store, { data }) => {
       //   const reviewsData = store.readQuery({
@@ -185,14 +191,6 @@ const AddProductReviewForm = ({
     label: string;
   }
 
-  const ratingOptions = [
-    { value: 1, label: '1 (Najhoršie)' },
-    { value: 2, label: '2' },
-    { value: 3, label: '3' },
-    { value: 4, label: '4' },
-    { value: 5, label: '5 (Najlepšie)' },
-  ];
-
   const customStyles = style;
 
   const [searchProducts, setSearchProducts] = useState<
@@ -231,42 +229,17 @@ const AddProductReviewForm = ({
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
       <div className="mb-2 mt-4 flex justify-between">
-        <FormInputLabel name="Produkt*" />
-        <div className="text-purple-light text-xs mt-1.5 pl-0.5">
-          Nenašli ste hľadaný produkt?{' '}
-          <Link href={`mailto: ${SVETA_EMAIL}`}>
-            <a className="hover:underline">Napíšte mi :)</a>
-          </Link>
-        </div>
+        <ProductController
+          searchProducts={searchProducts}
+          watchedProduct={watchedProduct}
+          onInputChange={(e) => {
+            setSearchTerm(e);
+          }}
+          name="product"
+          control={control}
+          showHint={true}
+        />
       </div>
-      <Controller
-        render={({ field, fieldState }) => (
-          <Select<SelectProductFieldsFragment>
-            {...field}
-            {...fieldState}
-            styles={customStyles}
-            options={searchProducts}
-            {...props}
-            components={{ Option }}
-            getOptionValue={(product: SelectProductFieldsFragment) =>
-              product.id.toString()
-            }
-            getOptionLabel={(product: SelectProductFieldsFragment) =>
-              product.name
-            }
-            onInputChange={(e) => {
-              setSearchTerm(e);
-            }}
-            placeholder="Vyhľadať produkt od 3 znakov"
-            value={watchedProduct}
-            noOptionsMessage={() => 'Žiadne ďalšie výsledky'}
-          />
-        )}
-        name="product"
-        control={control}
-        rules={{ required: true }}
-        defaultValue={null}
-      />
       <div className="flex justify-between my-6 mb-10">
         <div className="w-full pr-3">
           <div className="mb-2">
@@ -296,23 +269,11 @@ const AddProductReviewForm = ({
           />
         </div>
         <div className="w-full pl-3">
-          <div className="mb-2">
-            <FormInputLabel name="Hodnotenie*" />
-          </div>
-          <Controller
+          <RatingController
             name="rating"
             control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
-              <Select<RatingOption>
-                {...field}
-                styles={customStyles}
-                options={ratingOptions}
-                noOptionsMessage={() => 'Žiadne ďaľšie výsledky'}
-                isDisabled={reviewType !== '' ? true : false}
-                placeholder={reviewType || 'Vybrať hodnotenie (1-5)'}
-              />
-            )}
+            isDisabled={reviewType !== '' ? true : false}
+            placeholder={reviewType || 'Vybrať hodnotenie (1-5)'}
           />
         </div>
       </div>

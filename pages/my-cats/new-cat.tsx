@@ -4,13 +4,29 @@ import CatForm from '../../components/cat-form';
 import {
   AddCatMutation,
   AddCatMutationVariables,
+  AddReviewBulkMutation,
+  AddReviewBulkMutationVariables,
+  AddReviewHistoryBulkMutation,
+  AddReviewHistoryBulkMutationVariables,
+  AddReviewMutation,
+  AddReviewMutationVariables,
   Cat_Insert_Input,
   Cat_Set_Input,
+  ReviewHistory_Insert_Input,
+  Review_Insert_Input,
   UpdateCatMutation,
   UpdateCatMutationVariables,
   useGetCatByIdQuery,
+  useGetProductsQuery,
 } from '../../graphql/generated/graphql';
-import { ADD_CAT, UPDATE_CAT } from '../../graphql/mutations';
+import {
+  ADD_CAT,
+  UPDATE_CAT,
+  ADD_REVIEW,
+  ADD_REVIEW_HISTORY,
+  ADD_REVIEW_BULK,
+  ADD_REVIEW_HISTORY_BULK,
+} from '../../graphql/mutations';
 import Container from '../../components/container';
 import Layout from '../../components/layout';
 import Sidebar from '../../components/sidebar';
@@ -22,7 +38,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Breadcrumbs from '../../components/breadcrumbs';
 import Breadcrumb from '../../utils/breadcrumb';
 import setUppercaseTitle from '../../utils/set-uppercase-title';
-import { CATS_QUERY } from '../../graphql/queries';
+import { CATS_QUERY, USER_STATS_QUERY } from '../../graphql/queries';
 import { getUser } from '../../utils/user';
 import { useRouter } from 'next/router';
 import ErrorScreen from '../../components/error-screen';
@@ -41,6 +57,31 @@ export default function CreateCat() {
     }
   };
 
+  const ProductsToForm = () => {
+    const {
+      data: productData,
+      error: productError,
+      loading: productLoading,
+    } = useGetProductsQuery();
+
+    return (
+      <Center>
+        {productLoading && <Loading />}
+        {productError && (
+          <ErrorScreen error={GeneralError.fromApolloError(productError)} />
+        )}
+        <Title title={title} />
+        <Breadcrumbs breadcrumbs={breadcrumbs} />
+        {productData && (
+          <CatForm
+            handleSubmit1={handleSubmit1}
+            submitText={title}
+            products={productData.products}
+          />
+        )}
+      </Center>
+    );
+  };
   const CatById = () => {
     const {
       data: catData,
@@ -79,8 +120,18 @@ export default function CreateCat() {
   const [updateCat, { loading: updateCatLoading }] =
     useMutation<UpdateCatMutation, UpdateCatMutationVariables>(UPDATE_CAT);
 
+  const [createBulkReview] =
+    useMutation<AddReviewBulkMutation, AddReviewBulkMutationVariables>(
+      ADD_REVIEW_BULK
+    );
+
+  const [createBulkReviewHistory] = useMutation<
+    AddReviewHistoryBulkMutation,
+    AddReviewHistoryBulkMutationVariables
+  >(ADD_REVIEW_HISTORY_BULK);
+
   const createNewCat = useCallback(
-    async (catData: Cat_Insert_Input) => {
+    async (catData: Cat_Insert_Input, reviewData) => {
       const variables: AddCatMutationVariables = {
         cat: {
           name: catData.name || '',
@@ -97,6 +148,18 @@ export default function CreateCat() {
         },
       };
 
+      const reviewFactory = (
+        cat_id: number,
+        product_id: number,
+        review_type: string
+      ) => {
+        return {
+          cat_id,
+          product_id,
+          review_type,
+        };
+      };
+
       try {
         const result = await createCat({
           variables,
@@ -109,10 +172,52 @@ export default function CreateCat() {
                 limit: 2,
               },
             },
+            {
+              query: USER_STATS_QUERY,
+              variables: {
+                user_id: getUser(),
+              },
+            },
           ],
         });
         if (result.data?.insert_Cat?.returning) {
-          return true;
+          const reviews: Review_Insert_Input = reviewData.map((item) => {
+            return reviewFactory(
+              result.data?.insert_Cat?.returning.map((item) => item.id)[0],
+              item.product.id,
+              String(item.rating.value)
+            );
+          });
+
+          const reviewsHistory: ReviewHistory_Insert_Input = reviewData.map(
+            (item) => {
+              return reviewFactory(
+                result.data?.insert_Cat?.returning.map((item) => item.id)[0],
+                item.product.id,
+                String(item.rating.value)
+              );
+            }
+          );
+
+          const reviewVariables: AddReviewBulkMutationVariables = {
+            reviews: reviews,
+          };
+
+          const resultReview = await createBulkReview({
+            variables: reviewVariables,
+          });
+
+          const resultReviewHistory = await createBulkReviewHistory({
+            variables: {
+              review_history: reviewsHistory,
+            },
+          });
+          if (
+            resultReview.data?.insert_Review?.returning &&
+            resultReviewHistory.data?.insert_ReviewHistory?.returning
+          ) {
+            return true;
+          }
         } else {
           console.log(error);
           return false;
@@ -122,6 +227,7 @@ export default function CreateCat() {
         return false;
       }
     },
+
     [createCat]
   );
 
@@ -163,11 +269,11 @@ export default function CreateCat() {
   );
 
   const handleSubmit1 = useCallback(
-    async (catData: Cat_Insert_Input | Cat_Set_Input) => {
+    async (catData: Cat_Insert_Input | Cat_Set_Input, reviewData) => {
       if (editOrAdd()) {
         return updateMyCat(catData);
       } else {
-        return createNewCat(catData);
+        return createNewCat(catData, reviewData);
       }
     },
     [createNewCat, updateMyCat]
@@ -202,17 +308,7 @@ export default function CreateCat() {
     <Layout>
       <Header title={getTitle(title)} />
       <Sidebar />
-      <Container>
-        {editOrAdd() ? (
-          <CatById />
-        ) : (
-          <Center>
-            <Title title={title} />
-            <Breadcrumbs breadcrumbs={breadcrumbs} />
-            <CatForm handleSubmit1={handleSubmit1} submitText={title} />
-          </Center>
-        )}
-      </Container>
+      <Container>{editOrAdd() ? <CatById /> : <ProductsToForm />}</Container>
     </Layout>
   );
 }

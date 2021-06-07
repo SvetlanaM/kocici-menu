@@ -4,8 +4,18 @@ import {
   Cat_Set_Input,
   CatTypeEnum_Enum as catTypes,
   CatFieldsFragmentFragment,
+  GetProductsQuery,
+  SelectProductFieldsFragment,
+  Review_Insert_Input,
+  ReviewHistory_Insert_Input,
 } from '../graphql/generated/graphql';
-import { useForm, Controller } from 'react-hook-form';
+import {
+  useForm,
+  Controller,
+  useFieldArray,
+  useWatch,
+  Control,
+} from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
 import FormErrorMessage from './form-error-message';
@@ -23,15 +33,27 @@ import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
 import { useS3Upload } from 'next-s3-upload';
 
 export type CatInputData = Omit<Cat_Insert_Input, 'CatTypeEnum'>;
+import ProductController from './product-controller';
+import RatingController from './rating-controller';
+import useSearch from '../hooks/useSearch';
 interface CatFormInterface {
   handleSubmit1: {
-    (cat: CatInputData | Cat_Set_Input): Promise<boolean>;
+    (
+      cat: CatInputData | Cat_Set_Input,
+      reviews: [Review_Insert_Input] | [ReviewHistory_Insert_Input]
+    ): Promise<boolean>;
   };
   submitText: string;
   catData?: CatFieldsFragmentFragment;
+  products?: GetProductsQuery['products'];
 }
 
-const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
+const CatForm = ({
+  handleSubmit1,
+  submitText,
+  catData,
+  products,
+}: CatFormInterface) => {
   const catImage = useMemo<string>(
     () => (catData && catData.image_url ? catData.image_url : defaultImage),
     [catData]
@@ -40,7 +62,13 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { FileInput, openFileDialog, uploadToS3 } = useS3Upload();
   const { t } = useTranslation();
+  const [searchProducts, setSearchProducts] = useState<
+    Array<SelectProductFieldsFragment>
+  >([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
   const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -48,10 +76,47 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
     setValue,
     control,
     formState: { errors },
-  } = useForm();
+  } = useForm({ mode: 'onBlur' });
+
+  let index;
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'fieldArray',
+  });
+
+  const watchFieldArray = watch('fieldArray');
+  const controlledFields = fields.map((field, index) => {
+    return {
+      ...field,
+      ...watchFieldArray[index],
+    };
+  });
 
   const noteInputName = 'note';
   const watchedNote: string | undefined = watch(noteInputName);
+  const getUniqueReviews = () => {
+    return Array.from(new Set(products.map((item) => item.name))).map(
+      (name) => {
+        return products.find((item) => item.name === name);
+      }
+    );
+  };
+  const [limitedSearchProducts, setLimitedSearchedProducts] = useState<
+    Array<SelectProductFieldsFragment>
+  >(getUniqueReviews());
+
+  useSearch(searchTerm, limitedSearchProducts, setSearchProducts);
+
+  useEffect(() => {
+    let userProductsArray =
+      watchFieldArray && watchFieldArray.map((item) => item.product);
+
+    if (userProductsArray && userProductsArray.length > 0) {
+      setLimitedSearchedProducts((prevState) =>
+        prevState.filter((x) => !userProductsArray.includes(x))
+      );
+    }
+  }, [searchTerm]);
 
   const handleFileChange = async (file: File) => {
     setIsLoading(true);
@@ -66,12 +131,14 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
 
   const fileTypes = ['png', 'jpg', 'gif', 'webp', 'jpeg'];
   const checkFileType = (file: File) => {
-    let value = file.name;
-    let fileType = value.substring(value.lastIndexOf('.') + 1, value.length);
-    if (fileTypes.indexOf(fileType) > -1) {
-      return true;
-    } else {
-      return false;
+    if (file) {
+      let value = file.name;
+      let fileType = value.substring(value.lastIndexOf('.') + 1, value.length);
+      if (fileTypes.indexOf(fileType) > -1) {
+        return true;
+      } else {
+        return false;
+      }
     }
   };
 
@@ -91,8 +158,9 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
         id: catData ? catData.id : null,
         image_url: imageUrl,
       };
+      const reviewsInput = data.fieldArray;
 
-      handleSubmit1(catInput).then((success: boolean) => {
+      handleSubmit1(catInput, reviewsInput).then((success: boolean) => {
         if (success) {
           console.log('jupiii2');
           if (catData) {
@@ -101,7 +169,7 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
             router.push('/');
           }
         } else {
-          alert('Data sa nepodarilo ulozit');
+          alert('Dáta sa nepodarilo uložiť');
         }
       });
     },
@@ -186,7 +254,6 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
             <FormInput
               registerRules={{ ...register('nickname', { required: false }) }}
               type="text"
-              // defaultValue={catData.nickname}
             />
           </FormInputWrapper>
         </div>
@@ -252,10 +319,56 @@ const CatForm = ({ handleSubmit1, submitText, catData }: CatFormInterface) => {
       </fieldset>
       {/* <fieldset>
           <FormLegend name="Specialne poziadavky" />
-        </fieldset>
-        <fieldset>
-          <FormLegend name="Oblubene jedla" />
         </fieldset> */}
+      <fieldset>
+        <FormLegend name="Obľúbené jedlá mačky" />
+        {controlledFields.map((field, index) => {
+          return (
+            <div
+              key={field.id}
+              className="flex justify-between items-center mb-5"
+            >
+              <div className="w-1/2 pr-3">
+                <ProductController
+                  searchProducts={searchProducts}
+                  onInputChange={(e) => {
+                    setSearchTerm(e);
+                  }}
+                  name={`fieldArray.${index}.product`}
+                  control={control}
+                  showHint={false}
+                  {...register(`fieldArray.${index}.product` as const)}
+                />
+              </div>
+              <div className="pl-0 w-2/6">
+                <RatingController
+                  name={`fieldArray.${index}.rating`}
+                  control={control}
+                  isDisabled={false}
+                  placeholder={'Vybrať hodnotenie (1-5)'}
+                  defaultValue={5}
+                  {...register(`fieldArray.${index}.rating` as const)}
+                />
+              </div>
+
+              <button
+                type="button"
+                className="mt-8 text-red-500"
+                onClick={() => remove(index)}
+              >
+                - Odobrať
+              </button>
+            </div>
+          );
+        })}
+        <button
+          type="button"
+          className=" text-purple mb-3 font-semibold"
+          onClick={() => append({})}
+        >
+          + Pridať hodnotenie
+        </button>
+      </fieldset>
       <fieldset>
         <div className="flex flex-col w-full mt-2">
           <FormInputLabel name="Poznámka" />

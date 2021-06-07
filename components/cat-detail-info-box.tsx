@@ -11,7 +11,12 @@ import { useCallback, useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { DELETE_CAT } from '../graphql/mutations';
 import router, { Router } from 'next/router';
-import { CATS_DETAIL_QUERY, CATS_QUERY } from '../graphql/queries';
+import {
+  CATS_DETAIL_QUERY,
+  CATS_QUERY,
+  DASHBOARD_QUERY,
+  USER_STATS_QUERY,
+} from '../graphql/queries';
 import { TIP_LIMIT } from '../utils/constants';
 import { getUser } from '../utils/user';
 import { useMemo } from 'react';
@@ -43,6 +48,27 @@ const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
           withProducts: true,
           limitProducts: 5,
           brand_type: 'Feringa',
+        },
+      },
+      {
+        query: CATS_QUERY,
+        variables: {
+          withProducts: true,
+          user_id: getUser(),
+          limit: 2,
+        },
+      },
+      {
+        query: DASHBOARD_QUERY,
+        variables: {
+          limitTips: TIP_LIMIT,
+          user_id: getUser(),
+        },
+      },
+      {
+        query: USER_STATS_QUERY,
+        variables: {
+          user_id: getUser(),
         },
       },
     ],

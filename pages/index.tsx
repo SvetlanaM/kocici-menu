@@ -12,7 +12,6 @@ import {
   useGetCatsQuery,
   GetDashboardQueryVariables,
   GetCatsQueryVariables,
-  useGetCatDetailQuery,
 } from '../graphql/generated/graphql';
 import Header from '../components/head';
 import CenterContainer from '../components/center-container';
@@ -22,10 +21,7 @@ import Loading from '../components/loading';
 import getTitle from '../utils/get-title';
 import { TIP_LIMIT } from '../utils/constants';
 import { GeneralError } from '../components/error-screen';
-import setUppercaseTitle from '../utils/set-uppercase-title';
 import { getUser } from '../utils/user';
-import { getToken } from '../utils/token';
-import CatDetailContainer from '../components/cat-detail-container';
 
 //tu budu akoze ziskane macky uzivatela
 const getDashboardVariables: GetDashboardQueryVariables = {
