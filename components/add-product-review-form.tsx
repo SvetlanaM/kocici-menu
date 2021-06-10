@@ -20,6 +20,7 @@ import {
   CATS_DETAIL_QUERY,
   CATS_QUERY,
   DASHBOARD_QUERY,
+  REVIEWS_QUERY,
   USER_STATS_QUERY,
 } from '../graphql/queries';
 import FormInputLabel from './form-input-label';
@@ -124,6 +125,12 @@ const AddProductReviewForm = ({
         },
         {
           query: USER_STATS_QUERY,
+          variables: {
+            user_id: getUser(),
+          },
+        },
+        {
+          query: REVIEWS_QUERY,
           variables: {
             user_id: getUser(),
           },
@@ -281,7 +288,7 @@ const AddProductReviewForm = ({
       </div>
 
       {reviewType !== '' ? (
-        <span className="flex text-red-500 mb-4">
+        <span className="flex text-red-500 mb-10">
           Pre mačku {watchedCat.name} a krmivo {watchedProduct.name} už máte
           vybrané hodnotenie {reviewType}
         </span>

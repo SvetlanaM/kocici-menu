@@ -35,11 +35,12 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
     cats[0].name,
     cats[0].image_url,
     cats[0].reviews.map((review) => {
+      const reviews = review.products.reviewhistory.filter(
+        (review) => review.cat_id === cats[0].id
+      );
       return {
         product_id: review.products.id,
-        review_type: review.products.reviewhistory.filter(
-          (review) => review.cat_id === cats[0].id
-        )[0].review_type,
+        review_type: reviews[0] ? reviews[0].review_type : [],
       };
     })
   );
@@ -72,11 +73,12 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
         cat.name,
         cat.image_url,
         cat.reviews.map((review) => {
+          const reviews = review.products.reviewhistory.filter(
+            (review) => review.cat_id === cat.id
+          );
           return {
             product_id: review.products.id,
-            review_type: review.products.reviewhistory.filter(
-              (review) => review.cat_id === cat.id
-            )[0].review_type,
+            review_type: reviews[0] ? reviews[0].review_type : [],
           };
         })
       );
@@ -100,7 +102,7 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
     () => Math.floor(Math.random() * 3000) + 800
   );
 
-  const catProducts = Object.values(catData.reviews!).map(
+  const catProducts = Object.values(catData.reviews.slice(0, 5)!).map(
     (review) => review.products
   );
 
@@ -147,7 +149,7 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
           data={catProducts}
           name={catData.name}
           title="Obľúbené"
-          catReviews={catReviews}
+          catReviews={catReviews.slice(0, 5)}
           cats={[catModalData]}
           products={products}
         />

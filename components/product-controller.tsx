@@ -35,6 +35,7 @@ interface ProductControllerProps {
   control?: Control<FieldValues>;
   showHint: boolean;
   defaultValue?: string;
+  isDisabled?: boolean;
 }
 
 const ProductController = ({
@@ -46,6 +47,7 @@ const ProductController = ({
   control,
   showHint,
   defaultValue,
+  isDisabled,
 }: ProductControllerProps) => {
   return (
     <>
@@ -83,9 +85,10 @@ const ProductController = ({
               product.name
             }
             onInputChange={onInputChange}
-            placeholder={defaultValue}
-            value={watchedProduct}
+            placeholder={'Vyhľadať produkt od 3 znakov'}
+            // value={watchedProduct}
             noOptionsMessage={() => 'Žiadne ďalšie výsledky'}
+            isDisabled={isDisabled}
           />
         )}
         name={name}

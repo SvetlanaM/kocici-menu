@@ -8,6 +8,7 @@ import {
   SelectProductFieldsFragment,
   Review_Insert_Input,
   ReviewHistory_Insert_Input,
+  Product,
 } from '../graphql/generated/graphql';
 import {
   useForm,
@@ -31,6 +32,7 @@ import sk from '../public/locales/sk/common.json';
 import UploadImage from './upload-image';
 import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
 import { useS3Upload } from 'next-s3-upload';
+import Loading from '../components/loading';
 
 export type CatInputData = Omit<Cat_Insert_Input, 'CatTypeEnum'>;
 import ProductController from './product-controller';
@@ -40,12 +42,17 @@ interface CatFormInterface {
   handleSubmit1: {
     (
       cat: CatInputData | Cat_Set_Input,
-      reviews: [Review_Insert_Input] | [ReviewHistory_Insert_Input]
+      reviews?: [Review_Insert_Input] | [ReviewHistory_Insert_Input],
+      updatedReviews?: {
+        deleted: Array<SelectProductFieldsFragment>;
+        merged: Array<SelectProductFieldsFragment>;
+      }
     ): Promise<boolean>;
   };
   submitText: string;
   catData?: CatFieldsFragmentFragment;
   products?: GetProductsQuery['products'];
+  loading?: boolean;
 }
 
 const CatForm = ({
@@ -53,6 +60,7 @@ const CatForm = ({
   submitText,
   catData,
   products,
+  loading,
 }: CatFormInterface) => {
   const catImage = useMemo<string>(
     () => (catData && catData.image_url ? catData.image_url : defaultImage),
@@ -60,6 +68,7 @@ const CatForm = ({
   );
   const [imageUrl, setImageUrl] = useState<string>(catImage);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isMainLoading, setIsMainLoading] = useState<boolean>(false);
   const { FileInput, openFileDialog, uploadToS3 } = useS3Upload();
   const { t } = useTranslation();
   const [searchProducts, setSearchProducts] = useState<
@@ -68,6 +77,45 @@ const CatForm = ({
   const [searchTerm, setSearchTerm] = useState('');
 
   const router = useRouter();
+  const reviewFactory = (
+    product: {
+      name: string;
+      id: number;
+      brand_type?: string;
+      image_url?: string;
+      __typename?: 'Product';
+    },
+    rating: {
+      label: number;
+      value: string;
+    }
+  ) => {
+    return {
+      product,
+      rating,
+    };
+  };
+
+  const review: Array<SelectProductFieldsFragment> =
+    catData &&
+    catData.reviews.map((item) => {
+      const sorted = item.products.reviewhistory;
+      return reviewFactory(
+        {
+          name: item.products.name,
+          id: item.products.id,
+          brand_type: item.products.brand_type,
+          image_url: item.products.image_url,
+          __typename: item.products.__typename,
+        },
+        {
+          label: sorted.map((item) => item.review_type)[0],
+          value: String(sorted.map((item) => item.review_type)[0]),
+        }
+      );
+    });
+
+  const [userDefaultValues, setUserDefaultValues] = useState(review);
 
   const {
     register,
@@ -75,7 +123,7 @@ const CatForm = ({
     watch,
     setValue,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: {
       name: catData && catData.name,
@@ -88,20 +136,9 @@ const CatForm = ({
       doctor_email: catData && catData.doctor_email,
       note: '',
       type: catData && catData.type,
-      fieldArray:
-        catData &&
-        catData.reviews.map((item) => {
-          return {
-            rating: item.products.reviewhistory.map(
-              (item) => item.review_type
-            )[0],
-            product: item.products.name,
-          };
-        }),
     },
   });
 
-  let index;
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'fieldArray',
@@ -117,6 +154,7 @@ const CatForm = ({
 
   const noteInputName = 'note';
   const watchedNote: string | undefined = watch(noteInputName);
+
   const getUniqueReviews = () => {
     return Array.from(new Set(products.map((item) => item.name))).map(
       (name) => {
@@ -141,6 +179,109 @@ const CatForm = ({
     }
   }, [searchTerm]);
 
+  const userProductsArrayMain =
+    watchFieldArray && watchFieldArray.map((item) => item);
+
+  const newReviews =
+    review && userProductsArrayMain
+      ? userProductsArrayMain.slice(review.length, userProductsArrayMain.length)
+      : [];
+
+  const deletedReviews = useMemo(() => {
+    return userProductsArrayMain && userProductsArrayMain
+      ? review &&
+          review.filter(
+            (x) =>
+              !userProductsArrayMain
+                .map((item) => item.product.id)
+                .includes(x.product.id)
+          )
+      : [];
+  }, [userDefaultValues]);
+
+  const diff = useMemo(() => {
+    return userProductsArrayMain
+      ? review &&
+          userProductsArrayMain
+            .slice(0, review.length - deletedReviews.length)
+            .filter(
+              (x) =>
+                !review
+                  .map((item) => item.rating.value)
+                  .includes(x && x.rating.value)
+            )
+      : [];
+  }, [userProductsArrayMain]);
+
+  let mergedInsertUpdate = newReviews && diff ? [...newReviews, ...diff] : [];
+
+  useEffect(() => {
+    if (review && review.length > 0) {
+      setLimitedSearchedProducts((prevState) =>
+        prevState.filter(
+          (x) => !review.map((item) => item.product.name).includes(x && x.name)
+        )
+      );
+
+      setUserDefaultValues(review);
+
+      if (review.length === userDefaultValues.length) {
+        setValue(
+          'fieldArray',
+          userDefaultValues &&
+            userDefaultValues.map((item) => {
+              return {
+                product: {
+                  brand_type: item.product.brand_type,
+                  id: item.product.id,
+                  image_url: item.product.image_url,
+                  name: item.product.name,
+                  __typename: item.product.__typename,
+                },
+                rating: { value: item.rating.value, label: item.rating.label },
+              };
+            })
+        );
+      }
+    }
+  }, [catData]);
+
+  const [isRemoved, setIsRemoved] = useState(false);
+  useEffect(() => {
+    let userProductsArray =
+      watchFieldArray && watchFieldArray.map((item) => item);
+
+    if (
+      userProductsArray &&
+      userProductsArray.length > 0 &&
+      watchFieldArray &&
+      isRemoved
+    ) {
+      setUserDefaultValues(userProductsArray);
+      setValue(
+        'fieldArray',
+        userProductsArray &&
+          userProductsArray.map((item) => {
+            return {
+              product: {
+                brand_type: item.product.brand_type,
+                id: item.product.id,
+                image_url: item.product.image_url,
+                name: item.product.name,
+                __typename: item.product.__typename,
+              },
+              rating: {
+                value: item.rating.value,
+                label: item.rating.label,
+              },
+            };
+          })
+      );
+
+      setIsRemoved(false);
+    }
+  }, [isRemoved]);
+
   const handleFileChange = async (file: File) => {
     setIsLoading(true);
     if (checkFileType(file)) {
@@ -154,7 +295,7 @@ const CatForm = ({
 
   const fileTypes = ['png', 'jpg', 'gif', 'webp', 'jpeg'];
   const checkFileType = (file: File) => {
-    if (file) {
+    if (file && file.name) {
       let value = file.name;
       let fileType = value.substring(value.lastIndexOf('.') + 1, value.length);
       if (fileTypes.indexOf(fileType) > -1) {
@@ -183,12 +324,19 @@ const CatForm = ({
       };
       const reviewsInput = data.fieldArray;
 
-      handleSubmit1(catInput, reviewsInput).then((success: boolean) => {
+      handleSubmit1(catInput, reviewsInput, {
+        merged: mergedInsertUpdate,
+        deleted: deletedReviews,
+      }).then((success: boolean) => {
         if (success) {
           console.log('jupiii2');
           if (catData) {
+            setTimeout(() => {
+              setIsMainLoading(false);
+            }, 2000);
             router.push('/my-cats');
           } else {
+            setIsMainLoading(false);
             router.push('/');
           }
         } else {
@@ -196,7 +344,15 @@ const CatForm = ({
         }
       });
     },
-    [handleSubmit1, imageUrl]
+    [
+      handleSubmit1,
+      imageUrl,
+      newReviews,
+      deletedReviews,
+      diff,
+      mergedInsertUpdate,
+      isMainLoading,
+    ]
   );
 
   const catTypeOptions = useMemo(() => {
@@ -210,17 +366,20 @@ const CatForm = ({
     });
   }, [catTypes]);
 
-  // useEffect(() => {
-  //   if (catData) {
-  //     let fields1 = Object.keys(catData).slice(1);
-  //     for (let field of fields1) {
-  //       setValue(field, catData[field]);
-  //     }
-  //   }
-  // }, [catData]);
-
-  return (
-    <form onSubmit={handleSubmit(onSubmit)} className="w-full">
+  return isMainLoading ? (
+    <Loading />
+  ) : (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        setIsMainLoading(true);
+        //large amount of processing here, let the loading gif have time to rerender before this starts otherwise the browser gets bogged down.
+        setTimeout(() => {
+          handleSubmit(onSubmit)();
+        }, 2000);
+      }}
+      className="w-full"
+    >
       <fieldset>
         <FormLegend name="Základné informácie" />
         <div>
@@ -362,6 +521,7 @@ const CatForm = ({
                   defaultValue={field.product}
                   control={control}
                   showHint={false}
+                  isDisabled={false}
                 />
               </div>
               <div className="pl-0 w-2/6">
@@ -377,7 +537,10 @@ const CatForm = ({
               <button
                 type="button"
                 className="mt-8 text-red-500"
-                onClick={() => remove(index)}
+                onClick={() => {
+                  remove(index);
+                  setIsRemoved(true);
+                }}
               >
                 - Odobrať
               </button>

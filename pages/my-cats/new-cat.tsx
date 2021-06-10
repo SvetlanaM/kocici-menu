@@ -12,6 +12,8 @@ import {
   AddReviewMutationVariables,
   Cat_Insert_Input,
   Cat_Set_Input,
+  DeleteReviewMutation,
+  DeleteReviewMutationVariables,
   ReviewHistory_Insert_Input,
   Review_Insert_Input,
   UpdateCatMutation,
@@ -26,6 +28,7 @@ import {
   ADD_REVIEW_HISTORY,
   ADD_REVIEW_BULK,
   ADD_REVIEW_HISTORY_BULK,
+  DELETE_REVIEW,
 } from '../../graphql/mutations';
 import Container from '../../components/container';
 import Layout from '../../components/layout';
@@ -38,12 +41,19 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Breadcrumbs from '../../components/breadcrumbs';
 import Breadcrumb from '../../utils/breadcrumb';
 import setUppercaseTitle from '../../utils/set-uppercase-title';
-import { CATS_QUERY, USER_STATS_QUERY } from '../../graphql/queries';
+import {
+  CATS_DETAIL_QUERY,
+  CATS_QUERY,
+  DASHBOARD_QUERY,
+  REVIEWS_QUERY,
+  USER_STATS_QUERY,
+} from '../../graphql/queries';
 import { getUser } from '../../utils/user';
 import { useRouter } from 'next/router';
 import ErrorScreen from '../../components/error-screen';
 import Loading from '../../components/loading';
 import { GeneralError } from '../../components/error-screen';
+import { TIP_LIMIT } from '../../utils/constants';
 
 export default function CreateCat() {
   const router = useRouter();
@@ -128,13 +138,30 @@ export default function CreateCat() {
       ADD_REVIEW_BULK
     );
 
+  const [deleteReview] =
+    useMutation<DeleteReviewMutation, DeleteReviewMutationVariables>(
+      DELETE_REVIEW
+    );
+
   const [createBulkReviewHistory] = useMutation<
     AddReviewHistoryBulkMutation,
     AddReviewHistoryBulkMutationVariables
   >(ADD_REVIEW_HISTORY_BULK);
 
+  const reviewFactory = (
+    cat_id: number,
+    product_id: number,
+    review_type: string
+  ) => {
+    return {
+      cat_id,
+      product_id,
+      review_type,
+    };
+  };
+
   const createNewCat = useCallback(
-    async (catData: Cat_Insert_Input, reviewData) => {
+    async (catData: Cat_Insert_Input, reviewData, reviewUpdatedData) => {
       const variables: AddCatMutationVariables = {
         cat: {
           name: catData.name || '',
@@ -151,22 +178,25 @@ export default function CreateCat() {
         },
       };
 
-      const reviewFactory = (
-        cat_id: number,
-        product_id: number,
-        review_type: string
-      ) => {
-        return {
-          cat_id,
-          product_id,
-          review_type,
-        };
-      };
-
       try {
         const result = await createCat({
           variables,
           refetchQueries: [
+            {
+              query: DASHBOARD_QUERY,
+              variables: {
+                limitTips: TIP_LIMIT,
+                user_id: getUser(),
+              },
+            },
+            {
+              query: CATS_DETAIL_QUERY,
+              variables: {
+                user_id: getUser(),
+                limit: 5,
+                withProducts: true,
+              },
+            },
             {
               query: CATS_QUERY,
               variables: {
@@ -177,6 +207,12 @@ export default function CreateCat() {
             },
             {
               query: USER_STATS_QUERY,
+              variables: {
+                user_id: getUser(),
+              },
+            },
+            {
+              query: REVIEWS_QUERY,
               variables: {
                 user_id: getUser(),
               },
@@ -214,6 +250,37 @@ export default function CreateCat() {
             variables: {
               review_history: reviewsHistory,
             },
+            refetchQueries: [
+              {
+                query: DASHBOARD_QUERY,
+                variables: {
+                  limitTips: TIP_LIMIT,
+                  user_id: getUser(),
+                },
+              },
+              {
+                query: CATS_DETAIL_QUERY,
+                variables: {
+                  user_id: getUser(),
+                  limit: 5,
+                  withProducts: true,
+                },
+              },
+              {
+                query: CATS_QUERY,
+                variables: {
+                  withProducts: true,
+                  user_id: getUser(),
+                  limit: 2,
+                },
+              },
+              {
+                query: USER_STATS_QUERY,
+                variables: {
+                  user_id: getUser(),
+                },
+              },
+            ],
           });
           if (
             resultReview.data?.insert_Review?.returning &&
@@ -235,7 +302,7 @@ export default function CreateCat() {
   );
 
   const updateMyCat = useCallback(
-    async (catData: Cat_Set_Input) => {
+    async (catData: Cat_Set_Input, reviewData, reviewUpdatedData) => {
       const setCatInput: Cat_Set_Input = {
         name: catData.name || '',
         age: catData.age ?? null,
@@ -256,9 +323,221 @@ export default function CreateCat() {
             cats: setCatInput,
             id: catData.id,
           },
+          refetchQueries: [
+            {
+              query: DASHBOARD_QUERY,
+              variables: {
+                limitTips: TIP_LIMIT,
+                user_id: getUser(),
+              },
+            },
+            {
+              query: CATS_DETAIL_QUERY,
+              variables: {
+                user_id: getUser(),
+                limit: 5,
+                withProducts: true,
+              },
+            },
+            {
+              query: CATS_QUERY,
+              variables: {
+                withProducts: true,
+                user_id: getUser(),
+                limit: 2,
+              },
+            },
+            {
+              query: USER_STATS_QUERY,
+              variables: {
+                user_id: getUser(),
+              },
+            },
+            {
+              query: REVIEWS_QUERY,
+              variables: {
+                user_id: getUser(),
+              },
+            },
+          ],
         });
         if (result.data?.update_Cat.returning) {
-          return true;
+          const reviews: Review_Insert_Input =
+            reviewUpdatedData.merged &&
+            reviewUpdatedData.merged.map((item) => {
+              return reviewFactory(
+                result.data?.update_Cat?.returning.map((item) => item.id)[0],
+                item.product.id,
+                String(item.rating.value)
+              );
+            });
+
+          const reviewsHistory: ReviewHistory_Insert_Input =
+            reviewUpdatedData.merged &&
+            reviewUpdatedData.merged.map((item) => {
+              return reviewFactory(
+                result.data?.update_Cat?.returning.map((item) => item.id)[0],
+                item.product.id,
+                String(item.rating.value)
+              );
+            });
+          const reviewVariables: AddReviewBulkMutationVariables = {
+            reviews: reviews,
+          };
+          const resultReview = await createBulkReview({
+            variables: reviewVariables,
+            refetchQueries: [
+              {
+                query: DASHBOARD_QUERY,
+                variables: {
+                  limitTips: TIP_LIMIT,
+                  user_id: getUser(),
+                },
+              },
+              {
+                query: CATS_DETAIL_QUERY,
+                variables: {
+                  user_id: getUser(),
+                  limit: 5,
+                  withProducts: true,
+                },
+              },
+              {
+                query: CATS_QUERY,
+                variables: {
+                  withProducts: true,
+                  user_id: getUser(),
+                  limit: 2,
+                },
+              },
+              {
+                query: USER_STATS_QUERY,
+                variables: {
+                  user_id: getUser(),
+                },
+              },
+              {
+                query: REVIEWS_QUERY,
+                variables: {
+                  user_id: getUser(),
+                },
+              },
+            ],
+          });
+
+          const resultReviewHistory = await createBulkReviewHistory({
+            variables: {
+              review_history: reviewsHistory,
+            },
+            refetchQueries: [
+              {
+                query: DASHBOARD_QUERY,
+                variables: {
+                  limitTips: TIP_LIMIT,
+                  user_id: getUser(),
+                },
+              },
+              {
+                query: CATS_DETAIL_QUERY,
+                variables: {
+                  user_id: getUser(),
+                  limit: 5,
+                  withProducts: true,
+                },
+              },
+              {
+                query: CATS_QUERY,
+                variables: {
+                  withProducts: true,
+                  user_id: getUser(),
+                  limit: 2,
+                },
+              },
+              {
+                query: USER_STATS_QUERY,
+                variables: {
+                  user_id: getUser(),
+                },
+              },
+              {
+                query: REVIEWS_QUERY,
+                variables: {
+                  user_id: getUser(),
+                },
+              },
+            ],
+          });
+
+          const deletedReviews =
+            reviewUpdatedData.deleted &&
+            reviewUpdatedData.deleted.map((item) => {
+              return reviewFactory(
+                result.data?.update_Cat?.returning.map((item) => item.id)[0],
+                item.product.id,
+                String(item.rating.value)
+              );
+            });
+
+          console.log(deletedReviews);
+          const deleteOneByOne = (reviews) => {
+            for (const review of reviews) {
+              deleteReview({
+                variables: {
+                  cat_id: review.cat_id,
+                  product_id: review.product_id,
+                },
+                refetchQueries: [
+                  {
+                    query: DASHBOARD_QUERY,
+                    variables: {
+                      limitTips: TIP_LIMIT,
+                      user_id: getUser(),
+                    },
+                  },
+                  {
+                    query: CATS_DETAIL_QUERY,
+                    variables: {
+                      user_id: getUser(),
+                      limit: 5,
+                      withProducts: true,
+                    },
+                  },
+                  {
+                    query: CATS_QUERY,
+                    variables: {
+                      withProducts: true,
+                      user_id: getUser(),
+                      limit: 2,
+                    },
+                  },
+                  {
+                    query: USER_STATS_QUERY,
+                    variables: {
+                      user_id: getUser(),
+                    },
+                  },
+                  {
+                    query: REVIEWS_QUERY,
+                    variables: {
+                      user_id: getUser(),
+                    },
+                  },
+                ],
+              }).then((data) => data.data.delete_Review.returning);
+            }
+          };
+
+          const deleteResult = await deleteOneByOne(deletedReviews);
+
+          if (
+            resultReview.data?.insert_Review?.returning &&
+            resultReviewHistory.data?.insert_ReviewHistory?.returning
+          ) {
+            return true;
+          }
+          if (deleteResult) {
+            return true;
+          }
         } else {
           console.log(error);
           return false;
@@ -272,11 +551,15 @@ export default function CreateCat() {
   );
 
   const handleSubmit1 = useCallback(
-    async (catData: Cat_Insert_Input | Cat_Set_Input, reviewData) => {
+    async (
+      catData: Cat_Insert_Input | Cat_Set_Input,
+      reviewData,
+      reviewUpdatedData
+    ) => {
       if (editOrAdd()) {
-        return updateMyCat(catData);
+        return updateMyCat(catData, reviewData, reviewUpdatedData);
       } else {
-        return createNewCat(catData, reviewData);
+        return createNewCat(catData, reviewData, reviewUpdatedData);
       }
     },
     [createNewCat, updateMyCat]

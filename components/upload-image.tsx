@@ -15,13 +15,13 @@ export default function UploadImage({
   return (
     <div className="pt-1 pb-6">
       <div className="mt-1 flex items-center">
-        <div className="cat-image flex justify-center items-center border-rounded-base">
+        <div className="cat-image flex justify-center items-center">
           {isLoading ? (
             <Loading />
           ) : (
             <Image
               src={imageUrl}
-              className="object-cover flex items-stretch cat-image"
+              className="object-cover flex items-stretch cat-image border-rounded-base"
             />
           )}
         </div>

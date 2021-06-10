@@ -6,7 +6,7 @@ interface Props {
   size: string;
   color: string;
   hover?: string;
-  onClick?: () => void;
+  onClick?: (e?) => void;
 }
 
 const SubmitButton = (props: Props): JSX.Element => (

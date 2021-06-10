@@ -1,7 +1,7 @@
 export default function Loading() {
   return (
     <>
-      <div className="flex h-screen justify-center items-center">
+      <div className="flex h-screen justify-center items-center z-10">
         <svg className="animate-spin h-7 w-7" viewBox="0 0 24 24">
           <circle
             className="opacity-20 stroke-current text-purple"

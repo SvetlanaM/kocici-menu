@@ -22,7 +22,13 @@ export const ADD_CAT = gql`
 
 export const ADD_REVIEW_BULK = gql`
   mutation AddReviewBulk($reviews: [Review_insert_input!]!) {
-    insert_Review(objects: $reviews) {
+    insert_Review(
+      objects: $reviews
+      on_conflict: {
+        constraint: Review_product_id_cat_id_key
+        update_columns: [product_id, cat_id, review_type]
+      }
+    ) {
       returning {
         product: Product {
           id
@@ -112,6 +118,19 @@ export const DELETE_CAT = gql`
   mutation DeleteCat($id: Int!) {
     delete_Cat_by_pk(id: $id) {
       id
+    }
+  }
+`;
+
+export const DELETE_REVIEW = gql`
+  mutation DeleteReview($product_id: Int!, $cat_id: Int!) {
+    delete_Review(
+      where: { cat_id: { _eq: $cat_id }, product_id: { _eq: $product_id } }
+    ) {
+      returning {
+        cat_id
+        id
+      }
     }
   }
 `;

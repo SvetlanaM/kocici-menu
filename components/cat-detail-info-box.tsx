@@ -15,6 +15,7 @@ import {
   CATS_DETAIL_QUERY,
   CATS_QUERY,
   DASHBOARD_QUERY,
+  REVIEWS_QUERY,
   USER_STATS_QUERY,
 } from '../graphql/queries';
 import { TIP_LIMIT } from '../utils/constants';
@@ -67,6 +68,12 @@ const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
       },
       {
         query: USER_STATS_QUERY,
+        variables: {
+          user_id: getUser(),
+        },
+      },
+      {
+        query: REVIEWS_QUERY,
         variables: {
           user_id: getUser(),
         },

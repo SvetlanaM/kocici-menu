@@ -55,7 +55,7 @@ const CatDetailQuery = () => {
     </>
   );
 };
-const pageTitle = getTitle('Moje macky');
+const pageTitle = getTitle('Moje mačky');
 
 export default function MyCats() {
   return (

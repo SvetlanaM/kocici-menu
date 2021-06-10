@@ -49,7 +49,7 @@ const RatingController = ({
             options={ratingOptions}
             noOptionsMessage={() => 'Žiadne ďaľšie výsledky'}
             isDisabled={isDisabled}
-            placeholder={defaultValue}
+            placeholder={placeholder}
           />
         )}
       />

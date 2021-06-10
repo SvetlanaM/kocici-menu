@@ -42,7 +42,11 @@ const TipsList = ({ data, cols, isOnDashboard }: TipProps) => {
           />
         )}
       </div>
-      <div className={`grid ${cols} grid-flow-row gap-x-11`}>
+      <div
+        className={`grid ${cols} grid-flow-row gap-x-11 ${
+          !isOnDashboard ? 'section-tip' : null
+        }`}
+      >
         {searchTips.map(({ id, ...item }, index) => (
           <TipBox
             order={`${index + 1}. `}

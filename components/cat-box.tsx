@@ -23,18 +23,17 @@ export const CatFieldsFragment = gql`
     specials: SpecialRequirements {
       name
     }
-    reviews: Reviews(
-      order_by: { review_type: desc, updated_at: desc }
-      limit: $limit
-    ) @include(if: $withProducts) {
+    reviews: Reviews(order_by: { updated_at: desc, review_type: desc })
+      @include(if: $withProducts) {
       products: Product {
         brand_type
         id
         name
         image_url
-        reviewhistory {
+        reviewhistory(order_by: { updated_at: desc }) {
           review_type
           cat_id
+          updated_at
         }
       }
     }
@@ -47,13 +46,9 @@ interface CatBoxProps {
 }
 
 const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
-  let catProducts = [];
-
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggleSlider = () => setIsOpen(!isOpen);
-
-  catProducts = Object.values(reviews!).map((review) => review.products);
 
   const arrayDiff = CatFieldsFragment.specials.length - arrayLength;
   const updatedSpecials =
@@ -71,18 +66,16 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
       : CatFieldsFragment.specials;
 
   const catData = {
-    reviews: catProducts,
     doctor_email: CatFieldsFragment.doctor_email,
     specials: updatedSpecials,
   };
 
+  console.log(catData);
   return (
     <div className="flex flex-col flex-no-wrap justify-between h-75 py-3 border-rounded-base border-gray small-purple-text text-left my-cat">
       <div className="flex flex-row px-3">
         <CatBasicInfo cat={CatFieldsFragment} />
-        {(catData.doctor_email !== null ||
-          catData.reviews.length > 0 ||
-          catData.specials.length > 0) && (
+        {(catData.doctor_email !== null || catData.specials.length > 0) && (
           <button
             type="button"
             onClick={toggleSlider}
