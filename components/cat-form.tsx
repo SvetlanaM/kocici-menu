@@ -74,7 +74,8 @@ const CatForm = ({
   const [searchProducts, setSearchProducts] = useState<
     Array<SelectProductFieldsFragment>
   >([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [updateData, setUpdateData] = useState<boolean>(false);
 
   const router = useRouter();
   const reviewFactory = (
@@ -216,14 +217,16 @@ const CatForm = ({
   let mergedInsertUpdate = newReviews && diff ? [...newReviews, ...diff] : [];
 
   useEffect(() => {
+    setUpdateData(true), setUserDefaultValues(review);
+  }, [catData]);
+
+  useMemo(() => {
     if (review && review.length > 0) {
       setLimitedSearchedProducts((prevState) =>
         prevState.filter(
           (x) => !review.map((item) => item.product.name).includes(x && x.name)
         )
       );
-
-      setUserDefaultValues(review);
 
       if (review.length === userDefaultValues.length) {
         setValue(
@@ -244,7 +247,7 @@ const CatForm = ({
         );
       }
     }
-  }, [catData]);
+  }, [updateData]);
 
   const [isRemoved, setIsRemoved] = useState(false);
   useEffect(() => {
@@ -331,15 +334,14 @@ const CatForm = ({
         if (success) {
           console.log('jupiii2');
           if (catData) {
-            setTimeout(() => {
-              setIsMainLoading(false);
-            }, 2000);
+            setIsMainLoading(false);
             router.push('/my-cats');
           } else {
             setIsMainLoading(false);
             router.push('/');
           }
         } else {
+          setIsMainLoading(false);
           alert('Dáta sa nepodarilo uložiť');
         }
       });
@@ -372,11 +374,8 @@ const CatForm = ({
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        setIsMainLoading(true);
-        //large amount of processing here, let the loading gif have time to rerender before this starts otherwise the browser gets bogged down.
-        setTimeout(() => {
-          handleSubmit(onSubmit)();
-        }, 2000);
+        setIsMainLoading(false);
+        handleSubmit(onSubmit)();
       }}
       className="w-full"
     >

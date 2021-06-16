@@ -135,3 +135,15 @@ input:focus {
 .section-tip .tips-list:last-child {
     border-bottom: none;
 }
+
+.tooltip-wrapper {
+    top: -5px;
+    right: 40px;
+    z-index: 2;
+    width: 220px;
+}
+
+.tooltip-right {
+    right: -9px;
+    top: 13px;
+}

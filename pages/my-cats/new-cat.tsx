@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import CatForm from '../../components/cat-form';
 import {
   AddCatMutation,
@@ -18,6 +18,7 @@ import {
   Review_Insert_Input,
   UpdateCatMutation,
   UpdateCatMutationVariables,
+  useGetCatByIdLazyQuery,
   useGetCatByIdQuery,
   useGetProductsQuery,
 } from '../../graphql/generated/graphql';
@@ -55,7 +56,10 @@ import Loading from '../../components/loading';
 import { GeneralError } from '../../components/error-screen';
 import { TIP_LIMIT } from '../../utils/constants';
 
-export default function CreateCat() {
+interface CreateCatProps {
+  onClickTrigger?: () => void;
+}
+export default function CreateCat({ onClickTrigger }: CreateCatProps) {
   const router = useRouter();
   const { id } = router.query;
 
@@ -92,6 +96,8 @@ export default function CreateCat() {
       </Center>
     );
   };
+
+  const [isActive, setIsActive] = useState(false);
   const CatById = () => {
     const {
       data: catData,
@@ -103,25 +109,28 @@ export default function CreateCat() {
         withProducts: true,
         id: Number(id),
       },
+      pollInterval: 500,
     });
 
-    const { data: productData } = useGetProductsQuery();
+    const { data: productData } = useGetProductsQuery({
+      skip: isActive,
+      pollInterval: 500,
+    });
 
     return (
       <Center>
         {catLoading && <Loading />}
-        {catError && (
-          <ErrorScreen error={GeneralError.fromApolloError(catError)} />
-        )}
         <Title title={title} />
         <Breadcrumbs breadcrumbs={breadcrumbs} />
-        {catData && productData && (
+        {catData && productData ? (
           <CatForm
             handleSubmit1={handleSubmit1}
             submitText={title}
             catData={catData.cat}
             products={productData.products}
           />
+        ) : (
+          <Loading />
         )}
       </Center>
     );
@@ -164,8 +173,8 @@ export default function CreateCat() {
     async (catData: Cat_Insert_Input, reviewData, reviewUpdatedData) => {
       const variables: AddCatMutationVariables = {
         cat: {
-          name: catData.name || '',
-          age: catData.age ?? null,
+          name: setUppercaseTitle(catData.name) || '',
+          age: catData.age ?? 1,
           user_id: catData.user_id,
           doctor_email: catData.doctor_email ?? null,
           nickname: catData.nickname ?? null,
@@ -181,6 +190,7 @@ export default function CreateCat() {
       try {
         const result = await createCat({
           variables,
+
           refetchQueries: [
             {
               query: DASHBOARD_QUERY,
@@ -206,6 +216,14 @@ export default function CreateCat() {
               },
             },
             {
+              query: CATS_DETAIL_QUERY,
+              variables: {
+                user_id: getUser(),
+                limit: 5,
+                withProducts: true,
+              },
+            },
+            {
               query: USER_STATS_QUERY,
               variables: {
                 user_id: getUser(),
@@ -219,7 +237,7 @@ export default function CreateCat() {
             },
           ],
         });
-        if (result.data?.insert_Cat?.returning) {
+        if (result.data?.insert_Cat?.returning[0].id) {
           const reviews: Review_Insert_Input = reviewData.map((item) => {
             return reviewFactory(
               result.data?.insert_Cat?.returning.map((item) => item.id)[0],
@@ -361,7 +379,7 @@ export default function CreateCat() {
             },
           ],
         });
-        if (result.data?.update_Cat.returning) {
+        if (result.data?.update_Cat.returning[0].id) {
           const reviews: Review_Insert_Input =
             reviewUpdatedData.merged &&
             reviewUpdatedData.merged.map((item) => {
@@ -557,8 +575,10 @@ export default function CreateCat() {
       reviewUpdatedData
     ) => {
       if (editOrAdd()) {
+        setIsActive(true);
         return updateMyCat(catData, reviewData, reviewUpdatedData);
       } else {
+        setIsActive(true);
         return createNewCat(catData, reviewData, reviewUpdatedData);
       }
     },
@@ -594,6 +614,7 @@ export default function CreateCat() {
     <Layout>
       <Header title={getTitle(title)} />
       <Sidebar />
+
       <Container>{editOrAdd() ? <CatById /> : <ProductsToForm />}</Container>
     </Layout>
   );

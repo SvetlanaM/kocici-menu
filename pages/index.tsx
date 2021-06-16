@@ -53,7 +53,10 @@ const CenterContainerQuery = () => {
       title: 'Priemerná mesačná spotreba',
     },
     {
-      name: (dashboardData && dashboardData.stats[0].brand_type) || '--',
+      name:
+        (dashboardData && dashboardData.stats.length > 0
+          ? dashboardData.stats[0].brand_type
+          : '--') || '--',
       icon: '/icons/fav_brand.svg',
       title: 'Moja najpopulárnejšia značka',
     },

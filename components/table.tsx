@@ -37,11 +37,7 @@ const Table = ({
           return reviews.find((item) => item.product.name === name);
         });
     } else {
-      return Array.from(new Set(reviews.map((item) => item.product.name))).map(
-        (name) => {
-          return reviews.find((item) => item.product.name === name);
-        }
-      );
+      return reviews;
     }
   };
 

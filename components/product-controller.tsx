@@ -82,7 +82,7 @@ const ProductController = ({
               product.id.toString()
             }
             getOptionLabel={(product: SelectProductFieldsFragment) =>
-              product.name
+              `${product.brand_type} - ${product.name}`
             }
             onInputChange={onInputChange}
             placeholder={'Vyhľadať produkt od 3 znakov'}

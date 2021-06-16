@@ -23,6 +23,18 @@ export const ProductFieldsFragment = gql`
     name
     image_url
     id
+    path
+    path
+    meal
+    meal_type
+    other_type
+    note
+    daily_food
+    conservants
+    feeding
+    ingredient_name
+    amount
+    unit
   }
 `;
 
