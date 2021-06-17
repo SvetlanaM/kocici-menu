@@ -53,6 +53,7 @@ interface CatFormInterface {
   catData?: CatFieldsFragmentFragment;
   products?: GetProductsQuery['products'];
   loading?: boolean;
+  buttonText?: string;
 }
 
 const CatForm = ({
@@ -60,6 +61,7 @@ const CatForm = ({
   submitText,
   catData,
   products,
+  buttonText,
   loading,
 }: CatFormInterface) => {
   const catImage = useMemo<string>(
@@ -155,6 +157,16 @@ const CatForm = ({
 
   const noteInputName = 'note';
   const watchedNote: string | undefined = watch(noteInputName);
+  const watchedCatImage: string | undefined = watch('cat_image');
+
+  const resetPhoto = useCallback(() => {
+    setIsLoading(true);
+    setImageUrl(defaultImage);
+    let changedValue = setValue('cat_image', defaultImage);
+    changedValue !== null && setIsLoading(false);
+    setImageUrl(defaultImage);
+    return changedValue;
+  }, []);
 
   const getUniqueReviews = () => {
     return Array.from(new Set(products.map((item) => item.name))).map(
@@ -194,7 +206,7 @@ const CatForm = ({
           review.filter(
             (x) =>
               !userProductsArrayMain
-                .map((item) => item.product.id)
+                .map((item) => item !== undefined && item.product.id)
                 .includes(x.product.id)
           )
       : [];
@@ -203,7 +215,8 @@ const CatForm = ({
   const diff = useMemo(() => {
     return userProductsArrayMain
       ? review &&
-          userProductsArrayMain
+          userProductsArrayMain &&
+          deletedReviews
             .slice(0, review.length - deletedReviews.length)
             .filter(
               (x) =>
@@ -252,8 +265,11 @@ const CatForm = ({
   const [isRemoved, setIsRemoved] = useState(false);
   useEffect(() => {
     let userProductsArray =
-      watchFieldArray && watchFieldArray.map((item) => item);
+      watchFieldArray &&
+      watchFieldArray.map((item) => item.product !== undefined && item);
 
+    console.log(userProductsArray);
+    console.log(newReviews);
     if (
       userProductsArray &&
       userProductsArray.length > 0 &&
@@ -261,35 +277,42 @@ const CatForm = ({
       isRemoved
     ) {
       setUserDefaultValues(userProductsArray);
+
       setValue(
         'fieldArray',
         userProductsArray &&
-          userProductsArray.map((item) => {
-            return {
-              product: {
-                brand_type: item.product.brand_type,
-                id: item.product.id,
-                image_url: item.product.image_url,
-                name: item.product.name,
-                __typename: item.product.__typename,
-              },
-              rating: {
-                value: item.rating.value,
-                label: item.rating.label,
-              },
-            };
-          })
+          userProductsArray
+            .map((item) => {
+              return {
+                product: {
+                  brand_type:
+                    item.product !== undefined && item.product.brand_type,
+                  id: item.product !== undefined && item.product.id,
+                  image_url:
+                    item.product !== undefined && item.product.image_url,
+                  name: item.product !== undefined && item.product.name,
+                  __typename:
+                    item.product !== undefined && item.product.__typename,
+                },
+                rating: {
+                  value: item.rating !== undefined && item.rating.value,
+                  label: item.rating !== undefined && item.rating.label,
+                },
+              };
+            })
+            .filter((item) => item.product.id !== false)
       );
 
       setIsRemoved(false);
     }
-  }, [isRemoved]);
+  }, [isRemoved, userDefaultValues]);
 
   const handleFileChange = async (file: File) => {
     setIsLoading(true);
     if (checkFileType(file)) {
       let { url } = await uploadToS3(file);
       setImageUrl(url);
+      setValue('cat_image', url);
       setIsLoading(false);
     } else {
       alert('Nepodporovaný formát');
@@ -323,8 +346,9 @@ const CatForm = ({
         color: data.color,
         daily_food: Number(data.daily_food),
         id: catData ? catData.id : null,
-        image_url: imageUrl,
+        image_url: watchedCatImage,
       };
+
       const reviewsInput = data.fieldArray;
 
       handleSubmit1(catInput, reviewsInput, {
@@ -354,6 +378,7 @@ const CatForm = ({
       diff,
       mergedInsertUpdate,
       isMainLoading,
+      watchedCatImage,
     ]
   );
 
@@ -383,9 +408,11 @@ const CatForm = ({
         <FormLegend name="Základné informácie" />
         <div>
           <UploadImage
-            imageUrl={imageUrl}
+            imageUrl={watchedCatImage}
             openFileDialog={openFileDialog}
             isLoading={isLoading}
+            buttonText={buttonText}
+            resetPhoto={resetPhoto}
           />
           <Controller
             name="cat_image"
@@ -520,7 +547,12 @@ const CatForm = ({
                   defaultValue={field.product}
                   control={control}
                   showHint={false}
-                  isDisabled={false}
+                  isDisabled={
+                    index <
+                    userDefaultValues.filter((item) => item !== false).length
+                      ? true
+                      : false
+                  }
                 />
               </div>
               <div className="pl-0 w-2/6">

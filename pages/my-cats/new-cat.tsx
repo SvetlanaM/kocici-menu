@@ -91,6 +91,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
             handleSubmit1={handleSubmit1}
             submitText={title}
             products={productData.products}
+            buttonText={chooseString(editOrAdd(), 'buttonText')}
           />
         )}
       </Center>
@@ -128,6 +129,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
             submitText={title}
             catData={catData.cat}
             products={productData.products}
+            buttonText={chooseString(editOrAdd(), 'buttonText')}
           />
         ) : (
           <Loading />
@@ -333,6 +335,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
         color: catData.color ?? null,
         daily_food: catData.daily_food ?? null,
         id: catData.id,
+        image_url: catData.image_url ?? null,
       };
 
       try {
@@ -496,10 +499,9 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
               );
             });
 
-          console.log(deletedReviews);
           const deleteOneByOne = (reviews) => {
             for (const review of reviews) {
-              deleteReview({
+              return deleteReview({
                 variables: {
                   cat_id: review.cat_id,
                   product_id: review.product_id,
@@ -541,19 +543,18 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
                     },
                   },
                 ],
-              }).then((data) => data.data.delete_Review.returning);
+              });
             }
           };
 
           const deleteResult = await deleteOneByOne(deletedReviews);
 
           if (
-            resultReview.data?.insert_Review?.returning &&
-            resultReviewHistory.data?.insert_ReviewHistory?.returning
+            (resultReview.data?.insert_Review?.returning &&
+              resultReviewHistory.data?.insert_ReviewHistory?.returning) ||
+            (deletedReviews.length > 0 &&
+              deleteResult.data?.delete_Review?.returning)
           ) {
-            return true;
-          }
-          if (deleteResult) {
             return true;
           }
         } else {
@@ -575,6 +576,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
       reviewUpdatedData
     ) => {
       if (editOrAdd()) {
+        console.log(editOrAdd());
         setIsActive(true);
         return updateMyCat(catData, reviewData, reviewUpdatedData);
       } else {
@@ -582,7 +584,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
         return createNewCat(catData, reviewData, reviewUpdatedData);
       }
     },
-    [createNewCat, updateMyCat]
+    [createNewCat, updateMyCat, isActive, editOrAdd]
   );
 
   const editOrAddStrings = {
@@ -590,6 +592,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
     name: ['Prehľad', 'Moje mačky'],
     path: ['/', '/my-cats'],
     path2: ['/my-cats/new-cat', '/my-cats/[:id]'],
+    buttonText: ['Nahrať fotku', 'Zmeniť fotku'],
   };
 
   const chooseString = (type: boolean, key: string) =>

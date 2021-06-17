@@ -10,6 +10,7 @@ import { GeneralError } from '../../components/error-screen';
 import Center from '../../components/center-container';
 import Header from '../../components/head';
 import getTitle from '../../utils/get-title';
+import { useEffect } from 'react';
 
 const TipDetailQuery = () => {
   const router = useRouter();
@@ -22,6 +23,10 @@ const TipDetailQuery = () => {
     variables: {
       slug: String(tip),
     },
+  });
+
+  useEffect(() => {
+    document.title = getTitle(TipData?.tip?.name);
   });
 
   return (

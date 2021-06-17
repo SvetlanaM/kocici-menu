@@ -36,9 +36,9 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
     cats[0].name,
     cats[0].image_url,
     cats[0].reviews.map((review) => {
-      const reviews = review.products.reviewhistory.filter(
-        (review) => review.cat_id === cats[0].id
-      );
+      const reviews = review.products.reviewhistory
+        .filter((review) => review.cat_id === cats[0].id)
+        .reverse();
       return {
         product_id: review.products.id,
         review_type: reviews[0] ? reviews[0].review_type : [],
@@ -57,11 +57,16 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
     ]);
   }, []);
 
+  const productsTemp = products.filter(
+    (x) => !catData.reviews.map((item) => item.products.id).includes(x.id)
+  );
+
   const getCatReviewHistory = (cat) => {
     return cat.reviews.map((product) =>
       product.products.reviewhistory
         .filter((review) => review.cat_id === cat.id)
         .map((review) => review.review_type)
+        .reverse()
     );
   };
   const setCatData = useCallback(
@@ -74,9 +79,9 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
         cat.name,
         cat.image_url,
         cat.reviews.map((review) => {
-          const reviews = review.products.reviewhistory.filter(
-            (review) => review.cat_id === cat.id
-          );
+          const reviews = review.products.reviewhistory
+            .filter((review) => review.cat_id === cat.id)
+            .reverse();
           return {
             product_id: review.products.id,
             review_type: reviews[0] ? reviews[0].review_type : [],
@@ -179,7 +184,7 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
           title="Obľúbené"
           catReviews={catReviews.slice(0, 5)}
           cats={[catModalData]}
-          products={products}
+          products={productsTemp}
         />
         <CatDetailProductTable
           data={getRProducts}

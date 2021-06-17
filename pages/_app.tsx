@@ -38,7 +38,13 @@ const httpLink = new HttpLink({
 });
 
 export const ApiClient = new ApolloClient({
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Cat: {
+        keyFields: ['id'],
+      },
+    },
+  }),
   link: authMiddleware.concat(httpLink),
 });
 

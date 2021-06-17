@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 interface PaginationFooterProps {
   actualPageNumber: number;
   allPageNumber: number;
@@ -24,7 +26,12 @@ const PaginationFooter = ({
   return (
     <tfoot className="">
       <tr className="pagination-row py-3 h-10">
-        <td className="py-3 pl-3.6 base-medium-text" colSpan={5}></td>
+        <td className="py-3 pl-8 text-sm text-gray">
+          <Link href="https://www.zoohit.cz/">
+            <a target="new">Do eshopu</a>
+          </Link>
+        </td>
+        <td className="py-3 pl-3.6 base-medium-text" colSpan={4}></td>
         {allPageNumber > 1 && (
           <td className="pr-3.6 text-sm font-light text-gray text-right flex justify-end items-center py-3">
             <button onClick={() => getActualPageNumber('PREV')}>

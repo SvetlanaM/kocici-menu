@@ -80,7 +80,7 @@ const CenterContainerQuery = () => {
             selectProducts={dashboardData?.selectProducts}
             onReviewSaveSuccess={handleReviewAdded}
             numberOfProducts={5}
-            title={`Top 5 najlepšie hodnotených produktov zo ${dashboardData?.reviews.length}`}
+            title={`Top 5 najlepšie hodnotených produktov z ${dashboardData?.reviews.length}`}
             footerType="HOMEPAGE"
           />
           <StatisticsList data={extendedData} cols={'grid-cols-2'} />

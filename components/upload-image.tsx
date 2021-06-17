@@ -5,19 +5,26 @@ interface UploadImageProps {
   imageUrl?: string;
   openFileDialog: () => void;
   isLoading: boolean;
+  buttonText?: string;
+  resetPhoto?: () => void;
 }
 
 export default function UploadImage({
   imageUrl,
   openFileDialog,
   isLoading,
+  buttonText,
+  resetPhoto,
 }: UploadImageProps) {
+  console.log(isLoading);
   return (
     <div className="pt-1 pb-6">
       <div className="mt-1 flex items-center">
-        <div className="cat-image flex justify-center items-center">
+        <div className="cat-image">
           {isLoading ? (
-            <Loading />
+            <div className="cat-image border-rounded-base justify-center items-center flex">
+              <Loading />
+            </div>
           ) : (
             <Image
               src={imageUrl}
@@ -31,8 +38,18 @@ export default function UploadImage({
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray hover:bg-gray-100 transition duration-500 ease-in"
           onClick={openFileDialog}
         >
-          Nahrať fotku
+          {buttonText}
         </button>
+        {imageUrl.includes('catappreact') ? (
+          <button
+            type="button"
+            className="ml-5 bg-red-500 py-2 px-3 border-rounded-base text-sm text-white focus:outline-none focus:bg-red-500
+              focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray hover:bg-red-800 transition duration-500 ease-in"
+            onClick={resetPhoto}
+          >
+            Vymazať fotku
+          </button>
+        ) : null}
       </div>
     </div>
   );
