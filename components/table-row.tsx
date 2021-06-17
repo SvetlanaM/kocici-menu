@@ -10,6 +10,7 @@ import setUppercaseTitle from '../utils/set-uppercase-title';
 import truncateText from '../utils/truncate-text';
 import ProductDetailsTooltipBox from './product-details-tooltip';
 import { useState } from 'react';
+import Link from 'next/link';
 
 export const ReviewFieldsFragment = gql`
   fragment ReviewFieldsFragment on Review {
@@ -59,13 +60,17 @@ const TableRow = ({
         />
       </td>
       <td>
-        <ProductName
-          brand={product.brand_type}
-          name={setUppercaseTitle(
-            truncateText(product.name, 30),
-            product.brand_type
-          )}
-        />
+        <Link href={`https://www.zoohit.cz/${product.path}`}>
+          <a>
+            <ProductName
+              brand={product.brand_type}
+              name={setUppercaseTitle(
+                truncateText(product.name, 30),
+                product.brand_type
+              )}
+            />
+          </a>
+        </Link>
       </td>
       <td>
         Pred <br />

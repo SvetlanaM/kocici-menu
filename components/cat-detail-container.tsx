@@ -15,6 +15,7 @@ import { getUser } from '../utils/user';
 import CenterContainer from '../components/center-container';
 import LeftContainer from '../components/left-container';
 import AddCatBox from '../components/add-cat-box';
+import CatDetailPieChart from '../components/cat-detail-pie-chart';
 interface CatDetailContainerProps {
   cats: GetCatDetailQuery['cat'];
   products: GetProductsQuery['products'];
@@ -124,6 +125,30 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
     return difference;
   }, [isShuffled, selectedCat]);
 
+  const getNumber = (item: any): number => {
+    var numberPattern = /\d+/g;
+    console.log(item);
+    let number = Number(item.match(numberPattern)[0]);
+    return number;
+  };
+
+  const mealTypes = catData.reviews
+    .map((item) =>
+      item.products.meal_type !== null ? getNumber(item.products.meal_type) : 0
+    )
+    .filter((item) => item !== 0);
+
+  const bielTypes = catData.reviews
+    .map((item) =>
+      item.products.amount !== null ? getNumber(item.products.amount) : 0
+    )
+    .filter((item) => item !== 0);
+
+  const average = (arr) => arr.reduce((p, c) => p + c, 0) / arr.length;
+  const avgMealType = average(mealTypes) || 0;
+  const avgBielType = Math.ceil(average(bielTypes)) || 0;
+  const mergedStats = [avgMealType, avgBielType];
+
   return (
     <>
       <CenterContainer>
@@ -133,17 +158,20 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
           selectedCat={selectedCat}
         />
         <CatDetailInfoBox data={catData} />
-        <CatDetailCostChart
-          data1={randomDataG}
-          data2={randomDataK}
-          selectedCat={selectedCat}
-        />
       </CenterContainer>
       <LeftContainer>
         <div className="mt-9.5">
           <AddCatBox />
         </div>
       </LeftContainer>
+      <div className="w-full grid grid-cols-2 gap-11 pb-16 mt-3">
+        <CatDetailCostChart
+          data1={randomDataG}
+          data2={randomDataK}
+          selectedCat={selectedCat}
+        />
+        <CatDetailPieChart aggData={mergedStats} />
+      </div>
       <div className="grid grid-cols-2 grid-flow-row gap-x-12 w-full">
         <CatDetailProductTable
           data={catProducts}

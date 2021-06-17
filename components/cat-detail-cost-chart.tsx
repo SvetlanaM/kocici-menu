@@ -58,6 +58,7 @@ const CatDetailCostChart = ({
   const options = {
     animation: false,
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
       y: {
         // defining min and max so hiding the dataset does not change scale range

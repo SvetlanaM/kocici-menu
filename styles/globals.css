@@ -147,3 +147,7 @@ input:focus {
     right: -9px;
     top: 13px;
 }
+
+.graph-container {
+    height: 250px;
+}
