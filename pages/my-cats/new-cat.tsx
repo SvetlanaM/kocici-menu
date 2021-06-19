@@ -587,11 +587,26 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
     [createNewCat, updateMyCat, isActive, editOrAdd]
   );
 
+  const [historyUrl, setHistoryUrl] = useState<string>();
+
+  useEffect(() => {
+    const historyUrl = document.referrer;
+    if (typeof historyUrl !== undefined) {
+      setHistoryUrl(historyUrl);
+    }
+  }, [document.referrer]);
+
+  console.log(historyUrl && historyUrl);
   const editOrAddStrings = {
     title: [`Pridať novú mačku`, `Upraviť mačku`],
-    name: ['Prehľad', 'Moje mačky'],
-    path: ['/', '/my-cats'],
-    path2: ['/my-cats/new-cat', '/my-cats/[:id]'],
+    name: [
+      historyUrl && historyUrl !== undefined && historyUrl.includes('my-cats')
+        ? 'Krok späť'
+        : 'Prehlad',
+      'Moje mačky',
+    ],
+    path: ['back', '/my-cats'],
+    path2: ['back', '/my-cats/[:id]'],
     buttonText: ['Nahrať fotku', 'Zmeniť fotku'],
   };
 
@@ -611,7 +626,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
         name: title,
       },
     ];
-  }, [createCat, updateCat]);
+  }, [createCat, updateCat, historyUrl]);
 
   return (
     <Layout>

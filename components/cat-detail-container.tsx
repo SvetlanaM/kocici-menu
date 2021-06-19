@@ -150,8 +150,8 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
     .filter((item) => item !== 0);
 
   const average = (arr) => arr.reduce((p, c) => p + c, 0) / arr.length;
-  const avgMealType = average(mealTypes) || 0;
-  const avgBielType = Math.ceil(average(bielTypes)) || 0;
+  const avgMealType = average(mealTypes).toFixed(2) || 0;
+  const avgBielType = Math.ceil(average(bielTypes)).toFixed(2) || 0;
   const mergedStats = [avgMealType, avgBielType];
 
   return (
@@ -192,6 +192,8 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
           title="Navrhované"
           catReviews={catReviews}
           shuffleData={shuffleData}
+          products={getRProducts}
+          cats={[catModalData]}
         />
       </div>
     </>

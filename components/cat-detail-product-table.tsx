@@ -72,7 +72,7 @@ const CatDetailProductTable = ({
   };
 
   const handleReviewAdded = () => {
-    //return router.reload();
+    shuffleData();
   };
 
   const options = {
@@ -127,8 +127,10 @@ const CatDetailProductTable = ({
   };
 
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [rowNumber, setRowNumber] = useState<number>();
 
-  const openModal = () => {
+  const openModal = (order: number) => {
+    setRowNumber(order);
     setIsOpen(true);
   };
 
@@ -183,14 +185,25 @@ const CatDetailProductTable = ({
                     ) : (
                       <>
                         <Link href="/my-cats">
-                          <a onClick={openModal} className="text-gray">
+                          <a
+                            onClick={() => openModal(index)}
+                            className="text-gray"
+                          >
                             <Image
-                              src="/icons/add-review.svg"
+                              src="/icons/add.svg"
                               width={30}
                               className="mr-10"
                             />
                           </a>
                         </Link>
+                        <AddProductReviewModal
+                          isOpen={modalIsOpen}
+                          closeModal={closeModal}
+                          selectCats={cats}
+                          selectProducts={products}
+                          onSaveSuccess={handleReviewAdded}
+                          index={rowNumber}
+                        />
                       </>
                     )}
                   </div>

@@ -2,6 +2,7 @@ import ProductImage from './product-image';
 import ProductName from './product-name';
 import setUppercaseTitle from '../utils/set-uppercase-title';
 import truncateText from '../utils/truncate-text';
+import { useState } from 'react';
 
 const FavouriteProducts = ({ product }) => {
   return (
@@ -12,6 +13,7 @@ const FavouriteProducts = ({ product }) => {
         className="ml-3"
         width={50}
       />
+
       <div className="ml-3.6">
         <ProductName
           brand={product.brand_type}

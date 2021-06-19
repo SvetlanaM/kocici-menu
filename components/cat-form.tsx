@@ -359,10 +359,10 @@ const CatForm = ({
           console.log('jupiii2');
           if (catData) {
             setIsMainLoading(false);
-            router.push('/my-cats');
+            router.back();
           } else {
             setIsMainLoading(false);
-            router.push('/');
+            router.back();
           }
         } else {
           setIsMainLoading(false);
@@ -408,7 +408,7 @@ const CatForm = ({
         <FormLegend name="Základné informácie" />
         <div>
           <UploadImage
-            imageUrl={watchedCatImage}
+            imageUrl={watchedCatImage ? watchedCatImage : catImage}
             openFileDialog={openFileDialog}
             isLoading={isLoading}
             buttonText={buttonText}
@@ -548,7 +548,7 @@ const CatForm = ({
                   control={control}
                   showHint={false}
                   isDisabled={
-                    index <
+                    index < userDefaultValues &&
                     userDefaultValues.filter((item) => item !== false).length
                       ? true
                       : false
@@ -612,7 +612,7 @@ const CatForm = ({
         </div>
       </fieldset>
       <div className="mt-8">
-        <BackButton url={'/'} />
+        <BackButton />
         <SubmitButton text={submitText} disabled={false} size="w-1/4" />
       </div>
     </form>

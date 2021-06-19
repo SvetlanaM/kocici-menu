@@ -38,6 +38,7 @@ interface AddProductReviewFormProps {
   onBackAction?: () => void;
   onSuccess?: () => void;
   props?: Array<string>;
+  index?: number;
 }
 
 const Option = ({ children, ...props }) => {
@@ -67,6 +68,7 @@ const AddProductReviewForm = ({
   onBackAction,
   onSuccess,
   props,
+  index,
 }: AddProductReviewFormProps) => {
   const { handleSubmit, control, watch } = useForm();
 
@@ -246,6 +248,8 @@ const AddProductReviewForm = ({
             name="product"
             control={control}
             showHint={true}
+            defaultValue={index >= 0 && index <= 5 && productsCopy[index]}
+            isDisabled={productsCopy[index] ? true : false}
           />
         </div>
       </div>

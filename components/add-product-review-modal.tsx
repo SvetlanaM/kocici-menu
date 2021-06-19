@@ -8,6 +8,7 @@ interface AddProductReviewModalProps {
   onSaveSuccess: () => void;
   selectCats: GetDashboardQuery['selectCats'];
   selectProducts: GetDashboardQuery['selectProducts'];
+  index?: number;
 }
 
 const AddProductReviewModal = ({
@@ -16,6 +17,7 @@ const AddProductReviewModal = ({
   onSaveSuccess,
   selectCats,
   selectProducts,
+  index,
 }: AddProductReviewModalProps) => {
   return (
     <Modal
@@ -51,6 +53,7 @@ const AddProductReviewModal = ({
         selectCats={selectCats}
         selectProducts={selectProducts}
         onSuccess={onSaveSuccess}
+        index={index}
       />
     </Modal>
   );

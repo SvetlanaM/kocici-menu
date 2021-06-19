@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import router from 'next/router';
 import Breadcrumb from '../utils/breadcrumb';
 
 type BreadcrumbsProps = {
@@ -14,11 +15,17 @@ const Breadcrumbs = ({ breadcrumbs }: BreadcrumbsProps) => {
       {(crumbsCopy ?? []).map((breadcrumb, key) => {
         return (
           <>
-            <Link key={key} href={breadcrumb.path}>
-              <a className="underline hover:text-purple-darkest">
-                {breadcrumb.name}
-              </a>
-            </Link>
+            <a
+              className="underline hover:text-purple-darkest cursor-pointer"
+              onClick={() =>
+                breadcrumb.path === 'back'
+                  ? router.back()
+                  : router.push(breadcrumb.path)
+              }
+            >
+              {breadcrumb.name}
+            </a>
+
             {' / '}
           </>
         );

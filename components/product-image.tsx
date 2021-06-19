@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import Image from '../components/image';
 import { DEFAULT_PRODUCT_IMAGE as defaultImage } from '../utils/constants';
 
@@ -9,7 +9,17 @@ interface ProductImageProps {
 }
 
 const ProductImage = ({ src, alt, ...otherProps }: ProductImageProps) => {
-  const productImage = useMemo<string>(() => (src ? src : defaultImage), [src]);
+  const [urlError, setUrlError] = useState<boolean>(true);
+
+  const onError = () => {
+    setUrlError(false);
+  };
+
+  const productImage = useMemo<string>(
+    () => (urlError ? src : defaultImage),
+    [src, urlError]
+  );
+
   return (
     <Image
       src={productImage}
@@ -18,6 +28,7 @@ const ProductImage = ({ src, alt, ...otherProps }: ProductImageProps) => {
       height={55}
       quality={100}
       {...otherProps}
+      onError={onError}
     />
   );
 };

@@ -16,7 +16,6 @@ export default function UploadImage({
   buttonText,
   resetPhoto,
 }: UploadImageProps) {
-  console.log(isLoading);
   return (
     <div className="pt-1 pb-6">
       <div className="mt-1 flex items-center">
@@ -40,7 +39,7 @@ export default function UploadImage({
         >
           {buttonText}
         </button>
-        {imageUrl.includes('catappreact') ? (
+        {imageUrl && imageUrl.includes('catappreact') ? (
           <button
             type="button"
             className="ml-5 bg-red-500 py-2 px-3 border-rounded-base text-sm text-white focus:outline-none focus:bg-red-500
