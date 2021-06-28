@@ -6,7 +6,8 @@ import DateFormatObject from '../utils/get-format-date';
 import BackButton from '../components/back-button';
 import Breadcrumbs from '../components/breadcrumbs';
 import Breadcrumb from '../utils/breadcrumb';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import router from 'next/router';
 
 export const TipDetailFieldsFragment = gql`
   fragment TipDetailFragment on Tip {
@@ -23,12 +24,20 @@ const TipDetailBox = ({
   description,
 }: TipDetailFragmentFragment) => {
   const formattedDate = DateFormatObject(updated_at).formatDate();
+  const [historyUrl, setHistoryUrl] = useState<string>();
+
+  useEffect(() => {
+    const historyUrl = document.referrer;
+    if (typeof historyUrl !== undefined) {
+      setHistoryUrl(historyUrl);
+    }
+  }, [document.referrer, historyUrl]);
 
   const breadcrumbs: Breadcrumb[] = useMemo(() => {
     return [
       {
-        path: '/',
-        name: 'Prehľad',
+        path: 'back',
+        name: 'Späť',
       },
       {
         path: `/tips/${name}`,

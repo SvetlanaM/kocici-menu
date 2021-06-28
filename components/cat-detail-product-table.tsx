@@ -72,7 +72,7 @@ const CatDetailProductTable = ({
   };
 
   const handleReviewAdded = () => {
-    shuffleData();
+    shuffleData;
   };
 
   const options = {
@@ -177,7 +177,7 @@ const CatDetailProductTable = ({
               <>
                 <div className="pt-2 flex pb-1 justify-between items-center">
                   <div className="w-full">
-                    <FavouriteProducts key={item} product={item} />
+                    <FavouriteProducts key={item.id} product={item} />
                   </div>
                   <div className="canvas-graph">
                     {item.reviewhistory && item.reviewhistory.length > 0 ? (

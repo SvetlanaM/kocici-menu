@@ -38,9 +38,10 @@ const CatDetailPieChart = ({ aggData }: CatDetailPieChartProps) => {
   };
 
   function checkZeros() {
-    return !aggData.some((item) => item === 0);
+    return !aggData.some((item) => item === 'NaN');
   }
 
+  console.log(checkZeros(), aggData);
   return (
     <div className="mt-5 w-full graph-container">
       <Title title={`Kvalita stravy mačky`} />

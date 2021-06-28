@@ -8,7 +8,7 @@ const { items } = MenuLinks;
 
 const Sidebar = () => {
   const router = useRouter();
-  
+
   return (
     <aside className="relative h-screen w-72 flex-col-base justify-between px-8.5 bg-purple-darkest">
       <div className="mt-9.5">
