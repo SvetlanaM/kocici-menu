@@ -47,9 +47,6 @@ const UserBanner = ({ data }: UserBannerProps) => {
             Za posledných 7 dní si pridal/a{' '}
             {i18next.t('reviews.key', {
               count: data.reviews_count.aggregate.count,
-            })}{' '}
-            {i18next.t('products.key', {
-              count: data.reviews_count.aggregate.count,
             })}
             . Tvoja obľúbená značka je{' '}
             <strong>{data.stats[0].brand_type}</strong> s priemerným hodnotením

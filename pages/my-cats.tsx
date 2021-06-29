@@ -39,12 +39,16 @@ const CatDetailQuery = () => {
 
   return (
     <>
-      <CenterContainer>
-        {catLoading && <Loading />}
-        {catError && (
+      {catLoading && (
+        <CenterContainer>
+          <Loading />
+        </CenterContainer>
+      )}
+      {catError && (
+        <CenterContainer>
           <ErrorScreen error={GeneralError.fromApolloError(catError)} />
-        )}
-      </CenterContainer>
+        </CenterContainer>
+      )}
 
       {productData && catData && (
         <CatDetailContainer

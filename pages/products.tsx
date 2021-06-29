@@ -24,7 +24,11 @@ const Products = () => {
 
   return (
     <Container>
-      <CenterContainer>{reviewsLoading && <Loading />}</CenterContainer>
+      {reviewsLoading && (
+        <CenterContainer>
+          <Loading />
+        </CenterContainer>
+      )}
       {reviewsData && (
         <>
           <FilterForm

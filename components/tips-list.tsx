@@ -6,6 +6,7 @@ import truncateText from '../utils/truncate-text';
 import FormInput from './form-input';
 import { useEffect, useState } from 'react';
 import useSearch from '../hooks/useSearch';
+import Image from '../components/image';
 interface TipProps {
   data: GetDashboardQuery['tips'] | GetTipsQuery['tips'];
   cols: string;
@@ -32,14 +33,26 @@ const TipsList = ({ data, cols, isOnDashboard }: TipProps) => {
       <div className="flex flex-col xl-custom:flex-row justify-between mb-2 xl-custom:items-center">
         <Title title="Tipy a odporúčania" />
         {!isOnDashboard && (
-          <FormInput
-            type="text"
-            placeholder="Vyhľadať článok od 3 znakov"
-            width={'w-full xl-custom:w-1/3'}
-            onChange={(e) => {
-              setSearchTerm(e.target.value);
-            }}
-          />
+          <div className="flex flex-row justify-end w-full xl-custom:w-1/2 float-right relative">
+            <FormInput
+              type="text"
+              placeholder="Vyhľadávať od 3 znakov"
+              width={'w-full xl-custom:w-1/2'}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
+              defaultValue={searchTerm}
+            />
+            {searchTerm !== '' && (
+              <a onClick={() => setSearchTerm('')}>
+                <Image
+                  src={'/icons/cancel.svg'}
+                  width={12}
+                  className="filter-cancel"
+                />
+              </a>
+            )}
+          </div>
         )}
       </div>
       <div

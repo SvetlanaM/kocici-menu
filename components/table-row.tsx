@@ -60,8 +60,8 @@ const TableRow = ({
         />
       </td>
       <td className="pl-10 xl-custom:px-2">
-        <Link href={`https://www.zoohit.cz/${product.path}`}>
-          <a>
+        <Link href={`https://www.zoohit.cz${product.path}`}>
+          <a target="new">
             <ProductName
               brand={product.brand_type}
               name={setUppercaseTitle(

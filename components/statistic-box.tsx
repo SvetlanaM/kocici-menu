@@ -22,7 +22,7 @@ const StatisticBox = ({ icon, title, name }: ExtendType) => {
       <div>
         <Image src={icon} height={75} width={80} className="flex stats-img" />
       </div>
-      <div className="flex-col-base justify-center ml-6 leading-tight">
+      <div className="flex-col-base justify-center ml-6 mr-6 leading-tight">
         <h4 className="mb-1.2 font-semibold text-gray">{title}</h4>
         <p className="small-purple-text">
           <a

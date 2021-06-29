@@ -8,13 +8,14 @@ module.exports = {
     },
     screens: {
       'xl-custom': '1240px',
+      'xxl-custom': '1920px',
     },
     extend: {
       colors: {
         transparent: 'transparent',
         current: 'currentColor',
         purple: {
-          light: '#bdbde7',
+          light: '#9F9FC6',
           DEFAULT: '#4b4261',
           dark: '#9595bc',
           darkest: '#3e3e70',
@@ -22,7 +23,7 @@ module.exports = {
         gray: {
           lightest: '#e1e5ee',
           light: '#f0f2f7',
-          DEFAULT: '#b3bacc',
+          DEFAULT: '#A2A8B8',
         },
         yellow: {
           lightest: '#fae3c3',

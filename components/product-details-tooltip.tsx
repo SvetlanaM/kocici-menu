@@ -97,7 +97,13 @@ const ProductDetailsTooltipBox = ({ data }: ProductDetailsTooltipBoxProps) => {
         <ToolTipBody itemName="Konzervanty:" item={data.conservants} />
       )}
       {data.feeding && (
-        <ToolTipBody itemName="Doporučené dávkovanie:" item={data.feeding} />
+        <ToolTipBody
+          itemName="Doporučené dávkovanie:"
+          item={data.feeding.replace(
+            'Doporučené dávkování',
+            'Odporúča odborník'
+          )}
+        />
       )}
     </div>
   );

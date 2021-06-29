@@ -177,7 +177,7 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
         />
         <CatDetailPieChart aggData={mergedStats} />
       </div>
-      <div className="grid grid-rows-2 xl-custom:grid-rows-1 xl-custom:grid-cols-2 grid-flow-row gap-x-12 w-full">
+      <div className="grid grid-rows xl-custom:grid-rows-1 xl-custom:grid-cols-2 grid-flow-row gap-x-12 w-full">
         <CatDetailProductTable
           data={catProducts}
           name={catData.name}

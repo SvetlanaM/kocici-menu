@@ -24,13 +24,13 @@ const AddProductReviewModal = ({
       isOpen={isOpen}
       onRequestClose={closeModal}
       contentLabel="Add product review"
-      className="xl-custom:w-2/4 pt-9 pb-7 px-10 m-auto bg-white border-rounded-base w-full h-screen xl-custom:h-auto xl-custom:center-modal overflow-auto"
+      className="xl-custom:w-2/4 pt-9 pb-7 px-10 m-auto bg-white border-rounded-base w-full h-full xl-custom:h-auto center-modal overflow-x-auto"
     >
       <div className="flex flex-col justify-between text-purple leading-normal">
-        <h2 className="font-medium text-2xl">
+        <h2 className="font-medium text-2xl pt-10 xl-custom:pt-0">
           Pridať hodnotenie nového produktu
         </h2>
-        <div className="flex flex-col xl-custom:flex-row justify-between items-start pt-10 xl-custom:pt-0 xl-custom:items-center">
+        <div className="flex flex-col xl-custom:flex-row justify-between items-start pt-5 xl-custom:pt-0 xl-custom:items-center">
           <div className="font-light text-sm w-full xl-custom:w-4/6 pr-3.6">
             Hodnotenie nového produktu v{' '}
             <span className="text-purple-light">3 super easy krokoch.</span>

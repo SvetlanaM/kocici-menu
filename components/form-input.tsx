@@ -29,6 +29,7 @@ const FormInput = ({
       placeholder={placeholder}
       defaultValue={defaultValue}
       onChange={onChange}
+      value={defaultValue}
     ></input>
   );
 };
