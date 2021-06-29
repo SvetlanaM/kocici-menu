@@ -27,19 +27,19 @@ export default function Register() {
       <AuthWrapper>
         <AuthRightContainer
           title="Začni vytvorením účtu"
-          subtitle="Registrovat sa do aplikacie alebo"
+          subtitle="Registrovať sa do aplikácie alebo"
           link={link}
           form={
             <AuthForm
-              submitText="Registrovat sa"
-              passwordPlaceholder="Vytvorit silne heslo. Minimálne 8 znakov"
+              submitText="Registrovať sa"
+              passwordPlaceholder="Min. 8 znakov a 1 veľké písmeno"
               authMethod="signupUser"
             />
           }
           buttonInfo={false}
           footerLinks="Vytvorením účtu, súhlasíte s našimi Podmienkami používania"
         />
-        <AuthLeftContainer className="flex flex-col pt-32 px-20">
+        <AuthLeftContainer className="flex flex-col pt-10 xl-custom:pt-32 px-10 xl-custom:px-20 justify-center">
           <h2 className="text-white text-3xl font-medium">
             Pridaj si svoje mačky a nakupuj Victoria, a young white cat
           </h2>

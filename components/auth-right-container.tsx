@@ -23,7 +23,7 @@ const AuthRightContainer = ({
   footerLinks,
 }: AuthRightContainerProps) => {
   return (
-    <div className="w-1/2 flex items-start py-16 px-20 flex-col min-h-screen text-purple">
+    <div className="justify-center order-2 xl-custom:order-1 w-full xl-custom:w-1/2 flex items-start py-16 px-10 xl-custom:px-20 flex-col xl-custom:min-h-screen text-purple">
       <Link href="/">
         <a className="font-logo font-bold text-lg uppercase text-purple-dark">
           {APP_NAME}
@@ -41,9 +41,9 @@ const AuthRightContainer = ({
       <div className="mt-5 w-full">{form}</div>
       {buttonInfo && (
         <div className="text-purple-light text-sm font-light">
-          Problem s prihlasenim?{' '}
+          Problém s prihlásením?{' '}
           <Link href={`mailto: ${SVETA_EMAIL}`}>
-            <a>Napiste mi :)</a>
+            <a>Napíšte mi :)</a>
           </Link>
         </div>
       )}

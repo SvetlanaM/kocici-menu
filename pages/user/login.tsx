@@ -19,11 +19,11 @@ export default function Login() {
       <AuthWrapper>
         <AuthRightContainer
           title="Ahoj!"
-          subtitle="Prihlasit sa do aplikacie alebo"
+          subtitle="Prihlásiť sa do aplikácie alebo"
           link={link}
           form={
             <AuthForm
-              submitText="Prihlasit sa"
+              submitText="Prihlásiť sa"
               passwordPlaceholder="Zadajte heslo"
               authMethod="loginUser"
             />
@@ -31,7 +31,7 @@ export default function Login() {
           buttonInfo={true}
           footerLinks="Sveťa app 2021 Podmienky používania, Ochrana súkromia"
         />
-        <AuthLeftContainer className="flex items-center justify-center">
+        <AuthLeftContainer className="flex items-center justify-center p-10 xl-custom:p-0">
           <Image src="/icons/login.svg" height={425} width={462} />
         </AuthLeftContainer>
       </AuthWrapper>

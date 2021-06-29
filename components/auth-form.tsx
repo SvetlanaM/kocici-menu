@@ -32,11 +32,11 @@ const AuthForm = ({
     resources: {
       sk: {
         translation: {
-          invalid_grant_email_not_confirmed: 'Email nie je potvrdeny.',
+          invalid_grant_email_not_confirmed: 'Email nie je potvrdený.',
           a_user_with_this_email_address_has_already_been_registered:
-            'Uzivatel s touto emailovou adresou uz existuje. Zadajte inu.',
+            'Užívateľ s touto emailovou adresou už existuje. Zadajte iný email.',
           invalid_grant_no_user_found_with_that_email_or_password_invalid:
-            'Pouzivatel s touto adresou nenajdeny alebo zle zadane heslo.',
+            'Používateľ s touto email adresou nenájdený alebo zle zadané heslo.',
         },
       },
     },
@@ -63,7 +63,9 @@ const AuthForm = ({
         data: 'signed up thru react-netlify-identity',
       })
         .then(() =>
-          setSuccessMessage('Registracia uspesna. Potvrdte emailovu adresu.')
+          setSuccessMessage(
+            'Registrácia úspešná. Potvrdenie je zaslané na registračný email.'
+          )
         )
         .then(() => setMessage(''))
         .catch((err) => setMessage(i18next.t(convertErrString(err.message))));
@@ -106,7 +108,7 @@ const AuthForm = ({
             <FormInput
               registerRules={{
                 ...register('email', {
-                  required: { value: true, message: 'Email je povinny' },
+                  required: { value: true, message: 'Email je povinný' },
                 }),
               }}
               type="email"
@@ -120,13 +122,13 @@ const AuthForm = ({
             <FormInput
               registerRules={{
                 ...register('password', {
-                  required: { value: true, message: 'Heslo je povinne' },
+                  required: { value: true, message: 'Heslo je povinné' },
                   validate: {
                     hasUppercaseLetter: hasUppercaseLetter,
                   },
                   minLength: {
                     value: 8,
-                    message: 'Heslo musi mat najmenej 8 znakov',
+                    message: 'Heslo musí mať najmenej 8 znakov',
                   },
                 }),
               }}
@@ -140,7 +142,7 @@ const AuthForm = ({
             {errors.password &&
               errors.password.type === 'hasUppercaseLetter' && (
                 <FormErrorMessage
-                  error={'Heslo musi obsahovat aspon jedno velke pismeno'}
+                  error={'Heslo musí obsahovať aspoň jedno veľké písmeno'}
                 />
               )}
           </FormInputWrapper>

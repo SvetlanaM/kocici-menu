@@ -5,7 +5,11 @@ type AuthLeftContainerProps = {
 
 const AuthLeftContainer = ({ children, className }: AuthLeftContainerProps) => {
   return (
-    <div className={`w-1/2 bg-purple-darkest ${className}`}>{children}</div>
+    <div
+      className={`order-1 xl-custom:order-2 w-full xl-custom:w-1/2 bg-purple-darkest ${className}`}
+    >
+      {children}
+    </div>
   );
 };
 
