@@ -3,7 +3,11 @@ type ContainerProps = {
 };
 
 const LeftContainer = ({ children }: ContainerProps) => {
-  return <div className="w-3/12 pl-7">{children}</div>;
+  return (
+    <div className="w-full pt-5 xl-custom:pt-0 xl-custom:w-3/12 xl-custom:pl-7">
+      {children}
+    </div>
+  );
 };
 
 export default LeftContainer;

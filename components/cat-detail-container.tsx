@@ -165,11 +165,11 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
         <CatDetailInfoBox data={catData} />
       </CenterContainer>
       <LeftContainer>
-        <div className="mt-9.5">
+        <div className="mt-4 xl-custom:mt-9.5">
           <AddCatBox />
         </div>
       </LeftContainer>
-      <div className="w-full grid grid-cols-2 gap-11 pb-16 mt-3">
+      <div className="w-full grid grid-rows-2 xl-custom:grid-rows-1 xl-custom:grid-cols-2 gap-11 pb-16 mt-3">
         <CatDetailCostChart
           data1={randomDataG}
           data2={randomDataK}
@@ -177,7 +177,7 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
         />
         <CatDetailPieChart aggData={mergedStats} />
       </div>
-      <div className="grid grid-cols-2 grid-flow-row gap-x-12 w-full">
+      <div className="grid grid-rows-2 xl-custom:grid-rows-1 xl-custom:grid-cols-2 grid-flow-row gap-x-12 w-full">
         <CatDetailProductTable
           data={catProducts}
           name={catData.name}

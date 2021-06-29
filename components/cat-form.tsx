@@ -438,7 +438,7 @@ const CatForm = ({
               ))}
           />
         </div>
-        <div className="grid grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-3 xl-custom:gap-10">
           <FormInputWrapper>
             <FormInputLabel name="Meno mačky*" />
             <FormInput
@@ -465,7 +465,7 @@ const CatForm = ({
             />
           </FormInputWrapper>
         </div>
-        <div className="grid grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-3 xl-custom:gap-10">
           <FormInputWrapper>
             <FormInputLabel name="Vek mačky" />
             <FormInput
@@ -486,7 +486,7 @@ const CatForm = ({
             />
           </FormInputWrapper>
         </div>
-        <div className="grid grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-3 xl-custom:gap-10">
           <FormInputWrapper>
             <FormInputLabel name="Váha mačky v kg" />
             <FormInput
@@ -504,7 +504,7 @@ const CatForm = ({
             />
           </FormInputWrapper>
         </div>
-        <div className="grid grid-cols-2 gap-10 mt-3">
+        <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-3 xl-custom:gap-10 mt-3">
           <FormInputWrapper>
             <FormInputLabel name="Email veterinára" />
             <FormInput
@@ -534,9 +534,9 @@ const CatForm = ({
           return (
             <div
               key={field.id}
-              className="flex justify-between items-center mb-5"
+              className="flex flex-col xl-custom:flex-row justify-between xl-custom:items-center mb-5"
             >
-              <div className="w-1/2 pr-3">
+              <div className="w-full xl-custom:w-1/2 mb-5 xl-custom:mb-0 xl-custom:pr-3">
                 <ProductController
                   searchProducts={searchProducts}
                   onInputChange={(e) => {
@@ -555,7 +555,7 @@ const CatForm = ({
                   }
                 />
               </div>
-              <div className="pl-0 w-2/6">
+              <div className="pl-0 w-full xl-custom:w-2/6">
                 <RatingController
                   name={`fieldArray.${index}.rating`}
                   control={control}
@@ -567,7 +567,7 @@ const CatForm = ({
               </div>
               <button
                 type="button"
-                className="mt-8 text-red-500"
+                className="mt-5 text-left xl-custom:mt-8 text-red-500"
                 onClick={() => {
                   remove(index);
                   setIsRemoved(true);
@@ -613,7 +613,11 @@ const CatForm = ({
       </fieldset>
       <div className="mt-8">
         <BackButton />
-        <SubmitButton text={submitText} disabled={false} size="w-1/4" />
+        <SubmitButton
+          text={submitText}
+          disabled={false}
+          size="w-full xl-custom:w-1/4"
+        />
       </div>
     </form>
   );

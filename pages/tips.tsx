@@ -74,7 +74,7 @@ const TipsQuery = () => {
       </CenterContainer>
       {tipData && (
         <>
-          <TopTipsList data={top} cols={'grid-cols-2'} />
+          <TopTipsList data={top} cols={'grid-cols-1 xl-custom:grid-cols-2'} />
           <TipsList data={tips} cols={'grid-cols-1'} isOnDashboard={false} />
         </>
       )}

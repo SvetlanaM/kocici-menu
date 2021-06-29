@@ -44,10 +44,30 @@ tbody tr td {
 }
 
 .add-cat::after {
-    content: url('../public/icons/add_cat.svg');
-    position: absolute;
-    right: 4px;
-    top: -17px;
+    display: none;
+}
+
+@media (min-width: 1025px) {
+    .add-cat::after {
+        content: url('../public/icons/add_cat.svg');
+        position: absolute;
+        right: 4px;
+        top: -17px;
+        display: block;
+    }
+}
+
+@media (min-width: 1240px) {
+    .add-cat::after {
+        right: -10px;
+    }
+}
+
+@media (min-width: 1918px) {
+    .add-cat::after {
+        right: 25px;
+        top: -35px;
+    }
 }
 
 button:disabled {

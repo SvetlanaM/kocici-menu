@@ -56,7 +56,7 @@ const ProductController = ({
         <>
           <div className="flex justify-between mb-3">
             <FormInputLabel name="Produkt*" />
-            <div className="text-purple-light text-xs mt-1.5 pl-0.5">
+            <div className="text-purple-light text-xs mt-1.5 pl-0.5 hidden xl-custom:block">
               Nenašli ste hľadaný produkt?{' '}
               <Link href={`mailto: ${SVETA_EMAIL}`}>
                 <a className="hover:underline">Napíšte mi :)</a>

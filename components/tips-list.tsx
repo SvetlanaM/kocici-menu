@@ -29,13 +29,13 @@ const TipsList = ({ data, cols, isOnDashboard }: TipProps) => {
 
   return (
     <InnerContainer flexType="flex-col">
-      <div className="flex flex-row justify-between mb-2 items-center">
+      <div className="flex flex-col xl-custom:flex-row justify-between mb-2 xl-custom:items-center">
         <Title title="Tipy a odporúčania" />
         {!isOnDashboard && (
           <FormInput
             type="text"
             placeholder="Vyhľadať článok od 3 znakov"
-            width={'w-1/3'}
+            width={'w-full xl-custom:w-1/3'}
             onChange={(e) => {
               setSearchTerm(e.target.value);
             }}
@@ -43,7 +43,7 @@ const TipsList = ({ data, cols, isOnDashboard }: TipProps) => {
         )}
       </div>
       <div
-        className={`grid ${cols} grid-flow-row gap-x-11 ${
+        className={`grid xl-custom:${cols} grid-flow-row gap-x-11 ${
           !isOnDashboard ? 'section-tip' : null
         }`}
       >

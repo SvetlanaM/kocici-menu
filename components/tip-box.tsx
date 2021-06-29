@@ -41,7 +41,7 @@ const TipBox = ({
               <Image
                 src={`/icons/${category_machine_name}.svg`}
                 height={20}
-                className="mr-4 inline"
+                className="mr-4 xl-custom:inline hidden"
               />
             ) : (
               order
@@ -50,7 +50,7 @@ const TipBox = ({
           </div>
           <div>
             {!isOnDashboard ? (
-              <span className="mr-3 flex flex-row mt-1 text-purple">
+              <span className="mr-3 hidden xl-custom:flex flex-row mt-1 text-purple">
                 <Image
                   src={`/icons/clock.svg`}
                   height={10}

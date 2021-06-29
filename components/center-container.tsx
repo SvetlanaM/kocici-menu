@@ -3,7 +3,7 @@ type ContainerProps = {
 };
 
 const CenterContainer = ({ children }: ContainerProps) => {
-  return <div className="w-9/12">{children}</div>;
+  return <div className="w-full xl-custom:w-9/12">{children}</div>;
 };
 
 export default CenterContainer;

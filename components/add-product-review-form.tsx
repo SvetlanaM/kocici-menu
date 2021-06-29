@@ -253,8 +253,8 @@ const AddProductReviewForm = ({
           />
         </div>
       </div>
-      <div className="flex justify-between my-6 mb-10">
-        <div className="w-full pr-3">
+      <div className="flex flex-col xl-custom:flex-row justify-between mb-5 my-6 xl-custom:mb-10">
+        <div className="w-full xl-custom:pr-3 mb-5 xl-custom:mb-0">
           <div className="mb-2">
             <FormInputLabel name="Mačka*" />
           </div>
@@ -281,7 +281,7 @@ const AddProductReviewForm = ({
             )}
           />
         </div>
-        <div className="w-full pl-3">
+        <div className="w-full xl-custom:pl-3 mb-10 xl-custom:mb-0">
           <RatingController
             name="rating"
             control={control}
@@ -299,7 +299,11 @@ const AddProductReviewForm = ({
       ) : null}
 
       <NeutralButton title="Späť" onClick={onBackAction} />
-      <SubmitButton text="Uložiť" disabled={reviewType !== ''} size="w-1/4" />
+      <SubmitButton
+        text="Uložiť"
+        disabled={reviewType !== ''}
+        size="w-full xl-custom:w-1/4"
+      />
     </form>
   );
 };

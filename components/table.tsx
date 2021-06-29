@@ -60,7 +60,7 @@ const Table = ({
   };
 
   return (
-    <>
+    <div className="overflow-auto xl-custom:overflow-visible">
       <table className="table-auto border-rounded-base border-gray small-purple-text text-left">
         <TableHead sortedFunction={sortData} className={getClassName} />
         <tbody className="font-light">
@@ -72,7 +72,7 @@ const Table = ({
         </tbody>
         {Footer}
       </table>
-    </>
+    </div>
   );
 };
 

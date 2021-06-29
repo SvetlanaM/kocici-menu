@@ -10,7 +10,7 @@ const ProductName = ({ brand, name }: ProductNameProps) => {
     <>
       <span className="base-medium-text text-purple">{brand}</span>
       <br />
-      <span className="small-purple-text">{name}</span>
+      <span className="small-purple-text mr-3 xl-custom:pr-0">{name}</span>
     </>
   );
 };

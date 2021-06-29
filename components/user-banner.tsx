@@ -42,7 +42,7 @@ const UserBanner = ({ data }: UserBannerProps) => {
           Čauky mňauky,{' '}
           {setUppercaseTitle(getUsername(data.user_data[0].email))}!
         </h4>
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col xl-custom:flex-row justify-between items-center">
           <p className="small-purple-text font-light text-sm pr-4">
             Za posledných 7 dní si pridal/a{' '}
             {i18next.t('reviews.key', {
@@ -61,7 +61,7 @@ const UserBanner = ({ data }: UserBannerProps) => {
           </p>
           <Image
             src="/icons/user-profile-cat.svg"
-            className="pr-5"
+            className="pr-5 mt-5 xl-custom:mt-0"
             width={130}
           />
         </div>

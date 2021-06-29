@@ -9,7 +9,9 @@ interface StatisticsListProps {
 const StatisticsList = ({ data, cols }: StatisticsListProps) => {
   return (
     <InnerContainer flexType="flew-col">
-      <div className={`grid ${cols} grid-flow-row gap-x-11 w-full`}>
+      <div
+        className={`grid grid-cols xl-custom:${cols} grid-flow-row gap-y-11 xl-custom:gap-x-11 w-full`}
+      >
         {data &&
           data.map((item) => (
             <StatisticBox

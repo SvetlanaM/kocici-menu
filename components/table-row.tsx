@@ -52,14 +52,14 @@ const TableRow = ({
   const [isHidden, setIsHidden] = useState<boolean>(true);
 
   return (
-    <tr className="h-20">
-      <td className="flex flex-row justify-center h-20 py-3">
+    <tr className="h-32 xl-custom:h-20">
+      <td className="flex flex-row justify-center h-32 py-10 pl-5 xl-custom:pl-0 xl-custom:ml-0 xl-custom:h-20 xl-custom:py-3">
         <ProductImage
           src={product.image_url}
           alt={`${product.brand_type} - ${product.name}`}
         />
       </td>
-      <td>
+      <td className="pl-10 xl-custom:px-2">
         <Link href={`https://www.zoohit.cz/${product.path}`}>
           <a>
             <ProductName
@@ -72,7 +72,7 @@ const TableRow = ({
           </a>
         </Link>
       </td>
-      <td>
+      <td className="px-10 xl-custom:px-2">
         Pred <br />
         {formattedDate}
       </td>
@@ -81,7 +81,7 @@ const TableRow = ({
         <br />
         na kg
       </td>
-      <td className="text-center">
+      <td className="text-center px-10 xl-custom:px-2">
         <div className="flex flex-row justify-items-center justify-center">
           {reviewArray.map((review, key) => (
             <span className="mr-1">
@@ -93,7 +93,7 @@ const TableRow = ({
           ))}
         </div>
       </td>
-      <td className="pr-3.6">
+      <td className="pr-3.6 px-10 xl-custom:px-3.6">
         <div className="flex justify-end">
           <div className="mr-3">
             <a data-tip data-for="relatedProducts">

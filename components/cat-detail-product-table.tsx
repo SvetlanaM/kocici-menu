@@ -140,7 +140,7 @@ const CatDetailProductTable = ({
 
   return (
     <div className="mt-5 w-full">
-      <div className="flex flex-row justify-between align-middle items-start text-gray">
+      <div className="flex flex-col xl-custom:flex-row justify-between align-middle items-start xl-custom:items-start text-gray">
         <Title title={`${title} produkty ${name}`} />
         {title === 'Navrhované' ? (
           <button
@@ -148,7 +148,7 @@ const CatDetailProductTable = ({
               shuffleData();
             }}
           >
-            <div className="inline-flex">
+            <div className="inline-flex mb-5 xl-custom:mb-0">
               <Image src="/icons/reload.svg" height={15} width={15} />{' '}
               <span className="ml-2">Nové produkty</span>
             </div>
@@ -156,7 +156,7 @@ const CatDetailProductTable = ({
         ) : (
           <>
             <Link href="/my-cats">
-              <a onClick={openModal} className="text-gray">
+              <a onClick={openModal} className="text-gray mb-5 xl-custom:mb-0">
                 + Pridať hodnotenie
               </a>
             </Link>
@@ -179,7 +179,7 @@ const CatDetailProductTable = ({
                   <div className="w-full">
                     <FavouriteProducts key={item.id} product={item} />
                   </div>
-                  <div className="canvas-graph">
+                  <div className="canvas-graph ml-3 xl-custom:ml-0">
                     {item.reviewhistory && item.reviewhistory.length > 0 ? (
                       <Line data={data1(index)} options={options} />
                     ) : (

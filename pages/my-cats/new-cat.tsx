@@ -602,7 +602,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
     name: [
       historyUrl && historyUrl !== undefined && historyUrl.includes('my-cats')
         ? 'Krok späť'
-        : 'Prehľad',
+        : 'Krok späť',
       'Moje mačky',
     ],
     path: ['back', '/my-cats'],

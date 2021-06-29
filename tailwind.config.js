@@ -6,6 +6,9 @@ module.exports = {
       sans: ['Public Sans', 'sans-serif'],
       logo: ['Quantico', 'sans-serif'],
     },
+    screens: {
+      'xl-custom': '1240px',
+    },
     extend: {
       colors: {
         transparent: 'transparent',
