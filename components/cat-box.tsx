@@ -74,7 +74,6 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
     specials: updatedSpecials,
   };
 
-  console.log(catData);
   return (
     <div className="flex flex-col flex-no-wrap justify-between h-75 py-3 border-rounded-base border-gray small-purple-text text-left my-cat">
       <div className="flex flex-row px-3">

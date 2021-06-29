@@ -25,10 +25,6 @@ const TipDetailQuery = () => {
     },
   });
 
-  useEffect(() => {
-    document.title = getTitle(TipData?.tip?.name);
-  });
-
   return (
     <Container>
       <Center>

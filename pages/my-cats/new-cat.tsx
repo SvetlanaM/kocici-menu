@@ -576,7 +576,6 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
       reviewUpdatedData
     ) => {
       if (editOrAdd()) {
-        console.log(editOrAdd());
         setIsActive(true);
         return updateMyCat(catData, reviewData, reviewUpdatedData);
       } else {

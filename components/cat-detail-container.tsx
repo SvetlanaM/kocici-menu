@@ -132,7 +132,7 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
 
   const getNumber = (item: any): number => {
     var numberPattern = /\d+/g;
-    console.log(item);
+
     let number = Number(item.match(numberPattern)[0]);
     return number;
   };

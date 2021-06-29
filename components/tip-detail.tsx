@@ -24,14 +24,6 @@ const TipDetailBox = ({
   description,
 }: TipDetailFragmentFragment) => {
   const formattedDate = DateFormatObject(updated_at).formatDate();
-  const [historyUrl, setHistoryUrl] = useState<string>();
-
-  useEffect(() => {
-    const historyUrl = document.referrer;
-    if (typeof historyUrl !== undefined) {
-      setHistoryUrl(historyUrl);
-    }
-  }, [document.referrer, historyUrl]);
 
   const breadcrumbs: Breadcrumb[] = useMemo(() => {
     return [

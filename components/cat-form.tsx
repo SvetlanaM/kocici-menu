@@ -268,8 +268,6 @@ const CatForm = ({
       watchFieldArray &&
       watchFieldArray.map((item) => item.product !== undefined && item);
 
-    console.log(userProductsArray);
-    console.log(newReviews);
     if (
       userProductsArray &&
       userProductsArray.length > 0 &&

@@ -49,7 +49,6 @@ const ProductController = ({
   defaultValue,
   isDisabled,
 }: ProductControllerProps) => {
-  console.log(isDisabled);
   return (
     <>
       {showHint ? (
