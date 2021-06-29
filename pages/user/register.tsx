@@ -39,7 +39,7 @@ export default function Register() {
           buttonInfo={false}
           footerLinks="Vytvorením účtu, súhlasíte s našimi Podmienkami používania"
         />
-        <AuthLeftContainer className="flex flex-col pt-10 xl-custom:pt-32 px-10 xl-custom:px-20 justify-center">
+        <AuthLeftContainer className="flex flex-col pt-10  px-10 xl-custom:px-20 justify-center">
           <h2 className="text-white text-3xl font-medium">
             Pridaj si svoje mačky a nakupuj Victoria, a young white cat
           </h2>
