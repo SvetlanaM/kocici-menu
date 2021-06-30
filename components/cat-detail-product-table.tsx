@@ -72,7 +72,7 @@ const CatDetailProductTable = ({
   };
 
   const handleReviewAdded = () => {
-    shuffleData;
+    shuffleData && shuffleData();
   };
 
   const options = {

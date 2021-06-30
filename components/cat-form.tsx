@@ -213,19 +213,19 @@ const CatForm = ({
   }, [userDefaultValues]);
 
   const diff = useMemo(() => {
-    return userProductsArrayMain
-      ? review &&
-          userProductsArrayMain &&
-          deletedReviews
-            .slice(0, review.length - deletedReviews.length)
-            .filter(
-              (x) =>
-                !review
-                  .map((item) => item.rating.value)
-                  .includes(x && x.rating.value)
-            )
-      : [];
-  }, [userProductsArrayMain]);
+    return (
+      userProductsArrayMain &&
+      review &&
+      userProductsArrayMain
+        .slice(0, review.length - deletedReviews.length)
+        .filter(
+          (x) =>
+            !review
+              .map((item) => item.rating.value)
+              .includes(x && x.rating.value)
+        )
+    );
+  }, [userProductsArrayMain, review, watchFieldArray, deletedReviews]);
 
   let mergedInsertUpdate = newReviews && diff ? [...newReviews, ...diff] : [];
 
@@ -348,6 +348,8 @@ const CatForm = ({
       };
 
       const reviewsInput = data.fieldArray;
+
+      console.log(deletedReviews);
 
       handleSubmit1(catInput, reviewsInput, {
         merged: mergedInsertUpdate,

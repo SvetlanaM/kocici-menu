@@ -8,7 +8,7 @@ const DateFormatObject = (_date?: Date) => {
       return moment(_date).format('LLLL');
     },
     formatDateToText() {
-      return moment(_date).startOf('hour').fromNow()
+      return moment(_date).startOf('minute').fromNow()
     },
     formatWithReplace() {
       return this.formatDateToText().replace('pred', '')

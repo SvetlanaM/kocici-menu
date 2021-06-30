@@ -501,7 +501,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
 
           const deleteOneByOne = (reviews) => {
             for (const review of reviews) {
-              return deleteReview({
+              deleteReview({
                 variables: {
                   cat_id: review.cat_id,
                   product_id: review.product_id,
@@ -547,13 +547,62 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
             }
           };
 
-          const deleteResult = await deleteOneByOne(deletedReviews);
+          const deleteResult = await Promise.all(
+            deletedReviews.map((review) => {
+              deleteReview({
+                variables: {
+                  cat_id: review.cat_id,
+                  product_id: review.product_id,
+                },
+                refetchQueries: [
+                  {
+                    query: DASHBOARD_QUERY,
+                    variables: {
+                      limitTips: TIP_LIMIT,
+                      user_id: getUser(),
+                    },
+                  },
+                  {
+                    query: CATS_DETAIL_QUERY,
+                    variables: {
+                      user_id: getUser(),
+                      limit: 5,
+                      withProducts: true,
+                    },
+                  },
+                  {
+                    query: CATS_QUERY,
+                    variables: {
+                      withProducts: true,
+                      user_id: getUser(),
+                      limit: 2,
+                    },
+                  },
+                  {
+                    query: USER_STATS_QUERY,
+                    variables: {
+                      user_id: getUser(),
+                    },
+                  },
+                  {
+                    query: REVIEWS_QUERY,
+                    variables: {
+                      user_id: getUser(),
+                    },
+                  },
+                ],
+              });
+            })
+          ).then(() => {
+            return true;
+          });
+
+          // const deleteResult = await deleteOneByOne(deletedReviews);
 
           if (
             (resultReview.data?.insert_Review?.returning &&
               resultReviewHistory.data?.insert_ReviewHistory?.returning) ||
-            (deletedReviews.length > 0 &&
-              deleteResult.data?.delete_Review?.returning)
+            deleteResult
           ) {
             return true;
           }
