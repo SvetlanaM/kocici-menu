@@ -45,7 +45,7 @@ const UserBanner = ({ data }: UserBannerProps) => {
         <div className="flex flex-col xl-custom:flex-row justify-between items-center">
           <p className="small-purple-text font-light text-sm pr-4">
             Za posledných 7 dní si pridal/a{' '}
-            {i18next.t('reviews.key', {
+            {t('reviews.key', {
               count: data.reviews_count.aggregate.count,
             })}
             . Tvoja obľúbená značka je{' '}
