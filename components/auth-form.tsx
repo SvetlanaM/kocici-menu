@@ -54,6 +54,7 @@ const AuthForm = ({
       .replaceAll(',', '')
       .replaceAll('.', '')
       .toLowerCase();
+    console.log(newMessage.toLowerCase());
     return newMessage.toLowerCase();
   };
 
@@ -79,7 +80,7 @@ const AuthForm = ({
     if (authMethod === 'loginUser') {
       loginUser(data.email, data.password)
         .then((data) => router.push('/'))
-        .catch((err) => setMessage(t(convertErrString(err.message))));
+        .catch((err) => setMessage(i18next.t(convertErrString(err.message))));
     }
   };
 
