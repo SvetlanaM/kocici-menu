@@ -50,11 +50,17 @@ const CatDetailQuery = () => {
         </CenterContainer>
       )}
 
-      {productData && catData && (
+      {productData && catData && catData.cat.length > 0 ? (
         <CatDetailContainer
           cats={catData.cat}
           products={productData.products}
         />
+      ) : (
+        <LeftContainer>
+          <div className="mt-4 mt-9.5 xl-custom:mt-9.5">
+            <AddCatBox />
+          </div>
+        </LeftContainer>
       )}
     </>
   );
