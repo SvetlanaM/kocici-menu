@@ -4,14 +4,6 @@ module.exports = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  exportPathMap: async function (
-    defaultPathMap,
-    { dev, dir, outDir, distDir, buildId }
-  ) {
-    return {
-      '/api/s3-upload': { page: '/api/s3-upload', query: { filename: '' } },
-    };
-  },
   env: {
     S3_UPLOAD_REGION: process.env.S3_UPLOAD_REGION,
     S3_UPLOAD_KEY: process.env.S3_UPLOAD_KEY,
