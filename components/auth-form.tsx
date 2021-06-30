@@ -10,6 +10,7 @@ import { useIdentityContext } from 'react-netlify-identity';
 import { useState } from 'react';
 
 import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
 interface AuthFormProps {
   submitText: string;
   passwordPlaceholder: string;
@@ -29,6 +30,8 @@ const AuthForm = ({
   } = useForm();
 
   i18next.init({
+    lng: 'sk',
+    debug: false,
     resources: {
       sk: {
         translation: {
@@ -41,6 +44,8 @@ const AuthForm = ({
       },
     },
   });
+
+  const { t } = useTranslation();
 
   const convertErrString = (message: string) => {
     let newMessage = message
@@ -74,7 +79,7 @@ const AuthForm = ({
     if (authMethod === 'loginUser') {
       loginUser(data.email, data.password)
         .then((data) => router.push('/'))
-        .catch((err) => setMessage(i18next.t(convertErrString(err.message))));
+        .catch((err) => setMessage(t(convertErrString(err.message))));
     }
   };
 
