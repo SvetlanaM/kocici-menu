@@ -12,28 +12,28 @@ const getUsername = (email: string): string => {
   return email.substr(0, email.lastIndexOf('@'));
 };
 
-i18next.init({
-  lng: 'sk',
-  debug: false,
-  resources: {
-    sk: {
-      translation: {
-        reviews: {
-          key_0: '{{count}} hodnotenie',
-          key_1: '{{count}} hodnotenia',
-          key_2: '{{count}} hodnotení',
-        },
-        products: {
-          key_0: 'produktu',
-          key_1: 'produkty',
-          key_2: 'produktov',
+const UserBanner = ({ data }: UserBannerProps) => {
+  i18next.init({
+    lng: 'sk',
+    debug: false,
+    resources: {
+      sk: {
+        translation: {
+          reviews: {
+            key_0: '{{count}} hodnotenie',
+            key_1: '{{count}} hodnotenia',
+            key_2: '{{count}} hodnotení',
+          },
+          products: {
+            key_0: 'produktu',
+            key_1: 'produkty',
+            key_2: 'produktov',
+          },
         },
       },
     },
-  },
-});
+  });
 
-const UserBanner = ({ data }: UserBannerProps) => {
   const { t } = useTranslation();
   return (
     <div className="flex pt-4 pb-2 pr-10 bg-gray-light border-rounded-base border-gray_lightest">
@@ -45,7 +45,7 @@ const UserBanner = ({ data }: UserBannerProps) => {
         <div className="flex flex-col xl-custom:flex-row justify-between items-center">
           <p className="small-purple-text font-light text-sm pr-4">
             Za posledných 7 dní si pridal/a{' '}
-            {t('reviews.key', {
+            {i18next.t('reviews.key', {
               count: data.reviews_count.aggregate.count,
             })}
             . Tvoja obľúbená značka je{' '}
