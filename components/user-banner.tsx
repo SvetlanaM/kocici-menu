@@ -49,8 +49,9 @@ const UserBanner = ({ data }: UserBannerProps) => {
               count: data.reviews_count.aggregate.count,
             })}
             . Tvoja obľúbená značka je{' '}
-            <strong>{data.stats[0].brand_type}</strong> s priemerným hodnotením
-            všetkých produktov <strong>{data.user_stats[0].avg_review}</strong>.
+            <strong>{data.stats[0] && data.stats[0].brand_type}</strong> s
+            priemerným hodnotením všetkých produktov{' '}
+            <strong>{data.user_stats[0].avg_review}</strong>.
             <br />
             <p className="mt-5">
               <strong>Novinka mesiaca: Applaws kurací vývar</strong>

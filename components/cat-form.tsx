@@ -349,8 +349,6 @@ const CatForm = ({
 
       const reviewsInput = data.fieldArray;
 
-      console.log(deletedReviews);
-
       handleSubmit1(catInput, reviewsInput, {
         merged: mergedInsertUpdate,
         deleted: deletedReviews,
