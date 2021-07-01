@@ -132,7 +132,11 @@ export const DASHBOARD_QUERY = gql`
     ) {
       ...TipFieldsFragment
     }
-    stats: brand_fav_type(where: { id: { _eq: $user_id } }) {
+    stats: brand_fav_type(
+      where: { id: { _eq: $user_id } }
+      order_by: { user_id: desc }
+      limit: 1
+    ) {
       ...StatFieldsFragment
     }
     selectCats: Cat(
@@ -166,7 +170,11 @@ export const USER_STATS_QUERY = gql`
     user_stats(where: { id: { _eq: $user_id } }) {
       ...UserStatsFieldFragment
     }
-    stats: brand_fav_type(where: { id: { _eq: $user_id } }) {
+    stats: brand_fav_type(
+      where: { id: { _eq: $user_id } }
+      order_by: { user_id: desc }
+      limit: 1
+    ) {
       ...StatFieldsFragment
     }
     reviews_count: Review_aggregate(
