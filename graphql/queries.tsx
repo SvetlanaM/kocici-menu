@@ -170,7 +170,12 @@ export const USER_STATS_QUERY = gql`
       ...StatFieldsFragment
     }
     reviews_count: Review_aggregate(
-      where: { updated_at: { _gt: $updated_at } }
+      where: {
+        _and: {
+          Cat: { user_id: { _eq: $user_id } }
+          updated_at: { _gt: $updated_at }
+        }
+      }
     ) {
       aggregate {
         count
