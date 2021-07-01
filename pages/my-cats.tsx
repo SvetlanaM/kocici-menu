@@ -56,11 +56,16 @@ const CatDetailQuery = () => {
           products={productData.products}
         />
       ) : (
-        <LeftContainer>
-          <div className="mt-4 mt-9.5 xl-custom:mt-9.5">
-            <AddCatBox />
-          </div>
-        </LeftContainer>
+        <>
+          <CenterContainer>
+            <Loading />
+          </CenterContainer>
+          <LeftContainer>
+            <div className="mt-4 mt-9.5 xl-custom:mt-9.5">
+              <AddCatBox />
+            </div>
+          </LeftContainer>
+        </>
       )}
     </>
   );

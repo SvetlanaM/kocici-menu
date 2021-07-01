@@ -31,6 +31,7 @@ import { customStyles as style } from '../utils/form-styles';
 import useSearch from '../hooks/useSearch';
 import ProductController from './product-controller';
 import RatingController from './rating-controller';
+import DateFormatObject from '../utils/get-format-date';
 interface AddProductReviewFormProps {
   selectCats?: GetDashboardQuery['selectCats'];
 
@@ -79,6 +80,7 @@ const AddProductReviewForm = ({
     useMutation<AddReviewHistoryMutation, AddReviewHistoryMutationVariables>(
       ADD_REVIEW_HISTORY
     );
+  const lastWeek = DateFormatObject().lastWeek();
 
   const onSubmit = (data: any) => {
     const reviewInput: Review_Insert_Input = {
@@ -129,6 +131,7 @@ const AddProductReviewForm = ({
           query: USER_STATS_QUERY,
           variables: {
             user_id: getUser(),
+            updated_at: lastWeek,
           },
         },
         {

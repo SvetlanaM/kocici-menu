@@ -55,6 +55,7 @@ import ErrorScreen from '../../components/error-screen';
 import Loading from '../../components/loading';
 import { GeneralError } from '../../components/error-screen';
 import { TIP_LIMIT } from '../../utils/constants';
+import DateFormatObject from '../../utils/get-format-date';
 
 interface CreateCatProps {
   onClickTrigger?: () => void;
@@ -144,6 +145,8 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
   const [updateCat, { loading: updateCatLoading }] =
     useMutation<UpdateCatMutation, UpdateCatMutationVariables>(UPDATE_CAT);
 
+  const lastWeek = DateFormatObject().lastWeek();
+
   const [createBulkReview] =
     useMutation<AddReviewBulkMutation, AddReviewBulkMutationVariables>(
       ADD_REVIEW_BULK
@@ -229,6 +232,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
               query: USER_STATS_QUERY,
               variables: {
                 user_id: getUser(),
+                updated_at: lastWeek,
               },
             },
             {
@@ -298,6 +302,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
                 query: USER_STATS_QUERY,
                 variables: {
                   user_id: getUser(),
+                  updated_at: lastWeek,
                 },
               },
             ],
@@ -372,6 +377,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
               query: USER_STATS_QUERY,
               variables: {
                 user_id: getUser(),
+                updated_at: lastWeek,
               },
             },
             {
@@ -435,6 +441,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
                 query: USER_STATS_QUERY,
                 variables: {
                   user_id: getUser(),
+                  updated_at: lastWeek,
                 },
               },
               {
@@ -478,6 +485,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
                 query: USER_STATS_QUERY,
                 variables: {
                   user_id: getUser(),
+                  updated_at: lastWeek,
                 },
               },
               {
@@ -534,6 +542,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
                     query: USER_STATS_QUERY,
                     variables: {
                       user_id: getUser(),
+                      updated_at: lastWeek,
                     },
                   },
                   {
@@ -582,6 +591,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
                     query: USER_STATS_QUERY,
                     variables: {
                       user_id: getUser(),
+                      updated_at: lastWeek,
                     },
                   },
                   {

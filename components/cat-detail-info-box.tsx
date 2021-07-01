@@ -21,6 +21,7 @@ import {
 import { TIP_LIMIT } from '../utils/constants';
 import { getUser } from '../utils/user';
 import { useMemo } from 'react';
+import DateFormatObject from '../utils/get-format-date';
 interface CatDetailInfoBoxProps {
   data: CatDetailFieldsFragmentFragment;
 }
@@ -35,6 +36,8 @@ const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
   const closeModal = () => {
     setIsOpen(false);
   };
+
+  const lastWeek = DateFormatObject().lastWeek();
 
   const [deleteCat] = useMutation<
     DeleteCatMutation,
@@ -70,6 +73,7 @@ const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
         query: USER_STATS_QUERY,
         variables: {
           user_id: getUser(),
+          updated_at: lastWeek,
         },
       },
       {
