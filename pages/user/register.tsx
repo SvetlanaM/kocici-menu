@@ -1,11 +1,11 @@
-import Layout from '../../components/layout';
-import Header from '../../components/head';
-import AuthWrapper from '../../components/auth-wrapper';
-import AuthRightContainer from '../../components/auth-right-container';
-import AuthLeftContainer from '../../components/auth-left-container';
-import Image from '../../components/image';
-import AuthForm from '../../components/auth-form';
-import getTitle from '../../utils/get-title';
+import Layout from '../../components/Layout';
+import Header from '../../components/Head';
+import AuthWrapper from '../../components/AuthWrapper';
+import AuthRightContainer from '../../components/AuthRightContainer';
+import AuthLeftContainer from '../../components/AuthLeftContainer';
+import Image from '../../components/Image';
+import AuthForm from '../../components/AuthForm';
+import getTitle from '../../utils/getTitle';
 
 export default function Register() {
   const link = {

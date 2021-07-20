@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { GeneralError } from '../components/error-screen';
+import { GeneralError } from '../components/ErrorScreen';
 
 const useLogger = () => {
     return useCallback((error: GeneralError) => {

@@ -1,14 +1,14 @@
 import { gql } from '@apollo/client';
-import { CatFieldsFragment } from '../components/cat-box';
-import { TipFieldsFragment } from '../components/tip-box';
-import { ReviewFieldsFragment } from '../components/table-row';
-import { TipDetailFieldsFragment } from '../components/tip-detail';
-import { StatFieldsFragment } from '../components/statistic-box';
-import { ProductFieldsFragment } from '../components/cat-detail-product-table';
+import { CatFieldsFragment } from '../components/CatBox';
+import { TipFieldsFragment } from '../components/TipBox';
+import { ReviewFieldsFragment } from '../components/TableRow';
+import { TipDetailFieldsFragment } from '../components/TipDetail';
+import { StatFieldsFragment } from '../components/StatisticBox';
+import { ProductFieldsFragment } from '../components/CatDetailProductTable';
 import {
   UserStatsFieldFragment,
   UserFieldFragment,
-} from '../components/user-stats';
+} from '../components/UserStats';
 
 export const CATS_QUERY = gql`
   query GetCats($user_id: String, $withProducts: Boolean!, $limit: Int) {

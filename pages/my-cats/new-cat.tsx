@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import CatForm from '../../components/cat-form';
+import CatForm from '../../components/CatForm';
 import {
   AddCatMutation,
   AddCatMutationVariables,
@@ -31,17 +31,17 @@ import {
   ADD_REVIEW_HISTORY_BULK,
   DELETE_REVIEW,
 } from '../../graphql/mutations';
-import Container from '../../components/container';
-import Layout from '../../components/layout';
-import Sidebar from '../../components/sidebar';
-import Center from '../../components/center-container';
-import Header from '../../components/head';
-import getTitle from '../../utils/get-title';
-import Title from '../../components/title';
+import Container from '../../components/Container';
+import Layout from '../../components/Layout';
+import Sidebar from '../../components/Sidebar';
+import Center from '../../components/CenterContainer';
+import Header from '../../components/Head';
+import getTitle from '../../utils/getTitle';
+import Title from '../../components/Title';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import Breadcrumbs from '../../components/breadcrumbs';
+import Breadcrumbs from '../../components/Breadcrumbs';
 import Breadcrumb from '../../utils/breadcrumb';
-import setUppercaseTitle from '../../utils/set-uppercase-title';
+import setUppercaseTitle from '../../utils/setUppercaseTitle';
 import {
   CATS_DETAIL_QUERY,
   CATS_QUERY,
@@ -51,11 +51,11 @@ import {
 } from '../../graphql/queries';
 import { getUser } from '../../utils/user';
 import { useRouter } from 'next/router';
-import ErrorScreen from '../../components/error-screen';
-import Loading from '../../components/loading';
-import { GeneralError } from '../../components/error-screen';
+import ErrorScreen from '../../components/ErrorScreen';
+import Loading from '../../components/Loading';
+import { GeneralError } from '../../components/ErrorScreen';
 import { TIP_LIMIT } from '../../utils/constants';
-import DateFormatObject from '../../utils/get-format-date';
+import DateFormatObject from '../../utils/getFormatDate';
 
 interface CreateCatProps {
   onClickTrigger?: () => void;

@@ -1,15 +1,15 @@
-import Container from '../components/container';
-import Layout from '../components/layout';
-import Sidebar from '../components/sidebar';
+import Container from '../components/Container';
+import Layout from '../components/Layout';
+import Sidebar from '../components/Sidebar';
 import { useGetReviewsQuery } from '../graphql/generated/graphql';
-import Header from '../components/head';
-import CenterContainer from '../components/center-container';
-import ErrorScreen from '../components/error-screen';
-import Loading from '../components/loading';
-import getTitle from '../utils/get-title';
-import { GeneralError } from '../components/error-screen';
+import Header from '../components/Head';
+import CenterContainer from '../components/CenterContainer';
+import ErrorScreen from '../components/ErrorScreen';
+import Loading from '../components/Loading';
+import getTitle from '../utils/getTitle';
+import { GeneralError } from '../components/ErrorScreen';
 import { getUser } from '../utils/user';
-import FilterForm from '../components/filter-form';
+import FilterForm from '../components/FilterForm';
 
 const Products = () => {
   const {

@@ -1,19 +1,19 @@
-import getTitle from '../utils/get-title';
-import AddCatBox from '../components/add-cat-box';
-import Container from '../components/container';
-import Layout from '../components/layout';
-import Sidebar from '../components/sidebar';
-import Header from '../components/head';
-import CenterContainer from '../components/center-container';
-import LeftContainer from '../components/left-container';
-import CatDetailContainer from '../components/cat-detail-container';
-import ErrorScreen from '../components/error-screen';
-import Loading from '../components/loading';
-import { GeneralError } from '../components/error-screen';
+import getTitle from '../utils/getTitle';
+import AddCatBox from '../components/AddCatBox';
+import Container from '../components/Container';
+import Layout from '../components/Layout';
+import Sidebar from '../components/Sidebar';
+import Header from '../components/Head';
+import CenterContainer from '../components/CenterContainer';
+import LeftContainer from '../components/LeftContainer';
+import CatDetailContainer from '../components/CatDetailContainer';
+import ErrorScreen from '../components/ErrorScreen';
+import Loading from '../components/Loading';
+import { GeneralError } from '../components/ErrorScreen';
 import { getUser, setUser } from '../utils/user';
-import CatDetailSpecials from '../components/cat-detail-specials';
+import CatDetailSpecials from '../components/CatDetailSpecials';
 import { gql } from '@apollo/client';
-import { CatFieldsFragment } from '../components/cat-box';
+import { CatFieldsFragment } from '../components/CatBox';
 import {
   GetCatDetailQueryVariables,
   useGetCatDetailQuery,

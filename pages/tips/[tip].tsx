@@ -1,15 +1,15 @@
-import Container from '../../components/container';
-import Layout from '../../components/layout';
-import Sidebar from '../../components/sidebar';
-import TipDetailBox from '../../components/tip-detail';
+import Container from '../../components/Container';
+import Layout from '../../components/Layout';
+import Sidebar from '../../components/Sidebar';
+import TipDetailBox from '../../components/TipDetail';
 import { useTipDetailQuery } from '../../graphql/generated/graphql';
 import { useRouter } from 'next/router';
-import ErrorScreen from '../../components/error-screen';
-import Loading from '../../components/loading';
-import { GeneralError } from '../../components/error-screen';
-import Center from '../../components/center-container';
-import Header from '../../components/head';
-import getTitle from '../../utils/get-title';
+import ErrorScreen from '../../components/ErrorScreen';
+import Loading from '../../components/Loading';
+import { GeneralError } from '../../components/ErrorScreen';
+import Center from '../../components/CenterContainer';
+import Header from '../../components/Head';
+import getTitle from '../../utils/getTitle';
 import { useEffect } from 'react';
 
 const TipDetailQuery = () => {
