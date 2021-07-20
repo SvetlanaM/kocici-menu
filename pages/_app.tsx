@@ -3,7 +3,7 @@ import '../styles/globals.css';
 import { IdentityContextProvider } from 'react-netlify-identity';
 import { getToken } from '../utils/token';
 import { getUser } from '../utils/user';
-import ProtectedRoutes from '../utils/protected-routes';
+import ProtectedRoutes from '../utils/ProtectedRoutes';
 
 import {
   ApolloClient,

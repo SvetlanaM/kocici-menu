@@ -1,19 +1,19 @@
-import getTitle from '../utils/get-title';
-import Container from '../components/container';
-import Layout from '../components/layout';
-import Sidebar from '../components/sidebar';
-import Header from '../components/head';
-import CenterContainer from '../components/center-container';
-import ErrorScreen from '../components/error-screen';
-import Loading from '../components/loading';
-import { GeneralError } from '../components/error-screen';
-import UserBanner from '../components/user-banner';
-import UserStats from '../components/user-stats';
-import LeftContainer from '../components/left-container';
+import getTitle from '../utils/getTitle';
+import Container from '../components/Container';
+import Layout from '../components/Layout';
+import Sidebar from '../components/Sidebar';
+import Header from '../components/Head';
+import CenterContainer from '../components/CenterContainer';
+import ErrorScreen from '../components/ErrorScreen';
+import Loading from '../components/Loading';
+import { GeneralError } from '../components/ErrorScreen';
+import UserBanner from '../components/UserBanner';
+import UserStats from '../components/UserStats';
+import LeftContainer from '../components/LeftContainer';
 import { useGetUserStatsQuery } from '../graphql/generated/graphql';
 import { getUser } from '../utils/user';
-import DateFormatObject from '../utils/get-format-date';
-import UploadImage from '../components/upload-image';
+import DateFormatObject from '../utils/getFormatDate';
+import UploadImage from '../components/UploadImage';
 
 const UserStatsQuery = () => {
   const lastWeek = DateFormatObject().lastWeek();

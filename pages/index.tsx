@@ -1,26 +1,26 @@
-import AddCatBox from '../components/add-cat-box';
-import CatsList from '../components/cats-list';
-import Container from '../components/container';
-import Layout from '../components/layout';
-import Sidebar from '../components/sidebar';
-import StatisticsList from '../components/statistics-list';
-import TipsList from '../components/tips-list';
-import Title from '../components/title';
-import TopFiveTable from '../components/top-five-table';
+import AddCatBox from '../components/AddCatBox';
+import CatsList from '../components/CatsList';
+import Container from '../components/Container';
+import Layout from '../components/Layout';
+import Sidebar from '../components/Sidebar';
+import StatisticsList from '../components/StatisticsList';
+import TipsList from '../components/TipsList';
+import Title from '../components/Title';
+import TopFiveTable from '../components/TopFiveTable';
 import {
   useGetDashboardQuery,
   useGetCatsQuery,
   GetDashboardQueryVariables,
   GetCatsQueryVariables,
 } from '../graphql/generated/graphql';
-import Header from '../components/head';
-import CenterContainer from '../components/center-container';
-import LeftContainer from '../components/left-container';
-import ErrorScreen from '../components/error-screen';
-import Loading from '../components/loading';
-import getTitle from '../utils/get-title';
+import Header from '../components/Head';
+import CenterContainer from '../components/CenterContainer';
+import LeftContainer from '../components/LeftContainer';
+import ErrorScreen from '../components/ErrorScreen';
+import Loading from '../components/Loading';
+import getTitle from '../utils/getTitle';
 import { TIP_LIMIT } from '../utils/constants';
-import { GeneralError } from '../components/error-screen';
+import { GeneralError } from '../components/ErrorScreen';
 import { getUser } from '../utils/user';
 
 //tu budu akoze ziskane macky uzivatela
