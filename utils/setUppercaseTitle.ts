@@ -1,12 +1,9 @@
-const setUppercaseTitle = (title: string, brand?: string): string => {
-  let finalTitle
-  if (typeof title !== 'undefined' && typeof brand !== 'undefined') {
-    
-    finalTitle = title[0].toUpperCase() + title.slice(1 - title.length)
-  } else {
-    finalTitle = title[0].toUpperCase() + title.slice(1 - title.length)
+const setUppercaseTitle = (title: string): string => {
+  let finalTitle;
+  if (typeof title !== 'undefined') {
+    finalTitle = title[0].toUpperCase() + title.slice(1);
   }
-  return finalTitle
-}
+  return finalTitle;
+};
 
 export default setUppercaseTitle;

@@ -1,24 +1,35 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
+import { replaceSpecialChars } from '../utils/replaceSpecialChars';
 
-const useSearch = (searchTerm, inputData, setFunction, isEmpty=true) => useEffect(() => {
-  if (searchTerm.length >= 3) {
-    const results = inputData.filter((item) =>
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.description && item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.brand_type && item.brand_type.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    if (results.length > 1000) {
-      setFunction([]);
+const useSearch = (searchTerm, inputData, setFunction, isEmpty = true) =>
+  useEffect(() => {
+    if (searchTerm.length >= 3) {
+      const results = inputData.filter(
+        (item) =>
+          replaceSpecialChars(item.name)
+            .toLowerCase()
+            .includes(replaceSpecialChars(searchTerm).toLowerCase()) ||
+          (item.description &&
+            replaceSpecialChars(item.description)
+              .toLowerCase()
+              .includes(replaceSpecialChars(searchTerm).toLowerCase())) ||
+          (item.brand_type &&
+            replaceSpecialChars(item.brand_type)
+              .toLowerCase()
+              .includes(replaceSpecialChars(searchTerm).toLowerCase()))
+      );
+      if (results.length > 1000) {
+        setFunction([]);
+      } else {
+        setFunction(results);
+      }
     } else {
-      setFunction(results);
+      if (isEmpty) {
+        setFunction([]);
+      } else {
+        setFunction(inputData);
+      }
     }
-  } else {
-    if (isEmpty) {
-      setFunction([]);
-    } else {
-      setFunction(inputData);
-    }
-  }
-}, [searchTerm]);
+  }, [searchTerm]);
 
-export default useSearch
+export default useSearch;

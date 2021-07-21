@@ -23,8 +23,9 @@ const calculateReadingTime = (readingText: string): number => {
 const TipsList = ({ data, cols, isOnDashboard }: TipProps) => {
   const copyData = [...data];
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchTips, setSearchTips] =
-    useState<GetDashboardQuery['tips'] | GetTipsQuery['tips']>(copyData);
+  const [searchTips, setSearchTips] = useState<
+    GetDashboardQuery['tips'] | GetTipsQuery['tips']
+  >(copyData);
 
   useSearch(searchTerm, data, setSearchTips, false);
 
@@ -67,7 +68,7 @@ const TipsList = ({ data, cols, isOnDashboard }: TipProps) => {
             slug={item.slug}
             key={id}
             isOnDashboard={isOnDashboard}
-            category_machine_name={item.category_machine_name}
+            category_machine_name={item.category.comment}
             readingTime={calculateReadingTime(item.description)}
           />
         ))}

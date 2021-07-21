@@ -546,8 +546,8 @@ const CatForm = ({
                   control={control}
                   showHint={false}
                   isDisabled={
-                    index < userDefaultValues &&
-                    userDefaultValues.filter((item) => item !== false).length
+                    index < userDefaultValues.length &&
+                    userDefaultValues.filter((item) => item !== false)
                       ? true
                       : false
                   }

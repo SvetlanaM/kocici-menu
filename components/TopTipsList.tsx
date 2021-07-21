@@ -1,12 +1,14 @@
 import Image from './Image';
 import Link from 'next/link';
-
+import sk from '../public/locales/sk/common.json';
+import { useTranslation } from 'react-i18next';
 interface TopTipsListProps {
   data: Array<any>;
   cols: string;
 }
 
 const TopTipsList = ({ data, cols }: TopTipsListProps) => {
+  const { t } = useTranslation();
   return (
     <div
       className={`grid ${cols} gap-y-8 xl-custom:gap-x-11 pt-8 xl-custom:pt-0`}
@@ -29,7 +31,7 @@ const TopTipsList = ({ data, cols }: TopTipsListProps) => {
                   <p className="small-purple-text font-light text-sm">
                     {item.name}
                     <span className="text-purple-light block mt-3">
-                      {item.category}
+                      {t(sk[item.category])}
                     </span>
                   </p>
                 </div>

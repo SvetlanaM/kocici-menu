@@ -126,7 +126,7 @@ export const DASHBOARD_QUERY = gql`
       id
     }
     tips: Tip(
-      order_by: { created_at: desc }
+      order_by: { updated_at: desc }
       where: { is_active: { _eq: true } }
       limit: $limitTips
     ) {
@@ -200,7 +200,10 @@ export const USER_STATS_QUERY = gql`
 
 export const TIPS_QUERY = gql`
   query getTips {
-    tips: Tip(order_by: { updated_at: desc }) {
+    tips: Tip(
+      order_by: { updated_at: desc }
+      where: { is_active: { _eq: true } }
+    ) {
       top_article
       ...TipFieldsFragment
     }

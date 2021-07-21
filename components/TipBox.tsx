@@ -8,10 +8,12 @@ export const TipFieldsFragment = gql`
     id
     name
     slug
-    category_machine_name
-    category
+    category: category_value {
+      comment
+    }
     perex
     description
+    created_at
   }
 `;
 

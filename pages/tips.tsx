@@ -41,11 +41,14 @@ const TipsQuery = () => {
   const topArticles =
     tipData &&
     user &&
-    tipData.tips.filter((article) => {
-      if (article.top_article) {
-        return article;
-      }
-    });
+    tipData.tips
+      .filter((article) => {
+        if (article.top_article) {
+          return article;
+        }
+      })
+      .sort((a, b) => b.created_at - a.created_at)
+      .slice(0, 2);
 
   let top;
   top =
@@ -56,7 +59,7 @@ const TipsQuery = () => {
         article.perex,
         articleIcons[index],
         article.name,
-        article.category,
+        article.category.comment,
         article.slug
       );
     });

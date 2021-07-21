@@ -10,7 +10,7 @@ import { GeneralError } from '../../components/ErrorScreen';
 import Center from '../../components/CenterContainer';
 import Header from '../../components/Head';
 import getTitle from '../../utils/getTitle';
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 
 const TipDetailQuery = () => {
   const router = useRouter();
@@ -39,6 +39,8 @@ const TipDetailQuery = () => {
           description={TipData?.tip?.description!}
           slug={TipData?.tip?.slug!}
           id={TipData?.tip?.id!}
+          perex={TipData?.tip?.perex}
+          category={TipData?.tip?.category}
         />
       </Center>
     </Container>

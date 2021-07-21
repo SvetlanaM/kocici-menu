@@ -27,6 +27,10 @@
     "SIBIR_VALUE": "sibírska",
     "TURKEY_VALUE": "turecká angora",
     "CAT_TYPE_NULL": "neuvedené",
+    "category_cat_love": "Mačka - naj kamarát",
+    "category_cat_life": "Začiatky s mačkou",
+    "category_cat_evil": "Otravná mačka",
+    "category_cat_food": "Stravovanie mačky",
     "requirements_count": {
         "key": "požiadavka",
         "key_plural": "požiadavky"
