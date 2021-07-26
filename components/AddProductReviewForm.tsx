@@ -32,6 +32,7 @@ import useSearch from '../hooks/useSearch';
 import ProductController from './ProductController';
 import RatingController from './RatingController';
 import DateFormatObject from '../utils/getFormatDate';
+import { Components } from 'react-select/src/components';
 interface AddProductReviewFormProps {
   selectCats?: GetDashboardQuery['selectCats'];
 
@@ -42,7 +43,7 @@ interface AddProductReviewFormProps {
   index?: number;
 }
 
-const Option = ({ children, ...props }) => {
+const Option: Components['Option'] = ({ children, ...props }) => {
   return (
     <components.Option {...props}>
       <div className="float-left mt-0 mr-3 select-photo h-10 w-10">
@@ -73,13 +74,15 @@ const AddProductReviewForm = ({
 }: AddProductReviewFormProps) => {
   const { handleSubmit, control, watch } = useForm();
 
-  const [createReview] =
-    useMutation<AddReviewMutation, AddReviewMutationVariables>(ADD_REVIEW);
+  const [createReview] = useMutation<
+    AddReviewMutation,
+    AddReviewMutationVariables
+  >(ADD_REVIEW);
 
-  const [createReviewHistory] =
-    useMutation<AddReviewHistoryMutation, AddReviewHistoryMutationVariables>(
-      ADD_REVIEW_HISTORY
-    );
+  const [createReviewHistory] = useMutation<
+    AddReviewHistoryMutation,
+    AddReviewHistoryMutationVariables
+  >(ADD_REVIEW_HISTORY);
   const lastWeek = DateFormatObject().lastWeek();
 
   const onSubmit = (data: any) => {

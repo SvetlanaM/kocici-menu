@@ -74,6 +74,7 @@ const AuthForm = ({
           )
         )
         .then(() => setMessage(''))
+        .then(() => router.push('/welcome'))
         .catch((err) => setMessage(i18next.t(convertErrString(err.message))));
     }
 

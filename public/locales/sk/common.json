@@ -38,5 +38,8 @@
     "next_count": {
         "key": "ďalšia",
         "key_plural": "ďalšie"
-    }
+    },
+    "dry_food": "Granule",
+    "wet_food": "Konzervy a kapsičky",
+    "barf": "Surové mäso"
 }

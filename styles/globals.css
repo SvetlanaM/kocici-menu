@@ -71,7 +71,7 @@ tbody tr td {
 }
 
 button:disabled {
-    background-color: #B3BACC;
+    background-color: #b3bacc;
 }
 
 button.ascending svg .down {
@@ -134,7 +134,7 @@ input:focus {
 }
 
 .ReactModal__Overlay.ReactModal__Overlay--after-open {
-    background-color: rgba(0, 0, 0, 0.30) !important;
+    background-color: rgba(0, 0, 0, 0.3) !important;
 }
 
 .cat-detail-box {
@@ -177,4 +177,12 @@ input:focus {
     right: 13px;
     top: 22px;
     margin: auto;
+}
+
+input:checked+div {
+    @apply border-purple border-2;
+}
+
+input:checked+div svg {
+    @apply block;
 }

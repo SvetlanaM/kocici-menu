@@ -114,6 +114,17 @@ export const UPDATE_CAT = gql`
   }
 `;
 
+export const UPDATE_USER_PREFERENCES = gql`
+  mutation UpdateUser($id: String, $users: User_set_input) {
+    update_User(where: { id: { _eq: $id } }, _set: $users) {
+      affected_rows
+      returning {
+        id
+      }
+    }
+  }
+`;
+
 export const DELETE_CAT = gql`
   mutation DeleteCat($id: Int!) {
     delete_Cat_by_pk(id: $id) {
