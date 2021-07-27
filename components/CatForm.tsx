@@ -38,6 +38,7 @@ export type CatInputData = Omit<Cat_Insert_Input, 'CatTypeEnum'>;
 import ProductController from './ProductController';
 import RatingController from './RatingController';
 import useSearch from '../hooks/useSearch';
+import { uploadImage } from "../utils/uploadImage";
 interface CatFormInterface {
   handleSubmit1: {
     (
@@ -71,7 +72,7 @@ const CatForm = ({
   const [imageUrl, setImageUrl] = useState<string>(catImage);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isMainLoading, setIsMainLoading] = useState<boolean>(false);
-  const { FileInput, openFileDialog, uploadToS3 } = useS3Upload();
+  const { FileInput, openFileDialog } = useS3Upload();
   const { t } = useTranslation();
   const [searchProducts, setSearchProducts] = useState<
     Array<SelectProductFieldsFragment>
@@ -332,7 +333,7 @@ const CatForm = ({
   const handleFileChange = async (file: File) => {
     setIsLoading(true);
     if (checkFileType(file)) {
-      let { url } = await uploadToS3(file);
+      let url = await uploadImage(file);
       setImageUrl(url);
       setValue('cat_image', url);
       setIsLoading(false);
