@@ -152,7 +152,8 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
   const average = (arr) => arr.reduce((p, c) => p + c, 0) / arr.length;
   const avgMealType = average(mealTypes).toFixed(2) || 0;
   const avgBielType = Math.ceil(average(bielTypes)).toFixed(2) || 0;
-  const mergedStats = [avgMealType, avgBielType];
+  const othersType = 100 - (Number(avgMealType) + Number(avgBielType));
+  const mergedStats = [avgMealType, avgBielType, othersType];
 
   return (
     <>

@@ -11,13 +11,13 @@ interface CatDetailPieChartProps {
 const CatDetailPieChart = ({ aggData }: CatDetailPieChartProps) => {
   const data = useMemo(() => {
     return {
-      labels: ['% mäsa', '% bielkovín'],
+      labels: ['% mäsa', '% bielkovín', '% ostatne'],
       type: 'pie',
       datasets: [
         {
           label: 'kvalita stravy',
           data: aggData,
-          backgroundColor: ['#BDBDE7', '#E1E5EE'],
+          backgroundColor: ['#BDBDE7', '#E1E5EE', '#A6A6C8'],
           borderWidth: 1,
         },
       ],
