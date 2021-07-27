@@ -492,13 +492,14 @@ const CatForm = ({
             <FormInputLabel name="Vek mačky" />
             <FormInput
               registerRules={{
-                ...register('age', { min: 0.5, max: 30, required: false }),
+                ...register('age', { min: 1, max: 30, required: false }),
               }}
               type="number"
+              step={1}
               errors={errors.age}
-              placeholder="Vek od 0,5 do 30 rokov"
+              placeholder="Vek od 1 do 30 rokov"
             />
-            {errors.age && <FormErrorMessage error="Vek od 0,5 do 30 rokov" />}
+            {errors.age && <FormErrorMessage error="Vek od 1 do 30 rokov" />}
           </FormInputWrapper>
           <FormInputWrapper>
             <FormInputLabel name="Farba mačky" />
@@ -515,6 +516,7 @@ const CatForm = ({
               registerRules={{ ...register('weight', { required: false }) }}
               type="number"
               placeholder="1,5 kg"
+              step={0.1}
             />
           </FormInputWrapper>
           <FormInputWrapper>
