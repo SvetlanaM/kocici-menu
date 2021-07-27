@@ -7,7 +7,7 @@ export const customStyles = {
       borderBottom: isHovered ? null : '1px solid #E1E5EE',
       backgroundColor: isDisabled ? 'white' : null,
       // This line disable the blue border
-      boxShadow: isFocused ? '1px solid #E1E5EE' : 0,
+      boxShadow: isFocused ? '1px solid #E1E5EE' : '0px',
       '&:hover': {
         border: isFocused ? null : '1px solid #B3BACC',
       },
