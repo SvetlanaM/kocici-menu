@@ -16,6 +16,7 @@ import {
 } from '../graphql/generated/graphql';
 import AddProductReviewModal from './AddProductReviewModal';
 import Link from 'next/link';
+import truncateText from '../utils/truncateText';
 
 export const ProductFieldsFragment = gql`
   fragment ProductFieldsFragment on Product {
@@ -140,15 +141,15 @@ const CatDetailProductTable = ({
 
   return (
     <div className="mt-5 w-full">
-      <div className="flex flex-col xl-custom:flex-row justify-between align-middle items-start xl-custom:items-start text-gray">
-        <Title title={`${title} produkty ${name}`} />
+      <div className="flex flex-col xl-custom:flex-row justify-between items-center xl-custom:items-center text-gray text-left">
+        <Title title={`${title} produkty`} />
         {title === 'Navrhované' ? (
           <button
             onClick={() => {
               shuffleData();
             }}
           >
-            <div className="inline-flex mb-5 xl-custom:mb-0">
+            <div className="inline-flex pb-5 xl-custom:mb-0 text-right">
               <Image src="/icons/reload.svg" height={15} width={15} />{' '}
               <span className="ml-2">Nové produkty</span>
             </div>
@@ -156,7 +157,10 @@ const CatDetailProductTable = ({
         ) : (
           <>
             <Link href="/my-cats">
-              <a onClick={openModal} className="text-gray mb-5 xl-custom:mb-0">
+              <a
+                onClick={openModal}
+                className="text-gray pb-5 xl-custom:mb-0 text-right"
+              >
                 + Pridať hodnotenie
               </a>
             </Link>
