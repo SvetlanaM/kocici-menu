@@ -6,6 +6,7 @@ import { useTranslation } from 'next-i18next';
 import { CatFieldsFragmentFragment } from '../graphql/generated/graphql';
 import { useMemo } from 'react';
 import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
+import truncateText from '../utils/truncateText';
 
 interface CatBasicInfoProps {
   cat: CatFieldsFragmentFragment;
@@ -45,7 +46,7 @@ const CatBasicInfo = ({ cat }: CatBasicInfoProps) => {
         className="border-rounded-base object-cover cat-image"
       />
       <div className="flex-col-base justify-between ml-3">
-        <h4>{cat.name}</h4>
+        <h4>{truncateText(cat.name, 12)}</h4>
         <p className="small-light-text">
           {t(sk[cat.type] || sk['CAT_TYPE_NULL'])}
         </p>
