@@ -43,7 +43,7 @@ const CatDetailPieChart = ({ aggData }: CatDetailPieChartProps) => {
 
   return (
     <div className="mt-5 w-full graph-container">
-      <Title title={`Kvalita stravy mačky`} />
+      <Title title={`Kvalita stravy mačky (pripravujeme)`} />
       {checkZeros() ? (
         <Pie data={data} options={options} />
       ) : (

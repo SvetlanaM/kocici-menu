@@ -99,6 +99,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
     );
   };
 
+  let numberPattern = /\d+/g;
   const [isActive, setIsActive] = useState(false);
   const CatById = () => {
     const {
@@ -109,7 +110,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
       variables: {
         limit: 5,
         withProducts: true,
-        id: Number(id),
+        id: Number(String(id).match(numberPattern)),
       },
       pollInterval: 500,
     });
@@ -139,23 +140,27 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
     );
   };
 
-  const [createCat, { error, loading, data }] =
-    useMutation<AddCatMutation, AddCatMutationVariables>(ADD_CAT);
+  const [createCat, { error, loading, data }] = useMutation<
+    AddCatMutation,
+    AddCatMutationVariables
+  >(ADD_CAT);
 
-  const [updateCat, { loading: updateCatLoading }] =
-    useMutation<UpdateCatMutation, UpdateCatMutationVariables>(UPDATE_CAT);
+  const [updateCat, { loading: updateCatLoading }] = useMutation<
+    UpdateCatMutation,
+    UpdateCatMutationVariables
+  >(UPDATE_CAT);
 
   const lastWeek = DateFormatObject().lastWeek();
 
-  const [createBulkReview] =
-    useMutation<AddReviewBulkMutation, AddReviewBulkMutationVariables>(
-      ADD_REVIEW_BULK
-    );
+  const [createBulkReview] = useMutation<
+    AddReviewBulkMutation,
+    AddReviewBulkMutationVariables
+  >(ADD_REVIEW_BULK);
 
-  const [deleteReview] =
-    useMutation<DeleteReviewMutation, DeleteReviewMutationVariables>(
-      DELETE_REVIEW
-    );
+  const [deleteReview] = useMutation<
+    DeleteReviewMutation,
+    DeleteReviewMutationVariables
+  >(DELETE_REVIEW);
 
   const [createBulkReviewHistory] = useMutation<
     AddReviewHistoryBulkMutation,

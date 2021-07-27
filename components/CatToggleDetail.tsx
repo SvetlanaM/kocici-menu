@@ -12,11 +12,7 @@ const CatToggleDetail = ({ catData }: any) => {
         <div className="px-3 py-3.6">
           <Title title="Špeciálne požiadavky" fontSize="text-sm" />
           <div className="flex">
-            <ul>
-              {specials.map((item) => (
-                <SpecialRequirements name={item.name} key={item.name} />
-              ))}
-            </ul>
+            <SpecialRequirements name={specials} />
           </div>
         </div>
       )}

@@ -35,7 +35,7 @@ const CatDetailCostChart = ({
 
   const data = useMemo(() => {
     return {
-      labels: allMonths.slice(0, Number(currentMonth)),
+      labels: allMonths.slice(0, Number(currentMonth)).slice(-6),
       datasets: [
         {
           label: 'Jedlo',
@@ -81,7 +81,7 @@ const CatDetailCostChart = ({
   };
   return (
     <div className="mt-5 w-full graph-container">
-      <Title title={`Prehľad nákladov za rok ${currentYear}`} />
+      <Title title={`Prehľad nákladov za rok ${currentYear} (pripravujeme)`} />
       <Bar data={data} options={options} />
     </div>
   );

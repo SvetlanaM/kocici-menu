@@ -195,10 +195,10 @@ const CatForm = ({
   const userProductsArrayMain =
     watchFieldArray && watchFieldArray.map((item) => item);
 
-  const newReviews =
-    review && userProductsArrayMain
-      ? userProductsArrayMain.slice(review.length, userProductsArrayMain.length)
-      : [];
+  // const newReviews =
+  //   review && userProductsArrayMain
+  //     ? userProductsArrayMain.slice(review.length, userProductsArrayMain.length)
+  //     : [];
 
   const deletedReviews = useMemo(() => {
     return userProductsArrayMain && userProductsArrayMain
@@ -211,6 +211,24 @@ const CatForm = ({
           )
       : [];
   }, [userDefaultValues]);
+
+  const newReviews = useMemo(() => {
+    return userProductsArrayMain
+      ? userProductsArrayMain &&
+          review &&
+          userProductsArrayMain.filter(
+            (x) =>
+              !review
+                .map(
+                  (item) =>
+                    item !== undefined &&
+                    x.product !== undefined &&
+                    item.product.id
+                )
+                .includes(x.product !== undefined && x.product.id)
+          )
+      : [];
+  }, [userProductsArrayMain, deletedReviews]);
 
   const diff = useMemo(() => {
     return (
@@ -546,6 +564,7 @@ const CatForm = ({
                   control={control}
                   showHint={false}
                   isDisabled={
+                    userDefaultValues &&
                     index < userDefaultValues.length &&
                     userDefaultValues.filter((item) => item !== false)
                       ? true
@@ -596,7 +615,7 @@ const CatForm = ({
                 message: 'Maximálne 500 znakov',
               },
             })}
-            placeholder="Dodatočné poznámky. Maximálne 500 znakov."
+            placeholder="Dodatočné poznámky (napriklad choroby, diety, obmedzenia...) Maximálne 500 znakov."
             className="form-textarea w-full mb-3 mt-2 text-purple block border-rounded-base border-gray 
               focus:outline-none focus:bg-white focus:border-gray
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray"

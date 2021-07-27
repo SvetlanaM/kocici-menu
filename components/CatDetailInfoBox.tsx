@@ -158,7 +158,7 @@ const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
         <div className="edit-box flex flex-row items-center justify-start pl-3">
           <Image src="/icons/change_stars.svg" height={20} width={20} />
           <p className="uppercase text-gray text-sm ml-2 font-light">
-            <Link href={`/my-cats/${encodeURIComponent(data.id)}`}>
+            <Link href={`/my-cats/${encodeURIComponent(data.slug)}`}>
               Upraviť mačku
             </Link>
           </p>

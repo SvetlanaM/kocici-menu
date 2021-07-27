@@ -20,6 +20,8 @@ export const CatFieldsFragment = gql`
     daily_food
     weight
     nickname
+    note
+    slug
     specials: SpecialRequirements {
       name
     }
@@ -55,23 +57,23 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
   const toggleSlider = () => setIsOpen(!isOpen);
 
   const arrayDiff = CatFieldsFragment.specials.length - arrayLength;
-  const updatedSpecials =
-    CatFieldsFragment.specials.length > arrayLength
-      ? [
-          ...CatFieldsFragment.specials.slice(0, arrayLength),
-          {
-            name: `... ${t(sk.next_count.key, {
-              count: arrayDiff,
-            })} ${arrayDiff} ${t(sk.requirements_count.key, {
-              count: arrayDiff,
-            })}`,
-          },
-        ]
-      : CatFieldsFragment.specials;
+  // const updatedSpecials =
+  //   CatFieldsFragment.specials.length > arrayLength
+  //     ? [
+  //         ...CatFieldsFragment.specials.slice(0, arrayLength),
+  //         {
+  //           name: `... ${t(sk.next_count.key, {
+  //             count: arrayDiff,
+  //           })} ${arrayDiff} ${t(sk.requirements_count.key, {
+  //             count: arrayDiff,
+  //           })}`,
+  //         },
+  //       ]
+  //     : CatFieldsFragment.specials;
 
   const catData = {
     doctor_email: CatFieldsFragment.doctor_email,
-    specials: updatedSpecials,
+    specials: CatFieldsFragment.note,
   };
 
   return (
