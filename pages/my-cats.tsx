@@ -21,6 +21,7 @@ import {
 } from '../graphql/generated/graphql';
 import useAuth from '../hooks/useAuth';
 import { useEffect, useState } from 'react';
+import CatDetailEmptyBox from '../components/CatDetailEmptyBox';
 
 const CatDetailQuery = () => {
   const {
@@ -55,18 +56,16 @@ const CatDetailQuery = () => {
           cats={catData.cat}
           products={productData.products}
         />
-      ) : (
-        <>
-          <CenterContainer>
-            <Loading />
-          </CenterContainer>
+      ) : <>
+          <CenterContainer>{catLoading && <Loading />}</CenterContainer>
           <LeftContainer>
             <div className="mt-4 mt-9.5 xl-custom:mt-9.5">
               <AddCatBox />
             </div>
           </LeftContainer>
-        </>
-      )}
+        </> ? (
+        <>{catData && catData.cat.length === 0 && <CatDetailEmptyBox />}</>
+      ) : null}
     </>
   );
 };
