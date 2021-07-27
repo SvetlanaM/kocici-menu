@@ -181,24 +181,8 @@ const CatForm = ({
 
   useSearch(searchTerm, limitedSearchProducts, setSearchProducts);
 
-  useEffect(() => {
-    let userProductsArray =
-      watchFieldArray && watchFieldArray.map((item) => item.product);
-
-    if (userProductsArray && userProductsArray.length > 0) {
-      setLimitedSearchedProducts((prevState) =>
-        prevState.filter((x) => !userProductsArray.includes(x))
-      );
-    }
-  }, [searchTerm]);
-
   const userProductsArrayMain =
     watchFieldArray && watchFieldArray.map((item) => item);
-
-  // const newReviews =
-  //   review && userProductsArrayMain
-  //     ? userProductsArrayMain.slice(review.length, userProductsArrayMain.length)
-  //     : [];
 
   const deletedReviews = useMemo(() => {
     return userProductsArrayMain && userProductsArrayMain
@@ -206,11 +190,33 @@ const CatForm = ({
           review.filter(
             (x) =>
               !userProductsArrayMain
-                .map((item) => item !== undefined && item.product.id)
-                .includes(x.product.id)
+                .map((item) => item.product !== undefined && item.product.id)
+                .includes(x.product !== undefined && x.product.id)
           )
       : [];
   }, [userDefaultValues]);
+
+  useEffect(() => {
+    let userProductsArray =
+      watchFieldArray &&
+      watchFieldArray.map(
+        (item) => item.product !== undefined && item.product.id
+      );
+
+    let deleted =
+      deletedReviews && deletedReviews.map((item) => item.product.name);
+
+    if (
+      userProductsArray &&
+      userProductsArray.length > 0 &&
+      searchTerm !== ' '
+    ) {
+      setLimitedSearchedProducts([
+        ...getUniqueReviews().filter((x) => !userProductsArray.includes(x.id)),
+        ...getUniqueReviews().filter((x) => deleted.includes(x.name)),
+      ]);
+    }
+  }, [searchTerm, deletedReviews]);
 
   const newReviews = useMemo(() => {
     return userProductsArrayMain
@@ -240,7 +246,7 @@ const CatForm = ({
           (x) =>
             !review
               .map((item) => item.rating.value)
-              .includes(x && x.rating.value)
+              .includes(x.value !== undefined && x.rating.value)
         )
     );
   }, [userProductsArrayMain, review, watchFieldArray, deletedReviews]);
@@ -563,13 +569,13 @@ const CatForm = ({
                   defaultValue={field.product}
                   control={control}
                   showHint={false}
-                  isDisabled={
-                    userDefaultValues &&
-                    index < userDefaultValues.length &&
-                    userDefaultValues.filter((item) => item !== false)
-                      ? true
-                      : false
-                  }
+                  // isDisabled={
+                  //   userDefaultValues &&
+                  //   index < userDefaultValues.length &&
+                  //   userDefaultValues.filter((item) => item !== false)
+                  //     ? true
+                  //     : false
+                  // }
                 />
               </div>
               <div className="pl-0 w-full xl-custom:w-2/6">
