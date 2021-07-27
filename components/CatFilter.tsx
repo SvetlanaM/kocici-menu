@@ -10,10 +10,15 @@ interface CatFilterProps {
 }
 
 const CatFilter = ({ cats, setCatFunction, selectedCat }: CatFilterProps) => {
-  const [catId, setCatId] = useState<number>(cats[0].id);
+  const [catId, setCatId] = useState<number>(selectedCat);
 
   useEffect(() => {
-    setCatFunction(cats[0].id);
+    let newCatId = catId
+    if (!cats.some((cat) => cat.id === catId)) {
+      newCatId = cats[0].id
+    }
+    setCatId(newCatId)
+    setCatFunction(newCatId)
   }, [cats]);
 
   // useEffect(() => {
