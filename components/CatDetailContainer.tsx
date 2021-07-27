@@ -2,20 +2,14 @@ import CatFilter from './CatFilter';
 import CatDetailInfoBox from './CatDetailInfoBox';
 import CatDetailCostChart from './CatDetailCostChart';
 import CatDetailProductTable from './CatDetailProductTable';
-import {
-  CatDetailFieldsFragmentFragment,
-  GetCatDetailQuery,
-  GetProductsQuery,
-  Product,
-  ProductFieldsFragmentFragment,
-} from '../graphql/generated/graphql';
-import { useCallback, useEffect, useState } from 'react';
-import { useMemo } from 'react';
-import { getUser } from '../utils/user';
+import { GetCatDetailQuery, GetProductsQuery, } from '../graphql/generated/graphql';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import CenterContainer from './CenterContainer';
 import LeftContainer from './LeftContainer';
 import AddCatBox from './AddCatBox';
 import CatDetailPieChart from './CatDetailPieChart';
+import useLocalStorage, { LocalStorageKey } from "../hooks/useLocalStorage";
+
 interface CatDetailContainerProps {
   cats: GetCatDetailQuery['cat'];
   products: GetProductsQuery['products'];
@@ -31,13 +25,17 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
     };
   };
 
+  let [ savedCat, setSavedCat ] = useLocalStorage(LocalStorageKey.SELECTED_CAT, 0)
+
+  const initialCat = cats.find(cat => cat.id === savedCat) ?? cats[0]
+
   let initialData = catFactory(
-    cats[0].id,
-    cats[0].name,
-    cats[0].image_url,
-    cats[0].reviews.map((review) => {
+      initialCat.id,
+      initialCat.name,
+      initialCat.image_url,
+      initialCat.reviews.map((review) => {
       const reviews = review.products.reviewhistory
-        .filter((review) => review.cat_id === cats[0].id)
+        .filter((review) => review.cat_id === initialCat.id)
         .reverse();
       return {
         product_id: review.products.id,
@@ -46,14 +44,14 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
     })
   );
   const [[selectedCat, catData, catReviews, catModalData], setSelectedCat] =
-    useState([cats[0].id, cats[0], [], initialData]);
+    useState([initialCat.id, initialCat, [], initialData]);
 
   useEffect(() => {
     setSelectedCat([
-      cats[0].id,
-      cats[0],
-      getCatReviewHistory(cats[0]),
-      initialData,
+        initialCat.id,
+        initialCat,
+        getCatReviewHistory(initialCat),
+        initialData,
     ]);
   }, []);
 
@@ -90,6 +88,7 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
       );
 
       setSelectedCat([id, cat, review, catModal]);
+      setSavedCat(id)
 
       return id;
     },
@@ -131,7 +130,7 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
   }, [isShuffled, selectedCat]);
 
   const getNumber = (item: any): number => {
-    var numberPattern = /\d+/g;
+    const numberPattern = /\d+/g;
 
     let number = Number(item.match(numberPattern)[0]);
     return number;

@@ -379,7 +379,6 @@ const CatForm = ({
         deleted: deletedReviews,
       }).then((success: boolean) => {
         if (success) {
-          console.log('jupiii2');
           if (catData) {
             setIsMainLoading(false);
             router.back();
