@@ -182,7 +182,7 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
         <CatDetailProductTable
           data={catProducts}
           name={catData.name}
-          title="Obľúbené"
+          title="Najnovšie hodnotenia"
           catReviews={catReviews.slice(0, 5)}
           cats={[catModalData]}
           products={productsTemp}
@@ -190,7 +190,7 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
         <CatDetailProductTable
           data={getRProducts}
           name={catData.name}
-          title="Navrhované"
+          title="Navrhované produkty"
           catReviews={catReviews}
           shuffleData={shuffleData}
           products={getRProducts}

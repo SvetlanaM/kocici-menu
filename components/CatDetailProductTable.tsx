@@ -142,8 +142,8 @@ const CatDetailProductTable = ({
   return (
     <div className="mt-5 w-full">
       <div className="flex flex-col xl-custom:flex-row justify-between items-center xl-custom:items-center text-gray text-left">
-        <Title title={`${title} produkty`} />
-        {title === 'Navrhované' ? (
+        <Title title={`${title}`} />
+        {title === 'Navrhované produkty' ? (
           <button
             onClick={() => {
               shuffleData();
