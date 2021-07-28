@@ -358,16 +358,16 @@ const CatForm = ({
   const onSubmit = useCallback(
     (data) => {
       const catInput: CatInputData | Cat_Set_Input = {
-        age: Number(data.age),
+        age: data.age ? Number(data.age) : null,
         name: data.name,
         user_id: getUser(),
         doctor_email: data.doctor_email,
         nickname: data.nickname,
-        weight: Number(data.weight),
+        weight: data.weight ? Number(data.weight) : null,
         type: (data.type !== CAT_TYPE_NULL) ? data.type : null,
         note: data.note,
         color: data.color,
-        daily_food: Number(data.daily_food),
+        daily_food: data.daily_food ? Number(data.daily_food) : null,
         id: catData ? catData.id : null,
         image_url: watchedCatImage,
       };
