@@ -10,6 +10,9 @@ module.exports = {
       'xl-custom': '1240px',
       'xxl-custom': '1920px',
     },
+    flex: {
+      auto: '0 0 auto',
+    },
     extend: {
       colors: {
         transparent: 'transparent',
