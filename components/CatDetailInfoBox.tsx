@@ -22,6 +22,7 @@ import { TIP_LIMIT } from '../utils/constants';
 import { getUser } from '../utils/user';
 import { useMemo } from 'react';
 import DateFormatObject from '../utils/getFormatDate';
+import DoctorExportLink from './DoctorExportLink';
 interface CatDetailInfoBoxProps {
   data: CatDetailFieldsFragmentFragment;
 }
@@ -141,10 +142,19 @@ const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
             </li>
             <li>
               <span className="text-gray">Email doktora:</span>
-              {data.doctor_email && (
-                <Link href={`mailto: ${data.doctor_email}`}>
+              {data.doctor_email ? (
+                <DoctorExportLink
+                  catContactData={{
+                    email: data.doctor_email,
+                    age: data.age,
+                    weight: data.weight,
+                    name: data.name,
+                  }}
+                >
                   <a> Napísať</a>
-                </Link>
+                </DoctorExportLink>
+              ) : (
+                ' --'
               )}
             </li>
             <li>

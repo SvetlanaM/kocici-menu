@@ -72,7 +72,12 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
   //     : CatFieldsFragment.specials;
 
   const catData = {
-    doctor_email: CatFieldsFragment.doctor_email,
+    contact_doctor: {
+      email: CatFieldsFragment.doctor_email,
+      age: CatFieldsFragment.age,
+      weight: CatFieldsFragment.weight,
+      name: CatFieldsFragment.name,
+    },
     specials: CatFieldsFragment.note,
   };
 
@@ -80,7 +85,9 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
     <div className="flex flex-col flex-no-wrap justify-between h-75 py-3 border-rounded-base border-gray small-purple-text text-left my-cat">
       <div className="flex flex-row px-3">
         <CatBasicInfo cat={CatFieldsFragment} />
-        {(catData.doctor_email !== null || catData.specials.length > 0) && (
+        {(catData.contact_doctor.email !== null ||
+          catData.contact_doctor.email !== ' ' ||
+          catData.specials.length > 0) && (
           <button
             type="button"
             onClick={toggleSlider}

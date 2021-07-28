@@ -4,7 +4,7 @@ import DoctorExportButton from './DoctorExportButton';
 import Title from './Title';
 
 const CatToggleDetail = ({ catData }: any) => {
-  const { doctor_email, specials } = catData;
+  const { contact_doctor, specials } = catData;
   return (
     <div className="flex-col grid grid-rows divide-y divide-gray_lightest pt-3.6 font-light">
       <div></div>
@@ -16,9 +16,9 @@ const CatToggleDetail = ({ catData }: any) => {
           </div>
         </div>
       )}
-      {doctor_email && (
+      {contact_doctor.email && (
         <div className="pt-3.6 px-3">
-          <DoctorExportButton email={doctor_email} />
+          <DoctorExportButton catContactData={contact_doctor} />
         </div>
       )}
     </div>
