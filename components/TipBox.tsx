@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { gql } from '@apollo/client';
 import { TipFieldsFragmentFragment } from '../graphql/generated/graphql';
 import Image from './Image';
+import { BackLinkType } from "../utils/backlinks";
 
 export const TipFieldsFragment = gql`
   fragment TipFieldsFragment on Tip {
@@ -34,9 +35,12 @@ const TipBox = ({
   isOnDashboard,
   readingTime,
 }: TipBoxInterface) => {
+
+  const backlink = isOnDashboard ? BackLinkType.DASHBOARD : BackLinkType.TIPS
+
   return (
     <div className="w-full pb-3.6 mb-4 border-b border-gray tips-list">
-      <Link href={`/tips/${encodeURIComponent(slug)}`}>
+      <Link href={`/tips/${encodeURIComponent(slug)}?backlink=${backlink}`} as={`/tips/${encodeURIComponent(slug)}`}>
         <a className="small-purple-text font-light flex flex-row items-center justify-between">
           <div>
             {!isOnDashboard ? (

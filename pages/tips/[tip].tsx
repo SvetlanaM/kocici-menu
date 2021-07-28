@@ -10,7 +10,6 @@ import { GeneralError } from '../../components/ErrorScreen';
 import Center from '../../components/CenterContainer';
 import Header from '../../components/Head';
 import getTitle from '../../utils/getTitle';
-import { useEffect, useLayoutEffect } from 'react';
 
 const TipDetailQuery = () => {
   const router = useRouter();
