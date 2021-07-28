@@ -7,6 +7,7 @@ import { CatFieldsFragmentFragment } from '../graphql/generated/graphql';
 import { useMemo } from 'react';
 import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
 import truncateText from '../utils/truncateText';
+import LoadingImage from "./LoadingImage";
 
 interface CatBasicInfoProps {
   cat: CatFieldsFragmentFragment;
@@ -31,18 +32,19 @@ const CatBasicInfo = ({ cat }: CatBasicInfoProps) => {
   const { t } = useTranslation();
 
   // FIXME: toto je tu uplne zbytocne teraz
-  const catImage = useMemo<string>(
-    () => (cat.image_url ? cat.image_url : defaultImage),
-    [cat.image_url]
-  );
+  // const catImage = useMemo<string>(
+  //   () => (cat.image_url ? cat.image_url : defaultImage),
+  //   [cat.image_url]
+  // );
 
   return (
     <>
-      <Image
+      <LoadingImage
         alt={setUppercaseTitle(cat.name)}
-        src={catImage}
+        src={cat.image_url}
         width={65}
         height={65}
+        placeholder={"/default_cat.svg"}
         className="border-rounded-base object-cover cat-image"
       />
       <div className="flex-col-base justify-between ml-3">
