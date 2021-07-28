@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import CatForm from '../../components/CatForm';
+import CatForm, { CAT_TYPE_NULL } from '../../components/CatForm';
 import {
   AddCatMutation,
   AddCatMutationVariables,
@@ -64,7 +64,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
   const router = useRouter();
   const { id } = router.query;
 
-  const editOrAdd = () => {
+  const isEditCat = () => {
     // can also be written as !!id
     if (id) {
       return true;
@@ -73,7 +73,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
     }
   };
 
-  const ProductsToForm = () => {
+  const CreateCatForm = () => {
     const {
       data: productData,
       error: productError,
@@ -93,7 +93,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
             handleSubmit1={handleSubmit1}
             submitText={title}
             products={productData.products}
-            buttonText={chooseString(editOrAdd(), 'buttonText')}
+            buttonText={chooseString(isEditCat(), 'buttonText')}
           />
         )}
       </Center>
@@ -102,7 +102,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
 
   let numberPattern = /\d+/g;
   const [isActive, setIsActive] = useState(false);
-  const CatById = () => {
+  const EditCatForm = () => {
     const {
       data: catData,
       error: catError,
@@ -132,7 +132,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
             submitText={title}
             catData={catData.cat}
             products={productData.products}
-            buttonText={chooseString(editOrAdd(), 'buttonText')}
+            buttonText={chooseString(isEditCat(), 'buttonText')}
           />
         ) : (
           <Loading />
@@ -640,7 +640,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
       reviewData,
       reviewUpdatedData
     ) => {
-      if (editOrAdd()) {
+      if (isEditCat()) {
         setIsActive(true);
         return updateMyCat(catData, reviewData, reviewUpdatedData);
       } else {
@@ -648,7 +648,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
         return createNewCat(catData, reviewData, reviewUpdatedData);
       }
     },
-    [createNewCat, updateMyCat, isActive, editOrAdd]
+    [createNewCat, updateMyCat, isActive, isEditCat]
   );
 
   const editOrAddStrings = {
@@ -662,16 +662,16 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
   const chooseString = (type: boolean, key: string) =>
     type ? editOrAddStrings[key][1] : editOrAddStrings[key][0];
 
-  const title = chooseString(editOrAdd(), 'title');
+  const title = chooseString(isEditCat(), 'title');
 
   const breadcrumbs: Breadcrumb[] = useMemo(() => {
     return [
       {
-        path: chooseString(editOrAdd(), 'path'),
-        name: chooseString(editOrAdd(), 'name'),
+        path: chooseString(isEditCat(), 'path'),
+        name: chooseString(isEditCat(), 'name'),
       },
       {
-        path: chooseString(editOrAdd(), 'path2'),
+        path: chooseString(isEditCat(), 'path2'),
         name: title,
       },
     ];
@@ -682,7 +682,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
       <Header title={getTitle(title)} />
       <Sidebar />
 
-      <Container>{editOrAdd() ? <CatById /> : <ProductsToForm />}</Container>
+      <Container>{isEditCat() ? <EditCatForm /> : <CreateCatForm />}</Container>
     </Layout>
   );
 }
