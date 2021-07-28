@@ -65,6 +65,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
   const { id } = router.query;
 
   const editOrAdd = () => {
+    // can also be written as !!id
     if (id) {
       return true;
     } else {
