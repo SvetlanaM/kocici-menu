@@ -7,10 +7,9 @@ import {
 import CatBasicInfo from './CatBasicInfo';
 import Link from 'next/link';
 import RemoveConfirmationModal from './RemoveConfirmationModal';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { DELETE_CAT } from '../graphql/mutations';
-import router, { Router } from 'next/router';
 import {
   CATS_DETAIL_QUERY,
   CATS_QUERY,
@@ -20,7 +19,6 @@ import {
 } from '../graphql/queries';
 import { TIP_LIMIT } from '../utils/constants';
 import { getUser } from '../utils/user';
-import { useMemo } from 'react';
 import DateFormatObject from '../utils/getFormatDate';
 import DoctorExportLink from './DoctorExportLink';
 interface CatDetailInfoBoxProps {
@@ -166,7 +164,7 @@ const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
       </div>
       <div className="grid grid-flow-col py-5 xl-custom:py-0 xl-custom:grid-flow-row xl-custom:divide-y border-gray">
         <div className="edit-box flex flex-row items-center justify-start pl-3">
-          <Image src="/icons/change_stars.svg" height={20} width={20} />
+          <Image src="/icons/change_stars.svg" placeholder="/default_cat.svg" height={20} width={20} />
           <p className="uppercase text-gray text-sm ml-2 font-light">
             <Link href={`/my-cats/${encodeURIComponent(data.slug)}`}>
               Upraviť mačku
