@@ -163,13 +163,13 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
           setCatFunction={setCatData}
           selectedCat={selectedCat}
         />
-        <CatDetailInfoBox data={catData} />
       </CenterContainer>
-      <LeftContainer>
-        <div className="mt-4 xl-custom:mt-9.5">
+      <div className="w-full flex justify-between">
+        <CatDetailInfoBox data={catData} />
+        <div className="w-3/12 pl-7">
           <AddCatBox />
         </div>
-      </LeftContainer>
+      </div>
       <div className="w-full grid grid-rows-2 xl-custom:grid-rows-1 xl-custom:grid-cols-2 gap-11 pb-16 mt-3">
         <CatDetailCostChart
           data1={randomDataG}

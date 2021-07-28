@@ -112,7 +112,7 @@ const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
   }, [catId]);
 
   return (
-    <div className="grid xl-custom:grid-cols-4 xl-custom:grid-rows-0 divide-y xl-custom:divide-y-0 xl-custom:divide-x gap-y-2 divide-gray_lightest border-rounded-base border-gray">
+    <div className="grid xl-custom:grid-cols-4 xl-custom:grid-rows-0 divide-y xl-custom:divide-y-0 xl-custom:divide-x gap-y-2 divide-gray_lightest border-rounded-base border-gray w-9/12">
       <div className="flex small-purple-text text-left my-cat">
         <div className="flex flex-row px-3 align-middle py-3 justify-between cat-detail-box">
           <CatBasicInfo cat={data} />
