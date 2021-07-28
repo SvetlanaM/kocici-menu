@@ -85,7 +85,7 @@ const ProductController = ({
               `${product.brand_type} - ${product.name}`
             }
             onInputChange={onInputChange}
-            placeholder={'Vyhľadať produkt od 3 znakov'}
+            placeholder={'Vyhľadať príchuť alebo značku od 3 znakov'}
             // value={watchedProduct}
             noOptionsMessage={() => 'Žiadne ďalšie výsledky'}
             isDisabled={isDisabled}
