@@ -11,6 +11,7 @@ import router from 'next/router';
 import Image from './Image';
 import sk from '../public/locales/sk/common.json';
 import { useTranslation } from 'react-i18next';
+import links from "../utils/backlinks";
 
 export const TipDetailFieldsFragment = gql`
   fragment TipDetailFragment on Tip {
@@ -31,10 +32,15 @@ const TipDetailBox = ({
   const formattedDate = DateFormatObject(updated_at).formatDate();
   const { t } = useTranslation();
   const breadcrumbs: Breadcrumb[] = useMemo(() => {
+      const { backlink } = router.query
+      let previousLink = links.dashboard
+      if (backlink) {
+          previousLink = links[backlink as string] ?? previousLink
+      }
     return [
       {
-        path: 'back',
-        name: 'Späť',
+        path: previousLink.path,
+        name: previousLink.name,
       },
       {
         path: `/tips/${name}`,
