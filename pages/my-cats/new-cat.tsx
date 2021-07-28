@@ -56,6 +56,7 @@ import Loading from '../../components/Loading';
 import { GeneralError } from '../../components/ErrorScreen';
 import { TIP_LIMIT } from '../../utils/constants';
 import DateFormatObject from '../../utils/getFormatDate';
+import links from "../../utils/backlinks";
 
 interface CreateCatProps {
   onClickTrigger?: () => void;
@@ -93,7 +94,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
             handleSubmit1={handleSubmit1}
             submitText={title}
             products={productData.products}
-            buttonText={chooseString(isEditCat(), 'buttonText')}
+            buttonText={'Nahrať fotku'}
           />
         )}
       </Center>
@@ -132,7 +133,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
             submitText={title}
             catData={catData.cat}
             products={productData.products}
-            buttonText={chooseString(isEditCat(), 'buttonText')}
+            buttonText={'Zmeniť fotku'}
           />
         ) : (
           <Loading />
@@ -651,28 +652,23 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
     [createNewCat, updateMyCat, isActive, isEditCat]
   );
 
-  const editOrAddStrings = {
-    title: [`Pridať novú mačku`, `Upraviť mačku`],
-    name: ['Krok späť', 'Moje mačky'],
-    path: ['back', '/my-cats'],
-    path2: ['back', '/my-cats/[:id]'],
-    buttonText: ['Nahrať fotku', 'Zmeniť fotku'],
-  };
-
-  const chooseString = (type: boolean, key: string) =>
-    type ? editOrAddStrings[key][1] : editOrAddStrings[key][0];
-
-  const title = chooseString(isEditCat(), 'title');
+  const title = isEditCat() ? links.edit_cat.name : links.create_cat.name
 
   const breadcrumbs: Breadcrumb[] = useMemo(() => {
+    const { backlink } = router.query
+    let previousLink = links.dashboard
+    if (backlink) {
+      previousLink = links[backlink as string] ?? previousLink
+    }
+    let currentLink = isEditCat() ? links.edit_cat : links.create_cat
     return [
       {
-        path: chooseString(isEditCat(), 'path'),
-        name: chooseString(isEditCat(), 'name'),
+        path: previousLink.path,
+        name: previousLink.name,
       },
       {
-        path: chooseString(isEditCat(), 'path2'),
-        name: title,
+        path: currentLink.path,
+        name: currentLink.name,
       },
     ];
   }, [createCat, updateCat]);
