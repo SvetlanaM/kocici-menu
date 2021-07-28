@@ -2,7 +2,7 @@ import CatFilter from './CatFilter';
 import CatDetailInfoBox from './CatDetailInfoBox';
 import CatDetailCostChart from './CatDetailCostChart';
 import CatDetailProductTable from './CatDetailProductTable';
-import { GetCatDetailQuery, GetProductsQuery, } from '../graphql/generated/graphql';
+import { CatFieldsFragmentFragment, GetCatDetailQuery, GetProductsQuery, } from '../graphql/generated/graphql';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import CenterContainer from './CenterContainer';
 import LeftContainer from './LeftContainer';
@@ -16,12 +16,20 @@ interface CatDetailContainerProps {
 }
 
 const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
-  const catFactory = (id, name, image_url, reviews) => {
+  const catFactory = (cat: CatFieldsFragmentFragment) => {
     return {
-      id,
-      name,
-      image_url,
-      reviews,
+        id: cat.id,
+        name: cat.name,
+        image_url: cat.image_url,
+        reviews: cat.reviews.map((review) => {
+            const reviews = review.products.reviewhistory
+                .filter((review) => review.cat_id === cat.id)
+                .reverse();
+            return {
+                product_id: review.products.id,
+                review_type: reviews[0] ? reviews[0].review_type : [],
+            };
+        })
     };
   };
 
@@ -29,20 +37,7 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
 
   const initialCat = cats.find(cat => cat.id === savedCat) ?? cats[0]
 
-  let initialData = catFactory(
-      initialCat.id,
-      initialCat.name,
-      initialCat.image_url,
-      initialCat.reviews.map((review) => {
-      const reviews = review.products.reviewhistory
-        .filter((review) => review.cat_id === initialCat.id)
-        .reverse();
-      return {
-        product_id: review.products.id,
-        review_type: reviews[0] ? reviews[0].review_type : [],
-      };
-    })
-  );
+  let initialData = catFactory(initialCat);
   const [[selectedCat, catData, catReviews, catModalData], setSelectedCat] =
     useState([initialCat.id, initialCat, [], initialData]);
 
@@ -72,20 +67,7 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
       let cat = getCatData(id);
       let review = cat ? getCatReviewHistory(cat) : [];
 
-      let catModal = catFactory(
-        cat.id,
-        cat.name,
-        cat.image_url,
-        cat.reviews.map((review) => {
-          const reviews = review.products.reviewhistory
-            .filter((review) => review.cat_id === cat.id)
-            .reverse();
-          return {
-            product_id: review.products.id,
-            review_type: reviews[0] ? reviews[0].review_type : [],
-          };
-        })
-      );
+      let catModal = catFactory(cat);
 
       setSelectedCat([id, cat, review, catModal]);
       setSavedCat(id)
@@ -118,22 +100,17 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
   const [isShuffled, setIsShuffled] = useState<boolean>(false);
 
   const getRProducts = useMemo(() => {
-    const recommendedProducts = products.map((product) => product);
-    const shuffled = recommendedProducts
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 6);
-    let difference = shuffled
-      .map((item) => item)
-      .filter((x) => !catProducts.map((item) => item.name).includes(x.name))
-      .slice(0, 5);
-    return difference;
+    return products
+        .slice()
+        .sort(() => 0.5 - Math.random())
+        .filter((x) => !catProducts.map((item) => item.name).includes(x.name))
+        .slice(0, 5);
   }, [isShuffled, selectedCat]);
 
   const getNumber = (item: any): number => {
     const numberPattern = /\d+/g;
 
-    let number = Number(item.match(numberPattern)[0]);
-    return number;
+    return Number(item.match(numberPattern)[0]);
   };
 
   const mealTypes = catData.reviews
