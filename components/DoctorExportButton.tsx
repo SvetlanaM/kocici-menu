@@ -1,14 +1,14 @@
 import Image from './Image';
-import Link from 'next/link';
+import DoctorExportLink from './DoctorExportLink';
 
-const DoctorExportButton = ({ email }) => {
+const DoctorExportButton = ({ catContactData }) => {
   return (
-    <Link href={`mailto: ${email}`}>
-      <a className="flex flex-start">
+    <DoctorExportLink catContactData={catContactData}>
+      <div className="flex flex-start">
         <Image src="/icons/email.svg" width={25} height={15} />
         <h3 className="text-gray font-lg font-bold ml-2">Poslať doktorovi</h3>
-      </a>
-    </Link>
+      </div>
+    </DoctorExportLink>
   );
 };
 
