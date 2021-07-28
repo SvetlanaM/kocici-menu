@@ -2,21 +2,15 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Cat_Insert_Input,
   Cat_Set_Input,
-  CatTypeEnum_Enum as catTypes,
   CatFieldsFragmentFragment,
+  CatTypeEnum_Enum as catTypes,
   GetProductsQuery,
-  SelectProductFieldsFragment,
+  Product,
   Review_Insert_Input,
   ReviewHistory_Insert_Input,
-  Product,
+  SelectProductFieldsFragment,
 } from '../graphql/generated/graphql';
-import {
-  useForm,
-  Controller,
-  useFieldArray,
-  useWatch,
-  Control,
-} from 'react-hook-form';
+import { Controller, useFieldArray, useForm, } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
 import FormErrorMessage from './FormErrorMessage';
@@ -33,19 +27,20 @@ import UploadImage from './UploadImage';
 import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
 import { useS3Upload } from 'next-s3-upload';
 import Loading from './Loading';
-
-export type CatInputData = Omit<Cat_Insert_Input, 'CatTypeEnum'>;
 import ProductController from './ProductController';
 import RatingController from './RatingController';
 import useSearch from '../hooks/useSearch';
 import { uploadImage } from "../utils/uploadImage";
+
+export type CatInputData = Omit<Cat_Insert_Input, 'CatTypeEnum'>;
+
 interface CatFormInterface {
   handleSubmit1: {
     (
       cat: CatInputData | Cat_Set_Input,
       reviews?: [Review_Insert_Input] | [ReviewHistory_Insert_Input],
       updatedReviews?: {
-        deleted: Array<SelectProductFieldsFragment>;
+        deleted: Array<CatFormProduct>;
         merged: Array<SelectProductFieldsFragment>;
       }
     ): Promise<boolean>;
@@ -55,6 +50,14 @@ interface CatFormInterface {
   products?: GetProductsQuery['products'];
   loading?: boolean;
   buttonText?: string;
+}
+
+type CatFormProduct = {
+  product: SelectProductFieldsFragment
+  rating: {
+    label: number
+    value: string
+  }
 }
 
 const CatForm = ({
@@ -100,7 +103,7 @@ const CatForm = ({
     };
   };
 
-  const review: Array<SelectProductFieldsFragment> =
+  const review: Array<CatFormProduct> =
     catData &&
     catData.reviews.map((item) => {
       const sorted = item.products.reviewhistory;
@@ -138,7 +141,7 @@ const CatForm = ({
       cat_image: catData && catData.image_url,
       daily_food: catData && catData.daily_food,
       doctor_email: catData && catData.doctor_email,
-      note: '',
+      note: catData && catData.note,
       type: catData && catData.type,
     },
   });
@@ -347,11 +350,7 @@ const CatForm = ({
     if (file && file.name) {
       let value = file.name;
       let fileType = value.substring(value.lastIndexOf('.') + 1, value.length);
-      if (fileTypes.indexOf(fileType) > -1) {
-        return true;
-      } else {
-        return false;
-      }
+      return fileTypes.indexOf(fileType) > -1;
     }
   };
 
@@ -615,19 +614,19 @@ const CatForm = ({
         <div className="flex flex-col w-full mt-2">
           <FormInputLabel name="Poznámka" />
           <textarea
-            maxLength={500}
-            {...register('note', {
-              required: false,
-              maxLength: {
-                value: 500,
-                message: 'Maximálne 500 znakov',
-              },
-            })}
-            placeholder="Dodatočné poznámky (napriklad choroby, diety, obmedzenia...) Maximálne 500 znakov."
-            className="form-textarea w-full mb-3 mt-2 text-purple block border-rounded-base border-gray 
+              maxLength={500}
+              {...register('note', {
+                required: false,
+                maxLength: {
+                  value: 500,
+                  message: 'Maximálne 500 znakov',
+                },
+              })}
+              placeholder="Dodatočné poznámky (napriklad choroby, diety, obmedzenia...) Maximálne 500 znakov."
+              className="form-textarea w-full mb-3 mt-2 text-purple block border-rounded-base border-gray
               focus:outline-none focus:bg-white focus:border-gray
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray"
-          ></textarea>
+          />
           <span className="text-sm font-light text-gray">
             {watchedNote !== undefined && watchedNote.length <= 500
               ? `Ostáva ${500 - watchedNote?.length} znakov z 500`
