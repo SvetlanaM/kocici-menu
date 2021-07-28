@@ -185,7 +185,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
       const variables: AddCatMutationVariables = {
         cat: {
           name: setUppercaseTitle(catData.name) || '',
-          age: catData.age ?? 1,
+          age: catData.age ?? null,
           user_id: catData.user_id,
           doctor_email: catData.doctor_email ?? null,
           nickname: catData.nickname ?? null,
