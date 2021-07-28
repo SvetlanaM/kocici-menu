@@ -186,3 +186,12 @@ input:checked+div {
 input:checked+div svg {
     @apply block;
 }
+
+.custom-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+.custom-scroll {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
