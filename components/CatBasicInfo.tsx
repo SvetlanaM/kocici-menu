@@ -8,6 +8,7 @@ import { useMemo } from 'react';
 import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
 import truncateText from '../utils/truncateText';
 import LoadingImage from './LoadingImage';
+import CatForm, { CAT_TYPE_NULL } from './CatForm';
 
 interface CatBasicInfoProps {
   cat: CatFieldsFragmentFragment;
@@ -50,7 +51,7 @@ const CatBasicInfo = ({ cat }: CatBasicInfoProps) => {
       <div className="flex-col-base justify-between ml-3">
         <h4>{truncateText(cat.name, 12)}</h4>
         <p className="small-light-text">
-          {t(sk[cat.type] || sk['CAT_TYPE_NULL'])}
+          {t(sk[cat.type] || sk[CAT_TYPE_NULL])}
         </p>
         <p className="small-light-text text-gray">
           {cat.age
