@@ -18,11 +18,11 @@ interface RatingOption {
 }
 
 const ratingOptions = [
-  { value: 1, label: '1 (Najhoršie)' },
+  { value: 1, label: '1' },
   { value: 2, label: '2' },
   { value: 3, label: '3' },
   { value: 4, label: '4' },
-  { value: 5, label: '5 (Najlepšie)' },
+  { value: 5, label: '5' },
 ];
 
 const RatingController = ({
@@ -32,6 +32,12 @@ const RatingController = ({
   placeholder,
   defaultValue,
 }: RatingControllerProps) => {
+  const onKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+    }
+  };
+
   return (
     <>
       <div className="mb-2">
@@ -50,6 +56,8 @@ const RatingController = ({
             noOptionsMessage={() => 'Žiadne ďaľšie výsledky'}
             isDisabled={isDisabled}
             placeholder={placeholder}
+            isSearchable={true}
+            onKeyDown={onKeyDown}
           />
         )}
       />
