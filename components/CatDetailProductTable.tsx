@@ -17,6 +17,7 @@ import {
 import AddProductReviewModal from './AddProductReviewModal';
 import Link from 'next/link';
 import truncateText from '../utils/truncateText';
+import NoReviews from './NoReviews';
 
 export const ProductFieldsFragment = gql`
   fragment ProductFieldsFragment on Product {
@@ -217,14 +218,7 @@ const CatDetailProductTable = ({
           </div>
         </div>
       ) : (
-        <div className="border-rounded-base border-gray">
-          <div className="flex flex-col justify-between items-center px-8 pt-5 pb-4">
-            <Image src="/icons/no-reviews.svg" width={150} />
-            <h1 className="font-semibold text-gray mt-4">
-              {`Žiadne ${title.toLowerCase()} produkty`}
-            </h1>
-          </div>
-        </div>
+        <NoReviews />
       )}
     </div>
   );

@@ -1,5 +1,5 @@
 const SpecialRequirements = ({ name }) => {
-  return <li>- {name}</li>;
+  return <div>{name}</div>;
 };
 
 export default SpecialRequirements;

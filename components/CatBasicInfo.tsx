@@ -7,7 +7,7 @@ import { CatFieldsFragmentFragment } from '../graphql/generated/graphql';
 import { useMemo } from 'react';
 import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
 import truncateText from '../utils/truncateText';
-import LoadingImage from "./LoadingImage";
+import LoadingImage from './LoadingImage';
 
 interface CatBasicInfoProps {
   cat: CatFieldsFragmentFragment;
@@ -44,7 +44,7 @@ const CatBasicInfo = ({ cat }: CatBasicInfoProps) => {
         src={cat.image_url}
         width={65}
         height={65}
-        placeholder={"/default_cat.svg"}
+        placeholder={'/default_cat.svg'}
         className="border-rounded-base object-cover cat-image"
       />
       <div className="flex-col-base justify-between ml-3">

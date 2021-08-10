@@ -139,6 +139,9 @@ export const DASHBOARD_QUERY = gql`
     ) {
       ...StatFieldsFragment
     }
+    fav_stats: brand_fav_type {
+      brand_type
+    }
     selectCats: Cat(
       where: { _and: { is_active: { _eq: true }, user_id: { _eq: $user_id } } }
       order_by: { name: asc }

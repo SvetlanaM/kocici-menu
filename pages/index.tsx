@@ -46,11 +46,28 @@ const CenterContainerQuery = () => {
     },
   });
 
+  const arrToInstanceCountObj = (arr) =>
+    arr &&
+    arr.reduce((obj, e) => {
+      obj[e.brand_type] = (obj[e.brand_type] || 0) + 1;
+      return obj;
+    }, {});
+
+  const mostFavouriteByAll = arrToInstanceCountObj(
+    dashboardData && Object.values(dashboardData.fav_stats)
+  );
+
+  const mostFavouriteByAllOne =
+    mostFavouriteByAll &&
+    Object.keys(mostFavouriteByAll).reduce((a, b) =>
+      mostFavouriteByAll[a] > mostFavouriteByAll[b] ? a : b
+    );
+
   const extendedData = [
     {
-      name: '--',
+      name: (mostFavouriteByAllOne && mostFavouriteByAllOne) || '--',
       icon: '/icons/avg_cost.svg',
-      title: 'Priemerná mesačná spotreba',
+      title: 'Najobľúbenejšia značka užívateľov',
     },
     {
       name:
@@ -58,13 +75,16 @@ const CenterContainerQuery = () => {
           ? dashboardData.stats[0].brand_type
           : '--') || '--',
       icon: '/icons/fav_brand.svg',
-      title: 'Moja najpopulárnejšia značka',
+      title: 'Moja najobľúbenejšia značka',
     },
   ];
 
-  const handleReviewAdded = () => {
-    //return router.reload();
-  };
+  const tableTitle =
+    dashboardData && dashboardData?.reviews.length === 0
+      ? `Nemáte žiadne hodnotené produkty`
+      : dashboardData?.reviews.length < 5
+      ? `${dashboardData?.reviews.length} najlepšie hodnotené produkty`
+      : `Top 5 najlepšie hodnotených produktov z ${dashboardData?.reviews.length}`;
 
   return (
     <CenterContainer>
@@ -78,9 +98,8 @@ const CenterContainerQuery = () => {
             reviews={dashboardData?.reviews}
             selectCats={dashboardData?.selectCats}
             selectProducts={dashboardData?.selectProducts}
-            onReviewSaveSuccess={handleReviewAdded}
             numberOfProducts={5}
-            title={`Top 5 najlepšie hodnotených produktov z ${dashboardData?.reviews.length}`}
+            title={tableTitle}
             footerType="HOMEPAGE"
           />
           <StatisticsList data={extendedData} cols={'grid-cols-2'} />
@@ -108,7 +127,7 @@ const DashboardCatQuery = () => {
     },
   });
 
-  if (CatsLoading || CatsError) return <div>...</div>;
+  if (CatsLoading || CatsError) return <Loading />;
 
   return <CatsList cats={CatsData ? CatsData.cats : []} rows={'grid-rows-1'} />;
 };

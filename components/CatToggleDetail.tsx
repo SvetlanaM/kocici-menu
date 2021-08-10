@@ -9,15 +9,19 @@ const CatToggleDetail = ({ catData }: any) => {
     <div className="flex-col grid grid-rows divide-y divide-gray_lightest pt-3.6 font-light">
       <div></div>
       {specials && specials.length > 0 && (
-        <div className="px-3 py-3.6">
-          <Title title="Špeciálne požiadavky" fontSize="text-sm" />
+        <div className="px-3.6 pt-3.6">
+          <Title
+            title="Špeciálne požiadavky"
+            fontSize="text-sm"
+            paddingBottom="pb-2"
+          />
           <div className="flex">
             <SpecialRequirements name={specials} />
           </div>
         </div>
       )}
       {contact_doctor.email && (
-        <div className="pt-3.6 px-3">
+        <div className={`${specials && 'mt-3'} pt-3.6 px-3`}>
           <DoctorExportButton catContactData={contact_doctor} />
         </div>
       )}

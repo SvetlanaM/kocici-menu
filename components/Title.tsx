@@ -1,17 +1,21 @@
 type TitleProps = {
   title: string;
   fontSize?: string;
+  paddingBottom?: string;
   classNames?: string;
 };
 
-const Title = ({ title, fontSize, classNames }: TitleProps) => (
-  <h3 className={`pb-5 ${fontSize} font-semibold text-purple ${classNames}`}>
+const Title = ({ title, fontSize, classNames, paddingBottom }: TitleProps) => (
+  <h3
+    className={`${fontSize} ${paddingBottom} font-semibold text-purple ${classNames}`}
+  >
     {title}
   </h3>
 );
 
 Title.defaultProps = {
   fontSize: 'text-lg',
+  paddingBottom: 'pb-5',
 };
 
 export default Title;

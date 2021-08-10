@@ -9,8 +9,12 @@ import StarIcon from './StarIcon';
 import setUppercaseTitle from '../utils/setUppercaseTitle';
 import truncateText from '../utils/truncateText';
 import ProductDetailsTooltipBox from './ProductDetailsTooltip';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Link from 'next/link';
+import useOnClickOutside from '../hooks/useOnClickOutside';
+import useOnKeyPress from '../hooks/useOnKeyPress';
+
+const REVIEW_TOGGLE_ID = 'popupReview';
 
 export const ReviewFieldsFragment = gql`
   fragment ReviewFieldsFragment on Review {
@@ -50,9 +54,17 @@ const TableRow = ({
   const formattedDate = DateFormatObject(updated_at).formatWithReplace();
   const reviewArray = [1, 2, 3, 4, 5];
   const [isHidden, setIsHidden] = useState<boolean>(true);
+  const nodeRef = useRef<HTMLDivElement | null>(null);
+
+  const closeCollapse = () => {
+    setIsHidden(true);
+  };
+
+  useOnClickOutside(nodeRef, closeCollapse);
+  useOnKeyPress('Escape', closeCollapse);
 
   return (
-    <tr className="h-32 xl-custom:h-20">
+    <tr className="h-32 xl-custom:h-20" ref={nodeRef}>
       <td className="flex flex-row justify-center h-32 py-10 pl-5 xl-custom:pl-0 xl-custom:ml-0 xl-custom:h-20 xl-custom:py-3">
         <ProductImage
           src={product.image_url}
@@ -60,17 +72,10 @@ const TableRow = ({
         />
       </td>
       <td className="pl-10 xl-custom:px-2">
-        <Link href={`https://www.zoohit.cz${product.path}`}>
-          <a target="new">
-            <ProductName
-              brand={product.brand_type}
-              name={setUppercaseTitle(
-                truncateText(product.name, 30),
-                product.brand_type
-              )}
-            />
-          </a>
-        </Link>
+        <ProductName
+          brand={product.brand_type}
+          name={setUppercaseTitle(truncateText(product.name, 30))}
+        />
       </td>
       <td className="px-10 xl-custom:px-2">
         Pred <br />
@@ -96,22 +101,23 @@ const TableRow = ({
       <td className="pr-3.6 px-10 xl-custom:px-3.6">
         <div className="flex justify-end">
           <div className="mr-3">
-            <a data-tip data-for="relatedProducts">
-              <Image src="/icons/related_products.svg" width={35} height={35} />
-            </a>
-            <ReactTooltip
-              id="relatedProducts"
-              place="bottom"
-              textColor="white"
-              backgroundColor="#3E3E70"
-              effect="solid"
-              data-offset="{'top': 30}"
-            >
-              {'Suvisiace produkty'}
-            </ReactTooltip>
+            <Link href={`https://www.zoohit.cz${product.path}`}>
+              <a target="new">
+                <Image
+                  src="/icons/related_products.svg"
+                  width={35}
+                  height={35}
+                />
+              </a>
+            </Link>
           </div>
           <div className="relative">
-            <button onClick={() => setIsHidden((prevState) => !prevState)}>
+            <button
+              onClick={() => setIsHidden((prevState) => !prevState)}
+              aria-controls={REVIEW_TOGGLE_ID}
+              aria-haspopup
+              aria-expanded={isHidden}
+            >
               <Image
                 src="/icons/add-review.svg"
                 width={35}
@@ -123,6 +129,7 @@ const TableRow = ({
               className={`${
                 isHidden ? 'hidden' : 'block'
               } absolute bg-white tooltip-wrapper shadow-lg border-rounded-base border-gray_lightest w-full mx-1`}
+              id={REVIEW_TOGGLE_ID}
             >
               <div className="relative">
                 <div className="text-purple">

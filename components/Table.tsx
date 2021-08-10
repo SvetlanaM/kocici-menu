@@ -8,6 +8,7 @@ import {
   DEFAULT_TABLE_SORTING as default_sort,
   SortType,
 } from '../utils/constants';
+import NoReviews from './NoReviews';
 
 interface TableProps {
   reviews: GetDashboardQuery['reviews'];
@@ -59,19 +60,24 @@ const Table = ({
     return sortedColumn.column === name ? sortedColumn.direction : undefined;
   };
 
+  console.log(uniqueReviews.length);
   return (
     <div className="overflow-auto xl-custom:overflow-visible">
-      <table className="table-auto border-rounded-base border-gray small-purple-text text-left">
-        <TableHead sortedFunction={sortData} className={getClassName} />
-        <tbody className="font-light">
-          {inputData
-            ? inputData
-                .slice(offsetNumber, numberOfProducts)
-                .map((row) => <TableRow {...row} key={row.id} />)
-            : 'Ziadne produkty'}
-        </tbody>
-        {Footer}
-      </table>
+      {uniqueReviews && uniqueReviews.length > 0 ? (
+        <table className="table-auto border-rounded-base border-gray small-purple-text text-left">
+          <TableHead sortedFunction={sortData} className={getClassName} />
+          <tbody className="font-light">
+            {inputData
+              ? inputData
+                  .slice(offsetNumber, numberOfProducts)
+                  .map((row) => <TableRow {...row} key={row.id} />)
+              : 'Ziadne produkty'}
+          </tbody>
+          {Footer}
+        </table>
+      ) : (
+        <NoReviews customTitle="Začnite pridaním prvej mačky." />
+      )}
     </div>
   );
 };
