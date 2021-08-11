@@ -57,7 +57,7 @@ const UserStats = ({ data }: UserStatsProps) => {
         },
         {
           labels: 'Preferovaný eshop',
-          data_values: data.user_data[0].prefered_eshop || '--',
+          data_values: data.user_data[0].prefered_eshop || 'Zoohit',
         },
       ]) ||
       []

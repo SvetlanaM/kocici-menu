@@ -44,13 +44,25 @@ const UserBanner = ({ data }: UserBannerProps) => {
             {i18next.t('reviews.key', {
               count: data.reviews_count.aggregate.count,
             })}
-            . Tvoja obľúbená značka je{' '}
-            <strong>{data.stats[0] && data.stats[0].brand_type}</strong> s
-            priemerným hodnotením všetkých produktov{' '}
-            <strong>{data.user_stats[0].avg_review}</strong>.
-            <br />
+            .{' '}
+            {data.stats[0] ? (
+              <span>
+                Tvoja obľúbená značka je{' '}
+                <strong>{data.stats[0] && data.stats[0].brand_type}</strong> s
+                priemerným hodnotením všetkých produktov{' '}
+                <strong>{data.user_stats[0].avg_review}</strong>.
+                <br />
+              </span>
+            ) : (
+              <span>
+                Pre zobrazenie štatistík pridaj prvé hodnotenie produktu.
+                <br />
+              </span>
+            )}
             <p className="mt-5">
-              <strong>Novinka mesiaca: Applaws kurací vývar</strong>
+              <strong>
+                Novinka mesiaca: My Star is a Food Lover - smíšené balení
+              </strong>
             </p>
           </p>
           <Image
