@@ -330,6 +330,7 @@ const AddProductReviewForm = ({
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
                         onSaveRating={onSaveRating}
+                        isDisabled={reviewType !== ''}
                       />
                     </span>
                   );

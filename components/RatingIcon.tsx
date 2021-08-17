@@ -9,6 +9,7 @@ interface RatingIconProps {
   onMouseEnter: (index: number) => void;
   onMouseLeave: () => void;
   onSaveRating: (index: number) => void;
+  isDisabled?: boolean;
 }
 
 const RatingIcon = (props: RatingIconProps) => {
@@ -23,10 +24,12 @@ const RatingIcon = (props: RatingIconProps) => {
 
   return (
     <div
-      className="cursor-pointer"
+      className={`${!props.isDisabled ? 'cursor-pointer' : 'cursor-none'}`}
       onMouseEnter={() => props.onMouseEnter(props.index)}
       onMouseLeave={() => props.onMouseLeave()}
-      onClick={() => props.onSaveRating(props.index)}
+      onClick={() =>
+        !props.isDisabled ? props.onSaveRating(props.index) : null
+      }
     >
       <StarIcon isChecked={fill} />
     </div>
