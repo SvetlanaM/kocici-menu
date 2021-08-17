@@ -14,7 +14,7 @@ const customStyles = style;
 const Option = ({ children, ...props }) => {
   return (
     <components.Option {...props}>
-      <div className="mr-3 flex flex-row items-center">
+      <div className="mr-3 flex flex-row items-center cursor-pointer">
         {props.data.__typename === 'Product' && (
           <img
             src={props.data.image_url}

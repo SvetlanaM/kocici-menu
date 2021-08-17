@@ -49,20 +49,14 @@ interface AddProductReviewFormProps {
 const Option: Components['Option'] = ({ children, ...props }) => {
   return (
     <components.Option {...props}>
-      <div className="float-left mt-0 mr-3 select-photo h-10 w-10">
-        {props.data.__typename === 'Cat' ? (
-          <img
-            src={props.data.image_url || defaultImage}
-            className="rounded-full h-10 w-10 object-cover"
-          />
-        ) : props.data.__typename === 'Product' ? (
-          <img
-            src={props.data.image_url || defaultImage}
-            className="h-10 w-10"
-          />
-        ) : null}
+      <div className="mr-3 flex flex-row items-center cursor-pointer h-1 py-3">
+        <img
+          src={props.data.image_url || defaultImage}
+          className="object-cover h-10 w-10 mr-4 float-right rounded-full py-0"
+        />
+
+        {children}
       </div>
-      {children}
     </components.Option>
   );
 };
