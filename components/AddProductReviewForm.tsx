@@ -110,7 +110,7 @@ const AddProductReviewForm = ({
     const reviewInput: Review_Insert_Input = {
       cat_id: Number(data.cat.id),
       product_id: Number(data.product.id),
-      review_type: String(rating),
+      review_type: String(data.rating),
     };
 
     const reviewHistoryInput: ReviewHistory_Insert_Input = {
@@ -316,20 +316,20 @@ const AddProductReviewForm = ({
             name="rating"
             control={control}
             rules={{ required: true }}
-            render={({ field }) => (
+            render={({ field: { value, onChange } }) => (
               <div className="flex items-center mb-2">
                 {[1, 2, 3, 4, 5].map((index) => {
                   return (
                     <span className="mr-1 mt-1">
                       <RatingIcon
                         index={index}
-                        rating={reviewType !== '' ? Number(reviewType) : rating}
+                        rating={reviewType !== '' ? Number(reviewType) : value}
                         hoverRating={
-                          reviewType !== '' ? Number(reviewType) : hoverRating
+                          reviewType !== '' ? Number(reviewType) : value
                         }
                         onMouseEnter={onMouseEnter}
                         onMouseLeave={onMouseLeave}
-                        onSaveRating={onSaveRating}
+                        onSaveRating={onChange}
                         isDisabled={reviewType !== ''}
                       />
                     </span>
