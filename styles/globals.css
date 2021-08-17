@@ -121,7 +121,7 @@ input:focus {
 }
 
 .select-photo {
-    margin-top: -8px;
+    margin-top: -7px;
 }
 
 .stats-img {
@@ -148,7 +148,9 @@ input:focus {
 }
 
 .css-1s9yiwq-option:last-child,
-.css-1eajbx8-option:hover:last-child {
+.css-1eajbx8-option:hover:last-child,
+.css-usm8v0-option:last-child,
+.css-usm8v0-option:hover:last-child {
     border-bottom: none;
 }
 

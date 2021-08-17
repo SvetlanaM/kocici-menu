@@ -60,7 +60,6 @@ const Table = ({
     return sortedColumn.column === name ? sortedColumn.direction : undefined;
   };
 
-  console.log(uniqueReviews.length);
   return (
     <div className="overflow-auto xl-custom:overflow-visible">
       {uniqueReviews && uniqueReviews.length > 0 ? (
@@ -76,7 +75,7 @@ const Table = ({
           {Footer}
         </table>
       ) : (
-        <NoReviews customTitle="Začnite pridaním prvej mačky." />
+        <NoReviews />
       )}
     </div>
   );
