@@ -8,6 +8,7 @@ import {
 import { SVETA_EMAIL } from '../utils/constants';
 import Link from 'next/link';
 import FormInputLabel from './FormInputLabel';
+import FormErrorMessage from './FormErrorMessage';
 const customStyles = style;
 
 const Option = ({ children, ...props }) => {
@@ -36,6 +37,7 @@ interface ProductControllerProps {
   showHint: boolean;
   defaultValue?: string;
   isDisabled?: boolean;
+  errors?: any;
 }
 
 const ProductController = ({
@@ -48,7 +50,9 @@ const ProductController = ({
   showHint,
   defaultValue,
   isDisabled,
+  errors,
 }: ProductControllerProps) => {
+  console.log(errors);
   return (
     <>
       {showHint ? (
@@ -96,6 +100,9 @@ const ProductController = ({
         rules={{ required: true }}
         defaultValue={defaultValue}
       />
+      <div className="mt-3">
+        {errors[name] && <FormErrorMessage error="Tato hodnota je povinna" />}
+      </div>
     </>
   );
 };

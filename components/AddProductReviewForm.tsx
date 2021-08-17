@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import SubmitButton from './SubmitButton';
 import { useMutation } from '@apollo/client';
+import FormErrorMessage from './FormErrorMessage';
 import {
   AddReviewHistoryMutation,
   AddReviewHistoryMutationVariables,
@@ -33,6 +34,8 @@ import ProductController from './ProductController';
 import RatingController from './RatingController';
 import DateFormatObject from '../utils/getFormatDate';
 import { Components } from 'react-select/src/components';
+import RatingIcon from './RatingIcon';
+
 interface AddProductReviewFormProps {
   selectCats?: GetDashboardQuery['selectCats'];
 
@@ -72,7 +75,31 @@ const AddProductReviewForm = ({
   props,
   index,
 }: AddProductReviewFormProps) => {
-  const { handleSubmit, control, watch } = useForm();
+  const {
+    handleSubmit,
+    control,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const [rating, setRating] = useState<number>(0);
+  const [hoverRating, setHoverRating] = useState<number>(0);
+
+  const onMouseEnter = (index) => {
+    setHoverRating(index);
+  };
+
+  const onMouseLeave = () => {
+    setHoverRating(rating);
+  };
+
+  const [reviewType, setReviewType] = useState<string>('');
+
+  const onSaveRating = useCallback(
+    (index) => {
+      setRating(index);
+    },
+    [rating, hoverRating, reviewType]
+  );
 
   const [createReview] = useMutation<
     AddReviewMutation,
@@ -89,13 +116,13 @@ const AddProductReviewForm = ({
     const reviewInput: Review_Insert_Input = {
       cat_id: Number(data.cat.id),
       product_id: Number(data.product.id),
-      review_type: data.rating.value.toString(),
+      review_type: String(rating),
     };
 
     const reviewHistoryInput: ReviewHistory_Insert_Input = {
       cat_id: Number(data.cat.id),
       product_id: Number(data.product.id),
-      review_type: data.rating.value.toString(),
+      review_type: rating,
     };
 
     createReviewHistory({
@@ -196,7 +223,7 @@ const AddProductReviewForm = ({
       //   });
       // },
     }).then((data) => {
-      onSuccess();
+      // onSuccess();
       onBackAction();
     });
   };
@@ -213,7 +240,6 @@ const AddProductReviewForm = ({
   >([]);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const [reviewType, setReviewType] = useState<string>('');
   const productsCopy = [...selectProducts];
   const productInput = 'product';
   const watchedProduct: SelectProductFieldsFragment = watch(productInput);
@@ -252,6 +278,7 @@ const AddProductReviewForm = ({
               setSearchTerm(e);
             }}
             name="product"
+            errors={errors}
             control={control}
             showHint={true}
             defaultValue={index >= 0 && index <= 5 && productsCopy[index]}
@@ -259,8 +286,8 @@ const AddProductReviewForm = ({
           />
         </div>
       </div>
-      <div className="flex flex-col xl-custom:flex-row justify-between mb-5 my-6 xl-custom:mb-10">
-        <div className="w-full xl-custom:pr-3 mb-5 xl-custom:mb-0">
+      <div className="flex xl-custom:flex-col justify-between">
+        <div className="w-full mb-4">
           <div className="mb-2">
             <FormInputLabel name="Mačka*" />
           </div>
@@ -287,29 +314,58 @@ const AddProductReviewForm = ({
             )}
           />
         </div>
-        <div className="w-full xl-custom:pl-3 mb-10 xl-custom:mb-0">
-          <RatingController
+        <div className="w-full mb-3">
+          <div className="mb-2">
+            <FormInputLabel name="Hodnotenie*" />
+          </div>
+          <Controller
             name="rating"
             control={control}
-            isDisabled={reviewType !== '' ? true : false}
-            placeholder={reviewType || 'Vybrať hodnotenie (1-5)'}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <div className="flex items-center mb-2">
+                {[1, 2, 3, 4, 5].map((index) => {
+                  return (
+                    <span className="mr-1 mt-1">
+                      <RatingIcon
+                        index={index}
+                        rating={reviewType !== '' ? Number(reviewType) : rating}
+                        hoverRating={
+                          reviewType !== '' ? Number(reviewType) : hoverRating
+                        }
+                        onMouseEnter={onMouseEnter}
+                        onMouseLeave={onMouseLeave}
+                        onSaveRating={onSaveRating}
+                      />
+                    </span>
+                  );
+                })}
+              </div>
+            )}
           />
+          {errors.rating && reviewType === '' && (
+            <div className="mt-3">
+              <FormErrorMessage error="Tato hodnota je povinna" />
+            </div>
+          )}
         </div>
       </div>
 
       {reviewType !== '' ? (
-        <span className="flex text-red-500 mb-10">
+        <span className="flex text-red-500 mb-5">
           Pre mačku {watchedCat.name} a krmivo {watchedProduct.name} už máte
-          vybrané hodnotenie {reviewType}
+          vybrané hodnotenie {reviewType}.
         </span>
       ) : null}
 
-      <NeutralButton title="Späť" onClick={onBackAction} />
-      <SubmitButton
-        text="Uložiť"
-        disabled={reviewType !== ''}
-        size="w-full xl-custom:w-1/4"
-      />
+      <div className="mt-1">
+        <NeutralButton title="Späť" onClick={onBackAction} />
+        <SubmitButton
+          text="Uložiť"
+          disabled={reviewType !== ''}
+          size="w-full xl-custom:w-1/4"
+        />
+      </div>
     </form>
   );
 };
