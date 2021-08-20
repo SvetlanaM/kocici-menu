@@ -59,9 +59,9 @@ const CenterContainerQuery = () => {
 
   const mostFavouriteByAllOne =
     mostFavouriteByAll &&
-    Object.keys(mostFavouriteByAll).reduce((a, b) =>
-      mostFavouriteByAll[a] > mostFavouriteByAll[b] ? a : b
-    );
+    Object.keys(mostFavouriteByAll).reduce((a, b) => {
+      mostFavouriteByAll[a] > mostFavouriteByAll[b] ? a : b;
+    }, []);
 
   const extendedData = [
     {

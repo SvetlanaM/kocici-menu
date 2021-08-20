@@ -25,17 +25,8 @@ export const ReviewFieldsFragment = gql`
       price
       image_url
       path
-      meal
-      meal_type
-      plant_type
-      other_type
       note
-      daily_food
-      conservants
       feeding
-      ingredient_name
-      amount
-      unit
     }
     cat: Cat {
       id

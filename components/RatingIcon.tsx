@@ -9,10 +9,12 @@ interface RatingIconProps {
   onMouseEnter: (index: number) => void;
   onMouseLeave: () => void;
   onSaveRating: (index: number) => void;
+
   isDisabled?: boolean;
 }
 
 const RatingIcon = (props: RatingIconProps) => {
+  console.log(props.rating);
   const fill = useMemo(() => {
     if (props.hoverRating >= props.index) {
       return true;
