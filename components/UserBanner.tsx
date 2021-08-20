@@ -48,8 +48,8 @@ const UserBanner = ({ data }: UserBannerProps) => {
             {data.stats[0] ? (
               <span>
                 Tvoja obľúbená značka je{' '}
-                <strong>{data.stats[0] && data.stats[0].brand_type}</strong> s
-                priemerným hodnotením všetkých produktov{' '}
+                <strong>{data.stats[0] && data.stats[0].brand_type}</strong>.
+                Priemerné hodnotenie všetkých produktov je{' '}
                 <strong>{data.user_stats[0].avg_review}</strong>.
                 <br />
               </span>

@@ -1,5 +1,6 @@
 import i18next from 'i18next';
 import { ReviewFieldsFragmentFragment } from '../graphql/generated/graphql';
+import setUppercaseTitle from '../utils/setUppercaseTitle';
 import Image from './Image';
 
 i18next.init({
@@ -42,7 +43,7 @@ const ToolTipBody = ({ itemName, item }: ToolTipBodyProps) => {
             }}
           ></p>
         </div>
-        {itemName === '% mäsa:' ? (
+        {itemName === 'Avg. hodnotenie:' ? (
           <Image src={getQualityImage(item)} height={30} width={30} />
         ) : (
           ''
@@ -52,57 +53,51 @@ const ToolTipBody = ({ itemName, item }: ToolTipBodyProps) => {
   );
 };
 
-const getCombinedItems = (data: ReviewFieldsFragmentFragment['product']) => {
-  const plant_type = (data.plant_type && data.plant_type + ',') || '';
-  const other_type = (data.other_type && data.other_type + ',') || '';
-  const note = (data.note && data.note + ',') || '';
-  const ingredient_name =
-    data.ingredient_name &&
-    data.amount + data.unit + ' ' + data.ingredient_name;
-  return (plant_type + ' ' + other_type + ' ' + note + ' ' + ingredient_name)
-    .replace('ne', '')
-    .replace(' ', '');
-};
-
 const getQualityImage = (
-  meal: string
-): ReviewFieldsFragmentFragment['product']['meal'] => {
-  var numberPattern = /\d+/g;
-  let number = Number(meal.match(numberPattern)[0]);
+  rating: number
+): ReviewFieldsFragmentFragment['product']['rating'] => {
+  // var numberPattern = /\d+/g;
+  // let number = Number(rating.match(numberPattern)[0]);
 
-  return number >= 70
+  return rating >= 4
     ? '/icons/smile-cat.svg'
-    : number >= 50
+    : rating >= 2.5
     ? '/icons/neutral-cat.svg'
     : '/icons/sad-cat.svg';
 };
 
 const ProductDetailsTooltipBox = ({ data }: ProductDetailsTooltipBoxProps) => {
+  console.log(Object.entries(data.analysis_variant).map((item) => item[1]));
+
   return (
     <div className="grid divide-y divide-gray_lightest">
-      {data.meal && <ToolTipBody itemName="% mesa" item={data.meal} />}
-      {data.meal_type && (
-        <ToolTipBody itemName="% mäsa:" item={data.meal_type} />
+      {data.rating && (
+        <ToolTipBody itemName="Avg. hodnotenie:" item={data.rating} />
       )}
+      {data.analysis_variant
+        ? Object.entries(data.analysis_variant).map((item) => {
+            return (
+              <ToolTipBody
+                itemName={String(setUppercaseTitle(item[0]))}
+                item={`${item[1]} %`}
+              />
+            );
+          })
+        : data.analysis_main
+        ? Object.entries(data.analysis_main).map((item) => {
+            return (
+              <ToolTipBody
+                itemName={String(setUppercaseTitle(item[0]))}
+                item={`${item[1]} %`}
+              />
+            );
+          })
+        : null}
 
-      <ToolTipBody itemName="Zloženie:" item={getCombinedItems(data)} />
-
-      {data.daily_food && (
-        <ToolTipBody
-          itemName="Doporučená denná dávka/3-5kg mačka:"
-          item={data.daily_food}
-        />
-      )}
-      {data.conservants && (
-        <ToolTipBody itemName="Konzervanty:" item={data.conservants} />
-      )}
       {data.feeding && (
         <ToolTipBody
           itemName="Doporučené dávkovanie:"
-          item={data.feeding.replace(
-            'Doporučené dávkování',
-            'Odporúča odborník'
-          )}
+          item={data.feeding.replace('Doporučené dávkování', '')}
         />
       )}
     </div>

@@ -27,6 +27,10 @@ export const ReviewFieldsFragment = gql`
       path
       note
       feeding
+      rating
+      product_type
+      analysis_main
+      analysis_variant
     }
     cat: Cat {
       id

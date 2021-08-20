@@ -28,6 +28,10 @@ export const ProductFieldsFragment = gql`
     path
     note
     feeding
+    rating
+    product_type
+    analysis_main
+    analysis_variant
   }
 `;
 

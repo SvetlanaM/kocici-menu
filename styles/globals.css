@@ -162,7 +162,8 @@ input:focus {
     top: -5px;
     right: 40px;
     z-index: 2;
-    width: 220px;
+    min-width: 220px;
+    width: auto;
 }
 
 .tooltip-right {
