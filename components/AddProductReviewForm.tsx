@@ -116,7 +116,7 @@ const AddProductReviewForm = ({
     const reviewHistoryInput: ReviewHistory_Insert_Input = {
       cat_id: Number(data.cat.id),
       product_id: Number(data.product.id),
-      review_type: rating,
+      review_type: data.rating,
     };
 
     createReviewHistory({
@@ -320,7 +320,7 @@ const AddProductReviewForm = ({
               <div className="flex items-center mb-2">
                 {[1, 2, 3, 4, 5].map((index) => {
                   return (
-                    <span className="mr-1 mt-1">
+                    <span className="mr-1">
                       <RatingIcon
                         index={index}
                         rating={reviewType !== '' ? Number(reviewType) : value}

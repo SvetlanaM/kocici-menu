@@ -33,9 +33,6 @@ export const CatFieldsFragment = gql`
         name
         image_url
         path
-        meal_type
-        ingredient_name
-        amount
         reviewhistory(order_by: { updated_at: desc }) {
           review_type
           cat_id
