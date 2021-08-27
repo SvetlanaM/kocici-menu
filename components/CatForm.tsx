@@ -33,6 +33,7 @@ import useSearch from '../hooks/useSearch';
 import { uploadImage } from "../utils/uploadImage";
 
 export type CatInputData = Omit<Cat_Insert_Input, 'CatTypeEnum'>;
+export const CAT_TYPE_NULL = 'CAT_TYPE_NULL'
 
 interface CatFormInterface {
   handleSubmit1: {
@@ -357,16 +358,16 @@ const CatForm = ({
   const onSubmit = useCallback(
     (data) => {
       const catInput: CatInputData | Cat_Set_Input = {
-        age: Number(data.age),
+        age: data.age ? Number(data.age) : null,
         name: data.name,
         user_id: getUser(),
         doctor_email: data.doctor_email,
         nickname: data.nickname,
-        weight: Number(data.weight),
-        type: data.type,
+        weight: data.weight ? Number(data.weight) : null,
+        type: (data.type !== CAT_TYPE_NULL) ? data.type : null,
         note: data.note,
         color: data.color,
-        daily_food: Number(data.daily_food),
+        daily_food: data.daily_food ? Number(data.daily_food) : null,
         id: catData ? catData.id : null,
         image_url: watchedCatImage,
       };
@@ -404,11 +405,11 @@ const CatForm = ({
   );
 
   const catTypeOptions = useMemo(() => {
-    let newEnum = ['CAT_TYPE_NULL', ...Object.values(catTypes).sort()];
+    let newEnum = [CAT_TYPE_NULL, ...Object.values(catTypes).sort()];
     return newEnum.map((item) => {
       return (
         <option value={item} key={item}>
-          {t(sk[item] || sk['CAT_TYPE_NULL'])}
+          {t(sk[item] || sk[CAT_TYPE_NULL])}
         </option>
       );
     });

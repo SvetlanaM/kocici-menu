@@ -7,21 +7,12 @@ import Header from '../components/Head';
 import CenterContainer from '../components/CenterContainer';
 import LeftContainer from '../components/LeftContainer';
 import CatDetailContainer from '../components/CatDetailContainer';
-import ErrorScreen from '../components/ErrorScreen';
+import ErrorScreen, { GeneralError } from '../components/ErrorScreen';
 import Loading from '../components/Loading';
-import { GeneralError } from '../components/ErrorScreen';
-import { getUser, setUser } from '../utils/user';
-import CatDetailSpecials from '../components/CatDetailSpecials';
-import { gql } from '@apollo/client';
-import { CatFieldsFragment } from '../components/CatBox';
-import {
-  GetCatDetailQueryVariables,
-  useGetCatDetailQuery,
-  useGetProductsQuery,
-} from '../graphql/generated/graphql';
-import useAuth from '../hooks/useAuth';
-import { useEffect, useState } from 'react';
+import { getUser } from '../utils/user';
+import { useGetCatDetailQuery, useGetProductsQuery, } from '../graphql/generated/graphql';
 import CatDetailEmptyBox from '../components/CatDetailEmptyBox';
+import { BackLinkType } from "../utils/backlinks";
 
 const CatDetailQuery = () => {
   const {
@@ -60,7 +51,7 @@ const CatDetailQuery = () => {
           <CenterContainer>{catLoading && <Loading />}</CenterContainer>
           <LeftContainer>
             <div className="mt-4 mt-9.5 xl-custom:mt-9.5">
-              <AddCatBox />
+              <AddCatBox backlink={BackLinkType.MY_CATS} />
             </div>
           </LeftContainer>
         </> ? (

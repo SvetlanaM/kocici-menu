@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import CatForm from '../../components/CatForm';
+import CatForm, { CAT_TYPE_NULL } from '../../components/CatForm';
 import {
   AddCatMutation,
   AddCatMutationVariables,
@@ -56,6 +56,7 @@ import Loading from '../../components/Loading';
 import { GeneralError } from '../../components/ErrorScreen';
 import { TIP_LIMIT } from '../../utils/constants';
 import DateFormatObject from '../../utils/getFormatDate';
+import links from "../../utils/backlinks";
 
 interface CreateCatProps {
   onClickTrigger?: () => void;
@@ -64,7 +65,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
   const router = useRouter();
   const { id } = router.query;
 
-  const editOrAdd = () => {
+  const isEditCat = () => {
     // can also be written as !!id
     if (id) {
       return true;
@@ -73,7 +74,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
     }
   };
 
-  const ProductsToForm = () => {
+  const CreateCatForm = () => {
     const {
       data: productData,
       error: productError,
@@ -93,7 +94,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
             handleSubmit1={handleSubmit1}
             submitText={title}
             products={productData.products}
-            buttonText={chooseString(editOrAdd(), 'buttonText')}
+            buttonText={'Nahrať fotku'}
           />
         )}
       </Center>
@@ -102,7 +103,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
 
   let numberPattern = /\d+/g;
   const [isActive, setIsActive] = useState(false);
-  const CatById = () => {
+  const EditCatForm = () => {
     const {
       data: catData,
       error: catError,
@@ -132,7 +133,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
             submitText={title}
             catData={catData.cat}
             products={productData.products}
-            buttonText={chooseString(editOrAdd(), 'buttonText')}
+            buttonText={'Zmeniť fotku'}
           />
         ) : (
           <Loading />
@@ -185,7 +186,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
       const variables: AddCatMutationVariables = {
         cat: {
           name: setUppercaseTitle(catData.name) || '',
-          age: catData.age ?? 1,
+          age: catData.age ?? null,
           user_id: catData.user_id,
           doctor_email: catData.doctor_email ?? null,
           nickname: catData.nickname ?? null,
@@ -640,7 +641,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
       reviewData,
       reviewUpdatedData
     ) => {
-      if (editOrAdd()) {
+      if (isEditCat()) {
         setIsActive(true);
         return updateMyCat(catData, reviewData, reviewUpdatedData);
       } else {
@@ -648,31 +649,26 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
         return createNewCat(catData, reviewData, reviewUpdatedData);
       }
     },
-    [createNewCat, updateMyCat, isActive, editOrAdd]
+    [createNewCat, updateMyCat, isActive, isEditCat]
   );
 
-  const editOrAddStrings = {
-    title: [`Pridať novú mačku`, `Upraviť mačku`],
-    name: ['Krok späť', 'Moje mačky'],
-    path: ['back', '/my-cats'],
-    path2: ['back', '/my-cats/[:id]'],
-    buttonText: ['Nahrať fotku', 'Zmeniť fotku'],
-  };
-
-  const chooseString = (type: boolean, key: string) =>
-    type ? editOrAddStrings[key][1] : editOrAddStrings[key][0];
-
-  const title = chooseString(editOrAdd(), 'title');
+  const title = isEditCat() ? links.edit_cat.name : links.create_cat.name
 
   const breadcrumbs: Breadcrumb[] = useMemo(() => {
+    const { backlink } = router.query
+    let previousLink = links.dashboard
+    if (backlink) {
+      previousLink = links[backlink as string] ?? previousLink
+    }
+    let currentLink = isEditCat() ? links.edit_cat : links.create_cat
     return [
       {
-        path: chooseString(editOrAdd(), 'path'),
-        name: chooseString(editOrAdd(), 'name'),
+        path: previousLink.path,
+        name: previousLink.name,
       },
       {
-        path: chooseString(editOrAdd(), 'path2'),
-        name: title,
+        path: currentLink.path,
+        name: currentLink.name,
       },
     ];
   }, [createCat, updateCat]);
@@ -682,7 +678,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
       <Header title={getTitle(title)} />
       <Sidebar />
 
-      <Container>{editOrAdd() ? <CatById /> : <ProductsToForm />}</Container>
+      <Container>{isEditCat() ? <EditCatForm /> : <CreateCatForm />}</Container>
     </Layout>
   );
 }

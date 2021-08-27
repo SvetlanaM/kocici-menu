@@ -22,6 +22,7 @@ import getTitle from '../utils/getTitle';
 import { TIP_LIMIT } from '../utils/constants';
 import { GeneralError } from '../components/ErrorScreen';
 import { getUser } from '../utils/user';
+import { BackLinkType } from "../utils/backlinks";
 
 //tu budu akoze ziskane macky uzivatela
 const getDashboardVariables: GetDashboardQueryVariables = {
@@ -144,7 +145,7 @@ export default function Home() {
         <CenterContainerQuery />
         <LeftContainer>
           <Title title="Moje mačky" />
-          <AddCatBox />
+          <AddCatBox backlink={BackLinkType.DASHBOARD} />
           <DashboardCatQuery />
         </LeftContainer>
       </Container>

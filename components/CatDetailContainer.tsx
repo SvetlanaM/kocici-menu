@@ -9,6 +9,7 @@ import LeftContainer from './LeftContainer';
 import AddCatBox from './AddCatBox';
 import CatDetailPieChart from './CatDetailPieChart';
 import useLocalStorage, { LocalStorageKey } from "../hooks/useLocalStorage";
+import { BackLinkType } from "../utils/backlinks";
 
 interface CatDetailContainerProps {
   cats: GetCatDetailQuery['cat'];
@@ -143,7 +144,7 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
       <div className="w-full flex justify-between">
         <CatDetailInfoBox data={catData} />
         <div className="w-3/12 pl-7">
-          <AddCatBox />
+          <AddCatBox backlink={BackLinkType.MY_CATS} />
         </div>
       </div>
       <div className="w-full grid grid-rows-2 xl-custom:grid-rows-1 xl-custom:grid-cols-2 gap-11 pb-16 mt-3">
