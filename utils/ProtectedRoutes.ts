@@ -3,29 +3,25 @@ import useAuth from '../hooks/useAuth';
 import { setToken } from './token';
 import { setUser } from './user';
 
-
-const isBrowser = () => typeof window !== 'undefined'
+const isBrowser = () => typeof window !== 'undefined';
 
 const ProtectedRoutes = ({ router, children }) => {
-  const { isAuthenticated, token, user } = useAuth()
-  
+  const { isAuthenticated, token, user } = useAuth();
 
-  let unprotectedRoutes = [
-    '/user/login',
-    '/user/register',
-   
-  ];
+  let unprotectedRoutes = ['/user/login', '/user/register'];
 
   let pathIsProtected = unprotectedRoutes.indexOf(router.pathname) === -1;
 
- 
-  if (isBrowser() && !isAuthenticated &&  pathIsProtected) {
-    router.push('/user/login')
+  if (isBrowser() && !isAuthenticated && pathIsProtected) {
+    router.push('/user/login');
     return null;
-  }  
-  return children
-  
+  }
 
-}
+  if (isBrowser()) {
+    return children;
+  }
+
+  return null;
+};
 
 export default ProtectedRoutes;

@@ -198,3 +198,7 @@ input:checked+div svg {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+button:disabled {
+    cursor: not-allowed;
+}
