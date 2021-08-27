@@ -15,27 +15,28 @@ import { UPDATE_USER_PREFERENCES } from '../graphql/mutations';
 import { getUser } from '../utils/user';
 import { useEffect } from 'react';
 import router, { NextRouter, useRouter } from 'next/router';
+import Welcome from './welcome';
+import Home from './products';
+import Loading from '../components/Loading';
 
-export default function Welcome() {
-  const [updateUser] = useMutation<
-    UpdateUserMutation,
-    UpdateUserMutationVariables
-  >(UPDATE_USER_PREFERENCES);
+const DashboardCatQuery = () => {
+  const { data: data } = useUserSeenStateQuery({
+    variables: {
+      user_id: getUser(),
+    },
+    fetchPolicy: 'no-cache',
+  });
 
-  const catUpdateInput: User_Insert_Input = {
-    seen_tutorial: true,
-  };
+  if (data && data.user.seen_tutorial) {
+    return '/dashboard';
+  }
 
-  useEffect(() => {
-    updateUser({
-      variables: { id: getUser(), users: catUpdateInput },
-    });
-  }, []);
+  return '/welcome';
+};
 
-  return (
-    <>
-      <Header title={getTitle('Vitajte')} />
-      <WelcomeBox />
-    </>
-  );
+export default function RoutingPath() {
+  const router = useRouter();
+  const url = DashboardCatQuery();
+  router.push(url);
+  return <Loading />;
 }

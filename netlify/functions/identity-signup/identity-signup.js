@@ -37,7 +37,6 @@ exports.handler = async function (event, context) {
     user_metadata: {
       ...user.user_metadata, // append current user metadata
       my_token: createJWT(user.id),
-      seen: user.seen_tutorial,
     },
   };
 

@@ -9,12 +9,12 @@ export default function WelcomeBox() {
 
   return (
     <div className="w-full px-10 min-h-screen">
-      <Link href="/">
+      <Link href="/dashboard">
         <a className="font-logo font-bold text-lg uppercase text-purple-dark pt-8 flex">
           {APP_NAME}
         </a>
       </Link>
-      <div className="flex flex-col items-center justify-center text-center min-h-auto pt-10">
+      <div className="flex flex-col items-center justify-center text-center min-h-auto pt-7">
         <h2 className="text-3xl font-medium text-purple-darkest">
           Čauky mňauky, {getUsername(email)}!
         </h2>
@@ -28,7 +28,11 @@ export default function WelcomeBox() {
         <div className="pt-8 w-3/5">
           <WelcomeBoxForm />
         </div>
-        <p className="text-gray font-light">Preskočiť</p>
+        <Link href="/my-cats">
+          <p className="text-gray font-light cursor-pointer hover:text-purple-darkest">
+            Preskočiť
+          </p>
+        </Link>
       </div>
     </div>
   );
