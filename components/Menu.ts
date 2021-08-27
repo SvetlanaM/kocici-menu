@@ -2,7 +2,7 @@ export const MenuLinks = Object.freeze({
   items: [
     {
       icon: 'dashboard',
-      url: '/',
+      url: '/dashboard',
       name: 'Prehľad',
     },
     {

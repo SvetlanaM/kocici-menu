@@ -5,7 +5,7 @@ import WelcomeBoxForm from './WelcomeBoxForm';
 import UseAuth from '../hooks/useAuth';
 
 export default function WelcomeBox() {
-  const email = UseAuth().user_data.email;
+  const email = UseAuth().user_data && UseAuth().user_data.email;
 
   return (
     <div className="w-full px-10 min-h-screen">
@@ -16,7 +16,7 @@ export default function WelcomeBox() {
       </Link>
       <div className="flex flex-col items-center justify-center text-center min-h-auto pt-10">
         <h2 className="text-3xl font-medium text-purple-darkest">
-          Čauky mňauky, {email && getUsername(email)}!
+          Čauky mňauky, {getUsername(email)}!
         </h2>
         <p className="font-light px-48 pt-6 text-purple-darkest leading-normal">
           Vitaj v aplikácii{' '}
