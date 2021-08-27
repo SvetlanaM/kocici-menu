@@ -11,6 +11,8 @@ import { useState } from 'react';
 
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
+import { useUserSeenStateQuery } from '../graphql/generated/graphql';
+import { getUser } from '../utils/user';
 interface AuthFormProps {
   submitText: string;
   passwordPlaceholder: string;
@@ -63,6 +65,15 @@ const AuthForm = ({
 
   const { signupUser, loginUser } = useIdentityContext();
 
+  const getRoutingURL = (user_data): string => {
+    console.log(user_data);
+    if (user_data) {
+      return user_data && user_data.user.seen_tutorial
+        ? '/dashboard'
+        : '/welcome';
+    }
+  };
+
   const onSubmit = (data: any) => {
     if (authMethod === 'signupUser') {
       signupUser(data.email, data.password, {
@@ -74,13 +85,13 @@ const AuthForm = ({
           )
         )
         .then(() => setMessage(''))
-        .then(() => router.push('/welcome'))
+        .then(() => router.push('/login'))
         .catch((err) => setMessage(i18next.t(convertErrString(err.message))));
     }
 
     if (authMethod === 'loginUser') {
       loginUser(data.email, data.password)
-        .then((data) => router.push('/'))
+        .then((data) => router.push(getRoutingURL(data)))
         .catch((err) => setMessage(i18next.t(convertErrString(err.message))));
     }
   };

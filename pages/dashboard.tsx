@@ -63,6 +63,7 @@ const CenterContainerQuery = () => {
       mostFavouriteByAll[a] > mostFavouriteByAll[b] ? a : b;
     }, []);
 
+  console.log(mostFavouriteByAllOne);
   const extendedData = [
     {
       name: (mostFavouriteByAllOne && mostFavouriteByAllOne) || '--',

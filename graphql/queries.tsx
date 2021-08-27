@@ -168,6 +168,14 @@ export const TIP_DETAIL_QUERY = gql`
   ${TipDetailFieldsFragment}
 `;
 
+export const GET_USER_STATE = gql`
+  query UserSeenState($user_id: String!) {
+    user: User_by_pk(id: $user_id) {
+      seen_tutorial
+    }
+  }
+`;
+
 export const USER_STATS_QUERY = gql`
   query GetUserStats($user_id: String!, $updated_at: timestamptz) {
     user_stats(where: { id: { _eq: $user_id } }) {
