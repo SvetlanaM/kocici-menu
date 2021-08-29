@@ -125,6 +125,7 @@ const AuthForm = ({
               placeholder="email@email.sk"
               errors={errors.email && isDirty && errors.email}
               aria-invalid={errors.email}
+              name="email"
             />
             {errors.email && <FormErrorMessage error={errors.email?.message} />}
           </FormInputWrapper>
@@ -144,6 +145,7 @@ const AuthForm = ({
                 }),
               }}
               type="password"
+              name="password"
               placeholder={passwordPlaceholder}
               errors={errors.password && isDirty && errors.password}
             />
