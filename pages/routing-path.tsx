@@ -31,7 +31,11 @@ const DashboardCatQuery = () => {
     return '/dashboard';
   }
 
-  return '/welcome';
+  if (data && !data.user.seen_tutorial) {
+    return '/welcome';
+  }
+
+  return '/dashboard';
 };
 
 export default function RoutingPath() {

@@ -8,6 +8,7 @@ interface FormInputProps {
   step?: number;
   onChange?: (e) => void;
   name?: string;
+  required?: boolean;
 }
 
 const FormInput = ({
@@ -37,7 +38,6 @@ const FormInput = ({
       step={step}
       name={name}
       autoComplete="on"
-      onFocus={onChange}
     />
   );
 };

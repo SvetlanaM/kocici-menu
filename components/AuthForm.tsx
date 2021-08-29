@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { useForm, useFormState } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import FormErrorMessage from './FormErrorMessage';
 import FormInputWrapper from './FormInputWrapper';
@@ -29,8 +29,17 @@ const AuthForm = ({
   const {
     handleSubmit,
     register,
-    formState: { errors, isDirty },
-  } = useForm({ mode: 'onBlur', reValidateMode: 'onChange' });
+    control,
+    formState: { errors, isDirty, touchedFields, isValid },
+  } = useForm({
+    mode: 'all',
+    reValidateMode: 'onBlur',
+    shouldFocusError: true,
+  });
+
+  const { dirtyFields } = useFormState({
+    control,
+  });
 
   i18next.init({
     lng: 'sk',
@@ -116,14 +125,12 @@ const AuthForm = ({
           <FormInputWrapper>
             <FormInputLabel name="Email*" />
             <FormInput
-              registerRules={{
-                ...register('email', {
-                  required: { value: true, message: 'Email je povinný' },
-                }),
-              }}
+              {...register('email', {
+                required: { value: true, message: 'Email je povinný' },
+              })}
               type="email"
               placeholder="email@email.sk"
-              errors={errors.email && isDirty && errors.email}
+              errors={errors.email && errors.email}
               aria-invalid={errors.email}
               name="email"
             />
@@ -132,27 +139,25 @@ const AuthForm = ({
           <FormInputWrapper>
             <FormInputLabel name="Heslo*" />
             <FormInput
-              registerRules={{
-                ...register('password', {
-                  required: { value: true, message: 'Heslo je povinné' },
-                  validate: {
-                    hasUppercaseLetter: hasUppercaseLetter,
-                  },
-                  minLength: {
-                    value: 8,
-                    message: 'Heslo musí mať najmenej 8 znakov',
-                  },
-                }),
-              }}
-              type="password"
-              name="password"
               placeholder={passwordPlaceholder}
-              errors={errors.password && isDirty && errors.password}
+              errors={errors.password && errors.password}
+              type="password"
+              {...register('password', {
+                required: { value: true, message: 'Heslo je povinne' },
+                validate: {
+                  hasUppercaseLetter: hasUppercaseLetter,
+                },
+                minLength: {
+                  value: 8,
+                  message: 'Heslo musí mať najmenej 8 znakov',
+                },
+              })}
             />
             {errors.password && (
               <FormErrorMessage error={errors.password?.message} />
             )}
             {errors.password &&
+              touchedFields &&
               errors.password.type === 'hasUppercaseLetter' && (
                 <FormErrorMessage
                   error={'Heslo musí obsahovať aspoň jedno veľké písmeno'}
@@ -160,6 +165,7 @@ const AuthForm = ({
               )}
           </FormInputWrapper>
         </div>
+
         <SubmitButton text={submitText} disabled={false} size="w-full" />
       </form>
     </div>
