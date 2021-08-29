@@ -36,7 +36,8 @@ const FormInput = ({
       value={defaultValue}
       step={step}
       name={name}
-      autoComplete={name}
+      autoComplete="on"
+      onFocus={onChange}
     />
   );
 };
