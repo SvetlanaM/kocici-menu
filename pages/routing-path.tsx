@@ -34,13 +34,11 @@ const DashboardCatQuery = () => {
   if (data && !data.user.seen_tutorial) {
     return '/welcome';
   }
-
-  return '/dashboard';
 };
 
 export default function RoutingPath() {
   const router = useRouter();
   const url = DashboardCatQuery();
-  router.push(url);
+  url && router.push(url);
   return <Loading />;
 }

@@ -34,7 +34,6 @@ const AuthForm = ({
   } = useForm({
     mode: 'all',
     reValidateMode: 'onBlur',
-    shouldFocusError: true,
   });
 
   const { dirtyFields } = useFormState({
@@ -52,6 +51,11 @@ const AuthForm = ({
             'Užívateľ s touto emailovou adresou už existuje. Zadajte iný email.',
           invalid_grant_no_user_found_with_that_email_or_password_invalid:
             'Používateľ s touto email adresou nenájdený alebo zle zadané heslo.',
+          cannot_read_property_auth_of_undefined:
+            'Chyba v pripojení. Skúste neskôr.',
+          server_se_zadaným_názvem_hostitele_nelze_nalézt:
+            'Chyba v pripojení. Skúste neskôr.',
+          failed_to_fetch: 'Chyba v pripojení. Skúste neskôr.',
         },
       },
     },
@@ -65,6 +69,7 @@ const AuthForm = ({
       .replaceAll(' ', '_')
       .replaceAll(',', '')
       .replaceAll('.', '')
+      .replaceAll("'", '')
       .toLowerCase();
     console.log(newMessage.toLowerCase());
     return newMessage.toLowerCase();
@@ -82,11 +87,15 @@ const AuthForm = ({
       })
         .then(() =>
           setSuccessMessage(
-            'Registrácia úspešná. Potvrdenie je zaslané na registračný email.'
+            'Registrácia úspešná. O chvíľu budete presmerovaný do aplikácie.'
           )
         )
         .then(() => setMessage(''))
-        .then(() => router.push('/login'))
+        .then(() =>
+          loginUser(data.email, data.password).then(() =>
+            router.push('/routing-path')
+          )
+        )
         .catch((err) => setMessage(i18next.t(convertErrString(err.message))));
     }
 
@@ -103,15 +112,15 @@ const AuthForm = ({
         if (char.toUpperCase() === char && !/^\d+$/.test(char)) {
           return true;
         }
-        return false;
       }
+      return false;
     }
   };
 
   return (
     <div>
       {message && (
-        <div className="w-full bg-red-300 text-white rounded-md py-2 px-3 mb-4">
+        <div className="w-full bg-red-500 text-white rounded-md py-2 px-3 mb-4">
           {message}
         </div>
       )}
@@ -157,7 +166,6 @@ const AuthForm = ({
               <FormErrorMessage error={errors.password?.message} />
             )}
             {errors.password &&
-              touchedFields &&
               errors.password.type === 'hasUppercaseLetter' && (
                 <FormErrorMessage
                   error={'Heslo musí obsahovať aspoň jedno veľké písmeno'}
