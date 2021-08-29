@@ -30,7 +30,7 @@ const AuthForm = ({
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm();
+  } = useForm({ mode: 'onBlur', reValidateMode: 'onChange' });
 
   i18next.init({
     lng: 'sk',
@@ -124,6 +124,7 @@ const AuthForm = ({
               type="email"
               placeholder="email@email.sk"
               errors={errors.email}
+              aria-invalid={errors.email}
             />
             {errors.email && <FormErrorMessage error={errors.email?.message} />}
           </FormInputWrapper>
