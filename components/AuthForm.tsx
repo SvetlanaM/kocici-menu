@@ -29,7 +29,7 @@ const AuthForm = ({
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm({ mode: 'onBlur', reValidateMode: 'onChange' });
 
   i18next.init({
@@ -123,7 +123,7 @@ const AuthForm = ({
               }}
               type="email"
               placeholder="email@email.sk"
-              errors={errors.email}
+              errors={errors.email && isDirty && errors.email}
               aria-invalid={errors.email}
             />
             {errors.email && <FormErrorMessage error={errors.email?.message} />}
@@ -145,7 +145,7 @@ const AuthForm = ({
               }}
               type="password"
               placeholder={passwordPlaceholder}
-              errors={errors.password}
+              errors={errors.password && isDirty && errors.password}
             />
             {errors.password && (
               <FormErrorMessage error={errors.password?.message} />
