@@ -36,6 +36,7 @@ const FormInput = ({
       value={defaultValue}
       step={step}
       name={name}
+      autoComplete={name}
     />
   );
 };
