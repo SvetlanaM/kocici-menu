@@ -37,6 +37,7 @@ const TipsList = ({ data, cols, isOnDashboard }: TipProps) => {
           <div className="flex flex-row justify-end w-full xl-custom:w-1/2 float-right relative">
             <FormInput
               type="text"
+              name="search"
               placeholder="Vyhľadávať od 3 znakov"
               width={'w-full xl-custom:w-1/2'}
               onChange={(e) => {

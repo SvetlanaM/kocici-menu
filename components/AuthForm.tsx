@@ -137,6 +137,7 @@ const AuthForm = ({
               {...register('email', {
                 required: { value: true, message: 'Email je povinný' },
               })}
+              name="email"
               type="email"
               placeholder="email@email.sk"
               errors={errors.email && errors.email}
@@ -150,6 +151,7 @@ const AuthForm = ({
               placeholder={passwordPlaceholder}
               errors={errors.password && errors.password}
               type="password"
+              name="password"
               {...register('password', {
                 required: { value: true, message: 'Heslo je povinne' },
                 validate: {

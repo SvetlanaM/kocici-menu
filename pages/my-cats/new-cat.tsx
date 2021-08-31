@@ -56,7 +56,7 @@ import Loading from '../../components/Loading';
 import { GeneralError } from '../../components/ErrorScreen';
 import { TIP_LIMIT } from '../../utils/constants';
 import DateFormatObject from '../../utils/getFormatDate';
-import links from "../../utils/backlinks";
+import links from '../../utils/backlinks';
 
 interface CreateCatProps {
   onClickTrigger?: () => void;
@@ -114,12 +114,12 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
         withProducts: true,
         id: Number(String(id).match(numberPattern)),
       },
-      pollInterval: 500,
+      // pollInterval: 500,
     });
 
     const { data: productData } = useGetProductsQuery({
       skip: isActive,
-      pollInterval: 500,
+      // pollInterval: 500,
     });
 
     return (
@@ -652,15 +652,15 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
     [createNewCat, updateMyCat, isActive, isEditCat]
   );
 
-  const title = isEditCat() ? links.edit_cat.name : links.create_cat.name
+  const title = isEditCat() ? links.edit_cat.name : links.create_cat.name;
 
   const breadcrumbs: Breadcrumb[] = useMemo(() => {
-    const { backlink } = router.query
-    let previousLink = links.dashboard
+    const { backlink } = router.query;
+    let previousLink = links.dashboard;
     if (backlink) {
-      previousLink = links[backlink as string] ?? previousLink
+      previousLink = links[backlink as string] ?? previousLink;
     }
-    let currentLink = isEditCat() ? links.edit_cat : links.create_cat
+    let currentLink = isEditCat() ? links.edit_cat : links.create_cat;
     return [
       {
         path: previousLink.path,

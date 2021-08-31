@@ -464,16 +464,15 @@ const CatForm = ({
           <FormInputWrapper>
             <FormInputLabel name="Meno mačky*" />
             <FormInput
-              registerRules={{
-                ...register('name', {
-                  required: { value: true, message: 'Meno mačky je povinné' },
-                  maxLength: {
-                    value: 100,
-                    message: 'Meno mačky je max do 100 znakov',
-                  },
-                }),
-              }}
+              {...register('name', {
+                required: { value: true, message: 'Meno mačky je povinné' },
+                maxLength: {
+                  value: 100,
+                  message: 'Meno mačky je max do 100 znakov',
+                },
+              })}
               type="text"
+              name="name"
               placeholder="Meno mačky do 100 znakov"
               errors={errors.name}
             />
@@ -482,8 +481,9 @@ const CatForm = ({
           <FormInputWrapper>
             <FormInputLabel name="Prezývka mačky" />
             <FormInput
-              registerRules={{ ...register('nickname', { required: false }) }}
+              {...register('nickname', { required: false })}
               type="text"
+              name="nickname"
             />
           </FormInputWrapper>
         </div>
@@ -491,10 +491,9 @@ const CatForm = ({
           <FormInputWrapper>
             <FormInputLabel name="Vek mačky" />
             <FormInput
-              registerRules={{
-                ...register('age', { min: 1, max: 30, required: false }),
-              }}
+              {...register('age', { min: 1, max: 30, required: false })}
               type="number"
+              name="age"
               step={1}
               errors={errors.age}
               placeholder="Vek od 1 do 30 rokov"
@@ -504,8 +503,9 @@ const CatForm = ({
           <FormInputWrapper>
             <FormInputLabel name="Farba mačky" />
             <FormInput
-              registerRules={{ ...register('color', { required: false }) }}
+              {...register('color', { required: false })}
               type="text"
+              name="color"
             />
           </FormInputWrapper>
         </div>
@@ -513,18 +513,20 @@ const CatForm = ({
           <FormInputWrapper>
             <FormInputLabel name="Váha mačky v kg" />
             <FormInput
-              registerRules={{ ...register('weight', { required: false }) }}
+              {...register('weight', { required: false })}
               type="number"
               placeholder="1,5 kg"
               step={0.1}
+              name="weight"
             />
           </FormInputWrapper>
           <FormInputWrapper>
             <FormInputLabel name="Denná dávka v g" />
             <FormInput
-              registerRules={{ ...register('daily_food', { required: false }) }}
+              {...register('daily_food', { required: false })}
               type="number"
               placeholder="700g/denne"
+              name="daily_food"
             />
           </FormInputWrapper>
         </div>
@@ -532,10 +534,9 @@ const CatForm = ({
           <FormInputWrapper>
             <FormInputLabel name="Email veterinára" />
             <FormInput
-              registerRules={{
-                ...register('doctor_email', { required: false }),
-              }}
+              {...register('doctor_email', { required: false })}
               type="email"
+              name="doctor_email"
               placeholder="email@email.sk"
             />
           </FormInputWrapper>
@@ -629,7 +630,9 @@ const CatForm = ({
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray"
           />
           <span className="text-sm font-light text-gray">
-            {watchedNote !== undefined && watchedNote.length <= 500
+            {watchedNote !== undefined &&
+            watchedNote &&
+            watchedNote.length <= 500
               ? `Ostáva ${500 - watchedNote?.length} znakov z 500`
               : null}
           </span>
