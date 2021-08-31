@@ -7,7 +7,6 @@ interface FormInputProps {
   width?: string;
   step?: number;
   onChange?: (e) => void;
-  name?: string;
   required?: boolean;
 }
 
@@ -18,7 +17,6 @@ const FormInput = ({
   placeholder,
   defaultValue,
   width,
-  name,
   step,
   onChange,
 }: FormInputProps) => {
@@ -36,7 +34,6 @@ const FormInput = ({
       onChange={onChange}
       value={defaultValue}
       step={step}
-      name={name}
       autoComplete="on"
     />
   );
