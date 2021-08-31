@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
-import Loading from "./Loading";
+import { useCallback, useEffect, useState } from 'react';
+import Loading from './Loading';
 
 type LoadingImageProps = {
   src: string;
@@ -7,6 +7,7 @@ type LoadingImageProps = {
   height?: number;
   alt?: string;
   placeholder?: string;
+  customStyle?: string;
   [otherProps: string]: string | number | undefined;
 };
 
@@ -16,38 +17,57 @@ export default function LoadingImage({
   height,
   alt,
   placeholder,
+  customStyle,
   ...otherProps
 }: LoadingImageProps): JSX.Element {
-
   enum Status {
     loading,
     finished,
-    error
+    error,
   }
 
-  let [imageStatus, setImageStatus] = useState(Status.loading)
+  let [imageStatus, setImageStatus] = useState(Status.loading);
 
-  let sourceURL = src ?? placeholder
+  let sourceURL = src ?? placeholder;
 
   useEffect(() => {
-    setImageStatus((Status.loading))
+    setImageStatus(Status.loading);
   }, [sourceURL]);
 
   const handleOnLoad = useCallback(() => {
-    if (imageStatus === Status.loading) setImageStatus(Status.finished)
-  }, [])
+    if (imageStatus === Status.loading) setImageStatus(Status.finished);
+  }, []);
 
   const handleOnError = useCallback(() => {
-    setImageStatus(Status.error)
-  }, [])
+    setImageStatus(Status.error);
+  }, []);
 
   return (
-      <>
-        <div className="cat-image border-rounded-base justify-center items-center flex" style={ imageStatus !== Status.loading ? {display: 'none'} : otherProps.style }>
-          <Loading />
-        </div>
-        <img onLoad={handleOnLoad} onError={handleOnError} src={imageStatus === Status.error ? placeholder : sourceURL } width={width} height={height} alt={alt} style={ imageStatus === Status.loading ? {display: 'none'} : otherProps.style } {...otherProps} />
-      </>
-  )
-
+    <>
+      <div
+        className={`cat-image justify-center items-center flex ${customStyle}`}
+        style={
+          imageStatus !== Status.loading
+            ? { display: 'none' }
+            : otherProps.style
+        }
+      >
+        <Loading />
+      </div>
+      <img
+        onLoad={handleOnLoad}
+        onError={handleOnError}
+        src={imageStatus === Status.error ? placeholder : sourceURL}
+        width={width}
+        height={height}
+        alt={alt}
+        style={
+          imageStatus === Status.loading
+            ? { display: 'none' }
+            : otherProps.style
+        }
+        {...otherProps}
+      />
+    </>
+  );
 }

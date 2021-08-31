@@ -47,6 +47,7 @@ const CatBasicInfo = ({ cat }: CatBasicInfoProps) => {
         height={65}
         placeholder={'/default_cat.svg'}
         className="border-rounded-base object-cover cat-image"
+        customStyle="border-rounded-base"
       />
       <div className="flex-col-base justify-between ml-3">
         <h4>{truncateText(cat.name, 12)}</h4>

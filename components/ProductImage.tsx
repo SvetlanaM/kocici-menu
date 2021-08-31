@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import Image from './Image';
 import { DEFAULT_PRODUCT_IMAGE as defaultImage } from '../utils/constants';
-
+import LoadingImage from './LoadingImage';
 interface ProductImageProps {
   src: string;
   alt: string;
@@ -24,14 +24,14 @@ const ProductImage = ({ src, alt, ...otherProps }: ProductImageProps) => {
   }, [urlError, src]);
 
   return (
-    <Image
-      src={productImage}
+    <LoadingImage
       alt={alt}
+      src={productImage}
       width={55}
       height={55}
+      placeholder={productImage}
       quality={100}
-      {...otherProps}
-      onError={onError}
+      className="ml-3.5"
     />
   );
 };

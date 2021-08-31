@@ -101,7 +101,9 @@ const ProductController = ({
         defaultValue={defaultValue}
       />
       <div className="mt-3">
-        {errors[name] && <FormErrorMessage error="Tato hodnota je povinna" />}
+        {errors && errors[name] && (
+          <FormErrorMessage error="Tato hodnota je povinna" />
+        )}
       </div>
     </>
   );

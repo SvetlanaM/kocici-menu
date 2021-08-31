@@ -10,7 +10,7 @@ import {
   ReviewHistory_Insert_Input,
   SelectProductFieldsFragment,
 } from '../graphql/generated/graphql';
-import { Controller, useFieldArray, useForm, } from 'react-hook-form';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
 import FormErrorMessage from './FormErrorMessage';
@@ -30,10 +30,10 @@ import Loading from './Loading';
 import ProductController from './ProductController';
 import RatingController from './RatingController';
 import useSearch from '../hooks/useSearch';
-import { uploadImage } from "../utils/uploadImage";
+import { uploadImage } from '../utils/uploadImage';
 
 export type CatInputData = Omit<Cat_Insert_Input, 'CatTypeEnum'>;
-export const CAT_TYPE_NULL = 'CAT_TYPE_NULL'
+export const CAT_TYPE_NULL = 'CAT_TYPE_NULL';
 
 interface CatFormInterface {
   handleSubmit1: {
@@ -54,12 +54,12 @@ interface CatFormInterface {
 }
 
 type CatFormProduct = {
-  product: SelectProductFieldsFragment
+  product: SelectProductFieldsFragment;
   rating: {
-    label: number
-    value: string
-  }
-}
+    label: number;
+    value: string;
+  };
+};
 
 const CatForm = ({
   handleSubmit1,
@@ -364,7 +364,7 @@ const CatForm = ({
         doctor_email: data.doctor_email,
         nickname: data.nickname,
         weight: data.weight ? Number(data.weight) : null,
-        type: (data.type !== CAT_TYPE_NULL) ? data.type : null,
+        type: data.type !== CAT_TYPE_NULL ? data.type : null,
         note: data.note,
         color: data.color,
         daily_food: data.daily_food ? Number(data.daily_food) : null,
@@ -615,16 +615,16 @@ const CatForm = ({
         <div className="flex flex-col w-full mt-2">
           <FormInputLabel name="Poznámka" />
           <textarea
-              maxLength={500}
-              {...register('note', {
-                required: false,
-                maxLength: {
-                  value: 500,
-                  message: 'Maximálne 500 znakov',
-                },
-              })}
-              placeholder="Dodatočné poznámky (napriklad choroby, diety, obmedzenia...) Maximálne 500 znakov."
-              className="form-textarea w-full mb-3 mt-2 text-purple block border-rounded-base border-gray
+            maxLength={500}
+            {...register('note', {
+              required: false,
+              maxLength: {
+                value: 500,
+                message: 'Maximálne 500 znakov',
+              },
+            })}
+            placeholder="Dodatočné poznámky (napriklad choroby, diety, obmedzenia...) Maximálne 500 znakov."
+            className="form-textarea w-full mb-3 mt-2 text-purple block border-rounded-base border-gray
               focus:outline-none focus:bg-white focus:border-gray
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray"
           />
