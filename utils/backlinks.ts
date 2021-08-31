@@ -11,7 +11,7 @@ export enum BackLinkType {
 const links: { [key in BackLinkType]: Breadcrumb } = {
     dashboard: {
         path: '/dashboard',
-        name: 'Prehlaď'
+        name: 'Prehľad'
     },
     my_cats: {
         path: '/my-cats',
