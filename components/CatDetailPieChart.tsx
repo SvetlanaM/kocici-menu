@@ -11,13 +11,13 @@ interface CatDetailPieChartProps {
 const CatDetailPieChart = ({ aggData }: CatDetailPieChartProps) => {
   const data = useMemo(() => {
     return {
-      labels: ['% mäsa', '% bielkovín', '% ostatne'],
+      labels: ['bielkoviny', 'hrubá vláknina', 'popel', 'ostatné'],
       type: 'pie',
       datasets: [
         {
           label: 'kvalita stravy',
           data: aggData,
-          backgroundColor: ['#BDBDE7', '#E1E5EE', '#A6A6C8'],
+          backgroundColor: ['#A6A6C8', '#E1E5EE', '#3E3E70', '#BDBDE7'],
           borderWidth: 1,
         },
       ],
@@ -38,12 +38,12 @@ const CatDetailPieChart = ({ aggData }: CatDetailPieChartProps) => {
   };
 
   function checkZeros() {
-    return !aggData.some((item) => item === 'NaN');
+    return !aggData.some((item) => item === 100);
   }
 
   return (
     <div className="mt-5 w-full graph-container">
-      <Title title={`Kvalita stravy mačky (pripravujeme)`} />
+      <Title title={`Kvalita stravy mačky v %`} />
       {checkZeros() ? (
         <Pie data={data} options={options} />
       ) : (

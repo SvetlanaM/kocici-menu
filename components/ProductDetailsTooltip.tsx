@@ -67,8 +67,6 @@ const getQualityImage = (
 };
 
 const ProductDetailsTooltipBox = ({ data }: ProductDetailsTooltipBoxProps) => {
-  console.log(Object.entries(data.analysis_variant).map((item) => item[1]));
-
   return (
     <div className="grid divide-y divide-gray_lightest">
       {data.rating && (

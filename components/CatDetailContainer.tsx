@@ -115,31 +115,42 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
       .slice(0, 5);
   }, [isShuffled, selectedCat]);
 
-  console.log(getRProducts);
-
   const getNumber = (item: any): number => {
     const numberPattern = /\d+/g;
 
     return Number(item && item.match(numberPattern)[0]);
   };
 
-  const mealTypes = catData.reviews
-    .map((item) =>
-      item.products.meal_type !== null ? getNumber(item.products.meal_type) : 0
-    )
-    .filter((item) => item !== 0);
+  const average = (arr) =>
+    arr.reduce((p, c) => Math.ceil(p) + Math.ceil(c), 0) / arr.length;
 
-  const bielTypes = catData.reviews
-    .map((item) =>
-      item.products.amount !== null ? getNumber(item.products.amount) : 0
-    )
-    .filter((item) => item !== 0);
+  const getAnalysisValue = (value: string) => {
+    let data = catData.reviews.map((item) =>
+      item.products.analysis_variant
+        ? Object.entries(item.products.analysis_variant)
+            .filter((item) => item[0] === value)
+            .map((item) => {
+              return item[1];
+            })
+        : item.products.analysis_main
+        ? Object.entries(item.products.analysis_main)
+            .filter((item) => item[0] === value)
+            .map((item) => {
+              return item[1];
+            })
+        : [0]
+    );
+    return Number(Math.ceil(average(data)).toFixed(2)) || 0;
+  };
 
-  const average = (arr) => arr.reduce((p, c) => p + c, 0) / arr.length;
-  const avgMealType = average(mealTypes).toFixed(2) || 0;
-  const avgBielType = Math.ceil(average(bielTypes)).toFixed(2) || 0;
-  const othersType = 100 - (Number(avgMealType) + Number(avgBielType));
-  const mergedStats = [avgMealType, avgBielType, othersType];
+  const avgBielType = getAnalysisValue('bílkovina');
+  const avgFiber = getAnalysisValue('hrubá vláknina');
+  const avgAsh = getAnalysisValue('popel/popelovina');
+  const avgAll = [avgBielType, avgFiber, avgAsh];
+  const sumAll = avgAll.reduce((a, b) => a + b, 0);
+
+  const othersType = 100 - sumAll;
+  const mergedStats = [...avgAll, othersType];
 
   return (
     <>

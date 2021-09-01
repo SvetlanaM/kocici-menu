@@ -33,6 +33,8 @@ export const CatFieldsFragment = gql`
         name
         image_url
         path
+        analysis_main
+        analysis_variant
         reviewhistory(order_by: { updated_at: desc }) {
           review_type
           cat_id
