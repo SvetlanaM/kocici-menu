@@ -145,6 +145,8 @@ const CatForm = ({
       note: catData && catData.note,
       type: catData && catData.type,
     },
+    mode: 'all',
+    reValidateMode: 'onBlur',
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -371,7 +373,6 @@ const CatForm = ({
         id: catData ? catData.id : null,
         image_url: watchedCatImage,
       };
-
       const reviewsInput = data.fieldArray;
 
       handleSubmit1(catInput, reviewsInput, {
@@ -403,6 +404,8 @@ const CatForm = ({
       watchedCatImage,
     ]
   );
+
+  const onSubmit2 = (data) => console.log(data);
 
   const catTypeOptions = useMemo(() => {
     let newEnum = [CAT_TYPE_NULL, ...Object.values(catTypes).sort()];
