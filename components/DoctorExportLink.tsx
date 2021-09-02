@@ -8,6 +8,8 @@ const DoctorExportLink = ({ catContactData, children }) => {
     catContactData.name
   } %0D Vek macky: ${
     catContactData.age ? catContactData.age : notDefined
+  } %0D Pohlavie: ${
+    catContactData.gender ? catContactData.gender : notDefined
   } %0D Vaha macky: ${
     catContactData.weigth ? catContactData.weigth : notDefined
   } %0D`;

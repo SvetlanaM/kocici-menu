@@ -19,7 +19,7 @@ export const CatFieldsFragment = gql`
     color
     daily_food
     weight
-    nickname
+    gender
     note
     slug
     specials: SpecialRequirements {
@@ -76,6 +76,7 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
       age: CatFieldsFragment.age,
       weight: CatFieldsFragment.weight,
       name: CatFieldsFragment.name,
+      gender: CatFieldsFragment.gender,
     },
     specials: CatFieldsFragment.note,
   };

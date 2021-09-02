@@ -120,11 +120,10 @@ const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
         <div className="px-5">
           <ul className="small-light-text justify-evenly flex flex-col cat-detail-box">
             <li>
-              <span className="text-gray">Pohlavie:</span> --
+              <span className="text-gray">Prezyvka:</span> --
             </li>
             <li>
-              <span className="text-gray">Prezývka:</span>{' '}
-              {data.nickname || '--'}
+              <span className="text-gray">Pohlavie:</span> {data.gender || '--'}
             </li>
             <li>
               <span className="text-gray">Farba:</span> {data.color || '--'}
@@ -164,7 +163,12 @@ const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
       </div>
       <div className="grid grid-flow-col py-5 xl-custom:py-0 xl-custom:grid-flow-row xl-custom:divide-y border-gray">
         <div className="edit-box flex flex-row items-center justify-start pl-3">
-          <Image src="/icons/change_stars.svg" placeholder="/default_cat.svg" height={20} width={20} />
+          <Image
+            src="/icons/change_stars.svg"
+            placeholder="/default_cat.svg"
+            height={20}
+            width={20}
+          />
           <p className="uppercase text-gray text-sm ml-2 font-light">
             <Link href={`/my-cats/${encodeURIComponent(data.slug)}`}>
               Upraviť mačku

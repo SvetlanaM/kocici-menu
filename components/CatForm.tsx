@@ -135,7 +135,7 @@ const CatForm = ({
   } = useForm({
     defaultValues: {
       name: catData && catData.name,
-      nickname: catData && catData.nickname,
+      gender: catData && catData.gender,
       age: catData && catData.age,
       color: catData && catData.color,
       weight: catData && catData.weight,
@@ -364,7 +364,7 @@ const CatForm = ({
         name: data.name,
         user_id: getUser(),
         doctor_email: data.doctor_email,
-        nickname: data.nickname,
+        gender: data.gender,
         weight: data.weight ? Number(data.weight) : null,
         type: data.type !== CAT_TYPE_NULL ? data.type : null,
         note: data.note,
@@ -381,14 +381,12 @@ const CatForm = ({
       }).then((success: boolean) => {
         if (success) {
           if (catData) {
-            setIsMainLoading(false);
+            // setIsMainLoading(false);
             router.back();
           } else {
-            setIsMainLoading(false);
             router.back();
           }
         } else {
-          setIsMainLoading(false);
           alert('Dáta sa nepodarilo uložiť');
         }
       });
@@ -404,8 +402,6 @@ const CatForm = ({
       watchedCatImage,
     ]
   );
-
-  const onSubmit2 = (data) => console.log(data);
 
   const catTypeOptions = useMemo(() => {
     let newEnum = [CAT_TYPE_NULL, ...Object.values(catTypes).sort()];
@@ -424,7 +420,7 @@ const CatForm = ({
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        setIsMainLoading(false);
+        // setIsMainLoading(false);
         handleSubmit(onSubmit)();
       }}
       className="w-full"
@@ -482,12 +478,20 @@ const CatForm = ({
             {errors.name && <FormErrorMessage error={errors.name?.message} />}
           </FormInputWrapper>
           <FormInputWrapper>
-            <FormInputLabel name="Prezývka mačky" />
-            <FormInput
-              {...register('nickname', { required: false })}
-              type="text"
-              name="nickname"
-            />
+            <FormInputLabel name="Pohlavie" />
+            <FormSelectBox
+              registerRules={{ ...register('gender', { required: false }) }}
+            >
+              <option value="" key="">
+                Neuvedene
+              </option>
+              <option value="Macka" key="cat">
+                Macka
+              </option>
+              <option value="Kocur" key="tomcat">
+                Kocur
+              </option>
+            </FormSelectBox>
           </FormInputWrapper>
         </div>
         <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-3 xl-custom:gap-10">

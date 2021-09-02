@@ -79,7 +79,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
       data: productData,
       error: productError,
       loading: productLoading,
-    } = useGetProductsQuery();
+    } = useGetProductsQuery({ skip: isActive });
 
     return (
       <Center>
@@ -89,13 +89,15 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
         )}
         <Title title={title} />
         <Breadcrumbs breadcrumbs={breadcrumbs} />
-        {productData && (
+        {productData ? (
           <CatForm
             handleSubmit1={handleSubmit1}
             submitText={title}
             products={productData.products}
             buttonText={'Nahrať fotku'}
           />
+        ) : (
+          <Loading />
         )}
       </Center>
     );
@@ -114,17 +116,19 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
         withProducts: true,
         id: Number(String(id).match(numberPattern)),
       },
+      skip: isActive,
+
       // pollInterval: 500,
     });
 
-    const { data: productData } = useGetProductsQuery({
+    const { data: productData, loading: productLoading } = useGetProductsQuery({
       skip: isActive,
       // pollInterval: 500,
     });
 
     return (
       <Center>
-        {catLoading && <Loading />}
+        {catLoading && productLoading && <Loading />}
         <Title title={title} />
         <Breadcrumbs breadcrumbs={breadcrumbs} />
         {catData && productData ? (
@@ -189,7 +193,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
           age: catData.age ?? null,
           user_id: catData.user_id,
           doctor_email: catData.doctor_email ?? null,
-          nickname: catData.nickname ?? null,
+          gender: catData.gender ?? null,
           weight: catData.weight ?? null,
           type: catData.type ?? null,
           note: catData.note ?? null,
@@ -340,7 +344,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
         age: catData.age ?? null,
         user_id: catData.user_id,
         doctor_email: catData.doctor_email ?? null,
-        nickname: catData.nickname ?? null,
+        gender: catData.gender ?? null,
         weight: catData.weight ?? null,
         type: catData.type ?? null,
         note: catData.note ?? null,
@@ -643,10 +647,13 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
     ) => {
       if (isEditCat()) {
         setIsActive(true);
-        return updateMyCat(catData, reviewData, reviewUpdatedData);
+        return await setTimeout(
+          () => updateMyCat(catData, reviewData, reviewUpdatedData),
+          20
+        );
       } else {
         setIsActive(true);
-        return createNewCat(catData, reviewData, reviewUpdatedData);
+        return await createNewCat(catData, reviewData, reviewUpdatedData);
       }
     },
     [createNewCat, updateMyCat, isActive, isEditCat]
