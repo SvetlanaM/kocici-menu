@@ -16,7 +16,12 @@ const TopTipsList = ({ data, cols }: TopTipsListProps) => {
     >
       {data &&
         data.map((item) => (
-          <Link href={`/tips/${encodeURIComponent(item.slug)}?backlink=${BackLinkType.TIPS}`} as={`/tips/${encodeURIComponent(item.slug)}`} >
+          <Link href={{
+                    pathname: "/tips/[slug]",
+                    query: { slug: item.slug, backlink: BackLinkType.TIPS }
+                  }}
+                //as={`/tips/${encodeURIComponent(item.slug)}`}
+          >
             <a>
               <div className="flex pt-4 pr-10 bg-gray-light border-rounded-base border-gray_lightest h-full">
                 <div className="mb-0 xxl-custom:w-auto xl-custom:w-1/2 h-auto overflow-hidden flex items-end xl-custom:justify-center xl-custom:ml-5">

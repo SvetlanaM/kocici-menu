@@ -40,7 +40,12 @@ const TipBox = ({
 
   return (
     <div className="w-full pb-3.6 mb-4 border-b border-gray tips-list">
-      <Link href={`/tips/${encodeURIComponent(slug)}?backlink=${backlink}`} as={`/tips/${encodeURIComponent(slug)}`}>
+      <Link href={{
+              pathname: "/tips/[slug]",
+              query: { slug: slug, backlink: backlink }
+            }}
+            //as={`/tips/${encodeURIComponent(slug)}`}
+      >
         <a className="small-purple-text font-light flex flex-row items-center justify-between">
           <div>
             {!isOnDashboard ? (

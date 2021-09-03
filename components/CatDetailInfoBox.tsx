@@ -172,7 +172,13 @@ const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
             width={20}
           />
           <p className="uppercase text-gray text-sm ml-2 font-light">
-            <Link href={`/my-cats/${encodeURIComponent(data.slug)}?backlink=${BackLinkType.MY_CATS}`} as={`/my-cats/${encodeURIComponent(data.slug)}`}>
+            <Link
+                href={{
+                  pathname: "/my-cats/[slug]",
+                  query: { slug: data.slug, backlink: BackLinkType.MY_CATS }
+                }}
+                //as={`/my-cats/${encodeURIComponent(data.slug)}`}
+            >
               Upraviť mačku
             </Link>
           </p>
