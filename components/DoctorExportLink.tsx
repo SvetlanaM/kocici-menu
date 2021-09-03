@@ -7,7 +7,11 @@ const DoctorExportLink = ({ catContactData, children }) => {
   const body = `Obsah emailu: %0D Meno macky: ${
     catContactData.name
   } %0D Vek macky: ${
-    catContactData.age ? catContactData.age : notDefined
+    catContactData.age
+      ? catContactData.age
+      : catContactData.age === 0
+      ? 'do roku'
+      : notDefined
   } %0D Pohlavie: ${
     catContactData.gender ? catContactData.gender : notDefined
   } %0D Vaha macky: ${

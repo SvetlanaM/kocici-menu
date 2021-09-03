@@ -498,12 +498,12 @@ const CatForm = ({
           <FormInputWrapper>
             <FormInputLabel name="Vek mačky" />
             <FormInput
-              {...register('age', { min: 1, max: 30, required: false })}
+              {...register('age', { min: 0, max: 30, required: false })}
               type="number"
               name="age"
               step={1}
               errors={errors.age}
-              placeholder="Vek od 1 do 30 rokov"
+              placeholder="Vek od 0 do 30 rokov"
             />
             {errors.age && <FormErrorMessage error="Vek od 1 do 30 rokov" />}
           </FormInputWrapper>

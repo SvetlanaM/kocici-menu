@@ -59,6 +59,8 @@ const CatBasicInfo = ({ cat }: CatBasicInfoProps) => {
             ? i18next.t('years.key', {
                 count: cat.age,
               })
+            : cat.age === 0
+            ? 'do 1 roku'
             : '--'}
         </p>
       </div>

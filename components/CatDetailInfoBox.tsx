@@ -146,6 +146,7 @@ const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
                     age: data.age,
                     weight: data.weight,
                     name: data.name,
+                    gender: data.gender,
                   }}
                 >
                   <a> Napísať</a>
