@@ -204,6 +204,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
       };
 
       try {
+        setIsActive(true);
         const result = await createCat({
           variables,
 
@@ -355,6 +356,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
       };
 
       try {
+        setIsActive(true);
         const result = await updateCat({
           variables: {
             cats: setCatInput,
@@ -646,14 +648,15 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
       reviewUpdatedData
     ) => {
       if (isEditCat()) {
-        setIsActive(true);
         return await setTimeout(
           () => updateMyCat(catData, reviewData, reviewUpdatedData),
-          20
+          200
         );
       } else {
-        setIsActive(true);
-        return await createNewCat(catData, reviewData, reviewUpdatedData);
+        return await setTimeout(
+          () => createNewCat(catData, reviewData, reviewUpdatedData),
+          200
+        );
       }
     },
     [createNewCat, updateMyCat, isActive, isEditCat]
