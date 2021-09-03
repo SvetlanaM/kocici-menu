@@ -422,7 +422,6 @@ const CatForm = ({
             imageUrl={watchedCatImage ? watchedCatImage : catImage}
             openFileDialog={openFileDialog}
             isLoading={isLoading}
-            buttonText={buttonText}
             resetPhoto={resetPhoto}
           />
           <Controller
