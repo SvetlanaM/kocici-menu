@@ -24,8 +24,9 @@ import DoctorExportLink from './DoctorExportLink';
 import { BackLinkType } from "../utils/backlinks";
 interface CatDetailInfoBoxProps {
   data: CatDetailFieldsFragmentFragment;
+  onEditCat: () => void
 }
-const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
+const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [catId, setCatId] = useState<number>(data.id);
 
@@ -179,7 +180,7 @@ const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
                 }}
                 //as={`/my-cats/${encodeURIComponent(data.slug)}`}
             >
-              Upraviť mačku
+              <a onClick={onEditCat}>Upraviť mačku</a>
             </Link>
           </p>
         </div>
