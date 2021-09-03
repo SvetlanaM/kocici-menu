@@ -50,7 +50,6 @@ interface CatFormInterface {
   catData?: CatFieldsFragmentFragment;
   products?: GetProductsQuery['products'];
   loading?: boolean;
-  buttonText?: string;
 }
 
 type CatFormProduct = {
@@ -63,7 +62,6 @@ const CatForm = ({
   submitText,
   catData,
   products,
-  buttonText,
   loading,
 }: CatFormInterface) => {
   const catImage = useMemo<string>(
