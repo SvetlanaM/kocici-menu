@@ -4,9 +4,10 @@ import InnerContainer from './InnerContainer';
 import { GetDashboardQuery, GetTipsQuery } from '../graphql/generated/graphql';
 import truncateText from '../utils/truncateText';
 import FormInput from './FormInput';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useSearch from '../hooks/useSearch';
 import Image from './Image';
+
 interface TipProps {
   data: GetDashboardQuery['tips'] | GetTipsQuery['tips'];
   cols: string;
@@ -16,8 +17,7 @@ interface TipProps {
 const calculateReadingTime = (readingText: string): number => {
   const avgReadingTime = 250;
   const words = readingText.trim().split(/\s+/).length;
-  const time = Math.ceil(words / avgReadingTime);
-  return time;
+  return Math.ceil(words / avgReadingTime);
 };
 
 const TipsList = ({ data, cols, isOnDashboard }: TipProps) => {
