@@ -6,7 +6,7 @@ const AddCatBox = ({ backlink } : { backlink: BackLinkType }) => {
     <div className="relative">
       <div className="flex pt-6 pb-6 xxl-custom:pt-9 xxl-custom:pb-9 pl-4 border-rounded-base border-yellow bg-yellow-light add-cat">
         <Link href={{
-                    pathname: "/my-cats/new-cat?backlink",
+                    pathname: "/my-cats/new-cat",
                     query: { backlink: backlink }
                 }}
               //as={"/my-cats/new-cat"}
