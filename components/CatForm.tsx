@@ -55,10 +55,7 @@ interface CatFormInterface {
 
 type CatFormProduct = {
   product: SelectProductFieldsFragment;
-  rating: {
-    label: number;
-    value: string;
-  };
+  rating: number;
 };
 
 const CatForm = ({
@@ -93,10 +90,7 @@ const CatForm = ({
       image_url?: string;
       __typename?: 'Product';
     },
-    rating: {
-      label: number;
-      value: string;
-    }
+    rating: number
   ) => {
     return {
       product,
@@ -106,22 +100,21 @@ const CatForm = ({
 
   const review: Array<CatFormProduct> =
     catData &&
-    catData.reviews.map((item) => {
-      const sorted = item.products.reviewhistory;
-      return reviewFactory(
-        {
-          name: item.products.name,
-          id: item.products.id,
-          brand_type: item.products.brand_type,
-          image_url: item.products.image_url,
-          __typename: item.products.__typename,
-        },
-        {
-          label: sorted.map((item) => item.review_type)[0],
-          value: String(sorted.map((item) => item.review_type)[0]),
-        }
-      );
-    });
+    catData.reviews
+      .map((item) => {
+        const sorted = item.products.reviewhistory;
+        return reviewFactory(
+          {
+            name: item.products.name,
+            id: item.products.id,
+            brand_type: item.products.brand_type,
+            image_url: item.products.image_url,
+            __typename: item.products.__typename,
+          },
+          Number(sorted.map((item) => item.review_type)[0])
+        );
+      })
+      .sort((a, b) => b.rating - a.rating);
 
   const [userDefaultValues, setUserDefaultValues] = useState(review);
 
@@ -243,22 +236,19 @@ const CatForm = ({
       : [];
   }, [userProductsArrayMain, deletedReviews]);
 
-  const diff = useMemo(() => {
-    return (
-      userProductsArrayMain &&
-      review &&
-      userProductsArrayMain
-        .slice(0, review.length - deletedReviews.length)
-        .filter(
-          (x) =>
-            !review
-              .map((item) => item.rating.value)
-              .includes(x.value !== undefined && x.rating.value)
+  const diff =
+    userProductsArrayMain &&
+    userProductsArrayMain.filter(
+      ({ rating: id1, product: p1 }) =>
+        review &&
+        !review.some(
+          ({ rating: id2, product: p2 }) => id2 === id1 && p1.id === p2.id
         )
     );
-  }, [userProductsArrayMain, review, watchFieldArray, deletedReviews]);
 
-  let mergedInsertUpdate = newReviews && diff ? [...newReviews, ...diff] : [];
+  let mergedInsertUpdate = diff ? diff : [];
+
+  console.log(mergedInsertUpdate);
 
   useEffect(() => {
     setUpdateData(true), setUserDefaultValues(review);
@@ -285,7 +275,7 @@ const CatForm = ({
                   name: item.product.name,
                   __typename: item.product.__typename,
                 },
-                rating: { value: item.rating.value, label: item.rating.label },
+                rating: item.rating,
               };
             })
         );
@@ -323,10 +313,7 @@ const CatForm = ({
                   __typename:
                     item.product !== undefined && item.product.__typename,
                 },
-                rating: {
-                  value: item.rating !== undefined && item.rating.value,
-                  label: item.rating !== undefined && item.rating.label,
-                },
+                rating: item.rating !== undefined && item.rating,
               };
             })
             .filter((item) => item.product.id !== false)
@@ -394,7 +381,6 @@ const CatForm = ({
     [
       handleSubmit1,
       imageUrl,
-      newReviews,
       deletedReviews,
       diff,
       mergedInsertUpdate,
@@ -566,7 +552,7 @@ const CatForm = ({
           return (
             <div
               key={field.id}
-              className="flex flex-col xl-custom:flex-row justify-between xl-custom:items-center mb-5"
+              className="flex flex-col xl-custom:flex-row justify-between xl-custom:items-center mb-3"
             >
               <div className="w-full xl-custom:w-1/2 mb-5 xl-custom:mb-0 xl-custom:pr-3">
                 <ProductController
@@ -578,6 +564,7 @@ const CatForm = ({
                   {...register(`fieldArray.${index}.product` as const)}
                   defaultValue={field.product}
                   control={control}
+                  errors={errors}
                   showHint={false}
                   // isDisabled={
                   //   userDefaultValues &&
@@ -588,19 +575,20 @@ const CatForm = ({
                   // }
                 />
               </div>
-              <div className="pl-0 w-full xl-custom:w-2/6">
+              <div className="pl-0 w-full xl-custom:w-2/6 mb-5">
                 <RatingController
                   name={`fieldArray.${index}.rating`}
                   control={control}
                   defaultValue={field.rating}
                   isDisabled={false}
+                  errors={errors}
                   placeholder={'Vybrať hodnotenie (1-5)'}
                   {...register(`fieldArray.${index}.rating` as const)}
                 />
               </div>
               <button
                 type="button"
-                className="mt-5 text-left xl-custom:mt-8 text-red-500"
+                className="mt-5 text-left xl-custom:mt-5 text-red-500"
                 onClick={() => {
                   remove(index);
                   setIsRemoved(true);
@@ -611,6 +599,12 @@ const CatForm = ({
             </div>
           );
         })}
+        <div className="text-red-500 mb-4 -mt-2">
+          {errors.fieldArray &&
+            newReviews &&
+            'Pre nove polozky je hodnotenie povinne vyplnit, alebo ich odoberte'}
+        </div>
+
         <button
           type="button"
           className=" text-purple mb-3 font-semibold"

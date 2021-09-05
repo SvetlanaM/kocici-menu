@@ -6,15 +6,13 @@ interface RatingIconProps {
   index: number;
   rating: number;
   hoverRating: number;
-  onMouseEnter: (index: number) => void;
-  onMouseLeave: () => void;
-  onSaveRating: (index: number) => void;
-
+  onMouseEnter?: (index: number) => void;
+  onMouseLeave?: () => void;
+  onSaveRating?: (index: number) => void;
   isDisabled?: boolean;
 }
 
 const RatingIcon = (props: RatingIconProps) => {
-  console.log(props.rating);
   const fill = useMemo(() => {
     if (props.hoverRating >= props.index) {
       return true;
@@ -27,8 +25,6 @@ const RatingIcon = (props: RatingIconProps) => {
   return (
     <div
       className={`${!props.isDisabled ? 'cursor-pointer' : 'cursor-none'}`}
-      onMouseEnter={() => props.onMouseEnter(props.index)}
-      onMouseLeave={() => props.onMouseLeave()}
       onClick={() =>
         !props.isDisabled ? props.onSaveRating(props.index) : null
       }

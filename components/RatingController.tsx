@@ -1,7 +1,10 @@
+import { useCallback, useState } from 'react';
 import { Control, Controller, FieldValues } from 'react-hook-form';
 import Select, { components } from 'react-select';
 import { customStyles as style } from '../utils/formStyles';
+import ErrorScreen from './ErrorScreen';
 import FormInputLabel from './FormInputLabel';
+import RatingIcon from './RatingIcon';
 const customStyles = style;
 
 interface RatingControllerProps {
@@ -11,6 +14,7 @@ interface RatingControllerProps {
   isDisabled?: boolean;
   placeholder?: string;
   defaultValue?: string;
+  errors?: any;
 }
 interface RatingOption {
   value: number;
@@ -28,9 +32,9 @@ const ratingOptions = [
 const RatingController = ({
   name,
   control,
-  isDisabled,
-  placeholder,
   defaultValue,
+  isDisabled,
+  errors,
 }: RatingControllerProps) => {
   const onKeyDown = (e) => {
     if (e.keyCode === 13) {
@@ -40,25 +44,43 @@ const RatingController = ({
 
   return (
     <>
-      <div className="mb-2">
+      <div className="mb-5">
         <FormInputLabel name="Hodnotenie*" />
       </div>
       <Controller
         name={name}
         control={control}
-        rules={{ required: true }}
+        rules={{
+          required: { value: true, message: 'Heslo je povinne' },
+        }}
         defaultValue={defaultValue}
         render={({ field }) => (
-          <Select<RatingOption>
-            {...field}
-            styles={customStyles}
-            options={ratingOptions}
-            noOptionsMessage={() => 'Žiadne ďaľšie výsledky'}
-            isDisabled={isDisabled}
-            placeholder={placeholder}
-            isSearchable={true}
-            onKeyDown={onKeyDown}
-          />
+          <div className="flex items-center">
+            {[1, 2, 3, 4, 5].map((index) => {
+              return (
+                <span className="mr-1">
+                  <RatingIcon
+                    index={index}
+                    rating={field.value ? field.value : 0}
+                    hoverRating={field.value ? field.value : 0}
+                    onSaveRating={field.onChange}
+                    isDisabled={isDisabled}
+                  />
+                </span>
+              );
+            })}
+          </div>
+
+          // <Select<RatingOption>
+          //   {...field}
+          //   styles={customStyles}
+          //   options={ratingOptions}
+          //   noOptionsMessage={() => 'Žiadne ďaľšie výsledky'}
+          //   isDisabled={isDisabled}
+          //   placeholder="ahoj"
+          //   isSearchable={true}
+          //   onKeyDown={onKeyDown}
+          // />
         )}
       />
     </>

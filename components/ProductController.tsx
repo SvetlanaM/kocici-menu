@@ -52,7 +52,7 @@ const ProductController = ({
   isDisabled,
   errors,
 }: ProductControllerProps) => {
-  console.log(errors);
+  console.log(errors.fieldArray && errors.fieldArray);
   return (
     <>
       {showHint ? (

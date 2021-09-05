@@ -260,7 +260,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
             return reviewFactory(
               result.data?.insert_Cat?.returning.map((item) => item.id)[0],
               item.product.id,
-              String(item.rating.value)
+              String(item.rating)
             );
           });
 
@@ -269,7 +269,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
               return reviewFactory(
                 result.data?.insert_Cat?.returning.map((item) => item.id)[0],
                 item.product.id,
-                String(item.rating.value)
+                String(item.rating)
               );
             }
           );
@@ -405,10 +405,11 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
           const reviews: Review_Insert_Input =
             reviewUpdatedData.merged &&
             reviewUpdatedData.merged.map((item) => {
+              console.log(item);
               return reviewFactory(
                 result.data?.update_Cat?.returning.map((item) => item.id)[0],
                 item.product.id,
-                String(item.rating.value)
+                String(item.rating)
               );
             });
 
@@ -418,7 +419,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
               return reviewFactory(
                 result.data?.update_Cat?.returning.map((item) => item.id)[0],
                 item.product.id,
-                String(item.rating.value)
+                String(item.rating)
               );
             });
           const reviewVariables: AddReviewBulkMutationVariables = {
@@ -516,7 +517,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
               return reviewFactory(
                 result.data?.update_Cat?.returning.map((item) => item.id)[0],
                 item.product.id,
-                String(item.rating.value)
+                String(item.rating)
               );
             });
 
@@ -634,7 +635,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
           return false;
         }
       } catch (e) {
-        console.log(e);
+        console.log(e.message);
         return false;
       }
     },
@@ -648,15 +649,9 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
       reviewUpdatedData
     ) => {
       if (isEditCat()) {
-        return await setTimeout(
-          () => updateMyCat(catData, reviewData, reviewUpdatedData),
-          200
-        );
+        return await updateMyCat(catData, reviewData, reviewUpdatedData);
       } else {
-        return await setTimeout(
-          () => createNewCat(catData, reviewData, reviewUpdatedData),
-          200
-        );
+        return await createNewCat(catData, reviewData, reviewUpdatedData);
       }
     },
     [createNewCat, updateMyCat, isActive, isEditCat]
