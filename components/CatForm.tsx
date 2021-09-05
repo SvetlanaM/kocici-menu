@@ -193,8 +193,12 @@ const CatForm = ({
                 .map((item) => item.product !== undefined && item.product.id)
                 .includes(x.product !== undefined && x.product.id)
           )
+      : userDefaultValues.length === 0
+      ? review
       : [];
-  }, [userDefaultValues]);
+  }, [userProductsArrayMain]);
+
+  console.log('deletedReviews', deletedReviews);
 
   useEffect(() => {
     let userProductsArray =

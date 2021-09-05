@@ -521,55 +521,6 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
               );
             });
 
-          const deleteOneByOne = (reviews) => {
-            for (const review of reviews) {
-              deleteReview({
-                variables: {
-                  cat_id: review.cat_id,
-                  product_id: review.product_id,
-                },
-                refetchQueries: [
-                  {
-                    query: DASHBOARD_QUERY,
-                    variables: {
-                      limitTips: TIP_LIMIT,
-                      user_id: getUser(),
-                    },
-                  },
-                  {
-                    query: CATS_DETAIL_QUERY,
-                    variables: {
-                      user_id: getUser(),
-                      limit: 5,
-                      withProducts: true,
-                    },
-                  },
-                  {
-                    query: CATS_QUERY,
-                    variables: {
-                      withProducts: true,
-                      user_id: getUser(),
-                      limit: 2,
-                    },
-                  },
-                  {
-                    query: USER_STATS_QUERY,
-                    variables: {
-                      user_id: getUser(),
-                      updated_at: lastWeek,
-                    },
-                  },
-                  {
-                    query: REVIEWS_QUERY,
-                    variables: {
-                      user_id: getUser(),
-                    },
-                  },
-                ],
-              });
-            }
-          };
-
           const deleteResult = await Promise.all(
             deletedReviews.map((review) => {
               deleteReview({
@@ -620,8 +571,6 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
           ).then(() => {
             return true;
           });
-
-          // const deleteResult = await deleteOneByOne(deletedReviews);
 
           if (
             (resultReview.data?.insert_Review?.returning &&
