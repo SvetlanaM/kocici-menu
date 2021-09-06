@@ -35,7 +35,7 @@ const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
 
   const watchedBrand: GetReviewsQuery['selectBrands'] = watch('brand');
   const watchedCat: GetReviewsQuery['selectCats'] = watch('cat');
-  const watchedRating: RatingOption = watch('rating');
+  const watchedRating: RatingOption[] = watch('rating');
 
   useEffect(() => onFilter(), [watchedBrand, watchedCat, watchedRating]);
 

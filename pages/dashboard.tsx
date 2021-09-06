@@ -1,13 +1,16 @@
-import AddCatBox from '../components/AddCatBox';
-import CatsList from '../components/CatsList';
-import Container from '../components/Container';
-import Layout from '../components/Layout';
-import Sidebar from '../components/Sidebar';
-import StatisticsList from '../components/StatisticsList';
-import TipsList from '../components/TipsList';
-import Title from '../components/Title';
-import TopFiveTable from '../components/TopFiveTable';
+import AddCatBox from '../components/AddCatBox'
+import CatsList from '../components/CatsList'
+import Container from '../components/Container'
+import Layout from '../components/Layout'
+import Sidebar from '../components/Sidebar'
+import StatisticsList from '../components/StatisticsList'
+import TipsList from '../components/TipsList'
+import Title from '../components/Title'
+import TopFiveTable from '../components/TopFiveTable'
 import {
+  GetCatsQueryVariables,
+  GetDashboardQueryVariables,
+  useGetCatsQuery,
   useGetDashboardQuery,
   useGetCatsQuery,
   GetDashboardQueryVariables,
