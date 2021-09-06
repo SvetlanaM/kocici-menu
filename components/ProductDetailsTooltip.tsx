@@ -66,6 +66,21 @@ const getQualityImage = (
     : '/icons/sad-cat.svg';
 };
 
+const allovedValues = [
+  'Tuk',
+  'Jód',
+  'Měď',
+  'Železo',
+  'Vlhkost',
+  'Draslík',
+  'Vápník',
+  'Bílkovina',
+  'Hořčík',
+  'Hrubá vláknina',
+  'Popel/popelovina',
+  'Cukr',
+];
+
 const ProductDetailsTooltipBox = ({ data }: ProductDetailsTooltipBoxProps) => {
   return (
     <div className="grid divide-y divide-gray_lightest">
@@ -74,21 +89,23 @@ const ProductDetailsTooltipBox = ({ data }: ProductDetailsTooltipBoxProps) => {
       )}
       {data.analysis_variant
         ? Object.entries(data.analysis_variant).map((item) => {
-            return (
+            return allovedValues.indexOf(String(setUppercaseTitle(item[0]))) >
+              -1 ? (
               <ToolTipBody
                 itemName={String(setUppercaseTitle(item[0]))}
                 item={`${item[1]} %`}
               />
-            );
+            ) : null;
           })
         : data.analysis_main
         ? Object.entries(data.analysis_main).map((item) => {
-            return (
+            return allovedValues.indexOf(String(setUppercaseTitle(item[0]))) >
+              -1 ? (
               <ToolTipBody
                 itemName={String(setUppercaseTitle(item[0]))}
                 item={`${item[1]} %`}
               />
-            );
+            ) : null;
           })
         : null}
 
