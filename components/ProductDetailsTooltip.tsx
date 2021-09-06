@@ -83,7 +83,7 @@ const allovedValues = [
 
 const ProductDetailsTooltipBox = ({ data }: ProductDetailsTooltipBoxProps) => {
   return (
-    <div className="grid divide-y divide-gray_lightest">
+    <div className="grid divide-y divide-gray_lightest" key={data.id}>
       {data.rating && (
         <ToolTipBody itemName="Avg. hodnotenie:" item={data.rating} />
       )}

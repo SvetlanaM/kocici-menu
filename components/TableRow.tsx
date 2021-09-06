@@ -84,7 +84,7 @@ const TableRow = ({
       <td className="text-center px-10 xl-custom:px-2">
         <div className="flex flex-row justify-items-center justify-center">
           {reviewArray.map((review, key) => (
-            <span className="mr-1">
+            <span className="mr-1" key={key}>
               <StarIcon
                 key={key}
                 isChecked={review <= Number(review_type) ? true : false}

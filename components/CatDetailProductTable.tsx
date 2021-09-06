@@ -1,22 +1,12 @@
-import ProductImage from './ProductImage';
-import ProductName from './ProductName';
 import Image from './Image';
 import Title from './Title';
 import { Line } from 'react-chartjs-2';
 import FavouriteProducts from './FavouriteProducts';
 import { gql } from '@apollo/client';
-import { useEffect, useState } from 'react';
-import {
-  CatDetailFieldsFragmentFragment,
-  CatFieldsFragmentFragment,
-  GetCatDetailQuery,
-  GetProductsQuery,
-  ProductFieldsFragmentFragment,
-  SelectCatFieldsFragment,
-} from '../graphql/generated/graphql';
+import React, { useState } from 'react';
+import { GetProductsQuery, SelectCatFieldsFragment, } from '../graphql/generated/graphql';
 import AddProductReviewModal from './AddProductReviewModal';
 import Link from 'next/link';
-import truncateText from '../utils/truncateText';
 import NoReviews from './NoReviews';
 
 export const ProductFieldsFragment = gql`
@@ -174,7 +164,7 @@ const CatDetailProductTable = ({
         <div className="border-rounded-base border-gray">
           <div className="grid divide-y divide-gray_lightest">
             {data.map((item, index) => (
-              <>
+              <React.Fragment key={item.id}>
                 <div className="pt-2 flex pb-1 justify-between items-center">
                   <div className="w-full">
                     <FavouriteProducts key={item.id} product={item} />
@@ -208,7 +198,7 @@ const CatDetailProductTable = ({
                     )}
                   </div>
                 </div>
-              </>
+              </React.Fragment>
             ))}
           </div>
         </div>

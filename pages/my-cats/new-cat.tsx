@@ -57,6 +57,7 @@ import { GeneralError } from '../../components/ErrorScreen';
 import { TIP_LIMIT } from '../../utils/constants';
 import DateFormatObject from '../../utils/getFormatDate';
 import links from '../../utils/backlinks';
+import useLocalStorage, { LocalStorageKey } from "../../hooks/useLocalStorage";
 
 interface CreateCatProps {
   onClickTrigger?: () => void;
@@ -79,7 +80,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
       data: productData,
       error: productError,
       loading: productLoading,
-    } = useGetProductsQuery({ skip: isActive });
+    } = useGetProductsQuery({ skip: isSaving });
 
     return (
       <Center>
@@ -94,7 +95,6 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
             handleSubmit1={handleSubmit1}
             submitText={title}
             products={productData.products}
-            buttonText={'Nahrať fotku'}
           />
         ) : (
           <Loading />
@@ -104,7 +104,12 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
   };
 
   let numberPattern = /\d+/g;
-  const [isActive, setIsActive] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  let [, setSavedCat] = useLocalStorage(
+      LocalStorageKey.SELECTED_CAT,
+      0
+  );
+
   const EditCatForm = () => {
     const {
       data: catData,
@@ -116,13 +121,13 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
         withProducts: true,
         id: Number(String(id).match(numberPattern)),
       },
-      skip: isActive,
+      skip: isSaving,
 
       // pollInterval: 500,
     });
 
     const { data: productData, loading: productLoading } = useGetProductsQuery({
-      skip: isActive,
+      skip: isSaving,
       // pollInterval: 500,
     });
 
@@ -137,7 +142,6 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
             submitText={title}
             catData={catData.cat}
             products={productData.products.slice(1, 1000)}
-            buttonText={'Zmeniť fotku'}
           />
         ) : (
           <Loading />
@@ -204,7 +208,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
       };
 
       try {
-        setIsActive(true);
+        setIsSaving(true);
         const result = await createCat({
           variables,
 
@@ -319,6 +323,9 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
               },
             ],
           });
+
+          setSavedCat(result.data?.insert_Cat?.returning[0].id ?? 0)
+
           if (
             resultReview.data?.insert_Review?.returning &&
             resultReviewHistory.data?.insert_ReviewHistory?.returning
@@ -356,7 +363,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
       };
 
       try {
-        setIsActive(true);
+        setIsSaving(true);
         const result = await updateCat({
           variables: {
             cats: setCatInput,
@@ -603,7 +610,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
         return await createNewCat(catData, reviewData, reviewUpdatedData);
       }
     },
-    [createNewCat, updateMyCat, isActive, isEditCat]
+    [createNewCat, updateMyCat, isSaving, isEditCat]
   );
 
   const title = isEditCat() ? links.edit_cat.name : links.create_cat.name;

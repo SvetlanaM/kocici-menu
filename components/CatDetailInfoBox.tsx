@@ -21,10 +21,12 @@ import { TIP_LIMIT } from '../utils/constants';
 import { getUser } from '../utils/user';
 import DateFormatObject from '../utils/getFormatDate';
 import DoctorExportLink from './DoctorExportLink';
+import { BackLinkType } from "../utils/backlinks";
 interface CatDetailInfoBoxProps {
   data: CatDetailFieldsFragmentFragment;
+  onEditCat: () => void
 }
-const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
+const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [catId, setCatId] = useState<number>(data.id);
 
@@ -171,8 +173,14 @@ const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
             width={20}
           />
           <p className="uppercase text-gray text-sm ml-2 font-light">
-            <Link href={`/my-cats/${encodeURIComponent(data.slug)}`}>
-              Upraviť mačku
+            <Link
+                href={{
+                  pathname: "/my-cats/[slug]",
+                  query: { slug: data.slug, backlink: BackLinkType.MY_CATS }
+                }}
+                //as={`/my-cats/${encodeURIComponent(data.slug)}`}
+            >
+              <a onClick={onEditCat}>Upraviť mačku</a>
             </Link>
           </p>
         </div>
