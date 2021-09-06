@@ -5,10 +5,11 @@ import LoadingImage from './LoadingImage';
 interface ProductImageProps {
   src: string;
   alt: string;
+  type?: string;
   [otherProps: string]: any;
 }
 
-const ProductImage = ({ src, alt, ...otherProps }: ProductImageProps) => {
+const ProductImage = ({ src, alt, type, ...otherProps }: ProductImageProps) => {
   const [urlError, setUrlError] = useState<boolean>(true);
 
   const onError = () => {
@@ -31,7 +32,10 @@ const ProductImage = ({ src, alt, ...otherProps }: ProductImageProps) => {
       height={55}
       placeholder={productImage}
       quality={100}
-      className="ml-3.5"
+      className={
+        type !== 'search' ? 'ml-3.5' : 'object-fill h-10 w-10 mr-4 float-right'
+      }
+      type={type}
     />
   );
 };

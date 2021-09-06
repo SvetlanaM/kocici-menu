@@ -9,16 +9,22 @@ import { SVETA_EMAIL } from '../utils/constants';
 import Link from 'next/link';
 import FormInputLabel from './FormInputLabel';
 import FormErrorMessage from './FormErrorMessage';
+import ProductImage from './ProductImage';
 const customStyles = style;
 
 const Option = ({ children, ...props }) => {
   return (
     <components.Option {...props}>
-      <div className="mr-3 flex flex-row items-center cursor-pointer">
+      <div className="mr-4 flex flex-row items-center cursor-pointer">
         {props.data.__typename === 'Product' && (
-          <img
+          // <img
+          //   src={props.data.image_url}
+          //   className="object-fill h-10 w-10 mr-4 float-right"
+          // />
+          <ProductImage
             src={props.data.image_url}
-            className="object-fill h-10 w-10 mr-4 float-right"
+            alt={props.data.name}
+            type="search"
           />
         )}
         {children}

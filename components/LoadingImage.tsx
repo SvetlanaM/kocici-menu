@@ -7,6 +7,7 @@ type LoadingImageProps = {
   height?: number;
   alt?: string;
   placeholder?: string;
+  type?: string;
   customStyle?: string;
   [otherProps: string]: string | number | undefined;
 };
@@ -17,6 +18,7 @@ export default function LoadingImage({
   height,
   alt,
   placeholder,
+  type,
   customStyle,
   ...otherProps
 }: LoadingImageProps): JSX.Element {
@@ -45,7 +47,11 @@ export default function LoadingImage({
   return (
     <>
       <div
-        className={`cat-image justify-center items-center flex ${customStyle}`}
+        className={
+          type !== 'search'
+            ? `cat-image justify-center items-center flex ${customStyle}`
+            : 'object-fill h-10 w-10 mr-4 float-right'
+        }
         style={
           imageStatus !== Status.loading
             ? { display: 'none' }
