@@ -186,17 +186,17 @@ const CatForm = ({
 
   const deletedReviews = useMemo(() => {
     return userProductsArrayMain && userProductsArrayMain
-      ? review &&
+      ? userProductsArrayMain.length > 1
+        ? review &&
           review.filter(
             (x) =>
               !userProductsArrayMain
                 .map((item) => item.product !== undefined && item.product.id)
                 .includes(x.product !== undefined && x.product.id)
           )
-      : userDefaultValues.length === 0
-      ? review
+        : review
       : [];
-  }, [userProductsArrayMain]);
+  }, [userDefaultValues]);
 
   console.log('deletedReviews', deletedReviews);
 

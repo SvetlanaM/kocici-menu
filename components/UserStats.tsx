@@ -49,11 +49,13 @@ const UserStats = ({ data }: UserStatsProps) => {
       (data && [
         {
           labels: 'Počet mačiek',
-          data_values: data.user_stats[0].count_of_cats || '--',
+          data_values:
+            (data.user_stats[0] && data.user_stats[0].count_of_cats) || '--',
         },
         {
           labels: 'Počet hodnotení',
-          data_values: data.user_stats[0].count_of_reviews || '--',
+          data_values:
+            (data.user_stats[0] && data.user_stats[0].count_of_reviews) || '--',
         },
         {
           labels: 'Preferovaný eshop',
