@@ -4,8 +4,10 @@ import { BackLinkType } from '../utils/backlinks';
 const AddCatBox = ({ backlink }: { backlink: BackLinkType }) => {
   return (
     <Link
-      href={`/my-cats/new-cat?backlink=${backlink}`}
-      as={'/my-cats/new-cat'}
+      href={{
+        pathname: '/my-cats/new-cat',
+        query: { backlink: backlink },
+      }}
     >
       <a>
         <div className="relative">
