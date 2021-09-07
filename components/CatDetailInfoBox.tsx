@@ -149,7 +149,7 @@ const CatDetailInfoBox = ({ data }: CatDetailInfoBoxProps) => {
                     gender: data.gender,
                   }}
                 >
-                  <a> Napísať</a>
+                  <a className="hover:text-purple-light"> Napísať</a>
                 </DoctorExportLink>
               ) : (
                 ' --'

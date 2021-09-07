@@ -13,12 +13,12 @@ const CatFilter = ({ cats, setCatFunction, selectedCat }: CatFilterProps) => {
   const [catId, setCatId] = useState<number>(selectedCat);
 
   useEffect(() => {
-    let newCatId = catId
+    let newCatId = catId;
     if (!cats.some((cat) => cat.id === catId)) {
-      newCatId = cats[0].id
+      newCatId = cats[0].id;
     }
-    setCatId(newCatId)
-    setCatFunction(newCatId)
+    setCatId(newCatId);
+    setCatFunction(newCatId);
   }, [cats]);
 
   // useEffect(() => {
@@ -52,7 +52,7 @@ const CatFilter = ({ cats, setCatFunction, selectedCat }: CatFilterProps) => {
                 className={
                   cat.id === selectedCat
                     ? 'text-purple mr-3 flex-auto'
-                    : 'text-gray mr-3 flex-auto'
+                    : 'text-gray mr-3 flex-auto hover:text-purple-light'
                 }
                 onClick={() => {
                   setCatFunction(cat.id);

@@ -15,6 +15,7 @@ import {
 } from '@apollo/client';
 
 import { setContext } from '@apollo/client/link/context';
+import Meta from '../components/Meta';
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   operation.setContext(({ headers }) => {
@@ -53,6 +54,7 @@ function MyApp({ Component, pageProps, router }: AppProps) {
     <IdentityContextProvider url="https://catappreact.netlify.app/">
       <ProtectedRoutes router={router}>
         <ApolloProvider client={ApiClient}>
+          <Meta />
           <Component {...pageProps} />
         </ApolloProvider>
       </ProtectedRoutes>

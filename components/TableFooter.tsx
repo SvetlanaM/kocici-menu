@@ -41,7 +41,7 @@ const TableFooter = ({
         </td>
         <td className="pr-3.6 text-sm font-light text-gray text-right">
           <Link href="/products">
-            <a>Zobraziť všetky</a>
+            <a className="hover:text-gray-dark">Zobraziť všetky</a>
           </Link>
         </td>
       </tr>

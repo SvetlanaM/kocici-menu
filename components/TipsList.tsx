@@ -46,7 +46,7 @@ const TipsList = ({ data, cols, isOnDashboard }: TipProps) => {
               defaultValue={searchTerm}
             />
             {searchTerm !== '' && (
-              <a onClick={() => setSearchTerm('')}>
+              <a onClick={() => setSearchTerm('')} className="cursor-pointer">
                 <Image
                   src={'/icons/cancel.svg'}
                   width={12}
