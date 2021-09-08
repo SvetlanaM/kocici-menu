@@ -14,7 +14,7 @@ const PaginationTable = ({
   title,
   numberOfProducts,
 }: PaginationTableProps) => {
-  const offset = 3;
+  const offset = 10;
   const allPageNumber = Math.ceil(numberOfProducts / offset);
   const reviewsCopy = [...reviews];
   const [actualPageNumber, setActualPageNumber] = useState<number>(1);
