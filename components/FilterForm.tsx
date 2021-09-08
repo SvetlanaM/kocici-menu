@@ -9,8 +9,8 @@ import {
   Review,
   Cat,
   ReviewType,
-  BrandType,
-} from '../graphql/generated/graphql';
+  BrandType, ProductType, SelectProductTypeFieldsFragment,
+} from '../graphql/generated/graphql'
 import PaginationTable from './PaginationTable';
 import { customStyles as style } from '../utils/formStyles';
 import { useState } from 'react';
@@ -20,13 +20,15 @@ import LeftContainer from './LeftContainer';
 import Title from './Title';
 import { useTranslation } from 'react-i18next';
 import sk from '../public/locales/sk/common.json';
+
 interface FilterFormProps {
   selectCats: GetReviewsQuery['selectCats'];
   selectBrands: GetReviewsQuery['selectBrands'];
   reviews: GetReviewsQuery['reviews'];
+  selectProductTypes: GetReviewsQuery['selectProductTypes'];
 }
 
-const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
+const FilterForm = ({ selectCats, selectBrands, reviews, selectProductTypes }: FilterFormProps) => {
   const { control, watch, setValue } = useForm();
   const { t } = useTranslation();
 
@@ -36,8 +38,9 @@ const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
   const watchedBrand: GetReviewsQuery['selectBrands'] = watch('brand');
   const watchedCat: GetReviewsQuery['selectCats'] = watch('cat');
   const watchedRating: RatingOption[] = watch('rating');
+  const watchedType: GetReviewsQuery['selectProductTypes'] = watch('type');
 
-  useEffect(() => onFilter(), [watchedBrand, watchedCat, watchedRating]);
+  useEffect(() => onFilter(), [watchedBrand, watchedCat, watchedRating, watchedType]);
 
   const onFilter = () => {
     let catFilterData = reviews;
@@ -65,11 +68,20 @@ const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
       );
     }
 
+    if (watchedType && watchedType.length > 0) {
+      catFilterData = catFilterData.filter(review =>
+          Object.values(watchedType)
+              .map((type: ProductType) => type.value)
+              .includes(review.product.product_type)
+      )
+    }
+
     if (watchedCat !== undefined) {
       if (
         watchedCat.length === 0 &&
         watchedRating.length === 0 &&
-        watchedBrand.length === 0
+        watchedBrand.length === 0 &&
+        watchedType.length === 0
       ) {
         setReviewData(reviews);
       } else {
@@ -81,7 +93,7 @@ const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
   const resetFilter = (e) => {
     e.preventDefault();
     setReviewData(reviews);
-    let fields = ['cat', 'brand', 'rating'];
+    let fields = ['cat', 'brand', 'rating', 'type'];
     for (let field of fields) {
       setValue(field, []);
     }
@@ -176,6 +188,25 @@ const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
                   placeholder={t(sk['by_rating'])}
                 />
               )}
+            />
+          </div>
+          <div className="mb-5">
+            <Controller
+                render={({ field, fieldState }) => (
+                    <Select<SelectProductTypeFieldsFragment, true>
+                        {...field}
+                        isMulti
+                        options={selectProductTypes}
+                        styles={customStyles}
+                        getOptionValue={ type => type.value }
+                        getOptionLabel={ type => type.comment}
+                        placeholder="Podľa typu krmiva"
+                        noOptionsMessage={() => 'Žiadne ďalšie výsledky'}
+                    />
+                )}
+                name="type"
+                control={control}
+                defaultValue={[]}
             />
           </div>
           {reviewData !== reviews ? (

@@ -37,6 +37,7 @@ const Products = () => {
             selectCats={reviewsData.selectCats}
             selectBrands={reviewsData.selectBrands}
             reviews={reviewsData?.reviews}
+            selectProductTypes={reviewsData.selectProductTypes}
           />
         </>
       )}
