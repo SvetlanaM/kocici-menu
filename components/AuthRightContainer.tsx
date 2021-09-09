@@ -34,16 +34,16 @@ const AuthRightContainer = ({
         <p className="mt-2 font-light">
           {subtitle}{' '}
           <Link href={link.url}>
-            <a className="text-purple-light">{link.name}</a>
+            <a className="text-purple-light hover:underline">{link.name}</a>
           </Link>
         </p>
       </div>
       <div className="mt-5 w-full">{form}</div>
       {buttonInfo && (
-        <div className="text-purple-light text-sm font-light">
+        <div className="text-gray text-sm leading-normal font-light">
           Problém s prihlásením?{' '}
           <Link href={`mailto: ${SVETA_EMAIL}`}>
-            <a>Napíšte mi :)</a>
+            <a className="text-purple-light hover:text-purple">Napíšte mi :)</a>
           </Link>
         </div>
       )}

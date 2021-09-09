@@ -5,7 +5,7 @@ import FormInputWrapper from './FormInputWrapper';
 import FormInputLabel from './FormInputLabel';
 import FormInput from './FormInput';
 import SubmitButton from './SubmitButton';
-
+import Link from 'next/link';
 import { useIdentityContext } from 'react-netlify-identity';
 import { useState } from 'react';
 
@@ -176,6 +176,22 @@ const AuthForm = ({
         </div>
 
         <SubmitButton text={submitText} disabled={false} size="w-full" />
+        {authMethod === 'signupUser' ? (
+          <div className="text-gray text-sm leading-normal font-light">
+            Registraciou souhlasím s{' '}
+            <Link href="/terms-and-conditions">
+              <a target="new" className="text-purple-light hover:text-purple">
+                podmínkami
+              </a>
+            </Link>{' '}
+            a beru na vědomí{' '}
+            <Link href="/gdpr-conditions">
+              <a target="new" className="text-purple-light hover:text-purple">
+                ochranu svých osobních údajů.
+              </a>
+            </Link>
+          </div>
+        ) : null}
       </form>
     </div>
   );
