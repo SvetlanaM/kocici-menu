@@ -42,8 +42,9 @@ const FilterForm = ({ selectCats, selectBrands, reviews, selectProductTypes }: F
 
   const rangeDefault = [0, 100]
   const [ watchedProtein, setWatchedProtein ] = useState(rangeDefault)
+  const [ watchedFat, setWatchedFat ] = useState(rangeDefault)
 
-  useEffect(() => onFilter(), [watchedBrand, watchedCat, watchedRating, watchedType, watchedProtein]);
+  useEffect(() => onFilter(), [watchedBrand, watchedCat, watchedRating, watchedType, watchedProtein, watchedFat]);
 
   const onFilter = () => {
     let catFilterData = reviews;
@@ -86,21 +87,17 @@ const FilterForm = ({ selectCats, selectBrands, reviews, selectProductTypes }: F
           }
       )
     }
-    console.log(watchedProtein)
-    console.log(catFilterData)
+
+    if (rangeFilterActive(watchedFat)) {
+      catFilterData = catFilterData.filter(review => {
+            const fat = review.product.analysis_variant['tuk']
+            return fat && watchedFat[0] <= fat && watchedFat[1] >= fat
+          }
+      )
+    }
 
     if (watchedCat !== undefined) {
-      if (
-        watchedCat.length === 0 &&
-        watchedRating.length === 0 &&
-        watchedBrand.length === 0 &&
-        watchedType.length === 0 &&
-        !rangeFilterActive(watchedProtein)
-      ) {
-        setReviewData(reviews);
-      } else {
-        setReviewData(catFilterData);
-      }
+      setReviewData(catFilterData)
     }
   };
 
@@ -115,8 +112,9 @@ const FilterForm = ({ selectCats, selectBrands, reviews, selectProductTypes }: F
   };
 
   const resetRangeFilters = () => {
-    ['protein'].forEach(field => setValue(field, rangeDefault))
+    ['protein', 'fat'].forEach(field => setValue(field, rangeDefault))
     setWatchedProtein(rangeDefault)
+    setWatchedFat(rangeDefault)
   }
 
   const rangeFilterActive = (value?: number[]) => value && value.length === 2 && (value[0] !== 0 || value[1] !== 100)
@@ -247,6 +245,26 @@ const FilterForm = ({ selectCats, selectBrands, reviews, selectProductTypes }: F
                     />
                 )}
                 name="protein"
+                control={control}
+                defaultValue={rangeDefault}
+            />
+          </div>
+          <div className="mb-5 mx-3">
+            <Controller
+                render={({ field }) => (
+                    <RangeInput
+                        {...field}
+                        onFinalChange={(value) => {
+                          setWatchedFat(value)
+                        }}
+                        value={field.value}
+                        min={0}
+                        max={100}
+                        step={1}
+                        label={"Podľa obsahu tukov"}
+                    />
+                )}
+                name="fat"
                 control={control}
                 defaultValue={rangeDefault}
             />

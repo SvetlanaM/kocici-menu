@@ -1,4 +1,5 @@
 import { getTrackBackground, Range } from 'react-range'
+import { forwardRef } from 'react'
 
 interface RangeInputProps {
     value: number[]
@@ -11,7 +12,8 @@ interface RangeInputProps {
     rest?: any
 }
 
-const RangeInput = (
+const RangeInput = forwardRef(
+    (
         {
             value,
             onChange,
@@ -21,7 +23,8 @@ const RangeInput = (
             step,
             label,
             ...rest
-        }: RangeInputProps
+        }: RangeInputProps,
+        ref
     ) => {
         return (
             <>
@@ -86,5 +89,6 @@ const RangeInput = (
                 </>
         );
     }
+)
 
 export default RangeInput;
