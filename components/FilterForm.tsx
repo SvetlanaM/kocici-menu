@@ -35,16 +35,17 @@ const FilterForm = ({ selectCats, selectBrands, reviews, selectProductTypes }: F
   const [reviewData, setReviewData] =
     useState<GetReviewsQuery['reviews']>(reviews);
 
-  const watchedBrand: GetReviewsQuery['selectBrands'] = watch('brand');
-  const watchedCat: GetReviewsQuery['selectCats'] = watch('cat');
-  const watchedRating: RatingOption[] = watch('rating');
-  const watchedType: GetReviewsQuery['selectProductTypes'] = watch('type');
+  const watchedBrand: GetReviewsQuery['selectBrands'] = watch('brand')
+  const watchedCat: GetReviewsQuery['selectCats'] = watch('cat')
+  const watchedRating: RatingOption[] = watch('rating')
+  const watchedEshopRating: RatingOption[] = watch('eshopRating')
+  const watchedType: GetReviewsQuery['selectProductTypes'] = watch('type')
 
   const rangeDefault = [0, 100]
   const [ watchedProtein, setWatchedProtein ] = useState(rangeDefault)
   const [ watchedFat, setWatchedFat ] = useState(rangeDefault)
 
-  useEffect(() => onFilter(), [watchedBrand, watchedCat, watchedRating, watchedType, watchedProtein, watchedFat]);
+  useEffect(() => onFilter(), [watchedBrand, watchedCat, watchedRating, watchedType, watchedEshopRating, watchedProtein, watchedFat]);
 
   const onFilter = () => {
     let catFilterData = reviews;
@@ -70,6 +71,15 @@ const FilterForm = ({ selectCats, selectBrands, reviews, selectProductTypes }: F
           .map((brand: BrandType) => brand.comment)
           .includes(review.product.brand_type)
       );
+    }
+
+    if (watchedEshopRating && watchedEshopRating.length > 0) {
+      catFilterData = catFilterData.filter((review) => {
+        const rating = review.product.rating
+        return rating && watchedEshopRating
+            .map((rating) => rating.value)
+            .includes(rating)
+      });
     }
 
     if (watchedType && watchedType.length > 0) {
@@ -104,7 +114,7 @@ const FilterForm = ({ selectCats, selectBrands, reviews, selectProductTypes }: F
   const resetFilter = (e) => {
     e.preventDefault();
     setReviewData(reviews);
-    let fields = ['cat', 'brand', 'rating', 'type'];
+    let fields = ['cat', 'brand', 'rating', 'type', 'eshopRating'];
     for (let field of fields) {
       setValue(field, []);
     }
@@ -220,13 +230,30 @@ const FilterForm = ({ selectCats, selectBrands, reviews, selectProductTypes }: F
                         styles={customStyles}
                         getOptionValue={ type => type.value }
                         getOptionLabel={ type => type.comment}
-                        placeholder="Podľa typu krmiva"
+                        placeholder="Typu krmiva"
                         noOptionsMessage={() => 'Žiadne ďalšie výsledky'}
                     />
                 )}
                 name="type"
                 control={control}
                 defaultValue={[]}
+            />
+          </div>
+          <div className="mb-5">
+            <Controller
+                name="eshopRating"
+                control={control}
+                defaultValue={[]}
+                render={({ field }) => (
+                    <Select<RatingOption, true>
+                        {...field}
+                        isMulti
+                        styles={customStyles}
+                        options={ratingOptions}
+                        noOptionsMessage={() => 'Žiadne ďaľšie výsledky'}
+                        placeholder={'Recenzií eshopu'}
+                    />
+                )}
             />
           </div>
           <div className="mb-5 mx-3">
@@ -241,7 +268,7 @@ const FilterForm = ({ selectCats, selectBrands, reviews, selectProductTypes }: F
                         min={0}
                         max={100}
                         step={1}
-                        label={"Podľa obsahu bielkovin"}
+                        label={"Obsahu bielkovin"}
                     />
                 )}
                 name="protein"
@@ -261,7 +288,7 @@ const FilterForm = ({ selectCats, selectBrands, reviews, selectProductTypes }: F
                         min={0}
                         max={100}
                         step={1}
-                        label={"Podľa obsahu tukov"}
+                        label={"Obsahu tukov"}
                     />
                 )}
                 name="fat"
