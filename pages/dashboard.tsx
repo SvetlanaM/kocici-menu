@@ -8,24 +8,20 @@ import TipsList from '../components/TipsList'
 import Title from '../components/Title'
 import TopFiveTable from '../components/TopFiveTable'
 import {
-  GetCatsQueryVariables,
+  GetCatsQueryVariables, GetDashboardQuery,
   GetDashboardQueryVariables,
   useGetCatsQuery,
   useGetDashboardQuery,
-  useGetCatsQuery,
-  GetDashboardQueryVariables,
-  GetCatsQueryVariables,
-} from '../graphql/generated/graphql';
-import Header from '../components/Head';
-import CenterContainer from '../components/CenterContainer';
-import LeftContainer from '../components/LeftContainer';
-import ErrorScreen from '../components/ErrorScreen';
-import Loading from '../components/Loading';
-import getTitle from '../utils/getTitle';
-import { TIP_LIMIT } from '../utils/constants';
-import { GeneralError } from '../components/ErrorScreen';
-import { getUser } from '../utils/user';
-import { BackLinkType } from '../utils/backlinks';
+} from '../graphql/generated/graphql'
+import Header from '../components/Head'
+import CenterContainer from '../components/CenterContainer'
+import LeftContainer from '../components/LeftContainer'
+import ErrorScreen, { GeneralError } from '../components/ErrorScreen'
+import Loading from '../components/Loading'
+import getTitle from '../utils/getTitle'
+import { TIP_LIMIT } from '../utils/constants'
+import { getUser } from '../utils/user'
+import { BackLinkType } from '../utils/backlinks'
 import { useTranslation } from 'react-i18next';
 import sk from '../public/locales/sk/common.json';
 //tu budu akoze ziskane macky uzivatela
@@ -52,7 +48,7 @@ const CenterContainerQuery = () => {
     },
   });
 
-  const arrToInstanceCountObj = (arr) =>
+  const arrToInstanceCountObj = (arr: GetDashboardQuery['fav_stats']) =>
     arr &&
     arr.reduce((obj, e) => {
       obj[e.brand_type] = (obj[e.brand_type] || 0) + 1;
@@ -60,7 +56,7 @@ const CenterContainerQuery = () => {
     }, {});
 
   const mostFavouriteByAll = arrToInstanceCountObj(
-    dashboardData && Object.values(dashboardData.fav_stats)
+    dashboardData && dashboardData.fav_stats
   );
 
   const mostFavouriteByAllOne =
