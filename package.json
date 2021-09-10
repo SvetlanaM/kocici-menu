@@ -34,6 +34,7 @@
         "react-i18next": "^11.8.12",
         "react-modal": "^3.13.1",
         "react-netlify-identity": "^0.2.5",
+        "react-range": "^1.8.11",
         "react-select": "^4.3.0",
         "react-slick": "^0.28.1",
         "react-tooltip": "^4.2.17"

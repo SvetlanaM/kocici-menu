@@ -1,7 +1,6 @@
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form'
 import SubmitButton from './SubmitButton';
 import Select from 'react-select';
-import NeutralButton from './NeutralButton';
 import {
   GetReviewsQuery,
   SelectCatFieldsFragment,
@@ -20,6 +19,7 @@ import LeftContainer from './LeftContainer';
 import Title from './Title';
 import { useTranslation } from 'react-i18next';
 import sk from '../public/locales/sk/common.json';
+import RangeInput from './RangeInput'
 
 interface FilterFormProps {
   selectCats: GetReviewsQuery['selectCats'];
@@ -40,7 +40,10 @@ const FilterForm = ({ selectCats, selectBrands, reviews, selectProductTypes }: F
   const watchedRating: RatingOption[] = watch('rating');
   const watchedType: GetReviewsQuery['selectProductTypes'] = watch('type');
 
-  useEffect(() => onFilter(), [watchedBrand, watchedCat, watchedRating, watchedType]);
+  const rangeDefault = [0, 100]
+  const [ watchedProtein, setWatchedProtein ] = useState(rangeDefault)
+
+  useEffect(() => onFilter(), [watchedBrand, watchedCat, watchedRating, watchedType, watchedProtein]);
 
   const onFilter = () => {
     let catFilterData = reviews;
@@ -70,18 +73,29 @@ const FilterForm = ({ selectCats, selectBrands, reviews, selectProductTypes }: F
 
     if (watchedType && watchedType.length > 0) {
       catFilterData = catFilterData.filter(review =>
-          Object.values(watchedType)
-              .map((type: ProductType) => type.value)
-              .includes(review.product.product_type)
+        Object.values(watchedType)
+          .map((type: ProductType) => type.value)
+          .includes(review.product.product_type)
       )
     }
+
+    if (rangeFilterActive(watchedProtein)) {
+      catFilterData = catFilterData.filter(review => {
+            const protein = review.product.analysis_variant['bílkovina']
+            return protein && watchedProtein[0] <= protein && watchedProtein[1] >= protein
+          }
+      )
+    }
+    console.log(watchedProtein)
+    console.log(catFilterData)
 
     if (watchedCat !== undefined) {
       if (
         watchedCat.length === 0 &&
         watchedRating.length === 0 &&
         watchedBrand.length === 0 &&
-        watchedType.length === 0
+        watchedType.length === 0 &&
+        !rangeFilterActive(watchedProtein)
       ) {
         setReviewData(reviews);
       } else {
@@ -97,7 +111,15 @@ const FilterForm = ({ selectCats, selectBrands, reviews, selectProductTypes }: F
     for (let field of fields) {
       setValue(field, []);
     }
+    resetRangeFilters()
   };
+
+  const resetRangeFilters = () => {
+    ['protein'].forEach(field => setValue(field, rangeDefault))
+    setWatchedProtein(rangeDefault)
+  }
+
+  const rangeFilterActive = (value?: number[]) => value && value.length === 2 && (value[0] !== 0 || value[1] !== 100)
 
   interface RatingOption {
     value: number;
@@ -207,6 +229,26 @@ const FilterForm = ({ selectCats, selectBrands, reviews, selectProductTypes }: F
                 name="type"
                 control={control}
                 defaultValue={[]}
+            />
+          </div>
+          <div className="mb-5 mx-3">
+            <Controller
+                render={({ field }) => (
+                    <RangeInput
+                        {...field}
+                        onFinalChange={(value) => {
+                          setWatchedProtein(value)
+                        }}
+                        value={field.value}
+                        min={0}
+                        max={100}
+                        step={1}
+                        label={"Podľa obsahu bielkovin"}
+                    />
+                )}
+                name="protein"
+                control={control}
+                defaultValue={rangeDefault}
             />
           </div>
           {reviewData !== reviews ? (
