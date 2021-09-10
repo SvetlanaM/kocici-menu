@@ -421,7 +421,6 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
           const reviews: Review_Insert_Input =
             reviewUpdatedData.merged &&
             reviewUpdatedData.merged.map((item) => {
-              console.log(item);
               return reviewFactory(
                 result.data?.update_Cat?.returning.map((item) => item.id)[0],
                 item.product.id,
@@ -641,7 +640,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
         name: currentLink.name,
       },
     ];
-  }, [createCat, updateCat]);
+  }, [createCat, updateCat, router]);
 
   return (
     <Layout>
