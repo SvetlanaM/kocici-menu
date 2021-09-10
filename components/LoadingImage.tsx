@@ -45,18 +45,15 @@ export default React.memo(function LoadingImage({
     setImageStatus(Status.error);
   }, []);
 
+  const { className, ...restProps } = otherProps
+
   return (
     <>
       <div
         className={
           type !== 'search'
-            ? `cat-image justify-center items-center flex ${customStyle}`
-            : 'object-fill h-10 w-10 mr-4 float-right'
-        }
-        style={
-          imageStatus !== Status.loading
-            ? { display: 'none' }
-            : otherProps.style
+            ? `cat-image justify-center items-center flex ${customStyle} ${imageStatus !== Status.loading ? "hidden" : ""}`
+            : `object-fill h-10 w-10 mr-4 float-right ${imageStatus !== Status.loading ? "hidden" : ""}`
         }
       >
         {type !== 'product' ? <Loading /> : null}
@@ -68,12 +65,8 @@ export default React.memo(function LoadingImage({
         width={width}
         height={height}
         alt={alt}
-        style={
-          imageStatus === Status.loading
-            ? { display: 'none' }
-            : otherProps.style
-        }
-        {...otherProps}
+        className={`${className} ${imageStatus === Status.loading ? "hidden" : ""}`}
+        {...restProps}
       />
     </>
   );
