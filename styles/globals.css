@@ -133,8 +133,15 @@ input:focus {
     width: 65px;
 }
 
+.add-review-btn::before {
+    position: relative;
+    content: '+';
+    top: -1px;
+    margin-right: 5px;
+}
+
 .ReactModal__Overlay.ReactModal__Overlay--after-open {
-    background-color: rgba(0, 0, 0, 0.3) !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
 .cat-detail-box {

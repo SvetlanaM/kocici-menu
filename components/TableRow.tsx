@@ -59,29 +59,29 @@ const TableRow = ({
   useOnKeyPress('Escape', closeCollapse);
 
   return (
-    <tr className="h-32 xl-custom:h-20" ref={nodeRef}>
-      <td className="flex flex-row justify-center h-32 py-10 pl-5 xl-custom:pl-0 xl-custom:ml-0 xl-custom:h-20 xl-custom:py-3">
+    <tr className="h-auto my-12" ref={nodeRef}>
+      <td className="px-10 xl-custom:px-2 py-5">
         <ProductImage
           src={product.image_url}
           alt={`${product.brand_type} - ${product.name}`}
         />
       </td>
-      <td className="pl-10 xl-custom:px-2">
+      <td className="pl-10 xl-custom:px-2 py-5">
         <ProductName
           brand={product.brand_type}
           name={setUppercaseTitle(truncateText(product.name, 30))}
         />
       </td>
-      <td className="px-10 xl-custom:px-2">
+      <td className="px-10 xl-custom:px-2 py-5">
         Pred <br />
         {formattedDate}
       </td>
       <td>
         {product.price} CZK
         <br />
-        na kg
+        za balenie
       </td>
-      <td className="text-center px-10 xl-custom:px-2">
+      <td className="text-center px-10 xl-custom:px-2 py-5">
         <div className="flex flex-row justify-items-center justify-center">
           {reviewArray.map((review, key) => (
             <span className="mr-1" key={key}>
@@ -93,7 +93,7 @@ const TableRow = ({
           ))}
         </div>
       </td>
-      <td className="pr-3.6 px-10 xl-custom:px-3.6">
+      <td className="pr-3.6 px-10 xl-custom:px-3.6 py-5">
         <div className="flex justify-end">
           <div className="mr-3">
             <Link href={`https://www.zoohit.cz${product.path}`}>

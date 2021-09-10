@@ -57,7 +57,7 @@ import { GeneralError } from '../../components/ErrorScreen';
 import { TIP_LIMIT } from '../../utils/constants';
 import DateFormatObject from '../../utils/getFormatDate';
 import links from '../../utils/backlinks';
-import useLocalStorage, { LocalStorageKey } from "../../hooks/useLocalStorage";
+import useLocalStorage, { LocalStorageKey } from '../../hooks/useLocalStorage';
 
 interface CreateCatProps {
   onClickTrigger?: () => void;
@@ -105,10 +105,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
 
   let numberPattern = /\d+/g;
   const [isSaving, setIsSaving] = useState(false);
-  let [, setSavedCat] = useLocalStorage(
-      LocalStorageKey.SELECTED_CAT,
-      0
-  );
+  let [, setSavedCat] = useLocalStorage(LocalStorageKey.SELECTED_CAT, 0);
 
   const EditCatForm = () => {
     const {
@@ -141,12 +138,8 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
             handleSubmit1={handleSubmit1}
             submitText={title}
             catData={catData.cat}
-<<<<<<< HEAD
             products={productData.products}
             buttonText={'Zmeniť fotku'}
-=======
-            products={productData.products.slice(1, 1000)}
->>>>>>> c36295c01164e9f5f7fac307a26f306eea5fc65f
           />
         ) : (
           <Loading />
@@ -329,7 +322,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
             ],
           });
 
-          setSavedCat(result.data?.insert_Cat?.returning[0].id ?? 0)
+          setSavedCat(result.data?.insert_Cat?.returning[0].id ?? 0);
 
           if (
             resultReview.data?.insert_Review?.returning &&

@@ -22,7 +22,7 @@ import getTitle from '../utils/getTitle';
 import { TIP_LIMIT } from '../utils/constants';
 import { GeneralError } from '../components/ErrorScreen';
 import { getUser } from '../utils/user';
-import { BackLinkType } from "../utils/backlinks";
+import { BackLinkType } from '../utils/backlinks';
 
 //tu budu akoze ziskane macky uzivatela
 const getDashboardVariables: GetDashboardQueryVariables = {
@@ -60,16 +60,15 @@ const CenterContainerQuery = () => {
 
   const mostFavouriteByAllOne =
     mostFavouriteByAll &&
-    Object.keys(mostFavouriteByAll).reduce((a, b) => {
+    Object.keys(mostFavouriteByAll).sort((a, b) => {
       mostFavouriteByAll[a] > mostFavouriteByAll[b] ? a : b;
-    }, []);
+    })[0];
 
-  console.log(mostFavouriteByAllOne);
   const extendedData = [
     {
       name: (mostFavouriteByAllOne && mostFavouriteByAllOne) || '--',
       icon: '/icons/avg_cost.svg',
-      title: 'Najobľúbenejšia značka užívateľov',
+      title: 'Najobľúbenejšia značka ostatných',
     },
     {
       name:

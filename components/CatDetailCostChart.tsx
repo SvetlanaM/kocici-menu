@@ -38,14 +38,14 @@ const CatDetailCostChart = ({
       labels: allMonths.slice(0, Number(currentMonth)).slice(-6),
       datasets: [
         {
-          label: 'Jedlo',
+          label: 'Kapsičky',
           data: data1,
           backgroundColor: '#BDBDE7',
           borderRadius: '5',
           fill: true,
         },
         {
-          label: 'Ostatné',
+          label: 'Granule',
           data: data2,
           backgroundColor: '#E1E5EE',
           borderRadius: '5',
@@ -81,7 +81,7 @@ const CatDetailCostChart = ({
   };
   return (
     <div className="mt-5 w-full graph-container">
-      <Title title={`Prehľad nákladov za rok ${currentYear} (pripravujeme)`} />
+      <Title title={`Polročný prehľad nákladov (pripravujeme)`} />
       <Bar data={data} options={options} />
     </div>
   );

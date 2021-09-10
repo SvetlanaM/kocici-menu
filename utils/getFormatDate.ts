@@ -1,4 +1,5 @@
 import moment from 'moment';
+import 'moment/locale/sk';
 
 const DateFormatObject = (_date?: Date) => {
   moment.locale('sk');

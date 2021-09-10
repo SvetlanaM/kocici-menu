@@ -4,7 +4,10 @@ import { Line } from 'react-chartjs-2';
 import FavouriteProducts from './FavouriteProducts';
 import { gql } from '@apollo/client';
 import React, { useState } from 'react';
-import { GetProductsQuery, SelectCatFieldsFragment, } from '../graphql/generated/graphql';
+import {
+  GetProductsQuery,
+  SelectCatFieldsFragment,
+} from '../graphql/generated/graphql';
 import AddProductReviewModal from './AddProductReviewModal';
 import Link from 'next/link';
 import NoReviews from './NoReviews';
@@ -150,16 +153,10 @@ const CatDetailProductTable = ({
                 + Pridať hodnotenie
               </a>
             </Link>
-            <AddProductReviewModal
-              isOpen={modalIsOpen}
-              closeModal={closeModal}
-              selectCats={cats}
-              selectProducts={products}
-              onSaveSuccess={handleReviewAdded}
-            />
           </>
         )}
       </div>
+
       {data && data.length > 0 ? (
         <div className="border-rounded-base border-gray">
           <div className="grid divide-y divide-gray_lightest">
@@ -186,14 +183,6 @@ const CatDetailProductTable = ({
                             />
                           </a>
                         </Link>
-                        <AddProductReviewModal
-                          isOpen={modalIsOpen}
-                          closeModal={closeModal}
-                          selectCats={cats}
-                          selectProducts={products}
-                          onSaveSuccess={handleReviewAdded}
-                          index={rowNumber}
-                        />
                       </>
                     )}
                   </div>
@@ -201,6 +190,16 @@ const CatDetailProductTable = ({
               </React.Fragment>
             ))}
           </div>
+          {modalIsOpen ? (
+            <AddProductReviewModal
+              isOpen={modalIsOpen}
+              closeModal={closeModal}
+              selectCats={cats}
+              selectProducts={products}
+              onSaveSuccess={handleReviewAdded}
+              index={rowNumber}
+            />
+          ) : null}
         </div>
       ) : (
         <NoReviews />

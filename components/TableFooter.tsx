@@ -29,7 +29,9 @@ const TableFooter = ({
       <tr>
         <td className="py-3 pl-3.6 base-medium-text" colSpan={5}>
           <Link href="/dashboard">
-            <a onClick={openModal}>+ Pridať hodnotenie nového produktu</a>
+            <a onClick={openModal} className="add-review-btn">
+              Pridať hodnotenie nového produktu
+            </a>
           </Link>
           <AddProductReviewModal
             isOpen={modalIsOpen}
