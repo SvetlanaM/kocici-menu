@@ -25,9 +25,9 @@ const TableFooter = ({
   };
 
   return (
-    <tfoot>
-      <tr>
-        <td className="py-3 pl-3.6 base-medium-text" colSpan={5}>
+    <div className="w-full flex border-b-1 border-l-1 border-r-1 rounded-b-lg border-gray">
+      <div className="flex items-center justify-between w-full">
+        <div className="py-3 pl-3.6 base-medium-text text-purple">
           <Link href="/dashboard">
             <a onClick={openModal} className="add-review-btn">
               Pridať hodnotenie nového produktu
@@ -40,14 +40,15 @@ const TableFooter = ({
             selectProducts={selectProducts}
             onSaveSuccess={onSaveSuccess}
           />
-        </td>
-        <td className="pr-3.6 text-sm font-light text-gray text-right">
+        </div>
+
+        <div className="pr-3.6 text-sm font-light text-gray text-right">
           <Link href="/products">
             <a className="hover:text-gray-dark">Zobraziť všetky</a>
           </Link>
-        </td>
-      </tr>
-    </tfoot>
+        </div>
+      </div>
+    </div>
   );
 };
 

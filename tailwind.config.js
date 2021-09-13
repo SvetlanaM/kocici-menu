@@ -46,6 +46,9 @@ module.exports = {
       borderRadius: {
         '1.2xl': '0.43rem',
       },
+      borderWidth: {
+        1: '1px',
+      },
       borderColor: (theme) => ({
         yellow: theme('colors.yellow.lightest'),
         purple: theme('colors.purple.light'),

@@ -58,6 +58,7 @@ import { TIP_LIMIT } from '../../utils/constants';
 import DateFormatObject from '../../utils/getFormatDate';
 import links from '../../utils/backlinks';
 import useLocalStorage, { LocalStorageKey } from '../../hooks/useLocalStorage';
+import useLogger from '../../hooks/useLogger';
 
 interface CreateCatProps {
   onClickTrigger?: () => void;
@@ -123,7 +124,11 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
       // pollInterval: 500,
     });
 
-    const { data: productData, loading: productLoading } = useGetProductsQuery({
+    const {
+      data: productData,
+      loading: productLoading,
+      error: productError,
+    } = useGetProductsQuery({
       skip: isSaving,
       // pollInterval: 500,
     });
@@ -131,6 +136,11 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
     return (
       <Center>
         {catLoading && productLoading && <Loading />}
+        {catError && productError && (
+          <ErrorScreen
+            error={GeneralError.fromApolloError(catError || productError)}
+          />
+        )}
         <Title title={title} />
         <Breadcrumbs breadcrumbs={breadcrumbs} />
         {catData && productData ? (
@@ -151,6 +161,8 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
     AddCatMutation,
     AddCatMutationVariables
   >(ADD_CAT);
+
+  const logger = useLogger();
 
   const [updateCat, { loading: updateCatLoading }] = useMutation<
     UpdateCatMutation,
@@ -330,11 +342,11 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
             return true;
           }
         } else {
-          console.log(error);
+          logger(GeneralError.fromApolloError(error));
           return false;
         }
       } catch (e) {
-        console.log(e);
+        logger(e);
         return false;
       }
     },
@@ -584,11 +596,11 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
             return true;
           }
         } else {
-          console.log(error);
+          logger(GeneralError.fromApolloError(error));
           return false;
         }
       } catch (e) {
-        console.log(e.message);
+        logger(e);
         return false;
       }
     },

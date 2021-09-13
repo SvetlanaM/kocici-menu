@@ -10,9 +10,12 @@ import CatDetailContainer from '../components/CatDetailContainer';
 import ErrorScreen, { GeneralError } from '../components/ErrorScreen';
 import Loading from '../components/Loading';
 import { getUser } from '../utils/user';
-import { useGetCatDetailQuery, useGetProductsQuery, } from '../graphql/generated/graphql';
+import {
+  useGetCatDetailQuery,
+  useGetProductsQuery,
+} from '../graphql/generated/graphql';
 import CatDetailEmptyBox from '../components/CatDetailEmptyBox';
-import { BackLinkType } from "../utils/backlinks";
+import { BackLinkType } from '../utils/backlinks';
 
 const CatDetailQuery = () => {
   const {

@@ -25,7 +25,7 @@ const ProductImage = ({ src, alt, type, ...otherProps }: ProductImageProps) => {
   }, [urlError, src]);
 
   return (
-    <LoadingImage
+    <Image
       alt={alt}
       src={productImage}
       width={55}

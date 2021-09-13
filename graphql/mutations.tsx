@@ -20,6 +20,14 @@ export const ADD_CAT = gql`
   }
 `;
 
+export const ADD_LOG = gql`
+  mutation AddLog($log: Logging_insert_input!) {
+    insert_Logging_one(object: $log) {
+      id
+    }
+  }
+`;
+
 export const ADD_REVIEW_BULK = gql`
   mutation AddReviewBulk($reviews: [Review_insert_input!]!) {
     insert_Review(

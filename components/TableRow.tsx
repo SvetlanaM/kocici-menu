@@ -64,6 +64,7 @@ const TableRow = ({
         <ProductImage
           src={product.image_url}
           alt={`${product.brand_type} - ${product.name}`}
+          type="product"
         />
       </td>
       <td className="pl-10 xl-custom:px-2 py-5">

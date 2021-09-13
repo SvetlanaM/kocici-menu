@@ -27,6 +27,9 @@ const Products = () => {
       {reviewsLoading && (
         <CenterContainer>
           <Loading />
+          {reviewsError && (
+            <ErrorScreen error={GeneralError.fromApolloError(reviewsError)} />
+          )}
         </CenterContainer>
       )}
       {reviewsData && (

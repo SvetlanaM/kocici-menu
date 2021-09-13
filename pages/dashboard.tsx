@@ -128,7 +128,8 @@ const DashboardCatQuery = () => {
     },
   });
 
-  if (CatsLoading || CatsError) return <Loading />;
+  if (CatsLoading) return <Loading />;
+  if (CatsError) return null;
 
   return <CatsList cats={CatsData ? CatsData.cats : []} rows={'grid-rows-1'} />;
 };

@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useIdentityContext } from 'react-netlify-identity';
 import router from 'next/router';
 import { ApiClient } from '../pages/_app';
+import useLogger from '../hooks/useLogger';
+import { getUser } from '../utils/user';
 
 interface MenuItemProps {
   icon: string;
@@ -27,11 +29,16 @@ const MenuItem = ({ icon, name, url, active }: MenuItemProps) => {
     });
   };
 
+  const logger = useLogger();
+  const userId = getUser();
   const logout = () => {
+    logger(null, 'success', 'logout', userId && userId);
     logoutUser()
       .then(() => router.push('/user/login'))
       // .then(() => ApiClient.resetStore())
-      .catch((err) => alert('Nepodarilo sa uzivatela odhlasit ' + err));
+      .catch((err) => {
+        alert('Nepodarilo sa uzivatela odhlasit '), logger(err);
+      });
   };
 
   return icon === 'logout' ? (

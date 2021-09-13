@@ -63,17 +63,19 @@ const Table = ({
   return (
     <div className="overflow-auto xl-custom:overflow-visible">
       {uniqueReviews && uniqueReviews.length > 0 ? (
-        <table className="table-auto border-rounded-base border-gray small-purple-text text-left">
-          <TableHead sortedFunction={sortData} className={getClassName} />
-          <tbody className="font-light">
-            {inputData
-              ? inputData
-                  .slice(offsetNumber, numberOfProducts)
-                  .map((row) => <TableRow {...row} key={row.id} />)
-              : 'Ziadne produkty'}
-          </tbody>
+        <>
+          <table className="table-auto rounded-t-lg border-t-1 border-l-1 border-r-1 border-gray small-purple-text text-left">
+            <TableHead sortedFunction={sortData} className={getClassName} />
+            <tbody className="font-light">
+              {inputData
+                ? inputData
+                    .slice(offsetNumber, numberOfProducts)
+                    .map((row) => <TableRow {...row} key={row.id} />)
+                : 'Ziadne produkty'}
+            </tbody>
+          </table>
           {Footer}
-        </table>
+        </>
       ) : (
         <NoReviews />
       )}

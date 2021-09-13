@@ -35,6 +35,7 @@ import RatingController from './RatingController';
 import DateFormatObject from '../utils/getFormatDate';
 import { Components } from 'react-select/src/components';
 import RatingIcon from './RatingIcon';
+import useLogger from '../hooks/useLogger';
 
 interface AddProductReviewFormProps {
   selectCats?: GetDashboardQuery['selectCats'];
@@ -105,6 +106,7 @@ const AddProductReviewForm = ({
     AddReviewHistoryMutationVariables
   >(ADD_REVIEW_HISTORY);
   const lastWeek = DateFormatObject().lastWeek();
+  const logger = useLogger();
 
   const onSubmit = (data: any) => {
     const reviewInput: Review_Insert_Input = {
@@ -216,10 +218,12 @@ const AddProductReviewForm = ({
       //     },
       //   });
       // },
-    }).then((data) => {
-      // onSuccess();
-      onBackAction();
-    });
+    })
+      .then((data) => {
+        // onSuccess();
+        onBackAction();
+      })
+      .catch((err) => logger(err));
   };
 
   interface RatingOption {

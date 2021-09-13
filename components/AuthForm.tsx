@@ -12,8 +12,9 @@ import { useState } from 'react';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useUserSeenStateQuery } from '../graphql/generated/graphql';
-import { getUser } from '../utils/user';
+import { getUser, user_id } from '../utils/user';
 import RoutingPath from '../pages/routing-path';
+import useLogger from '../hooks/useLogger';
 interface AuthFormProps {
   submitText: string;
   passwordPlaceholder: string;
@@ -62,6 +63,7 @@ const AuthForm = ({
   });
 
   const { t } = useTranslation();
+  const logger = useLogger();
 
   const convertErrString = (message: string) => {
     let newMessage = message
@@ -96,13 +98,16 @@ const AuthForm = ({
             router.push('/routing-path')
           )
         )
-        .catch((err) => setMessage(i18next.t(convertErrString(err.message))));
+        .catch((err) => setMessage(i18next.t(convertErrString(err.message))))
+        .catch((err) => logger(err.message, 'error'));
     }
 
     if (authMethod === 'loginUser') {
       loginUser(data.email, data.password)
         .then((data) => router.push('/routing-path'))
-        .catch((err) => setMessage(i18next.t(convertErrString(err.message))));
+        .then(() => logger(null, 'success', 'login', user_id))
+        .catch((err) => setMessage(i18next.t(convertErrString(err.message))))
+        .catch((err) => logger(err.message, 'error'));
     }
   };
 

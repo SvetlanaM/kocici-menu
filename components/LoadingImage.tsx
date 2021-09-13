@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import Loading from './Loading';
+import React from 'react';
 
 type LoadingImageProps = {
   src: string;
@@ -12,7 +13,7 @@ type LoadingImageProps = {
   [otherProps: string]: string | number | undefined;
 };
 
-export default function LoadingImage({
+export default React.memo(function LoadingImage({
   src,
   width,
   height,
@@ -32,9 +33,9 @@ export default function LoadingImage({
 
   let sourceURL = src ?? placeholder;
 
-  useEffect(() => {
-    setImageStatus(Status.loading);
-  }, [sourceURL]);
+  // useEffect(() => {
+  //   setImageStatus(Status.loading);
+  // }, [sourceURL]);
 
   const handleOnLoad = useCallback(() => {
     if (imageStatus === Status.loading) setImageStatus(Status.finished);
@@ -58,7 +59,7 @@ export default function LoadingImage({
             : otherProps.style
         }
       >
-        <Loading />
+        {type !== 'product' ? <Loading /> : null}
       </div>
       <img
         onLoad={handleOnLoad}
@@ -76,4 +77,4 @@ export default function LoadingImage({
       />
     </>
   );
-}
+});

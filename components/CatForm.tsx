@@ -31,6 +31,7 @@ import ProductController from './ProductController';
 import RatingController from './RatingController';
 import useSearch from '../hooks/useSearch';
 import { uploadImage } from '../utils/uploadImage';
+import ErrorScreen from './ErrorScreen';
 
 export type CatInputData = Omit<Cat_Insert_Input, 'CatTypeEnum'>;
 export const CAT_TYPE_NULL = 'CAT_TYPE_NULL';
@@ -376,7 +377,7 @@ const CatForm = ({
             router.back();
           }
         } else {
-          alert('Dáta sa nepodarilo uložiť');
+          alert('chyba');
         }
       });
     },
