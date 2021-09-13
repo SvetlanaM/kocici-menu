@@ -139,7 +139,6 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
             submitText={title}
             catData={catData.cat}
             products={productData.products}
-            buttonText={'Zmeniť fotku'}
           />
         ) : (
           <Loading />

@@ -328,7 +328,7 @@ const CatForm = ({
   const handleFileChange = async (file: File) => {
     setIsLoading(true);
     if (checkFileType(file)) {
-      let url = await uploadImage(file);
+      let url = await uploadImage(file, catData.slug);
       setImageUrl(url);
       setValue('cat_image', url);
       setIsLoading(false);

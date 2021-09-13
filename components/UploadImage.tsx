@@ -14,8 +14,7 @@ export default function UploadImage({
   isLoading,
   resetPhoto,
 }: UploadImageProps) {
-
-  const isImageSet = imageUrl && imageUrl.includes('catappreact')
+  const isImageSet = imageUrl && imageUrl.includes('catappreact');
 
   return (
     <div className="pt-1 pb-6">
@@ -38,7 +37,7 @@ export default function UploadImage({
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray hover:bg-gray-100 transition duration-500 ease-in"
           onClick={openFileDialog}
         >
-          {isImageSet ? "Zmeniť fotku" : "Nahrať fotku"}
+          {isImageSet ? 'Zmeniť fotku' : 'Nahrať fotku'}
         </button>
         {isImageSet ? (
           <button
