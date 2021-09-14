@@ -2,7 +2,8 @@ import Modal from 'react-modal';
 import SubmitButton from './SubmitButton';
 import NeutralButton from './NeutralButton';
 import Image from './Image';
-
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 interface RemoveConfirmationModalProps {
   isOpen: boolean;
   closeModal: () => void;
@@ -16,6 +17,7 @@ const RemoveConfirmationModal = ({
   rest,
   onClickAction,
 }: RemoveConfirmationModalProps) => {
+  const { t } = useTranslation();
   return (
     <Modal
       isOpen={isOpen}
@@ -25,12 +27,12 @@ const RemoveConfirmationModal = ({
     >
       <div className="flex flex-col justify-between text-purple leading-normal">
         <h2 className="font-medium text-2xl">
-          Potvrdiť vymazanie mačky {rest} :(
+          {t(sk['remove_confirmation'])} {rest} {t(sk['sad_face'])}
         </h2>
         <div className="flex justify-between items-center mt-5 mb-5">
           <div className="font-light text-sm w-full pr-3.6">
-            Naozaj chcete vymazať mačku {rest}? Vymazanie je trvalé a nie je
-            možné ho vrátiť späť.
+            {t(sk['cat_remove_info'])} {rest}
+            {t(sk['cat_remove_detail'])}
           </div>
           <Image src="/icons/cat-trash.svg" height={50} width={100} />
         </div>

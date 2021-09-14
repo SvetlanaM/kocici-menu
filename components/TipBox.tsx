@@ -2,7 +2,9 @@ import Link from 'next/link';
 import { gql } from '@apollo/client';
 import { TipFieldsFragmentFragment } from '../graphql/generated/graphql';
 import Image from './Image';
-import { BackLinkType } from "../utils/backlinks";
+import { BackLinkType } from '../utils/backlinks';
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 
 export const TipFieldsFragment = gql`
   fragment TipFieldsFragment on Tip {
@@ -35,16 +37,16 @@ const TipBox = ({
   isOnDashboard,
   readingTime,
 }: TipBoxInterface) => {
-
-  const backlink = isOnDashboard ? BackLinkType.DASHBOARD : BackLinkType.TIPS
-
+  const backlink = isOnDashboard ? BackLinkType.DASHBOARD : BackLinkType.TIPS;
+  const { t } = useTranslation();
   return (
     <div className="w-full pb-3.6 mb-4 border-b border-gray tips-list">
-      <Link href={{
-              pathname: "/tips/[slug]",
-              query: { slug: slug, backlink: backlink }
-            }}
-            //as={`/tips/${encodeURIComponent(slug)}`}
+      <Link
+        href={{
+          pathname: '/tips/[slug]',
+          query: { slug: slug, backlink: backlink },
+        }}
+        //as={`/tips/${encodeURIComponent(slug)}`}
       >
         <a className="small-purple-text font-light flex flex-row items-center justify-between">
           <div>
@@ -68,7 +70,7 @@ const TipBox = ({
                   width={15}
                   className="mr-2 inline-block"
                 />
-                {readingTime} min. čítania
+                {readingTime} {t(sk['reading_time'])}
                 <Image
                   src={`/icons/more.svg`}
                   height={10}

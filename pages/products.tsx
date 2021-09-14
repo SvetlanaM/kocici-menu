@@ -10,7 +10,8 @@ import getTitle from '../utils/getTitle';
 import { GeneralError } from '../components/ErrorScreen';
 import { getUser } from '../utils/user';
 import FilterForm from '../components/FilterForm';
-
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 const Products = () => {
   const {
     data: reviewsData,
@@ -45,9 +46,9 @@ const Products = () => {
   );
 };
 
-const pageTitle = getTitle('Produkty');
-
 export default function Home() {
+  const { t } = useTranslation();
+  const pageTitle = getTitle(t(sk['products']));
   return (
     <Layout>
       <Header title={pageTitle} />

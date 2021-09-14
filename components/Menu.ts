@@ -1,14 +1,17 @@
+import i18next from 'i18next';
+import sk from '../public/locales/sk/common.json';
+
 export const MenuLinks = Object.freeze({
   items: [
     {
       icon: 'dashboard',
       url: '/dashboard',
-      name: 'Prehľad',
+      name: 'Prehlad',
     },
     {
       icon: 'my_cats',
       url: '/my-cats',
-      name: 'Moje mačky',
+      name: 'Moje macky',
     },
     {
       icon: 'products',
@@ -33,7 +36,7 @@ export const MenuLinks = Object.freeze({
     {
       icon: 'logout',
       url: '',
-      name: 'Odhlásiť sa',
+      name: 'Odhlasit sa',
     },
   ],
 });

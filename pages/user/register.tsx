@@ -6,11 +6,14 @@ import AuthLeftContainer from '../../components/AuthLeftContainer';
 import Image from '../../components/Image';
 import AuthForm from '../../components/AuthForm';
 import getTitle from '../../utils/getTitle';
+import { useTranslation } from 'react-i18next';
+import sk from '../../public/locales/sk/common.json';
 
 export default function Register() {
+  const { t } = useTranslation();
   const link = {
     url: '/user/login',
-    name: 'Prihlásiť',
+    name: t(sk['login1']),
   };
 
   const registerProItems = [
@@ -23,21 +26,21 @@ export default function Register() {
 
   return (
     <Layout>
-      <Header title={getTitle('Registrovať sa')} />
+      <Header title={getTitle(t(sk['register']))} />
       <AuthWrapper>
         <AuthRightContainer
-          title="Začni vytvorením účtu"
-          subtitle="Registrovať sa do aplikácie alebo"
+          title={t(sk['register_start'])}
+          subtitle={t(sk['register_or'])}
           link={link}
           form={
             <AuthForm
-              submitText="Registrovať sa"
-              passwordPlaceholder="Min. 8 znakov a 1 veľké písmeno"
+              submitText={t(sk['register'])}
+              passwordPlaceholder={t(sk['pass_req'])}
               authMethod="signupUser"
             />
           }
           buttonInfo={false}
-          footerLinks="Vytvorením účtu, súhlasíte s našimi Podmienkami používania"
+          footerLinks={t(sk['toc'])}
         />
         <AuthLeftContainer className="flex flex-col pt-10  px-10 xl-custom:px-20 justify-center">
           <h2 className="text-white text-3xl font-medium">

@@ -6,30 +6,33 @@ import AuthLeftContainer from '../../components/AuthLeftContainer';
 import Image from '../../components/Image';
 import AuthForm from '../../components/AuthForm';
 import getTitle from '../../utils/getTitle';
+import { useTranslation } from 'react-i18next';
+import sk from '../../public/locales/sk/common.json';
 
 export default function Login() {
+  const { t } = useTranslation();
   const link = {
     url: '/user/register',
-    name: 'Registrovať',
+    name: t(sk['register']),
   };
 
   return (
     <Layout>
-      <Header title={getTitle('Prihlásiť sa')} />
+      <Header title={getTitle(t(sk['login']))} />
       <AuthWrapper>
         <AuthRightContainer
-          title="Ahoj!"
-          subtitle="Prihlásiť sa do aplikácie alebo"
+          title={t(sk['hello'])}
+          subtitle={t(sk['login_or'])}
           link={link}
           form={
             <AuthForm
-              submitText="Prihlásiť sa"
-              passwordPlaceholder="Zadajte heslo"
+              submitText={t(sk['login'])}
+              passwordPlaceholder={t(sk['enter_pass'])}
               authMethod="loginUser"
             />
           }
           buttonInfo={true}
-          footerLinks="Sveťa app 2021 Podmienky používania, Ochrana súkromia"
+          footerLinks={t(sk['copy'])}
         />
         <AuthLeftContainer className="flex items-center justify-center p-10 xl-custom:p-0">
           <Image src="/icons/login.svg" height={425} width={462} />

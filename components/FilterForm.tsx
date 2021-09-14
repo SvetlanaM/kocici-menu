@@ -18,6 +18,8 @@ import { useEffect } from 'react';
 import CenterContainer from './CenterContainer';
 import LeftContainer from './LeftContainer';
 import Title from './Title';
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 interface FilterFormProps {
   selectCats: GetReviewsQuery['selectCats'];
   selectBrands: GetReviewsQuery['selectBrands'];
@@ -26,6 +28,7 @@ interface FilterFormProps {
 
 const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
   const { control, watch, setValue } = useForm();
+  const { t } = useTranslation();
 
   const [reviewData, setReviewData] =
     useState<GetReviewsQuery['reviews']>(reviews);
@@ -90,11 +93,11 @@ const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
   }
 
   const ratingOptions = [
-    { value: 1, label: '1 (Najhoršie)' },
+    { value: 1, label: t(sk['first']) },
     { value: 2, label: '2' },
     { value: 3, label: '3' },
     { value: 4, label: '4' },
-    { value: 5, label: '5 (Najlepšie)' },
+    { value: 5, label: t(sk['fifth']) },
   ];
 
   const customStyles = style;
@@ -105,13 +108,13 @@ const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
         <PaginationTable
           reviews={reviewData}
           numberOfProducts={reviewData.length}
-          title={`Všetky ${
-            reviewData === reviews ? 'hodnotené' : 'filtrované'
-          } produkty: ${reviewData.length}`}
+          title={`${t(sk['all'])} ${
+            reviewData === reviews ? t(sk['reviewed']) : t(sk['filtered'])
+          } ${t(sk['products'])} ${reviewData.length}`}
         />
       </CenterContainer>
       <LeftContainer>
-        <Title title="Filtrovať" />
+        <Title title={t(sk['filter'])} />
         <form className="w-full flex flex-col justify-between mb-5">
           <div className="mb-5">
             <Controller
@@ -128,8 +131,8 @@ const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
                   getOptionLabel={(brand: SelectBrandTypeFieldsFragment) =>
                     brand.comment
                   }
-                  placeholder="Podľa značky"
-                  noOptionsMessage={() => 'Žiadne ďalšie výsledky'}
+                  placeholder={t(sk['by_brand'])}
+                  noOptionsMessage={() => t(sk['no_results'])}
                 />
               )}
               name="brand"
@@ -149,8 +152,8 @@ const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
                     cat.id.toString()
                   }
                   getOptionLabel={(cat: SelectCatFieldsFragment) => cat.name}
-                  placeholder="Podľa mačky"
-                  noOptionsMessage={() => 'Žiadne ďalšie výsledky'}
+                  placeholder={t(sk['by_cat'])}
+                  noOptionsMessage={() => t(sk['no_results'])}
                 />
               )}
               name="cat"
@@ -169,15 +172,15 @@ const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
                   isMulti
                   styles={customStyles}
                   options={ratingOptions}
-                  noOptionsMessage={() => 'Žiadne ďaľšie výsledky'}
-                  placeholder={'Podľa hodnotenia'}
+                  noOptionsMessage={() => t(sk['no_results'])}
+                  placeholder={t(sk['by_rating'])}
                 />
               )}
             />
           </div>
           {reviewData !== reviews ? (
             <SubmitButton
-              text="Resetovať"
+              text={t(sk['reset'])}
               size="w-full"
               color="bg-red-500"
               onClick={resetFilter}

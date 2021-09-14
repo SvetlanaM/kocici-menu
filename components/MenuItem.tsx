@@ -6,7 +6,8 @@ import router from 'next/router';
 import { ApiClient } from '../pages/_app';
 import useLogger from '../hooks/useLogger';
 import { getUser } from '../utils/user';
-
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 interface MenuItemProps {
   icon: string;
   name: string;
@@ -15,6 +16,7 @@ interface MenuItemProps {
 }
 
 const MenuItem = ({ icon, name, url, active }: MenuItemProps) => {
+  const { t } = useTranslation();
   const hoverIcon = `/icons/${icon}-purple.svg`;
   const basicIcon = `/icons/${icon}.svg`;
   const [isHover, setIsHover] = useState(basicIcon);
@@ -37,7 +39,7 @@ const MenuItem = ({ icon, name, url, active }: MenuItemProps) => {
       .then(() => router.push('/user/login'))
       // .then(() => ApiClient.resetStore())
       .catch((err) => {
-        alert('Nepodarilo sa uzivatela odhlasit '), logger(err);
+        alert(t(sk['logout_error'])), logger(err);
       });
   };
 

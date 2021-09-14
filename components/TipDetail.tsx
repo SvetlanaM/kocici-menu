@@ -11,7 +11,7 @@ import router from 'next/router';
 import Image from './Image';
 import sk from '../public/locales/sk/common.json';
 import { useTranslation } from 'react-i18next';
-import links from "../utils/backlinks";
+import links from '../utils/backlinks';
 
 export const TipDetailFieldsFragment = gql`
   fragment TipDetailFragment on Tip {
@@ -32,11 +32,11 @@ const TipDetailBox = ({
   const formattedDate = DateFormatObject(updated_at).formatDate();
   const { t } = useTranslation();
   const breadcrumbs: Breadcrumb[] = useMemo(() => {
-      const { backlink } = router.query
-      let previousLink = links.dashboard
-      if (backlink) {
-          previousLink = links[backlink as string] ?? previousLink
-      }
+    const { backlink } = router.query;
+    let previousLink = links.dashboard;
+    if (backlink) {
+      previousLink = links[backlink as string] ?? previousLink;
+    }
     return [
       {
         path: previousLink.path,
@@ -68,7 +68,7 @@ const TipDetailBox = ({
           </div>
         )}
         <p className="text-sm font-light text-gray">
-          Publikované: {formattedDate}
+          {t(sk['published_date'])} {formattedDate}
         </p>
       </div>
       {perex && (

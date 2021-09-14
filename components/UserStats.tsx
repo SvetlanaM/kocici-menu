@@ -2,7 +2,8 @@ import { gql } from '@apollo/client';
 import { useMemo } from 'react';
 import { GetUserStatsQuery } from '../graphql/generated/graphql';
 import DateFormatObject from '../utils/getFormatDate';
-
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 interface UserStatsProps {
   data: GetUserStatsQuery;
 }
@@ -26,15 +27,16 @@ export const UserFieldFragment = gql`
 `;
 
 const UserStats = ({ data }: UserStatsProps) => {
+  const { t } = useTranslation();
   const userDataObject = useMemo(() => {
     return (
       (data && [
         {
-          labels: 'Emailová adresa',
+          labels: t(sk['email']),
           data_values: data.user_data[0].email || '--',
         },
         {
-          labels: 'Dátum registrácie',
+          labels: t(sk['registration_date']),
           data_values:
             DateFormatObject(data.user_data[0].created_at).formatDateTime() ||
             '--',
@@ -48,17 +50,17 @@ const UserStats = ({ data }: UserStatsProps) => {
     return (
       (data && [
         {
-          labels: 'Počet mačiek',
+          labels: t(sk['num_of_cats']),
           data_values:
             (data.user_stats[0] && data.user_stats[0].count_of_cats) || '--',
         },
         {
-          labels: 'Počet hodnotení',
+          labels: t(sk['num_of_reviews']),
           data_values:
             (data.user_stats[0] && data.user_stats[0].count_of_reviews) || '--',
         },
         {
-          labels: 'Môj eshop',
+          labels: t(sk['my_eshop']),
           data_values: data.user_data[0].prefered_eshop || 'Zoohit',
         },
       ]) ||

@@ -1,7 +1,8 @@
 import TableRow from './TableRow';
 import { GetDashboardQuery } from '../graphql/generated/graphql';
 import TableHead from './TableHead';
-
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 import useSortableData from '../hooks/useSortableData';
 import { useEffect, useMemo, useState } from 'react';
 import {
@@ -30,6 +31,7 @@ const Table = ({
     direction: SortType.DESC,
   };
 
+  const { t } = useTranslation();
   const getUniqueReviews = () => {
     if (numberOfProducts === 5) {
       return Array.from(new Set(reviews.map((item) => item.product.name)))
@@ -71,7 +73,7 @@ const Table = ({
                 ? inputData
                     .slice(offsetNumber, numberOfProducts)
                     .map((row) => <TableRow {...row} key={row.id} />)
-                : 'Ziadne produkty'}
+                : t(sk['no_products'])}
             </tbody>
           </table>
           {Footer}

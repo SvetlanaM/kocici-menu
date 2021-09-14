@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 
 interface PaginationFooterProps {
   actualPageNumber: number;
@@ -23,12 +25,14 @@ const PaginationFooter = ({
     }
   };
 
+  const { t } = useTranslation();
+
   return (
     <div className="w-full flex border-b-1 border-l-1 border-r-1 rounded-b-lg border-gray">
       <div className="flex items-center justify-between w-full">
         <div className="py-3 pl-3.6 base-medium-text text-purple">
           <Link href="https://www.zoohit.cz/">
-            <a target="new">Do eshopu</a>
+            <a target="new">{t(sk['to_eshop'])}</a>
           </Link>
         </div>
 

@@ -5,7 +5,8 @@ import useLogger from '../hooks/useLogger';
 import Link from 'next/link';
 import Image from './Image';
 import { SVETA_EMAIL } from '../utils/constants';
-
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 interface ErrorScreenProps {
   error: GeneralError;
   userMessage?: GeneralError['userMessage'];
@@ -20,18 +21,19 @@ export class GeneralError {
   ) {}
 
   static fromApolloError(error: ApolloError): GeneralError {
+    const { t } = useTranslation();
     switch (error) {
       case error:
         return {
           error: error,
-          userMessage: 'Ajaj...nieco sa pokazilo',
+          userMessage: t(sk['general_error']),
           errorType: 'error',
           message: error && error.message,
         };
       case error.networkError:
         return {
           error: error.networkError,
-          userMessage: 'Chyba v stahovani dat',
+          userMessage: t(sk['data_error']),
           errorType: 'error',
           message: error.networkError?.message,
         };
@@ -42,7 +44,7 @@ export class GeneralError {
 const ErrorScreen = ({ error, userMessage }: ErrorScreenProps) => {
   const logger = useLogger();
   const [errorMessage, setErrorMessage] = useState<string>(userMessage);
-
+  const { t } = useTranslation();
   useEffect(() => {
     logger(error);
     setErrorMessage(error.userMessage);
@@ -55,21 +57,17 @@ const ErrorScreen = ({ error, userMessage }: ErrorScreenProps) => {
         {errorMessage}
       </h2>
       <p className="font-light px-32 text-center pt-3.6 pb-4 text-purple-darkest leading-normal">
-        Ak by problem pretrvaval dlhodobo, kontaktujte nas prostrednictvom{' '}
+        {t(sk['error_message'])}{' '}
         <a
           href={`mailto:${SVETA_EMAIL}`}
           className="text-purple-light hover:text-purple-dark"
         >
-          emailu
+          {t(sk['emailu'])}
         </a>
-        . Na naprave budeme usilovne pracovat.
+        {t(sk['error_solution'])}
       </p>
     </div>
   );
-};
-
-ErrorScreen.defaultProps = {
-  defaultMessage: 'Neznama chyba',
 };
 
 export default ErrorScreen;

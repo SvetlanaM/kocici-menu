@@ -16,7 +16,8 @@ import {
 } from '../graphql/generated/graphql';
 import CatDetailEmptyBox from '../components/CatDetailEmptyBox';
 import { BackLinkType } from '../utils/backlinks';
-
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 const CatDetailQuery = () => {
   const {
     data: catData,
@@ -63,9 +64,10 @@ const CatDetailQuery = () => {
     </>
   );
 };
-const pageTitle = getTitle('Moje mačky');
 
 export default function MyCats() {
+  const { t } = useTranslation();
+  const pageTitle = getTitle(t(sk['my_cats']));
   return (
     <Layout>
       <Header title={pageTitle} />

@@ -2,7 +2,8 @@ import i18next from 'i18next';
 import { ReviewFieldsFragmentFragment } from '../graphql/generated/graphql';
 import setUppercaseTitle from '../utils/setUppercaseTitle';
 import Image from './Image';
-
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 i18next.init({
   resources: {
     sk: {
@@ -31,6 +32,7 @@ interface ToolTipBodyProps {
 }
 
 const ToolTipBody = ({ itemName, item }: ToolTipBodyProps) => {
+  const { t } = useTranslation();
   return (
     <div className="w-full px-4 py-3 flex flex-col text-xs">
       <div className="flex justify-between">
@@ -43,7 +45,7 @@ const ToolTipBody = ({ itemName, item }: ToolTipBodyProps) => {
             }}
           ></p>
         </div>
-        {itemName === 'Avg. hodnotenie:' ? (
+        {itemName === t(sk['avg_review']) ? (
           <Image src={getQualityImage(item)} height={30} width={30} />
         ) : (
           ''
@@ -82,10 +84,11 @@ const allovedValues = [
 ];
 
 const ProductDetailsTooltipBox = ({ data }: ProductDetailsTooltipBoxProps) => {
+  const { t } = useTranslation();
   return (
     <div className="grid divide-y divide-gray_lightest" key={data.id}>
       {data.rating && (
-        <ToolTipBody itemName="Avg. hodnotenie:" item={data.rating} />
+        <ToolTipBody itemName={t(sk['avg_review'])} item={data.rating} />
       )}
       {data.analysis_variant
         ? Object.entries(data.analysis_variant).map((item) => {
@@ -111,7 +114,7 @@ const ProductDetailsTooltipBox = ({ data }: ProductDetailsTooltipBoxProps) => {
 
       {data.feeding && (
         <ToolTipBody
-          itemName="Doporučené dávkovanie:"
+          itemName={t(sk['reccommended_feeding'])}
           item={data.feeding.replace('Doporučené dávkování', '')}
         />
       )}

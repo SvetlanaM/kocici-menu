@@ -5,7 +5,8 @@ import { useRouter } from 'next/router';
 import { APP_NAME, SVETA_EMAIL } from '../utils/constants';
 import { useState } from 'react';
 import Image from './Image';
-
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 const { items } = MenuLinks;
 
 const Sidebar = () => {
@@ -15,6 +16,8 @@ const Sidebar = () => {
   const toggleMenu = () => {
     setIsClosed(!isClosed);
   };
+
+  const { t } = useTranslation();
 
   return (
     <>
@@ -37,7 +40,7 @@ const Sidebar = () => {
         </div>
         <div className="mb-5 py-1.5 border-rounded-base border-purple font-medium text-center text-purple-light transition duration-500 ease-in hover:bg-purple-light hover:text-white">
           <Link href={`mailto:${SVETA_EMAIL}`}>
-            <a>Napíšte mi</a>
+            <a>{t(sk['write_me_1'])}</a>
           </Link>
         </div>
       </aside>
@@ -63,7 +66,7 @@ const Sidebar = () => {
             ))}
             <div className="mb-5 mt-2 py-1.5 border-rounded-base border-purple font-medium text-center text-purple-light transition duration-500 ease-in hover:bg-purple-light hover:text-white">
               <Link href={`mailto:${SVETA_EMAIL}`}>
-                <a>Napíšte mi</a>
+                <a>{t(sk['write_me_1'])}</a>
               </Link>
             </div>
           </div>

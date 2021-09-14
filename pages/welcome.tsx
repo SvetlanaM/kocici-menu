@@ -15,7 +15,8 @@ import { UPDATE_USER_PREFERENCES } from '../graphql/mutations';
 import { getUser } from '../utils/user';
 import { useEffect } from 'react';
 import router, { NextRouter, useRouter } from 'next/router';
-
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 export default function Welcome() {
   const [updateUser] = useMutation<
     UpdateUserMutation,
@@ -31,10 +32,10 @@ export default function Welcome() {
       variables: { id: getUser(), users: catUpdateInput },
     });
   }, []);
-
+  const { t } = useTranslation();
   return (
     <>
-      <Header title={getTitle('Vitajte')} />
+      <Header title={getTitle(t(sk['welcome']))} />
       <WelcomeBox />
     </>
   );

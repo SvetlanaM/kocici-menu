@@ -11,6 +11,8 @@ import FormInputLabel from './FormInputLabel';
 import FormErrorMessage from './FormErrorMessage';
 import ProductImage from './ProductImage';
 const customStyles = style;
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 
 const Option = ({ children, ...props }) => {
   return (
@@ -59,23 +61,24 @@ const ProductController = ({
   errors,
 }: ProductControllerProps) => {
   console.log(errors.fieldArray && errors.fieldArray);
+  const { t } = useTranslation();
   return (
     <>
       {showHint ? (
         <>
           <div className="flex justify-between mb-3">
-            <FormInputLabel name="Produkt*" />
+            <FormInputLabel name={t(sk['product'])} />
             <div className="text-purple-light text-xs mt-1.5 pl-0.5 hidden xl-custom:block">
-              Nenašli ste hľadaný produkt?{' '}
+              {t(sk['no_product_find'])}{' '}
               <Link href={`mailto: ${SVETA_EMAIL}`}>
-                <a className="hover:underline">Napíšte mi :)</a>
+                <a className="hover:underline">{t(sk['write_me'])}</a>
               </Link>
             </div>
           </div>
         </>
       ) : (
         <div className="mb-2">
-          <FormInputLabel name="Produkt*" />
+          <FormInputLabel name={t(sk['product'])} />
         </div>
       )}
 
@@ -95,9 +98,9 @@ const ProductController = ({
               `${product.brand_type} - ${product.name}`
             }
             onInputChange={onInputChange}
-            placeholder={'Vyhľadať príchuť alebo značku'}
+            placeholder={t(sk['search_product'])}
             // value={watchedProduct}
-            noOptionsMessage={() => 'Žiadne ďalšie výsledky'}
+            noOptionsMessage={() => t(sk['no_results'])}
             isDisabled={isDisabled}
           />
         )}
@@ -108,7 +111,7 @@ const ProductController = ({
       />
       <div className="mt-3">
         {errors && errors[name] && (
-          <FormErrorMessage error="Tato hodnota je povinna" />
+          <FormErrorMessage error={t(sk['product_required'])} />
         )}
       </div>
     </>

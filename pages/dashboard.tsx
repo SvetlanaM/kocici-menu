@@ -23,7 +23,8 @@ import { TIP_LIMIT } from '../utils/constants';
 import { GeneralError } from '../components/ErrorScreen';
 import { getUser } from '../utils/user';
 import { BackLinkType } from '../utils/backlinks';
-
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 //tu budu akoze ziskane macky uzivatela
 const getDashboardVariables: GetDashboardQueryVariables = {
   limitTips: TIP_LIMIT,
@@ -36,6 +37,7 @@ const getCatVariables: GetCatsQueryVariables = {
 };
 
 const CenterContainerQuery = () => {
+  const { t } = useTranslation();
   const {
     data: dashboardData,
     error: dashboardError,
@@ -68,7 +70,7 @@ const CenterContainerQuery = () => {
     {
       name: (mostFavouriteByAllOne && mostFavouriteByAllOne) || '--',
       icon: '/icons/avg_cost.svg',
-      title: 'Najobľúbenejšia značka ostatných',
+      title: t(sk['fav_brand_others']),
     },
     {
       name:
@@ -76,16 +78,16 @@ const CenterContainerQuery = () => {
           ? dashboardData.stats[0].brand_type
           : '--') || '--',
       icon: '/icons/fav_brand.svg',
-      title: 'Moja najobľúbenejšia značka',
+      title: t(sk['fav_brand_mine']),
     },
   ];
 
   const tableTitle =
     dashboardData && dashboardData?.reviews.length === 0
-      ? `Nemáte žiadne hodnotené produkty`
+      ? `${t(sk['no_reviewed_products'])}`
       : dashboardData?.reviews.length < 5
-      ? `${dashboardData?.reviews.length} najlepšie hodnotené produkty`
-      : `Top 5 najlepšie hodnotených produktov z ${dashboardData?.reviews.length}`;
+      ? `${dashboardData?.reviews.length} ${t(sk['best_products'])}`
+      : `${t(sk['top_5'])} ${dashboardData?.reviews.length}`;
 
   return (
     <CenterContainer>
@@ -134,9 +136,9 @@ const DashboardCatQuery = () => {
   return <CatsList cats={CatsData ? CatsData.cats : []} rows={'grid-rows-1'} />;
 };
 
-const pageTitle = getTitle('Prehľad');
-
 export default function Home() {
+  const { t } = useTranslation();
+  const pageTitle = getTitle(t(sk['dashboard']));
   return (
     <Layout>
       <Header title={pageTitle} />
@@ -144,7 +146,7 @@ export default function Home() {
       <Container>
         <CenterContainerQuery />
         <LeftContainer>
-          <Title title="Moje mačky" />
+          <Title title={t(sk['my_cats'])} />
           <AddCatBox backlink={BackLinkType.DASHBOARD} />
           <DashboardCatQuery />
         </LeftContainer>

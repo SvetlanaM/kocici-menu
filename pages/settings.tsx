@@ -14,7 +14,8 @@ import { useGetUserStatsQuery } from '../graphql/generated/graphql';
 import { getUser } from '../utils/user';
 import DateFormatObject from '../utils/getFormatDate';
 import UploadImage from '../components/UploadImage';
-
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 const UserStatsQuery = () => {
   const lastWeek = DateFormatObject().lastWeek();
 
@@ -47,9 +48,10 @@ const UserStatsQuery = () => {
     </>
   );
 };
-const pageTitle = getTitle('Nastavenia');
 
 export default function Settings() {
+  const { t } = useTranslation();
+  const pageTitle = getTitle(t(sk['settings']));
   return (
     <Layout>
       <Header title={pageTitle} />

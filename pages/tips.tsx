@@ -11,6 +11,8 @@ import TopTipsList from '../components/TopTipsList';
 import { useGetTipsQuery } from '../graphql/generated/graphql';
 import { getToken } from '../utils/token';
 import TipsList from '../components/TipsList';
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 
 const TipsQuery = () => {
   const {
@@ -84,9 +86,10 @@ const TipsQuery = () => {
     </>
   );
 };
-const pageTitle = getTitle('Tipy');
 
 export default function Tips() {
+  const { t } = useTranslation();
+  const pageTitle = getTitle(t(sk['tips']));
   return (
     <Layout>
       <Header title={pageTitle} />

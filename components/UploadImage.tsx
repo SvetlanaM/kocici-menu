@@ -1,6 +1,7 @@
 import Image from './Image';
 import Loading from './Loading';
-
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 interface UploadImageProps {
   imageUrl?: string;
   openFileDialog: () => void;
@@ -15,7 +16,7 @@ export default function UploadImage({
   resetPhoto,
 }: UploadImageProps) {
   const isImageSet = imageUrl && imageUrl.includes('catappreact');
-
+  const { t } = useTranslation();
   return (
     <div className="pt-1 pb-6">
       <div className="mt-1 flex items-center">
@@ -37,7 +38,7 @@ export default function UploadImage({
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray hover:bg-gray-100 transition duration-500 ease-in"
           onClick={openFileDialog}
         >
-          {isImageSet ? 'Zmeniť fotku' : 'Nahrať fotku'}
+          {isImageSet ? t(sk['change_photo']) : t(sk['upload_photo'])}
         </button>
         {isImageSet ? (
           <button
@@ -46,7 +47,7 @@ export default function UploadImage({
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray hover:bg-red-800 transition duration-500 ease-in"
             onClick={resetPhoto}
           >
-            Vymazať fotku
+            {t(sk['remove_photo'])}
           </button>
         ) : null}
       </div>

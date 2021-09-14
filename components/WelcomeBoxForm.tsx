@@ -13,7 +13,8 @@ import { UPDATE_USER_PREFERENCES } from '../graphql/mutations';
 import { getUser } from '../utils/user';
 import SubmitButton from './SubmitButton';
 import WelcomeBoxCheckbox from './WelcomeBoxCheckbox';
-
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 const WelcomeBoxForm = () => {
   const {
     handleSubmit,
@@ -41,7 +42,7 @@ const WelcomeBoxForm = () => {
 
   const checkBoxData = ['wet_food', 'dry_food', 'barf'];
   const watchedInput: [string] = watch('item');
-
+  const { t } = useTranslation();
   const disabled = isDirty
     ? (Array.isArray(watchedInput) && watchedInput.length) === 0
     : true;
@@ -61,7 +62,7 @@ const WelcomeBoxForm = () => {
 
       <div className="flex justify-center mt-10">
         <SubmitButton
-          text="Uložiť výber"
+          text={t(sk['save_meal'])}
           size="w-full xl-custom:w-1/3"
           disabled={disabled}
         />
