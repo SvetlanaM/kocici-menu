@@ -2,6 +2,8 @@ import Modal from 'react-modal';
 import AddProductReviewForm from './AddProductReviewForm';
 import { GetDashboardQuery } from '../graphql/generated/graphql';
 import Image from './Image';
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 interface AddProductReviewModalProps {
   isOpen: boolean;
   closeModal: () => void;
@@ -19,6 +21,7 @@ const AddProductReviewModal = ({
   selectProducts,
   index,
 }: AddProductReviewModalProps) => {
+  const { t } = useTranslation();
   return (
     <Modal
       isOpen={isOpen}
@@ -28,16 +31,13 @@ const AddProductReviewModal = ({
     >
       <div className="flex flex-col justify-between text-purple leading-normal">
         <h2 className="font-medium text-2xl pt-10 xl-custom:pt-0">
-          Pridať hodnotenie nového produktu
+          {t(sk['new_review'])}
         </h2>
         <div className="flex flex-col xl-custom:flex-row justify-between items-start pt-5 xl-custom:pt-0 xl-custom:items-center">
           <div className="font-light text-sm w-full xl-custom:w-4/6 pr-3.6">
-            Hodnotenie nového produktu v{' '}
-            <span className="text-purple-light">3 super easy krokoch.</span>
-            <p className="mt-3">
-              Hodnotenie je možné pridať iba pre produkt, ktorý mačka nemá
-              hodnotený, inak je editovateľný v detaily mačky.
-            </p>
+            {t(sk['new_review_modal'])}{' '}
+            <span className="text-purple-light">{t(sk['3_steps'])}</span>
+            <p className="mt-3">{t(sk['review_rules'])}</p>
           </div>
           <div className="w-full xl-custom:w-2/6 mt-5 xl-custom:mt-0">
             <Image

@@ -334,7 +334,7 @@ const CatForm = ({
       setValue('cat_image', url);
       setIsLoading(false);
     } else {
-      alert('Nepodporovaný formát');
+      alert(t(sk['unsupported_file']));
     }
   };
 
@@ -377,7 +377,7 @@ const CatForm = ({
             router.back();
           }
         } else {
-          alert('chyba');
+          alert(t(sk['add_cat_error_modal']));
         }
       });
     },
@@ -415,7 +415,7 @@ const CatForm = ({
       className="w-full"
     >
       <fieldset>
-        <FormLegend name="Základné informácie" />
+        <FormLegend name={t(sk['basic_info'])} />
         <div>
           <UploadImage
             imageUrl={watchedCatImage ? watchedCatImage : catImage}
@@ -442,61 +442,61 @@ const CatForm = ({
             {...(errors.cat_image &&
               errors.cat_image.type === 'checkFileType' && (
                 <FormErrorMessage
-                  error={`Nahrajte subor v jednom z tychto formatov ${fileTypes}`}
+                  error={`${t(sk['file_error'])} ${fileTypes}`}
                 />
               ))}
           />
         </div>
         <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-3 xl-custom:gap-10">
           <FormInputWrapper>
-            <FormInputLabel name="Meno mačky*" />
+            <FormInputLabel name={t(sk['cat_name'])} />
             <FormInput
               {...register('name', {
-                required: { value: true, message: 'Meno mačky je povinné' },
+                required: { value: true, message: t(sk['cat_name_required']) },
                 maxLength: {
                   value: 100,
-                  message: 'Meno mačky je max do 100 znakov',
+                  message: t(sk['cat_name_length']),
                 },
               })}
               type="text"
               name="name"
-              placeholder="Meno mačky do 100 znakov"
+              placeholder={t(sk['cat_name_placeholder'])}
               errors={errors.name}
             />
             {errors.name && <FormErrorMessage error={errors.name?.message} />}
           </FormInputWrapper>
           <FormInputWrapper>
-            <FormInputLabel name="Pohlavie" />
+            <FormInputLabel name={t(sk['gender'])} />
             <FormSelectBox
               registerRules={{ ...register('gender', { required: false }) }}
             >
               <option value="" key="">
-                Neuvedene
+                {t(sk['none'])}
               </option>
               <option value="Macka" key="cat">
-                Macka
+                {t(sk['cat'])}
               </option>
               <option value="Kocur" key="tomcat">
-                Kocur
+                {t(sk['tomcat'])}
               </option>
             </FormSelectBox>
           </FormInputWrapper>
         </div>
         <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-3 xl-custom:gap-10">
           <FormInputWrapper>
-            <FormInputLabel name="Vek mačky" />
+            <FormInputLabel name={t(sk['cat_age'])} />
             <FormInput
               {...register('age', { min: 0, max: 30, required: false })}
               type="number"
               name="age"
               step={1}
               errors={errors.age}
-              placeholder="Vek od 0 do 30 rokov"
+              placeholder={t(sk['cat_age_placeholder'])}
             />
-            {errors.age && <FormErrorMessage error="Vek od 1 do 30 rokov" />}
+            {errors.age && <FormErrorMessage error={t(sk['cat_age_error'])} />}
           </FormInputWrapper>
           <FormInputWrapper>
-            <FormInputLabel name="Farba mačky" />
+            <FormInputLabel name={t(sk['cat_color'])} />
             <FormInput
               {...register('color', { required: false })}
               type="text"
@@ -506,7 +506,7 @@ const CatForm = ({
         </div>
         <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-3 xl-custom:gap-10">
           <FormInputWrapper>
-            <FormInputLabel name="Váha mačky v kg" />
+            <FormInputLabel name={t(sk['cat_weight'])} />
             <FormInput
               {...register('weight', { required: false })}
               type="number"
@@ -516,27 +516,27 @@ const CatForm = ({
             />
           </FormInputWrapper>
           <FormInputWrapper>
-            <FormInputLabel name="Denná dávka v g" />
+            <FormInputLabel name={t(sk['cat_daily_food'])} />
             <FormInput
               {...register('daily_food', { required: false })}
               type="number"
-              placeholder="700g/denne"
+              placeholder={t(sk['cat_daily_food_placeholder'])}
               name="daily_food"
             />
           </FormInputWrapper>
         </div>
         <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-3 xl-custom:gap-10 mt-3">
           <FormInputWrapper>
-            <FormInputLabel name="Email veterinára" />
+            <FormInputLabel name={t(sk['doctor_email'])} />
             <FormInput
               {...register('doctor_email', { required: false })}
               type="email"
               name="doctor_email"
-              placeholder="email@email.sk"
+              placeholder={t(sk['email_placeholder'])}
             />
           </FormInputWrapper>
           <FormInputWrapper>
-            <FormInputLabel name="Typ mačky" />
+            <FormInputLabel name={t(sk['cat_type'])} />
             <FormSelectBox
               registerRules={{ ...register('type', { required: false }) }}
             >
@@ -549,7 +549,7 @@ const CatForm = ({
           <FormLegend name="Specialne poziadavky" />
         </fieldset> */}
       <fieldset>
-        <FormLegend name="Obľúbené jedlá mačky" />
+        <FormLegend name={t(sk['cat_foods'])} />
         {controlledFields.map((field, index) => {
           return (
             <div
@@ -584,7 +584,7 @@ const CatForm = ({
                   defaultValue={field.rating}
                   isDisabled={false}
                   errors={errors}
-                  placeholder={'Vybrať hodnotenie (1-5)'}
+                  placeholder={t(sk['choose_review_1'])}
                   {...register(`fieldArray.${index}.rating` as const)}
                 />
               </div>
@@ -596,15 +596,13 @@ const CatForm = ({
                   setIsRemoved(true);
                 }}
               >
-                - Odobrať
+                {t(sk['remove'])}
               </button>
             </div>
           );
         })}
         <div className="text-red-500 mb-4 -mt-2">
-          {errors.fieldArray &&
-            newReviews &&
-            'Pre nove polozky je hodnotenie povinne vyplnit, alebo ich odoberte'}
+          {errors.fieldArray && newReviews && t(sk['reviews_error'])}
         </div>
 
         <button
@@ -612,22 +610,22 @@ const CatForm = ({
           className=" text-purple mb-3 font-semibold"
           onClick={() => append({})}
         >
-          + Pridať hodnotenie
+          {t(sk['add_review_small'])}
         </button>
       </fieldset>
       <fieldset>
         <div className="flex flex-col w-full mt-2">
-          <FormInputLabel name="Poznámka" />
+          <FormInputLabel name={t(sk['cat_note'])} />
           <textarea
             maxLength={500}
             {...register('note', {
               required: false,
               maxLength: {
                 value: 500,
-                message: 'Maximálne 500 znakov',
+                message: t(sk['cat_note_error']),
               },
             })}
-            placeholder="Dodatočné poznámky (napriklad choroby, diety, obmedzenia...) Maximálne 500 znakov."
+            placeholder={t(sk['cat_note_placeholder'])}
             className="form-textarea w-full mb-3 mt-2 text-purple block border-rounded-base border-gray
               focus:outline-none focus:bg-white focus:border-gray
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray"
@@ -636,7 +634,9 @@ const CatForm = ({
             {watchedNote !== undefined &&
             watchedNote &&
             watchedNote.length <= 500
-              ? `Ostáva ${500 - watchedNote?.length} znakov z 500`
+              ? `${t(sk['remain'])} ${500 - watchedNote?.length} ${t(
+                  sk['500_chars']
+                )}`
               : null}
           </span>
           {errors.note && <FormErrorMessage error={errors.note} />}

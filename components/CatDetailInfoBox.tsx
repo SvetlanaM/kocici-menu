@@ -21,10 +21,12 @@ import { TIP_LIMIT } from '../utils/constants';
 import { getUser } from '../utils/user';
 import DateFormatObject from '../utils/getFormatDate';
 import DoctorExportLink from './DoctorExportLink';
-import { BackLinkType } from "../utils/backlinks";
+import { BackLinkType } from '../utils/backlinks';
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 interface CatDetailInfoBoxProps {
   data: CatDetailFieldsFragmentFragment;
-  onEditCat: () => void
+  onEditCat: () => void;
 }
 const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -39,7 +41,7 @@ const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
   };
 
   const lastWeek = DateFormatObject().lastWeek();
-
+  const { t } = useTranslation();
   const [deleteCat] = useMutation<
     DeleteCatMutation,
     DeleteCatMutationVariables
@@ -122,13 +124,15 @@ const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
         <div className="px-5">
           <ul className="small-light-text justify-evenly flex flex-col cat-detail-box">
             <li>
-              <span className="text-gray">Prezyvka:</span> --
+              <span className="text-gray">{t(sk['nickname'])}</span> --
             </li>
             <li>
-              <span className="text-gray">Pohlavie:</span> {data.gender || '--'}
+              <span className="text-gray">{t(sk['gender'])}</span>{' '}
+              {data.gender || '--'}
             </li>
             <li>
-              <span className="text-gray">Farba:</span> {data.color || '--'}
+              <span className="text-gray">{t(sk['color'])}</span>{' '}
+              {data.color || '--'}
             </li>
           </ul>
         </div>
@@ -137,10 +141,11 @@ const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
         <div className="px-5">
           <ul className="small-light-text justify-evenly flex flex-col cat-detail-box">
             <li>
-              <span className="text-gray">Váha:</span> {data.weight || '--'} kg
+              <span className="text-gray">{t(sk['weight'])}</span>{' '}
+              {data.weight || '--'} kg
             </li>
             <li>
-              <span className="text-gray">Email doktora:</span>
+              <span className="text-gray">{t(sk['doctor_email'])}</span>
               {data.doctor_email ? (
                 <DoctorExportLink
                   catContactData={{
@@ -151,14 +156,14 @@ const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
                     gender: data.gender,
                   }}
                 >
-                  <a className="hover:text-purple-light"> Napísať</a>
+                  <a className="hover:text-purple-light"> {t(sk['write'])}</a>
                 </DoctorExportLink>
               ) : (
                 ' --'
               )}
             </li>
             <li>
-              <span className="text-gray">Denná dávka:</span>{' '}
+              <span className="text-gray">{t(sk['daily_food'])}</span>{' '}
               {data.daily_food || '--'} g
             </li>
           </ul>
@@ -174,13 +179,13 @@ const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
           />
           <p className="uppercase text-gray text-sm ml-2 font-light">
             <Link
-                href={{
-                  pathname: "/my-cats/[slug]",
-                  query: { slug: data.slug, backlink: BackLinkType.MY_CATS }
-                }}
-                //as={`/my-cats/${encodeURIComponent(data.slug)}`}
+              href={{
+                pathname: '/my-cats/[slug]',
+                query: { slug: data.slug, backlink: BackLinkType.MY_CATS },
+              }}
+              //as={`/my-cats/${encodeURIComponent(data.slug)}`}
             >
-              <a onClick={onEditCat}>Upraviť mačku</a>
+              <a onClick={onEditCat}>{t(sk['edit_cat'])}</a>
             </Link>
           </p>
         </div>
@@ -194,7 +199,7 @@ const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
                   setCatId(data.id);
                 }}
               >
-                Vymazať mačku
+                {t(sk['delete_cat'])}
               </a>
             </Link>
           </p>

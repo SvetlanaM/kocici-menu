@@ -2,6 +2,8 @@ import { APP_NAME } from '../utils/constants';
 import Link from 'next/link';
 import { SVETA_EMAIL } from '../utils/constants';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 
 type AuthRightContainerProps = {
   name?: string;
@@ -22,6 +24,7 @@ const AuthRightContainer = ({
   buttonInfo,
   footerLinks,
 }: AuthRightContainerProps) => {
+  const { t } = useTranslation();
   return (
     <div className="justify-center order-2 xl-custom:order-1 w-full xl-custom:w-1/2 flex items-start py-16 px-10 xl-custom:px-20 flex-col xl-custom:min-h-screen text-purple">
       <Link href="/">
@@ -41,9 +44,11 @@ const AuthRightContainer = ({
       <div className="mt-5 w-full">{form}</div>
       {buttonInfo && (
         <div className="text-gray text-sm leading-normal font-light">
-          Problém s prihlásením?{' '}
+          {t(sk['login_problem'])}{' '}
           <Link href={`mailto: ${SVETA_EMAIL}`}>
-            <a className="text-purple-light hover:text-purple">Napíšte mi :)</a>
+            <a className="text-purple-light hover:text-purple">
+              {t(sk['write_me'])}
+            </a>
           </Link>
         </div>
       )}

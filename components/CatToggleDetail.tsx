@@ -2,8 +2,11 @@ import FavouriteProducts from './FavouriteProducts';
 import SpecialRequirements from './SpecialRequirements';
 import DoctorExportButton from './DoctorExportButton';
 import Title from './Title';
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 
 const CatToggleDetail = ({ catData }: any) => {
+  const { t } = useTranslation();
   const { contact_doctor, specials } = catData;
   return (
     <div className="flex-col grid grid-rows divide-y divide-gray_lightest pt-3.6 font-light">
@@ -11,7 +14,7 @@ const CatToggleDetail = ({ catData }: any) => {
       {specials && specials.length > 0 && (
         <div className="px-3.6 pt-3.6">
           <Title
-            title="Špeciálne požiadavky"
+            title={t(sk['special_requirements'])}
             fontSize="text-sm"
             paddingBottom="pb-2"
           />

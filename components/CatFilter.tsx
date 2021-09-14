@@ -2,6 +2,8 @@ import { useMemo, useRef } from 'react';
 import { useEffect, useState } from 'react';
 import Title from './Title';
 import { GetCatDetailQuery } from '../graphql/generated/graphql';
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 
 interface CatFilterProps {
   cats: GetCatDetailQuery['cat'];
@@ -10,6 +12,7 @@ interface CatFilterProps {
 }
 
 const CatFilter = ({ cats, setCatFunction, selectedCat }: CatFilterProps) => {
+  const { t } = useTranslation();
   const [catId, setCatId] = useState<number>(selectedCat);
 
   useEffect(() => {
@@ -37,7 +40,7 @@ const CatFilter = ({ cats, setCatFunction, selectedCat }: CatFilterProps) => {
 
   return (
     <div className="flex align-baseline w-full" ref={ref2}>
-      <Title title="Vybraná mačka: " classNames="flex-auto" />
+      <Title title={t(sk['choosen_cat'])} classNames="flex-auto" />
 
       <ul
         className="flex flex-row ml-3 text-lg font-semibold cursor-pointer overflow-y-auto custom-scroll"

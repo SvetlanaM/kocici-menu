@@ -14,13 +14,15 @@ import AddCatBox from './AddCatBox';
 import CatDetailPieChart from './CatDetailPieChart';
 import useLocalStorage, { LocalStorageKey } from '../hooks/useLocalStorage';
 import { BackLinkType } from '../utils/backlinks';
-
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 interface CatDetailContainerProps {
   cats: GetCatDetailQuery['cat'];
   products: GetProductsQuery['products'];
 }
 
 const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
+  const { t } = useTranslation();
   const catFactory = (cat: CatFieldsFragmentFragment) => {
     return {
       id: cat.id,
@@ -44,9 +46,10 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
   );
   const setCatEditOpened = () => {
     setSavedCat(selectedCat);
-  }
+  };
 
-  const initialCat = cats.find((cat) => savedCat && cat.id === savedCat) ?? cats[0];
+  const initialCat =
+    cats.find((cat) => savedCat && cat.id === savedCat) ?? cats[0];
 
   let initialData = catFactory(initialCat);
   const [[selectedCat, catData, catReviews, catModalData], setSelectedCat] =
@@ -59,7 +62,7 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
       getCatReviewHistory(initialCat),
       initialData,
     ]);
-    setSavedCat(null)
+    setSavedCat(null);
   }, []);
 
   const productsTemp = products.filter(
@@ -167,7 +170,10 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
       <div className="w-full flex justify-between">
         <CatDetailInfoBox data={catData} onEditCat={setCatEditOpened} />
         <div className="w-3/12 pl-7">
-          <AddCatBox backlink={BackLinkType.MY_CATS} onNewCat={setCatEditOpened} />
+          <AddCatBox
+            backlink={BackLinkType.MY_CATS}
+            onNewCat={setCatEditOpened}
+          />
         </div>
       </div>
       <div className="w-full grid grid-rows-2 xl-custom:grid-rows-1 xl-custom:grid-cols-2 gap-11 pb-16 mt-3">
@@ -182,7 +188,7 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
         <CatDetailProductTable
           data={catProducts}
           name={catData.name}
-          title="Najnovšie hodnotenia"
+          title={t(sk['newest_reviews'])}
           catReviews={catReviews.slice(0, 5)}
           cats={[catModalData]}
           products={productsTemp}
@@ -190,7 +196,7 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
         <CatDetailProductTable
           data={getRProducts}
           name={catData.name}
-          title="Navrhované produkty"
+          title={t(sk['suggested_reviews'])}
           catReviews={catReviews}
           shuffleData={shuffleData}
           products={getRProducts}

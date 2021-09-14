@@ -60,7 +60,7 @@ const CatBasicInfo = ({ cat }: CatBasicInfoProps) => {
                 count: cat.age,
               })
             : cat.age === 0
-            ? 'do 1 roku'
+            ? t(sk['to_year'])
             : '--'}
         </p>
       </div>

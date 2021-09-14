@@ -15,6 +15,7 @@ import { useUserSeenStateQuery } from '../graphql/generated/graphql';
 import { getUser, user_id } from '../utils/user';
 import RoutingPath from '../pages/routing-path';
 import useLogger from '../hooks/useLogger';
+import sk from '../public/locales/sk/common.json';
 interface AuthFormProps {
   submitText: string;
   passwordPlaceholder: string;
@@ -47,16 +48,18 @@ const AuthForm = ({
     resources: {
       sk: {
         translation: {
-          invalid_grant_email_not_confirmed: 'Email nie je potvrdený.',
+          invalid_grant_email_not_confirmed:
+            'Emailova adresa nie je zatial potvrdena. Skontrolujte si prichadzajuce emaily alebo spam zlozku.',
           a_user_with_this_email_address_has_already_been_registered:
-            'Užívateľ s touto emailovou adresou už existuje. Zadajte iný email.',
+            'Užívateľ s touto emailovou adresou už existuje. Zadajte prosim iný email.',
           invalid_grant_no_user_found_with_that_email_or_password_invalid:
-            'Používateľ s touto email adresou nenájdený alebo zle zadané heslo.',
+            'Užívateľ s touto emailovou adresou nenájdený alebo zle zadana kombinacia emailu a hesla.',
           cannot_read_property_auth_of_undefined:
-            'Chyba v pripojení. Skúste neskôr.',
+            'Chyba v internetovom pripojení. Opakujte vasu poziadavku neskôr.',
           server_se_zadaným_názvem_hostitele_nelze_nalézt:
-            'Chyba v pripojení. Skúste neskôr.',
-          failed_to_fetch: 'Chyba v pripojení. Skúste neskôr.',
+            'Chyba v internetovom pripojení. Opakujte vasu poziadavku neskôr.',
+          failed_to_fetch:
+            'Chyba v internetovom pripojení. Opakujte vasu poziadavku neskôr.',
         },
       },
     },
@@ -87,11 +90,7 @@ const AuthForm = ({
       signupUser(data.email, data.password, {
         data: 'signed up thru react-netlify-identity',
       })
-        .then(() =>
-          setSuccessMessage(
-            'Registrácia úspešná. O chvíľu budete presmerovaný do aplikácie.'
-          )
-        )
+        .then(() => setSuccessMessage(t(sk['registration_success'])))
         .then(() => setMessage(''))
         .then(() =>
           loginUser(data.email, data.password).then(() =>
@@ -137,34 +136,34 @@ const AuthForm = ({
       <form onSubmit={handleSubmit(onSubmit)} className="w-full">
         <div className="mb-7">
           <FormInputWrapper>
-            <FormInputLabel name="Email*" />
+            <FormInputLabel name={`${t(sk['email'])}*`} />
             <FormInput
               {...register('email', {
-                required: { value: true, message: 'Email je povinný' },
+                required: { value: true, message: t(sk['email_required']) },
               })}
               name="email"
               type="email"
-              placeholder="email@email.sk"
+              placeholder={t(sk['email_placeholder'])}
               errors={errors.email && errors.email}
               aria-invalid={errors.email}
             />
             {errors.email && <FormErrorMessage error={errors.email?.message} />}
           </FormInputWrapper>
           <FormInputWrapper>
-            <FormInputLabel name="Heslo*" />
+            <FormInputLabel name={`${t(sk['password'])}*`} />
             <FormInput
               placeholder={passwordPlaceholder}
               errors={errors.password && errors.password}
               type="password"
               name="password"
               {...register('password', {
-                required: { value: true, message: 'Heslo je povinne' },
+                required: { value: true, message: t(sk['password_required']) },
                 validate: {
                   hasUppercaseLetter: hasUppercaseLetter,
                 },
                 minLength: {
                   value: 8,
-                  message: 'Heslo musí mať najmenej 8 znakov',
+                  message: t(sk['password_rule_min_length']),
                 },
               })}
             />
@@ -173,9 +172,7 @@ const AuthForm = ({
             )}
             {errors.password &&
               errors.password.type === 'hasUppercaseLetter' && (
-                <FormErrorMessage
-                  error={'Heslo musí obsahovať aspoň jedno veľké písmeno'}
-                />
+                <FormErrorMessage error={t(sk['password_rule_sign'])} />
               )}
           </FormInputWrapper>
         </div>
@@ -183,16 +180,16 @@ const AuthForm = ({
         <SubmitButton text={submitText} disabled={false} size="w-full" />
         {authMethod === 'signupUser' ? (
           <div className="text-gray text-sm leading-normal font-light">
-            Registraciou souhlasím s{' '}
+            {t(sk['registration_info'])}{' '}
             <Link href="/terms-and-conditions">
               <a target="new" className="text-purple-light hover:text-purple">
-                podmínkami
+                {t(sk['rules'])}
               </a>
             </Link>{' '}
-            a beru na vědomí{' '}
+            {t(sk['and_i_know'])}{' '}
             <Link href="/gdpr-conditions">
               <a target="new" className="text-purple-light hover:text-purple">
-                ochranu svých osobních údajů.
+                {t(sk['my_privacy'])}
               </a>
             </Link>
           </div>

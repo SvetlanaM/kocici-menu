@@ -11,6 +11,8 @@ import {
 import AddProductReviewModal from './AddProductReviewModal';
 import Link from 'next/link';
 import NoReviews from './NoReviews';
+import { useTranslation } from 'react-i18next';
+import sk from '../public/locales/sk/common.json';
 
 export const ProductFieldsFragment = gql`
   fragment ProductFieldsFragment on Product {
@@ -47,6 +49,7 @@ const CatDetailProductTable = ({
   cats,
   products,
 }: CatDetailProductTableProps) => {
+  const { t } = useTranslation();
   const data1 = (order: number) => {
     return {
       labels: ['1', '2', '3', '4', '5'],
@@ -132,7 +135,7 @@ const CatDetailProductTable = ({
     <div className="mt-5 w-full">
       <div className="flex flex-col xl-custom:flex-row justify-between items-center xl-custom:items-center text-gray text-left">
         <Title title={`${title}`} />
-        {title === 'Navrhované produkty' ? (
+        {title === t(sk['suggested_reviews']) ? (
           <button
             onClick={() => {
               shuffleData();
@@ -140,7 +143,7 @@ const CatDetailProductTable = ({
           >
             <div className="inline-flex pb-5 xl-custom:mb-0 text-right">
               <Image src="/icons/reload.svg" height={15} width={15} />{' '}
-              <span className="ml-2">Nové produkty</span>
+              <span className="ml-2">{t(sk['new_products'])}</span>
             </div>
           </button>
         ) : (
@@ -150,7 +153,7 @@ const CatDetailProductTable = ({
                 onClick={openModal}
                 className="text-gray pb-5 xl-custom:mb-0 text-right"
               >
-                + Pridať hodnotenie
+                {t(sk['add_review_small'])}
               </a>
             </Link>
           </>
