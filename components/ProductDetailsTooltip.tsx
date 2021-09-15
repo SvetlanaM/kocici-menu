@@ -5,6 +5,8 @@ import Image from './Image';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
 i18next.init({
+  lng: 'cs',
+  debug: false,
   resources: {
     sk: {
       translation: {
@@ -17,6 +19,19 @@ i18next.init({
         conservants: 'Konzervanty',
         feeding: 'Dorucene davkovanie',
         ingredient_name: 'Ingrediencie',
+      },
+    },
+    cs: {
+      translation: {
+        meal: '% masa',
+        meal_type: 'Typ masa',
+        plant_type: 'Rostlinné složky',
+        other_type: 'Ostatní složky',
+        note: 'Další suroviny',
+        daily_food: 'Doporučená denní dávka',
+        conservants: 'Konzervanty',
+        feeding: 'Doporučené dávkování',
+        ingredient_name: 'Ingredience',
       },
     },
   },

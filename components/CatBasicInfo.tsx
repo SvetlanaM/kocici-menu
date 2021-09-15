@@ -15,7 +15,7 @@ interface CatBasicInfoProps {
 }
 const CatBasicInfo = ({ cat }: CatBasicInfoProps) => {
   i18next.init({
-    lng: 'sk',
+    lng: 'cs',
     debug: false,
     resources: {
       sk: {
@@ -24,6 +24,15 @@ const CatBasicInfo = ({ cat }: CatBasicInfoProps) => {
             key_0: '{{count}} rok',
             key_1: '{{count}} roky',
             key_2: '{{count}} rokov',
+          },
+        },
+      },
+      cs: {
+        translation: {
+          years: {
+            key_0: '{{count}} rok',
+            key_1: '{{count}} roky',
+            key_2: '{{count}} roků',
           },
         },
       },

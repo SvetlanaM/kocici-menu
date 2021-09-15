@@ -7,7 +7,7 @@ import Image from '../../components/Image';
 import AuthForm from '../../components/AuthForm';
 import getTitle from '../../utils/getTitle';
 import { useTranslation } from 'react-i18next';
-import sk from '../../public/locales/sk/common.json';
+import cs from '../../public/locales/cs/common.json';
 
 export default function Register() {
   const { t } = useTranslation();

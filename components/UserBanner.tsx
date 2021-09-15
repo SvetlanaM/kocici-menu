@@ -12,7 +12,7 @@ interface UserBannerProps {
 
 const UserBanner = ({ data }: UserBannerProps) => {
   i18next.init({
-    lng: 'sk',
+    lng: 'cs',
     debug: false,
     resources: {
       sk: {
@@ -26,6 +26,20 @@ const UserBanner = ({ data }: UserBannerProps) => {
             key_0: 'produktu',
             key_1: 'produkty',
             key_2: 'produktov',
+          },
+        },
+      },
+      cs: {
+        translation: {
+          reviews: {
+            key_0: '{{count}} hodnocení',
+            key_1: '{{count}} hodnocení',
+            key_2: '{{count}} hodnocení',
+          },
+          products: {
+            key_0: 'produktu',
+            key_1: 'produkty',
+            key_2: 'produktů',
           },
         },
       },
@@ -49,7 +63,7 @@ const UserBanner = ({ data }: UserBannerProps) => {
             {data.stats[0] ? (
               <span>
                 {t(cs['favourite_brand'])}{' '}
-                <strong>{data.stats[0] && data.stats[0].brand_type}</strong>.
+                <strong>{data.stats[0] && data.stats[0].brand_type}</strong>.{' '}
                 {t(cs['avg_review_info'])}{' '}
                 <strong>{data.user_stats[0].avg_review}</strong>.
                 <br />

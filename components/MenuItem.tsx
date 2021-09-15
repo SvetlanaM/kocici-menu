@@ -58,7 +58,7 @@ const MenuItem = ({ icon, name, url, active }: MenuItemProps) => {
             className="ml-0 mr-5"
           />
         </div>
-        <span className={active ? activeLinkStyle : ''}>{name}</span>
+        <span className={active ? activeLinkStyle : ''}>{t(cs[name])}</span>
       </a>
     </button>
   ) : (
@@ -76,7 +76,7 @@ const MenuItem = ({ icon, name, url, active }: MenuItemProps) => {
             className="ml-0 mr-5"
           />
         </div>
-        <span className={active ? activeLinkStyle : ''}>{name}</span>
+        <span className={active ? activeLinkStyle : ''}>{t(cs[name])}</span>
       </a>
     </Link>
   );

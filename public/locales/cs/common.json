@@ -208,7 +208,7 @@
     "skip": "Přeskočit",
     "save_meal": "Uložit výběr",
     "register": "Registrovat",
-    "login": "Přihlásit sa",
+    "login": "Přihlásit se",
     "hello": "Ahoj!",
     "login_or": "Přihlásit se do aplikace nebo",
     "enter_pass": "Zadejte heslo",
@@ -226,5 +226,7 @@
     "no_reviewed_products": "Nemáte žádne hodnocené produkty",
     "best_products": "nejlépe hodnocené produkty",
     "top_5": "Top 5 nejlépe hodnocených produktů z",
-    "welcome": "Vítejte"
+    "welcome": "Vítejte",
+    "tips_and_recommendations": "Tipy a doporučení",
+    "search_from_characters": "Vyhledávat od 3 znaků"
 }

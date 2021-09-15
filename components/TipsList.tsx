@@ -7,6 +7,8 @@ import FormInput from './FormInput';
 import { useState } from 'react';
 import useSearch from '../hooks/useSearch';
 import Image from './Image';
+import { useTranslation } from 'react-i18next'
+import cs from '../public/locales/cs/common.json';
 
 interface TipProps {
   data: GetDashboardQuery['tips'] | GetTipsQuery['tips'];
@@ -27,18 +29,20 @@ const TipsList = ({ data, cols, isOnDashboard }: TipProps) => {
     GetDashboardQuery['tips'] | GetTipsQuery['tips']
   >(copyData);
 
+  const { t } = useTranslation();
+
   useSearch(searchTerm, data, setSearchTips, false);
 
   return (
     <InnerContainer flexType="flex-col">
       <div className="flex flex-col xl-custom:flex-row justify-between mb-2 xl-custom:items-center">
-        <Title title="Tipy a odporúčania" />
+        <Title title={t(cs['tips_and_recommendations'])} />
         {!isOnDashboard && (
           <div className="flex flex-row justify-end w-full xl-custom:w-1/2 float-right relative">
             <FormInput
               type="text"
               name="search"
-              placeholder="Vyhľadávať od 3 znakov"
+              placeholder={t(cs['search_from_characters'])}
               width={'w-full xl-custom:w-1/2'}
               onChange={(e) => {
                 setSearchTerm(e.target.value);

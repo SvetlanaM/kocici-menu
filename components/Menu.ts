@@ -6,22 +6,22 @@ export const MenuLinks = Object.freeze({
     {
       icon: 'dashboard',
       url: '/dashboard',
-      name: 'Prehlad',
+      name: 'dashboard',
     },
     {
       icon: 'my_cats',
       url: '/my-cats',
-      name: 'Moje macky',
+      name: 'my_cats',
     },
     {
       icon: 'products',
       url: '/products',
-      name: 'Produkty',
+      name: 'products_menu',
     },
     {
       icon: 'tips',
       url: '/tips',
-      name: 'Tipy',
+      name: 'tips',
     },
     // {
     //   icon: 'fans',
@@ -31,12 +31,12 @@ export const MenuLinks = Object.freeze({
     {
       icon: 'settings',
       url: '/settings',
-      name: 'Nastavenia',
+      name: 'settings',
     },
     {
       icon: 'logout',
       url: '',
-      name: 'Odhlasit sa',
+      name: 'logout',
     },
   ],
 });
