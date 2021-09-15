@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 
 export const MenuLinks = Object.freeze({
   items: [

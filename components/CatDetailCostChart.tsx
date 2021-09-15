@@ -3,7 +3,7 @@ import { Bar } from 'react-chartjs-2';
 import moment from 'moment';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 interface CatDetailCostChartProps {
   data1: number[];
   data2: number[];
@@ -18,18 +18,18 @@ const CatDetailCostChart = ({
   const { t } = useTranslation();
   const mergeData = [...data1, ...data2];
   const allMonths = [
-    t(sk['january']),
-    t(sk['february']),
-    t(sk['march']),
-    t(sk['april']),
-    t(sk['may']),
-    t(sk['june']),
-    t(sk['july']),
-    t(sk['august']),
-    t(sk['september']),
-    t(sk['october']),
-    t(sk['november']),
-    t(sk['december']),
+    t(cs['january']),
+    t(cs['february']),
+    t(cs['march']),
+    t(cs['april']),
+    t(cs['may']),
+    t(cs['june']),
+    t(cs['july']),
+    t(cs['august']),
+    t(cs['september']),
+    t(cs['october']),
+    t(cs['november']),
+    t(cs['december']),
   ];
 
   const currentMonth = moment(moment(), 'YYYY/MM/DD').format('M');
@@ -40,14 +40,14 @@ const CatDetailCostChart = ({
       labels: allMonths.slice(0, Number(currentMonth)).slice(-6),
       datasets: [
         {
-          label: t(sk['wet_food_short']),
+          label: t(cs['wet_food_short']),
           data: data1,
           backgroundColor: '#BDBDE7',
           borderRadius: '5',
           fill: true,
         },
         {
-          label: t(sk['dry_food']),
+          label: t(cs['dry_food']),
           data: data2,
           backgroundColor: '#E1E5EE',
           borderRadius: '5',
@@ -83,7 +83,7 @@ const CatDetailCostChart = ({
   };
   return (
     <div className="mt-5 w-full graph-container">
-      <Title title={t(sk['half_year_costs'])} />
+      <Title title={t(cs['half_year_costs'])} />
       <Bar data={data} options={options} />
     </div>
   );

@@ -3,7 +3,7 @@ import { ReviewFieldsFragmentFragment } from '../graphql/generated/graphql';
 import setUppercaseTitle from '../utils/setUppercaseTitle';
 import Image from './Image';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 i18next.init({
   resources: {
     sk: {
@@ -45,7 +45,7 @@ const ToolTipBody = ({ itemName, item }: ToolTipBodyProps) => {
             }}
           ></p>
         </div>
-        {itemName === t(sk['avg_review']) ? (
+        {itemName === t(cs['avg_review']) ? (
           <Image src={getQualityImage(item)} height={30} width={30} />
         ) : (
           ''
@@ -88,7 +88,7 @@ const ProductDetailsTooltipBox = ({ data }: ProductDetailsTooltipBoxProps) => {
   return (
     <div className="grid divide-y divide-gray_lightest" key={data.id}>
       {data.rating && (
-        <ToolTipBody itemName={t(sk['avg_review'])} item={data.rating} />
+        <ToolTipBody itemName={t(cs['avg_review'])} item={data.rating} />
       )}
       {data.analysis_variant
         ? Object.entries(data.analysis_variant).map((item) => {
@@ -114,7 +114,7 @@ const ProductDetailsTooltipBox = ({ data }: ProductDetailsTooltipBoxProps) => {
 
       {data.feeding && (
         <ToolTipBody
-          itemName={t(sk['reccommended_feeding'])}
+          itemName={t(cs['reccommended_feeding'])}
           item={data.feeding.replace('Doporučené dávkování', '')}
         />
       )}

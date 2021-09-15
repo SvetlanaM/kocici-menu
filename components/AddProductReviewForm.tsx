@@ -37,7 +37,7 @@ import { Components } from 'react-select/src/components';
 import RatingIcon from './RatingIcon';
 import useLogger from '../hooks/useLogger';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 
 interface AddProductReviewFormProps {
   selectCats?: GetDashboardQuery['selectCats'];
@@ -289,7 +289,7 @@ const AddProductReviewForm = ({
       <div className="flex xl-custom:flex-col justify-between">
         <div className="w-full mb-4">
           <div className="mb-2">
-            <FormInputLabel name={`${t(sk['cat'])}*`} />
+            <FormInputLabel name={`${t(cs['cat'])}*`} />
           </div>
           <Controller
             name="cat"
@@ -307,8 +307,8 @@ const AddProductReviewForm = ({
                   cat.id.toString()
                 }
                 getOptionLabel={(cat: SelectCatFieldsFragment) => cat.name}
-                placeholder={t(sk['choose_cat'])}
-                noOptionsMessage={() => t(sk['no_results'])}
+                placeholder={t(cs['choose_cat'])}
+                noOptionsMessage={() => t(cs['no_results'])}
                 isDisabled={selectCats.length === 1 ? true : false}
               />
             )}
@@ -316,7 +316,7 @@ const AddProductReviewForm = ({
         </div>
         <div className="w-full mb-3">
           <div className="mb-2">
-            <FormInputLabel name={`${t(sk['review'])}*`} />
+            <FormInputLabel name={`${t(cs['review'])}*`} />
           </div>
           <Controller
             name="rating"
@@ -346,7 +346,7 @@ const AddProductReviewForm = ({
           />
           {errors.rating && reviewType === '' && (
             <div className="mt-3">
-              <FormErrorMessage error={t(sk['review_required'])} />
+              <FormErrorMessage error={t(cs['review_required'])} />
             </div>
           )}
         </div>
@@ -354,16 +354,16 @@ const AddProductReviewForm = ({
 
       {reviewType !== '' ? (
         <span className="flex text-red-500 mb-5">
-          {`${t(sk['for_cat'])} ${watchedCat.name} ${t(sk['and_food'])} ${
+          {`${t(cs['for_cat'])} ${watchedCat.name} ${t(cs['and_food'])} ${
             watchedProduct.name
-          } ${t(sk['review_exists'])} ${reviewType}.`}
+          } ${t(cs['review_exists'])} ${reviewType}.`}
         </span>
       ) : null}
 
       <div className="mt-1">
-        <NeutralButton title={t(sk['back'])} onClick={onBackAction} />
+        <NeutralButton title={t(cs['back'])} onClick={onBackAction} />
         <SubmitButton
-          text={t(sk['save'])}
+          text={t(cs['save'])}
           disabled={reviewType !== ''}
           size="w-full xl-custom:w-1/4"
         />

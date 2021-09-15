@@ -7,7 +7,7 @@ import FormInputLabel from './FormInputLabel';
 import RatingIcon from './RatingIcon';
 const customStyles = style;
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 interface RatingControllerProps {
   props?: Array<string>;
   name: string;
@@ -48,13 +48,13 @@ const RatingController = ({
   return (
     <>
       <div className="mb-5">
-        <FormInputLabel name={`${t(sk['review'])}*`} />
+        <FormInputLabel name={`${t(cs['review'])}*`} />
       </div>
       <Controller
         name={name}
         control={control}
         rules={{
-          required: { value: true, message: t(sk['review_required_stars']) },
+          required: { value: true, message: t(cs['review_required_stars']) },
         }}
         defaultValue={defaultValue}
         render={({ field }) => (

@@ -1,6 +1,6 @@
 import Image from './Image';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 const NoReviews = () => {
   const { t } = useTranslation();
   return (
@@ -8,7 +8,7 @@ const NoReviews = () => {
       <div className="flex flex-col justify-between items-center px-8 pt-5 pb-4">
         <Image src="/icons/no-reviews.svg" width={150} />
         <h1 className="font-semibold text-gray mt-4">
-          {t(sk['no_reviews_products'])}
+          {t(cs['no_reviews_products'])}
         </h1>
       </div>
     </div>

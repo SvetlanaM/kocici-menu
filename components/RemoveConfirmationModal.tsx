@@ -3,7 +3,7 @@ import SubmitButton from './SubmitButton';
 import NeutralButton from './NeutralButton';
 import Image from './Image';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 interface RemoveConfirmationModalProps {
   isOpen: boolean;
   closeModal: () => void;
@@ -27,12 +27,12 @@ const RemoveConfirmationModal = ({
     >
       <div className="flex flex-col justify-between text-purple leading-normal">
         <h2 className="font-medium text-2xl">
-          {t(sk['remove_confirmation'])} {rest} {t(sk['sad_face'])}
+          {t(cs['remove_confirmation'])} {rest} {t(cs['sad_face'])}
         </h2>
         <div className="flex justify-between items-center mt-5 mb-5">
           <div className="font-light text-sm w-full pr-3.6">
-            {t(sk['cat_remove_info'])} {rest}
-            {t(sk['cat_remove_detail'])}
+            {t(cs['cat_remove_info'])} {rest}
+            {t(cs['cat_remove_detail'])}
           </div>
           <Image src="/icons/cat-trash.svg" height={50} width={100} />
         </div>

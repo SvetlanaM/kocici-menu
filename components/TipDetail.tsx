@@ -9,7 +9,7 @@ import Breadcrumb from '../utils/breadcrumb';
 import { useEffect, useMemo, useState } from 'react';
 import router from 'next/router';
 import Image from './Image';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 import { useTranslation } from 'react-i18next';
 import links from '../utils/backlinks';
 
@@ -63,12 +63,12 @@ const TipDetailBox = ({
               className="mr-2 xl-custom:inline hidden"
             />{' '}
             <span className="text-sm font-light text-gray">
-              {t(sk[category.comment])}
+              {t(cs[category.comment])}
             </span>
           </div>
         )}
         <p className="text-sm font-light text-gray">
-          {t(sk['published_date'])} {formattedDate}
+          {t(cs['published_date'])} {formattedDate}
         </p>
       </div>
       {perex && (

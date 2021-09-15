@@ -2,7 +2,7 @@ import TableRow from './TableRow';
 import { GetDashboardQuery } from '../graphql/generated/graphql';
 import TableHead from './TableHead';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 import useSortableData from '../hooks/useSortableData';
 import { useEffect, useMemo, useState } from 'react';
 import {
@@ -73,7 +73,7 @@ const Table = ({
                 ? inputData
                     .slice(offsetNumber, numberOfProducts)
                     .map((row) => <TableRow {...row} key={row.id} />)
-                : t(sk['no_products'])}
+                : t(cs['no_products'])}
             </tbody>
           </table>
           {Footer}

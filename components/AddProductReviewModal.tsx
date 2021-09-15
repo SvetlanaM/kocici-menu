@@ -3,7 +3,7 @@ import AddProductReviewForm from './AddProductReviewForm';
 import { GetDashboardQuery } from '../graphql/generated/graphql';
 import Image from './Image';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 interface AddProductReviewModalProps {
   isOpen: boolean;
   closeModal: () => void;
@@ -31,13 +31,13 @@ const AddProductReviewModal = ({
     >
       <div className="flex flex-col justify-between text-purple leading-normal">
         <h2 className="font-medium text-2xl pt-10 xl-custom:pt-0">
-          {t(sk['new_review'])}
+          {t(cs['new_review'])}
         </h2>
         <div className="flex flex-col xl-custom:flex-row justify-between items-start pt-5 xl-custom:pt-0 xl-custom:items-center">
           <div className="font-light text-sm w-full xl-custom:w-4/6 pr-3.6">
-            {t(sk['new_review_modal'])}{' '}
-            <span className="text-purple-light">{t(sk['3_steps'])}</span>
-            <p className="mt-3">{t(sk['review_rules'])}</p>
+            {t(cs['new_review_modal'])}{' '}
+            <span className="text-purple-light">{t(cs['3_steps'])}</span>
+            <p className="mt-3">{t(cs['review_rules'])}</p>
           </div>
           <div className="w-full xl-custom:w-2/6 mt-5 xl-custom:mt-0">
             <Image

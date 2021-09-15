@@ -12,7 +12,7 @@ import AddProductReviewModal from './AddProductReviewModal';
 import Link from 'next/link';
 import NoReviews from './NoReviews';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 
 export const ProductFieldsFragment = gql`
   fragment ProductFieldsFragment on Product {
@@ -135,7 +135,7 @@ const CatDetailProductTable = ({
     <div className="mt-5 w-full">
       <div className="flex flex-col xl-custom:flex-row justify-between items-center xl-custom:items-center text-gray text-left">
         <Title title={`${title}`} />
-        {title === t(sk['suggested_reviews']) ? (
+        {title === t(cs['suggested_reviews']) ? (
           <button
             onClick={() => {
               shuffleData();
@@ -143,7 +143,7 @@ const CatDetailProductTable = ({
           >
             <div className="inline-flex pb-5 xl-custom:mb-0 text-right">
               <Image src="/icons/reload.svg" height={15} width={15} />{' '}
-              <span className="ml-2">{t(sk['new_products'])}</span>
+              <span className="ml-2">{t(cs['new_products'])}</span>
             </div>
           </button>
         ) : (
@@ -153,7 +153,7 @@ const CatDetailProductTable = ({
                 onClick={openModal}
                 className="text-gray pb-5 xl-custom:mb-0 text-right"
               >
-                {t(sk['add_review_small'])}
+                {t(cs['add_review_small'])}
               </a>
             </Link>
           </>
