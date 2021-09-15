@@ -230,8 +230,8 @@ const FilterForm = ({ selectCats, selectBrands, reviews, selectProductTypes }: F
                         styles={customStyles}
                         getOptionValue={ type => type.value }
                         getOptionLabel={ type => type.comment}
-                        placeholder="Typu krmiva"
-                        noOptionsMessage={() => 'Žiadne ďalšie výsledky'}
+                        placeholder={t(sk['by_feed_type'])}
+                        noOptionsMessage={() => t(sk['no_results'])}
                     />
                 )}
                 name="type"
@@ -250,8 +250,8 @@ const FilterForm = ({ selectCats, selectBrands, reviews, selectProductTypes }: F
                         isMulti
                         styles={customStyles}
                         options={ratingOptions}
-                        noOptionsMessage={() => 'Žiadne ďaľšie výsledky'}
-                        placeholder={'Recenzií eshopu'}
+                        noOptionsMessage={() => t(sk['no_results'])}
+                        placeholder={t(sk['by_eshop_reviews'])}
                     />
                 )}
             />
@@ -268,7 +268,7 @@ const FilterForm = ({ selectCats, selectBrands, reviews, selectProductTypes }: F
                         min={0}
                         max={100}
                         step={1}
-                        label={"Obsahu bielkovin"}
+                        label={t(sk['by_protein'])}
                     />
                 )}
                 name="protein"
@@ -288,7 +288,7 @@ const FilterForm = ({ selectCats, selectBrands, reviews, selectProductTypes }: F
                         min={0}
                         max={100}
                         step={1}
-                        label={"Obsahu tukov"}
+                        label={t(sk['by_fat'])}
                     />
                 )}
                 name="fat"

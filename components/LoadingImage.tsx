@@ -56,7 +56,7 @@ export default React.memo(function LoadingImage({
             : `object-fill h-10 w-10 mr-4 float-right ${imageStatus !== Status.loading ? "hidden" : ""}`
         }
       >
-        {type !== 'product' ? <Loading /> : null}
+        <Loading />
       </div>
       <img
         onLoad={handleOnLoad}
