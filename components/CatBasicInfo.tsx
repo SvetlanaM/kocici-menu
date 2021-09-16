@@ -1,7 +1,7 @@
 import Image from './Image';
 import setUppercaseTitle from '../utils/setUppercaseTitle';
 import i18next from 'i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 import { useTranslation } from 'next-i18next';
 import { CatFieldsFragmentFragment } from '../graphql/generated/graphql';
 import { useMemo } from 'react';
@@ -15,7 +15,7 @@ interface CatBasicInfoProps {
 }
 const CatBasicInfo = ({ cat }: CatBasicInfoProps) => {
   i18next.init({
-    lng: 'sk',
+    lng: 'cs',
     debug: false,
     resources: {
       sk: {
@@ -24,6 +24,15 @@ const CatBasicInfo = ({ cat }: CatBasicInfoProps) => {
             key_0: '{{count}} rok',
             key_1: '{{count}} roky',
             key_2: '{{count}} rokov',
+          },
+        },
+      },
+      cs: {
+        translation: {
+          years: {
+            key_0: '{{count}} rok',
+            key_1: '{{count}} roky',
+            key_2: '{{count}} roků',
           },
         },
       },
@@ -52,7 +61,7 @@ const CatBasicInfo = ({ cat }: CatBasicInfoProps) => {
       <div className="flex-col-base justify-between ml-3">
         <h4>{truncateText(cat.name, 12)}</h4>
         <p className="small-light-text">
-          {t(sk[cat.type] || sk[CAT_TYPE_NULL])}
+          {t(cs[cat.type] || sk[CAT_TYPE_NULL])}
         </p>
         <p className="small-light-text text-gray">
           {cat.age
@@ -60,7 +69,7 @@ const CatBasicInfo = ({ cat }: CatBasicInfoProps) => {
                 count: cat.age,
               })
             : cat.age === 0
-            ? t(sk['to_year'])
+            ? t(cs['to_year'])
             : '--'}
         </p>
       </div>

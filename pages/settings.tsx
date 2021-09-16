@@ -15,7 +15,7 @@ import { getUser } from '../utils/user';
 import DateFormatObject from '../utils/getFormatDate';
 import UploadImage from '../components/UploadImage';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 const UserStatsQuery = () => {
   const lastWeek = DateFormatObject().lastWeek();
 
@@ -51,7 +51,7 @@ const UserStatsQuery = () => {
 
 export default function Settings() {
   const { t } = useTranslation();
-  const pageTitle = getTitle(t(sk['settings']));
+  const pageTitle = getTitle(t(cs['settings']));
   return (
     <Layout>
       <Header title={pageTitle} />

@@ -15,7 +15,7 @@ import { useUserSeenStateQuery } from '../graphql/generated/graphql';
 import { getUser, user_id } from '../utils/user';
 import RoutingPath from '../pages/routing-path';
 import useLogger from '../hooks/useLogger';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 interface AuthFormProps {
   submitText: string;
   passwordPlaceholder: string;
@@ -43,7 +43,7 @@ const AuthForm = ({
   });
 
   i18next.init({
-    lng: 'sk',
+    lng: 'cs',
     debug: false,
     resources: {
       sk: {
@@ -60,6 +60,22 @@ const AuthForm = ({
             'Chyba v internetovom pripojení. Opakujte vasu poziadavku neskôr.',
           failed_to_fetch:
             'Chyba v internetovom pripojení. Opakujte vasu poziadavku neskôr.',
+        },
+      },
+      cs: {
+        translation: {
+          invalid_grant_email_not_confirmed:
+              'Emailová adresa zatím není ověřená. Zkontrolujte si příchozí emaily nebo spam složku.',
+          a_user_with_this_email_address_has_already_been_registered:
+              'Uživatel s touto emailovou adresou již existuje. Zadejte prosím jiný email.',
+          invalid_grant_no_user_found_with_that_email_or_password_invalid:
+              'Uživatel s touto emailovou adresou nenalezen nebo nesprávná kombinace emailu a hesla.',
+          cannot_read_property_auth_of_undefined:
+              'Chyba v internetovém připojení. Opakujte Váš požadavek později.',
+          server_se_zadaným_názvem_hostitele_nelze_nalézt:
+              'Chyba v internetovém připojení. Opakujte Váš požadavek později.',
+          failed_to_fetch:
+              'Chyba v internetovém připojení. Opakujte Váš požadavek později.',
         },
       },
     },
@@ -90,7 +106,7 @@ const AuthForm = ({
       signupUser(data.email, data.password, {
         data: 'signed up thru react-netlify-identity',
       })
-        .then(() => setSuccessMessage(t(sk['registration_success'])))
+        .then(() => setSuccessMessage(t(cs['registration_success'])))
         .then(() => setMessage(''))
         .then(() =>
           loginUser(data.email, data.password).then(() =>
@@ -136,34 +152,34 @@ const AuthForm = ({
       <form onSubmit={handleSubmit(onSubmit)} className="w-full">
         <div className="mb-7">
           <FormInputWrapper>
-            <FormInputLabel name={`${t(sk['email'])}*`} />
+            <FormInputLabel name={`${t(cs['email'])}*`} />
             <FormInput
               {...register('email', {
-                required: { value: true, message: t(sk['email_required']) },
+                required: { value: true, message: t(cs['email_required']) },
               })}
               name="email"
               type="email"
-              placeholder={t(sk['email_placeholder'])}
+              placeholder={t(cs['email_placeholder'])}
               errors={errors.email && errors.email}
               aria-invalid={errors.email}
             />
             {errors.email && <FormErrorMessage error={errors.email?.message} />}
           </FormInputWrapper>
           <FormInputWrapper>
-            <FormInputLabel name={`${t(sk['password'])}*`} />
+            <FormInputLabel name={`${t(cs['password'])}*`} />
             <FormInput
               placeholder={passwordPlaceholder}
               errors={errors.password && errors.password}
               type="password"
               name="password"
               {...register('password', {
-                required: { value: true, message: t(sk['password_required']) },
+                required: { value: true, message: t(cs['password_required']) },
                 validate: {
                   hasUppercaseLetter: hasUppercaseLetter,
                 },
                 minLength: {
                   value: 8,
-                  message: t(sk['password_rule_min_length']),
+                  message: t(cs['password_rule_min_length']),
                 },
               })}
             />
@@ -172,7 +188,7 @@ const AuthForm = ({
             )}
             {errors.password &&
               errors.password.type === 'hasUppercaseLetter' && (
-                <FormErrorMessage error={t(sk['password_rule_sign'])} />
+                <FormErrorMessage error={t(cs['password_rule_sign'])} />
               )}
           </FormInputWrapper>
         </div>
@@ -180,16 +196,16 @@ const AuthForm = ({
         <SubmitButton text={submitText} disabled={false} size="w-full" />
         {authMethod === 'signupUser' ? (
           <div className="text-gray text-sm leading-normal font-light">
-            {t(sk['registration_info'])}{' '}
+            {t(cs['registration_info'])}{' '}
             <Link href="/terms-and-conditions">
               <a target="new" className="text-purple-light hover:text-purple">
-                {t(sk['rules'])}
+                {t(cs['rules'])}
               </a>
             </Link>{' '}
-            {t(sk['and_i_know'])}{' '}
+            {t(cs['and_i_know'])}{' '}
             <Link href="/gdpr-conditions">
               <a target="new" className="text-purple-light hover:text-purple">
-                {t(sk['my_privacy'])}
+                {t(cs['my_privacy'])}
               </a>
             </Link>
           </div>

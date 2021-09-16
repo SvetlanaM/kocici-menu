@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { SVETA_EMAIL } from '../utils/constants';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 
 type AuthRightContainerProps = {
   name?: string;
@@ -44,10 +44,10 @@ const AuthRightContainer = ({
       <div className="mt-5 w-full">{form}</div>
       {buttonInfo && (
         <div className="text-gray text-sm leading-normal font-light">
-          {t(sk['login_problem'])}{' '}
+          {t(cs['login_problem'])}{' '}
           <Link href={`mailto: ${SVETA_EMAIL}`}>
             <a className="text-purple-light hover:text-purple">
-              {t(sk['write_me'])}
+              {t(cs['write_me'])}
             </a>
           </Link>
         </div>

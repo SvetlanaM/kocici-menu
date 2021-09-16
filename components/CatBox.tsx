@@ -5,7 +5,7 @@ import { CatFieldsFragmentFragment } from '../graphql/generated/graphql';
 import { useTranslation } from 'next-i18next';
 import CatToggleDetail from './CatToggleDetail';
 import { ARRAY_REQUIREMENTS_LENGTH as arrayLength } from '../utils/constants';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 import CatBasicInfo from './CatBasicInfo';
 
 export const CatFieldsFragment = gql`

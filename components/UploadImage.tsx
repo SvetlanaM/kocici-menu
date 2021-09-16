@@ -1,7 +1,7 @@
 import Image from './Image';
 import Loading from './Loading';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 interface UploadImageProps {
   imageUrl?: string;
   openFileDialog: () => void;
@@ -38,7 +38,7 @@ export default function UploadImage({
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray hover:bg-gray-100 transition duration-500 ease-in"
           onClick={openFileDialog}
         >
-          {isImageSet ? t(sk['change_photo']) : t(sk['upload_photo'])}
+          {isImageSet ? t(cs['change_photo']) : t(cs['upload_photo'])}
         </button>
         {isImageSet ? (
           <button
@@ -47,7 +47,7 @@ export default function UploadImage({
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray hover:bg-red-800 transition duration-500 ease-in"
             onClick={resetPhoto}
           >
-            {t(sk['remove_photo'])}
+            {t(cs['remove_photo'])}
           </button>
         ) : null}
       </div>

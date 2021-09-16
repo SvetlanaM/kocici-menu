@@ -2,7 +2,7 @@ import Title from './Title';
 import { Pie } from 'react-chartjs-2';
 import Image from './Image';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 import { useMemo } from 'react';
 
 interface CatDetailPieChartProps {
@@ -13,11 +13,11 @@ const CatDetailPieChart = ({ aggData }: CatDetailPieChartProps) => {
   const { t } = useTranslation();
   const data = useMemo(() => {
     return {
-      labels: [t(sk['protein']), t(sk['fiber']), t(sk['ash']), t(sk['others'])],
+      labels: [t(cs['protein']), t(cs['fiber']), t(cs['ash']), t(cs['others'])],
       type: 'pie',
       datasets: [
         {
-          label: t(sk['food_quality']),
+          label: t(cs['food_quality']),
           data: aggData,
           backgroundColor: ['#A6A6C8', '#E1E5EE', '#3E3E70', '#BDBDE7'],
           borderWidth: 1,
@@ -45,7 +45,7 @@ const CatDetailPieChart = ({ aggData }: CatDetailPieChartProps) => {
 
   return (
     <div className="mt-5 w-full graph-container">
-      <Title title={t(sk['food_quality_%'])} />
+      <Title title={t(cs['food_quality_%'])} />
       {checkZeros() ? (
         <Pie data={data} options={options} />
       ) : (

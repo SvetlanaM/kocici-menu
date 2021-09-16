@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import router from 'next/router';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 
 interface Props {
   url?: string;
@@ -20,7 +20,7 @@ const BackButton = (props: Props): JSX.Element => {
       onClick={(e) => goBack(e)}
       type="button"
     >
-      {t(sk['back'])}
+      {t(cs['back'])}
     </button>
   );
 };

@@ -11,23 +11,23 @@ export enum BackLinkType {
 const links: { [key in BackLinkType]: Breadcrumb } = {
     dashboard: {
         path: '/dashboard',
-        name: 'Prehľad'
+        name: 'dashboard'
     },
     my_cats: {
         path: '/my-cats',
-        name: 'Moje mačky'
+        name: 'my_cats'
     },
     tips: {
         path: '/tips',
-        name: 'Tipy'
+        name: 'tips'
     },
     edit_cat: {
         path: '/my-cats/[:id]',
-        name: 'Upraviť mačku'
+        name: 'edit_cat'
     },
     create_cat: {
         path: '/my-cats/new-cat',
-        name: 'Pridať novú mačku'
+        name: 'create_cat'
     }
 };
 

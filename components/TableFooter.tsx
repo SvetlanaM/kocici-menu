@@ -3,7 +3,7 @@ import AddProductReviewModal from './AddProductReviewModal';
 import { useState } from 'react';
 import { GetDashboardQuery } from '../graphql/generated/graphql';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 
 interface TableFooterProps {
   selectCats: GetDashboardQuery['selectCats'];
@@ -34,7 +34,7 @@ const TableFooter = ({
         <div className="py-3 pl-3.6 base-medium-text text-purple">
           <Link href="/dashboard">
             <a onClick={openModal} className="add-review-btn">
-              {t(sk['add_new_review'])}
+              {t(cs['add_new_review'])}
             </a>
           </Link>
           <AddProductReviewModal
@@ -48,7 +48,7 @@ const TableFooter = ({
 
         <div className="pr-3.6 text-sm font-light text-gray text-right">
           <Link href="/products">
-            <a className="hover:text-gray-dark">{t(sk['show_all'])}</a>
+            <a className="hover:text-gray-dark">{t(cs['show_all'])}</a>
           </Link>
         </div>
       </div>

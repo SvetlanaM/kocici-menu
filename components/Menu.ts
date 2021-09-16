@@ -1,27 +1,27 @@
 import i18next from 'i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 
 export const MenuLinks = Object.freeze({
   items: [
     {
       icon: 'dashboard',
       url: '/dashboard',
-      name: 'Prehlad',
+      name: 'dashboard',
     },
     {
       icon: 'my_cats',
       url: '/my-cats',
-      name: 'Moje macky',
+      name: 'my_cats',
     },
     {
       icon: 'products',
       url: '/products',
-      name: 'Produkty',
+      name: 'products_menu',
     },
     {
       icon: 'tips',
       url: '/tips',
-      name: 'Tipy',
+      name: 'tips',
     },
     // {
     //   icon: 'fans',
@@ -31,12 +31,12 @@ export const MenuLinks = Object.freeze({
     {
       icon: 'settings',
       url: '/settings',
-      name: 'Nastavenia',
+      name: 'settings',
     },
     {
       icon: 'logout',
       url: '',
-      name: 'Odhlasit sa',
+      name: 'logout',
     },
   ],
 });

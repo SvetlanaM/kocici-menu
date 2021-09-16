@@ -7,7 +7,7 @@ import { ApiClient } from '../pages/_app';
 import useLogger from '../hooks/useLogger';
 import { getUser } from '../utils/user';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 interface MenuItemProps {
   icon: string;
   name: string;
@@ -39,7 +39,7 @@ const MenuItem = ({ icon, name, url, active }: MenuItemProps) => {
       .then(() => router.push('/user/login'))
       // .then(() => ApiClient.resetStore())
       .catch((err) => {
-        alert(t(sk['logout_error'])), logger(err);
+        alert(t(cs['logout_error'])), logger(err);
       });
   };
 
@@ -58,7 +58,7 @@ const MenuItem = ({ icon, name, url, active }: MenuItemProps) => {
             className="ml-0 mr-5"
           />
         </div>
-        <span className={active ? activeLinkStyle : ''}>{name}</span>
+        <span className={active ? activeLinkStyle : ''}>{t(cs[name])}</span>
       </a>
     </button>
   ) : (
@@ -76,7 +76,7 @@ const MenuItem = ({ icon, name, url, active }: MenuItemProps) => {
             className="ml-0 mr-5"
           />
         </div>
-        <span className={active ? activeLinkStyle : ''}>{name}</span>
+        <span className={active ? activeLinkStyle : ''}>{t(cs[name])}</span>
       </a>
     </Link>
   );

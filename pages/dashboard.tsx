@@ -24,7 +24,7 @@ import { GeneralError } from '../components/ErrorScreen';
 import { getUser } from '../utils/user';
 import { BackLinkType } from '../utils/backlinks';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 //tu budu akoze ziskane macky uzivatela
 const getDashboardVariables: GetDashboardQueryVariables = {
   limitTips: TIP_LIMIT,
@@ -70,7 +70,7 @@ const CenterContainerQuery = () => {
     {
       name: (mostFavouriteByAllOne && mostFavouriteByAllOne) || '--',
       icon: '/icons/avg_cost.svg',
-      title: t(sk['fav_brand_others']),
+      title: t(cs['fav_brand_others']),
     },
     {
       name:
@@ -78,16 +78,16 @@ const CenterContainerQuery = () => {
           ? dashboardData.stats[0].brand_type
           : '--') || '--',
       icon: '/icons/fav_brand.svg',
-      title: t(sk['fav_brand_mine']),
+      title: t(cs['fav_brand_mine']),
     },
   ];
 
   const tableTitle =
     dashboardData && dashboardData?.reviews.length === 0
-      ? `${t(sk['no_reviewed_products'])}`
+      ? `${t(cs['no_reviewed_products'])}`
       : dashboardData?.reviews.length < 5
-      ? `${dashboardData?.reviews.length} ${t(sk['best_products'])}`
-      : `${t(sk['top_5'])} ${dashboardData?.reviews.length}`;
+      ? `${dashboardData?.reviews.length} ${t(cs['best_products'])}`
+      : `${t(cs['top_5'])} ${dashboardData?.reviews.length}`;
 
   return (
     <CenterContainer>
@@ -138,7 +138,7 @@ const DashboardCatQuery = () => {
 
 export default function Home() {
   const { t } = useTranslation();
-  const pageTitle = getTitle(t(sk['dashboard']));
+  const pageTitle = getTitle(t(cs['dashboard']));
   return (
     <Layout>
       <Header title={pageTitle} />
@@ -146,7 +146,7 @@ export default function Home() {
       <Container>
         <CenterContainerQuery />
         <LeftContainer>
-          <Title title={t(sk['my_cats'])} />
+          <Title title={t(cs['my_cats'])} />
           <AddCatBox backlink={BackLinkType.DASHBOARD} />
           <DashboardCatQuery />
         </LeftContainer>

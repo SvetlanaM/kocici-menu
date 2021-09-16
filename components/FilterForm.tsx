@@ -19,7 +19,7 @@ import CenterContainer from './CenterContainer';
 import LeftContainer from './LeftContainer';
 import Title from './Title';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 interface FilterFormProps {
   selectCats: GetReviewsQuery['selectCats'];
   selectBrands: GetReviewsQuery['selectBrands'];
@@ -93,11 +93,11 @@ const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
   }
 
   const ratingOptions = [
-    { value: 1, label: t(sk['first']) },
+    { value: 1, label: t(cs['first']) },
     { value: 2, label: '2' },
     { value: 3, label: '3' },
     { value: 4, label: '4' },
-    { value: 5, label: t(sk['fifth']) },
+    { value: 5, label: t(cs['fifth']) },
   ];
 
   const customStyles = style;
@@ -108,13 +108,13 @@ const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
         <PaginationTable
           reviews={reviewData}
           numberOfProducts={reviewData.length}
-          title={`${t(sk['all'])} ${
-            reviewData === reviews ? t(sk['reviewed']) : t(sk['filtered'])
-          } ${t(sk['products'])} ${reviewData.length}`}
+          title={`${t(cs['all'])} ${
+            reviewData === reviews ? t(cs['reviewed']) : t(cs['filtered'])
+          } ${t(cs['products'])} ${reviewData.length}`}
         />
       </CenterContainer>
       <LeftContainer>
-        <Title title={t(sk['filter'])} />
+        <Title title={t(cs['filter'])} />
         <form className="w-full flex flex-col justify-between mb-5">
           <div className="mb-5">
             <Controller
@@ -131,8 +131,8 @@ const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
                   getOptionLabel={(brand: SelectBrandTypeFieldsFragment) =>
                     brand.comment
                   }
-                  placeholder={t(sk['by_brand'])}
-                  noOptionsMessage={() => t(sk['no_results'])}
+                  placeholder={t(cs['by_brand'])}
+                  noOptionsMessage={() => t(cs['no_results'])}
                 />
               )}
               name="brand"
@@ -152,8 +152,8 @@ const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
                     cat.id.toString()
                   }
                   getOptionLabel={(cat: SelectCatFieldsFragment) => cat.name}
-                  placeholder={t(sk['by_cat'])}
-                  noOptionsMessage={() => t(sk['no_results'])}
+                  placeholder={t(cs['by_cat'])}
+                  noOptionsMessage={() => t(cs['no_results'])}
                 />
               )}
               name="cat"
@@ -172,15 +172,15 @@ const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
                   isMulti
                   styles={customStyles}
                   options={ratingOptions}
-                  noOptionsMessage={() => t(sk['no_results'])}
-                  placeholder={t(sk['by_rating'])}
+                  noOptionsMessage={() => t(cs['no_results'])}
+                  placeholder={t(cs['by_rating'])}
                 />
               )}
             />
           </div>
           {reviewData !== reviews ? (
             <SubmitButton
-              text={t(sk['reset'])}
+              text={t(cs['reset'])}
               size="w-full"
               color="bg-red-500"
               onClick={resetFilter}

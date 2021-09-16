@@ -12,7 +12,7 @@ import FormErrorMessage from './FormErrorMessage';
 import ProductImage from './ProductImage';
 const customStyles = style;
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 
 const Option = ({ children, ...props }) => {
   return (
@@ -67,18 +67,18 @@ const ProductController = ({
       {showHint ? (
         <>
           <div className="flex justify-between mb-3">
-            <FormInputLabel name={t(sk['product'])} />
+            <FormInputLabel name={t(cs['product'])} />
             <div className="text-purple-light text-xs mt-1.5 pl-0.5 hidden xl-custom:block">
-              {t(sk['no_product_find'])}{' '}
+              {t(cs['no_product_find'])}{' '}
               <Link href={`mailto: ${SVETA_EMAIL}`}>
-                <a className="hover:underline">{t(sk['write_me'])}</a>
+                <a className="hover:underline">{t(cs['write_me'])}</a>
               </Link>
             </div>
           </div>
         </>
       ) : (
         <div className="mb-2">
-          <FormInputLabel name={t(sk['product'])} />
+          <FormInputLabel name={t(cs['product'])} />
         </div>
       )}
 
@@ -98,9 +98,9 @@ const ProductController = ({
               `${product.brand_type} - ${product.name}`
             }
             onInputChange={onInputChange}
-            placeholder={t(sk['search_product'])}
+            placeholder={t(cs['search_product'])}
             // value={watchedProduct}
-            noOptionsMessage={() => t(sk['no_results'])}
+            noOptionsMessage={() => t(cs['no_results'])}
             isDisabled={isDisabled}
           />
         )}
@@ -111,7 +111,7 @@ const ProductController = ({
       />
       <div className="mt-3">
         {errors && errors[name] && (
-          <FormErrorMessage error={t(sk['product_required'])} />
+          <FormErrorMessage error={t(cs['product_required'])} />
         )}
       </div>
     </>

@@ -3,7 +3,7 @@ import SpecialRequirements from './SpecialRequirements';
 import DoctorExportButton from './DoctorExportButton';
 import Title from './Title';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 
 const CatToggleDetail = ({ catData }: any) => {
   const { t } = useTranslation();
@@ -14,7 +14,7 @@ const CatToggleDetail = ({ catData }: any) => {
       {specials && specials.length > 0 && (
         <div className="px-3.6 pt-3.6">
           <Title
-            title={t(sk['special_requirements'])}
+            title={t(cs['special_requirements'])}
             fontSize="text-sm"
             paddingBottom="pb-2"
           />

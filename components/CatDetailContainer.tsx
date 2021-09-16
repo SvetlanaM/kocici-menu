@@ -15,7 +15,7 @@ import CatDetailPieChart from './CatDetailPieChart';
 import useLocalStorage, { LocalStorageKey } from '../hooks/useLocalStorage';
 import { BackLinkType } from '../utils/backlinks';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 interface CatDetailContainerProps {
   cats: GetCatDetailQuery['cat'];
   products: GetProductsQuery['products'];
@@ -188,7 +188,7 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
         <CatDetailProductTable
           data={catProducts}
           name={catData.name}
-          title={t(sk['newest_reviews'])}
+          title={t(cs['newest_reviews'])}
           catReviews={catReviews.slice(0, 5)}
           cats={[catModalData]}
           products={productsTemp}
@@ -196,7 +196,7 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
         <CatDetailProductTable
           data={getRProducts}
           name={catData.name}
-          title={t(sk['suggested_reviews'])}
+          title={t(cs['suggested_reviews'])}
           catReviews={catReviews}
           shuffleData={shuffleData}
           products={getRProducts}

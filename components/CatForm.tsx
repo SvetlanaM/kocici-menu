@@ -22,7 +22,7 @@ import FormSelectBox from './FormSelectBox';
 import BackButton from './BackButton';
 import SubmitButton from './SubmitButton';
 import { getUser } from '../utils/user';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 import UploadImage from './UploadImage';
 import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
 import { useS3Upload } from 'next-s3-upload';
@@ -334,7 +334,7 @@ const CatForm = ({
       setValue('cat_image', url);
       setIsLoading(false);
     } else {
-      alert(t(sk['unsupported_file']));
+      alert(t(cs['unsupported_file']));
     }
   };
 
@@ -377,7 +377,7 @@ const CatForm = ({
             router.back();
           }
         } else {
-          alert(t(sk['add_cat_error_modal']));
+          alert(t(cs['add_cat_error_modal']));
         }
       });
     },
@@ -397,7 +397,7 @@ const CatForm = ({
     return newEnum.map((item) => {
       return (
         <option value={item} key={item}>
-          {t(sk[item] || sk[CAT_TYPE_NULL])}
+          {t(cs[item] || sk[CAT_TYPE_NULL])}
         </option>
       );
     });
@@ -415,7 +415,7 @@ const CatForm = ({
       className="w-full"
     >
       <fieldset>
-        <FormLegend name={t(sk['basic_info'])} />
+        <FormLegend name={t(cs['basic_info'])} />
         <div>
           <UploadImage
             imageUrl={watchedCatImage ? watchedCatImage : catImage}
@@ -442,61 +442,61 @@ const CatForm = ({
             {...(errors.cat_image &&
               errors.cat_image.type === 'checkFileType' && (
                 <FormErrorMessage
-                  error={`${t(sk['file_error'])} ${fileTypes}`}
+                  error={`${t(cs['file_error'])} ${fileTypes}`}
                 />
               ))}
           />
         </div>
         <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-3 xl-custom:gap-10">
           <FormInputWrapper>
-            <FormInputLabel name={t(sk['cat_name'])} />
+            <FormInputLabel name={t(cs['cat_name'])} />
             <FormInput
               {...register('name', {
-                required: { value: true, message: t(sk['cat_name_required']) },
+                required: { value: true, message: t(cs['cat_name_required']) },
                 maxLength: {
                   value: 100,
-                  message: t(sk['cat_name_length']),
+                  message: t(cs['cat_name_length']),
                 },
               })}
               type="text"
               name="name"
-              placeholder={t(sk['cat_name_placeholder'])}
+              placeholder={t(cs['cat_name_placeholder'])}
               errors={errors.name}
             />
             {errors.name && <FormErrorMessage error={errors.name?.message} />}
           </FormInputWrapper>
           <FormInputWrapper>
-            <FormInputLabel name={t(sk['gender'])} />
+            <FormInputLabel name={t(cs['gender'])} />
             <FormSelectBox
               registerRules={{ ...register('gender', { required: false }) }}
             >
               <option value="" key="">
-                {t(sk['none'])}
+                {t(cs['none'])}
               </option>
               <option value="Macka" key="cat">
-                {t(sk['cat'])}
+                {t(cs['cat'])}
               </option>
               <option value="Kocur" key="tomcat">
-                {t(sk['tomcat'])}
+                {t(cs['tomcat'])}
               </option>
             </FormSelectBox>
           </FormInputWrapper>
         </div>
         <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-3 xl-custom:gap-10">
           <FormInputWrapper>
-            <FormInputLabel name={t(sk['cat_age'])} />
+            <FormInputLabel name={t(cs['cat_age'])} />
             <FormInput
               {...register('age', { min: 0, max: 30, required: false })}
               type="number"
               name="age"
               step={1}
               errors={errors.age}
-              placeholder={t(sk['cat_age_placeholder'])}
+              placeholder={t(cs['cat_age_placeholder'])}
             />
-            {errors.age && <FormErrorMessage error={t(sk['cat_age_error'])} />}
+            {errors.age && <FormErrorMessage error={t(cs['cat_age_error'])} />}
           </FormInputWrapper>
           <FormInputWrapper>
-            <FormInputLabel name={t(sk['cat_color'])} />
+            <FormInputLabel name={t(cs['cat_color'])} />
             <FormInput
               {...register('color', { required: false })}
               type="text"
@@ -506,7 +506,7 @@ const CatForm = ({
         </div>
         <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-3 xl-custom:gap-10">
           <FormInputWrapper>
-            <FormInputLabel name={t(sk['cat_weight'])} />
+            <FormInputLabel name={t(cs['cat_weight'])} />
             <FormInput
               {...register('weight', { required: false })}
               type="number"
@@ -516,27 +516,27 @@ const CatForm = ({
             />
           </FormInputWrapper>
           <FormInputWrapper>
-            <FormInputLabel name={t(sk['cat_daily_food'])} />
+            <FormInputLabel name={t(cs['cat_daily_food'])} />
             <FormInput
               {...register('daily_food', { required: false })}
               type="number"
-              placeholder={t(sk['cat_daily_food_placeholder'])}
+              placeholder={t(cs['cat_daily_food_placeholder'])}
               name="daily_food"
             />
           </FormInputWrapper>
         </div>
         <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-3 xl-custom:gap-10 mt-3">
           <FormInputWrapper>
-            <FormInputLabel name={t(sk['doctor_email'])} />
+            <FormInputLabel name={t(cs['doctor_email'])} />
             <FormInput
               {...register('doctor_email', { required: false })}
               type="email"
               name="doctor_email"
-              placeholder={t(sk['email_placeholder'])}
+              placeholder={t(cs['email_placeholder'])}
             />
           </FormInputWrapper>
           <FormInputWrapper>
-            <FormInputLabel name={t(sk['cat_type'])} />
+            <FormInputLabel name={t(cs['cat_type'])} />
             <FormSelectBox
               registerRules={{ ...register('type', { required: false }) }}
             >
@@ -549,7 +549,7 @@ const CatForm = ({
           <FormLegend name="Specialne poziadavky" />
         </fieldset> */}
       <fieldset>
-        <FormLegend name={t(sk['cat_foods'])} />
+        <FormLegend name={t(cs['cat_foods'])} />
         {controlledFields.map((field, index) => {
           return (
             <div
@@ -584,7 +584,7 @@ const CatForm = ({
                   defaultValue={field.rating}
                   isDisabled={false}
                   errors={errors}
-                  placeholder={t(sk['choose_review_1'])}
+                  placeholder={t(cs['choose_review_1'])}
                   {...register(`fieldArray.${index}.rating` as const)}
                 />
               </div>
@@ -596,13 +596,13 @@ const CatForm = ({
                   setIsRemoved(true);
                 }}
               >
-                {t(sk['remove'])}
+                {t(cs['remove'])}
               </button>
             </div>
           );
         })}
         <div className="text-red-500 mb-4 -mt-2">
-          {errors.fieldArray && newReviews && t(sk['reviews_error'])}
+          {errors.fieldArray && newReviews && t(cs['reviews_error'])}
         </div>
 
         <button
@@ -610,22 +610,22 @@ const CatForm = ({
           className=" text-purple mb-3 font-semibold"
           onClick={() => append({})}
         >
-          {t(sk['add_review_small'])}
+          {t(cs['add_review_small'])}
         </button>
       </fieldset>
       <fieldset>
         <div className="flex flex-col w-full mt-2">
-          <FormInputLabel name={t(sk['cat_note'])} />
+          <FormInputLabel name={t(cs['cat_note'])} />
           <textarea
             maxLength={500}
             {...register('note', {
               required: false,
               maxLength: {
                 value: 500,
-                message: t(sk['cat_note_error']),
+                message: t(cs['cat_note_error']),
               },
             })}
-            placeholder={t(sk['cat_note_placeholder'])}
+            placeholder={t(cs['cat_note_placeholder'])}
             className="form-textarea w-full mb-3 mt-2 text-purple block border-rounded-base border-gray
               focus:outline-none focus:bg-white focus:border-gray
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray"
@@ -634,7 +634,7 @@ const CatForm = ({
             {watchedNote !== undefined &&
             watchedNote &&
             watchedNote.length <= 500
-              ? `${t(sk['remain'])} ${500 - watchedNote?.length} ${t(
+              ? `${t(cs['remain'])} ${500 - watchedNote?.length} ${t(
                   sk['500_chars']
                 )}`
               : null}

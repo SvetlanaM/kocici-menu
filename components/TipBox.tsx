@@ -4,7 +4,7 @@ import { TipFieldsFragmentFragment } from '../graphql/generated/graphql';
 import Image from './Image';
 import { BackLinkType } from '../utils/backlinks';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 
 export const TipFieldsFragment = gql`
   fragment TipFieldsFragment on Tip {
@@ -70,7 +70,7 @@ const TipBox = ({
                   width={15}
                   className="mr-2 inline-block"
                 />
-                {readingTime} {t(sk['reading_time'])}
+                {readingTime} {t(cs['reading_time'])}
                 <Image
                   src={`/icons/more.svg`}
                   height={10}

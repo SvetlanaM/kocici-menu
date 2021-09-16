@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Image from './Image';
 import { SVETA_EMAIL } from '../utils/constants';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 interface ErrorScreenProps {
   error: GeneralError;
   userMessage?: GeneralError['userMessage'];
@@ -26,14 +26,14 @@ export class GeneralError {
       case error:
         return {
           error: error,
-          userMessage: t(sk['general_error']),
+          userMessage: t(cs['general_error']),
           errorType: 'error',
           message: error && error.message,
         };
       case error.networkError:
         return {
           error: error.networkError,
-          userMessage: t(sk['data_error']),
+          userMessage: t(cs['data_error']),
           errorType: 'error',
           message: error.networkError?.message,
         };
@@ -57,14 +57,14 @@ const ErrorScreen = ({ error, userMessage }: ErrorScreenProps) => {
         {errorMessage}
       </h2>
       <p className="font-light px-32 text-center pt-3.6 pb-4 text-purple-darkest leading-normal">
-        {t(sk['error_message'])}{' '}
+        {t(cs['error_message'])}{' '}
         <a
           href={`mailto:${SVETA_EMAIL}`}
           className="text-purple-light hover:text-purple-dark"
         >
-          {t(sk['emailu'])}
+          {t(cs['emailu'])}
         </a>
-        {t(sk['error_solution'])}
+        {t(cs['error_solution'])}
       </p>
     </div>
   );

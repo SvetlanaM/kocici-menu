@@ -16,7 +16,7 @@ import { getUser } from '../utils/user';
 import { useEffect } from 'react';
 import router, { NextRouter, useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 export default function Welcome() {
   const [updateUser] = useMutation<
     UpdateUserMutation,
@@ -35,7 +35,7 @@ export default function Welcome() {
   const { t } = useTranslation();
   return (
     <>
-      <Header title={getTitle(t(sk['welcome']))} />
+      <Header title={getTitle(t(cs['welcome']))} />
       <WelcomeBox />
     </>
   );

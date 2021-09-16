@@ -14,7 +14,7 @@ import { getUser } from '../utils/user';
 import SubmitButton from './SubmitButton';
 import WelcomeBoxCheckbox from './WelcomeBoxCheckbox';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 const WelcomeBoxForm = () => {
   const {
     handleSubmit,
@@ -62,7 +62,7 @@ const WelcomeBoxForm = () => {
 
       <div className="flex justify-center mt-10">
         <SubmitButton
-          text={t(sk['save_meal'])}
+          text={t(cs['save_meal'])}
           size="w-full xl-custom:w-1/3"
           disabled={disabled}
         />

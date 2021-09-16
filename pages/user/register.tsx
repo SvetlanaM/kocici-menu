@@ -7,13 +7,13 @@ import Image from '../../components/Image';
 import AuthForm from '../../components/AuthForm';
 import getTitle from '../../utils/getTitle';
 import { useTranslation } from 'react-i18next';
-import sk from '../../public/locales/sk/common.json';
+import cs from '../../public/locales/cs/common.json';
 
 export default function Register() {
   const { t } = useTranslation();
   const link = {
     url: '/user/login',
-    name: t(sk['login1']),
+    name: t(cs['login1']),
   };
 
   const registerProItems = [
@@ -26,21 +26,21 @@ export default function Register() {
 
   return (
     <Layout>
-      <Header title={getTitle(t(sk['register']))} />
+      <Header title={getTitle(t(cs['register']))} />
       <AuthWrapper>
         <AuthRightContainer
-          title={t(sk['register_start'])}
-          subtitle={t(sk['register_or'])}
+          title={t(cs['register_start'])}
+          subtitle={t(cs['register_or'])}
           link={link}
           form={
             <AuthForm
-              submitText={t(sk['register'])}
-              passwordPlaceholder={t(sk['pass_req'])}
+              submitText={t(cs['register'])}
+              passwordPlaceholder={t(cs['pass_req'])}
               authMethod="signupUser"
             />
           }
           buttonInfo={false}
-          footerLinks={t(sk['toc'])}
+          footerLinks={t(cs['toc'])}
         />
         <AuthLeftContainer className="flex flex-col pt-10  px-10 xl-custom:px-20 justify-center">
           <h2 className="text-white text-3xl font-medium">

@@ -1,6 +1,6 @@
 import Image from './Image';
 import Link from 'next/link';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 import { useTranslation } from 'react-i18next';
 import { BackLinkType } from "../utils/backlinks";
 interface TopTipsListProps {
@@ -37,7 +37,7 @@ const TopTipsList = ({ data, cols }: TopTipsListProps) => {
                   <p className="small-purple-text font-light text-sm">
                     {item.name}
                     <span className="text-purple-light block mt-3">
-                      {t(sk[item.category])}
+                      {t(cs[item.category])}
                     </span>
                   </p>
                 </div>

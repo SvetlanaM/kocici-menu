@@ -59,6 +59,8 @@ import DateFormatObject from '../../utils/getFormatDate';
 import links from '../../utils/backlinks';
 import useLocalStorage, { LocalStorageKey } from '../../hooks/useLocalStorage';
 import useLogger from '../../hooks/useLogger';
+import { useTranslation } from 'react-i18next';
+import cs from '../../public/locales/cs/common.json';
 
 interface CreateCatProps {
   onClickTrigger?: () => void;
@@ -66,6 +68,7 @@ interface CreateCatProps {
 export default function CreateCat({ onClickTrigger }: CreateCatProps) {
   const router = useRouter();
   const { id } = router.query;
+  const { t } = useTranslation();
 
   const isEditCat = () => {
     // can also be written as !!id
@@ -622,7 +625,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
     [createNewCat, updateMyCat, isSaving, isEditCat]
   );
 
-  const title = isEditCat() ? links.edit_cat.name : links.create_cat.name;
+  const title = t(cs[isEditCat() ? links.edit_cat.name : links.create_cat.name]);
 
   const breadcrumbs: Breadcrumb[] = useMemo(() => {
     const { backlink } = router.query;
@@ -634,14 +637,14 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
     return [
       {
         path: previousLink.path,
-        name: previousLink.name,
+        name: t(cs[previousLink.name]),
       },
       {
         path: currentLink.path,
-        name: currentLink.name,
+        name: t(cs[currentLink.name]),
       },
     ];
-  }, [createCat, updateCat]);
+  }, [createCat, updateCat, id]);
 
   return (
     <Layout>

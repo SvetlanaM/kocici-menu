@@ -23,7 +23,7 @@ import DateFormatObject from '../utils/getFormatDate';
 import DoctorExportLink from './DoctorExportLink';
 import { BackLinkType } from '../utils/backlinks';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 interface CatDetailInfoBoxProps {
   data: CatDetailFieldsFragmentFragment;
   onEditCat: () => void;
@@ -124,14 +124,14 @@ const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
         <div className="px-5">
           <ul className="small-light-text justify-evenly flex flex-col cat-detail-box">
             <li>
-              <span className="text-gray">{t(sk['nickname'])}</span> --
+              <span className="text-gray">{t(cs['nickname'])}</span> --
             </li>
             <li>
-              <span className="text-gray">{t(sk['gender'])}</span>{' '}
+              <span className="text-gray">{t(cs['gender'])}</span>{' '}
               {data.gender || '--'}
             </li>
             <li>
-              <span className="text-gray">{t(sk['color'])}</span>{' '}
+              <span className="text-gray">{t(cs['color'])}</span>{' '}
               {data.color || '--'}
             </li>
           </ul>
@@ -141,11 +141,11 @@ const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
         <div className="px-5">
           <ul className="small-light-text justify-evenly flex flex-col cat-detail-box">
             <li>
-              <span className="text-gray">{t(sk['weight'])}</span>{' '}
+              <span className="text-gray">{t(cs['weight'])}</span>{' '}
               {data.weight || '--'} kg
             </li>
             <li>
-              <span className="text-gray">{t(sk['doctor_email'])}</span>
+              <span className="text-gray">{t(cs['doctor_email'])}</span>
               {data.doctor_email ? (
                 <DoctorExportLink
                   catContactData={{
@@ -156,14 +156,14 @@ const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
                     gender: data.gender,
                   }}
                 >
-                  <a className="hover:text-purple-light"> {t(sk['write'])}</a>
+                  <a className="hover:text-purple-light"> {t(cs['write'])}</a>
                 </DoctorExportLink>
               ) : (
                 ' --'
               )}
             </li>
             <li>
-              <span className="text-gray">{t(sk['daily_food'])}</span>{' '}
+              <span className="text-gray">{t(cs['daily_food'])}</span>{' '}
               {data.daily_food || '--'} g
             </li>
           </ul>
@@ -185,7 +185,7 @@ const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
               }}
               //as={`/my-cats/${encodeURIComponent(data.slug)}`}
             >
-              <a onClick={onEditCat}>{t(sk['edit_cat'])}</a>
+              <a onClick={onEditCat}>{t(cs['edit_cat'])}</a>
             </Link>
           </p>
         </div>
@@ -199,7 +199,7 @@ const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
                   setCatId(data.id);
                 }}
               >
-                {t(sk['delete_cat'])}
+                {t(cs['delete_cat'])}
               </a>
             </Link>
           </p>

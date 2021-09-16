@@ -14,7 +14,7 @@ import Link from 'next/link';
 import useOnClickOutside from '../hooks/useOnClickOutside';
 import useOnKeyPress from '../hooks/useOnKeyPress';
 import { useTranslation } from 'react-i18next';
-import sk from '../public/locales/sk/common.json';
+import cs from '../public/locales/cs/common.json';
 const REVIEW_TOGGLE_ID = 'popupReview';
 
 export const ReviewFieldsFragment = gql`
@@ -76,13 +76,13 @@ const TableRow = ({
         />
       </td>
       <td className="px-10 xl-custom:px-2 py-5">
-        {t(sk['before'])} <br />
+        {t(cs['before'])} <br />
         {formattedDate}
       </td>
       <td>
-        {product.price} {t(sk['czk'])}
+        {product.price} {t(cs['czk'])}
         <br />
-        {t(sk['for_package'])}
+        {t(cs['for_package'])}
       </td>
       <td className="text-center px-10 xl-custom:px-2 py-5">
         <div className="flex flex-row justify-items-center justify-center">
