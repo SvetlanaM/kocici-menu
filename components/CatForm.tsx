@@ -197,8 +197,6 @@ const CatForm = ({
       : [];
   }, [userDefaultValues]);
 
-  console.log('deletedReviews', deletedReviews);
-
   useEffect(() => {
     let userProductsArray =
       watchFieldArray &&
@@ -250,8 +248,6 @@ const CatForm = ({
     );
 
   let mergedInsertUpdate = diff ? diff : [];
-
-  console.log(mergedInsertUpdate);
 
   useEffect(() => {
     setUpdateData(true), setUserDefaultValues(review);

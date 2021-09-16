@@ -424,7 +424,6 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
           const reviews: Review_Insert_Input =
             reviewUpdatedData.merged &&
             reviewUpdatedData.merged.map((item) => {
-              console.log(item);
               return reviewFactory(
                 result.data?.update_Cat?.returning.map((item) => item.id)[0],
                 item.product.id,
@@ -625,7 +624,9 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
     [createNewCat, updateMyCat, isSaving, isEditCat]
   );
 
-  const title = t(cs[isEditCat() ? links.edit_cat.name : links.create_cat.name]);
+  const title = t(
+    cs[isEditCat() ? links.edit_cat.name : links.create_cat.name]
+  );
 
   const breadcrumbs: Breadcrumb[] = useMemo(() => {
     const { backlink } = router.query;
@@ -644,7 +645,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
         name: t(cs[currentLink.name]),
       },
     ];
-  }, [createCat, updateCat, id]);
+  }, [createCat, updateCat, router]);
 
   return (
     <Layout>
