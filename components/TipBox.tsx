@@ -41,10 +41,9 @@ const TipBox = ({
   const { t } = useTranslation();
   return (
     <div className="w-full pb-3.6 mb-4 border-b border-gray tips-list">
-      <Link
-        href={{
-          pathname: '/tips/[slug]',
-          query: { slug: slug, backlink: backlink },
+      <Link href={{
+          pathname: `/tips/${slug}`,
+          query: { backlink: backlink },
         }}
         //as={`/tips/${encodeURIComponent(slug)}`}
       >

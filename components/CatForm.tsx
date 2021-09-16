@@ -473,10 +473,10 @@ const CatForm = ({
               <option value="" key="">
                 {t(cs['none'])}
               </option>
-              <option value="Macka" key="cat">
+              <option value="cat" key="cat">
                 {t(cs['cat'])}
               </option>
-              <option value="Kocur" key="tomcat">
+              <option value="tomcat" key="tomcat">
                 {t(cs['tomcat'])}
               </option>
             </FormSelectBox>

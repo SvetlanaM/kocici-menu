@@ -40,7 +40,7 @@ const TipDetailBox = ({
     return [
       {
         path: previousLink.path,
-        name: previousLink.name,
+        name: t(cs[previousLink.name]),
       },
       {
         path: `/tips/${name}`,

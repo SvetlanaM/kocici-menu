@@ -19,7 +19,7 @@ const TopTipsList = ({ data, cols }: TopTipsListProps) => {
           <Link
             key={item.name + index}
             href={{
-              pathname: '/tips/[slug]',
+              pathname: `/tips/${item.slug}`,
               query: { slug: item.slug, backlink: BackLinkType.TIPS },
             }}
             //as={`/tips/${encodeURIComponent(item.slug)}`}

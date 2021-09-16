@@ -16,7 +16,7 @@ const DoctorExportLink = ({ catContactData, children }) => {
       ? t(cs['to_year'])
       : notDefined
   } %0D ${t(cs['gender'])} ${
-    catContactData.gender ? catContactData.gender : notDefined
+    catContactData.gender ? t(cs[catContactData.gender]) : notDefined
   } %0D ${t(cs['cat_weight'])} ${
     catContactData.weigth ? catContactData.weigth : notDefined
   } %0D`;
