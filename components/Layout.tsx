@@ -6,11 +6,9 @@ type ContainerProps = {
 
 const Layout = ({ children }: ContainerProps) => {
   return (
-    <>
-      <div className="min-h-screen block xl-custom:flex font-sans tracking-wide">
-        {children}
-      </div>
-    </>
+    <div className="min-h-screen block xl-custom:flex font-sans tracking-wide">
+      {children}
+    </div>
   );
 };
 

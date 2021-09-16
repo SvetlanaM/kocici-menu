@@ -22,12 +22,11 @@ const DoctorExportLink = ({ catContactData, children }) => {
   } %0D`;
 
   return (
-    <a
+    <Link
       href={`mailto:${catContactData.email}?subject=${subject}&body=${body}`}
-      className=""
     >
       {children}
-    </a>
+    </Link>
   );
 };
 

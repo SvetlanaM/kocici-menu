@@ -42,7 +42,7 @@ const FormInput = forwardRef(
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray`}
         type={type}
         placeholder={placeholder}
-        defaultValue={defaultValue}
+        // defaultValue={defaultValue}
         onChange={onChange}
         value={defaultValue}
         step={step}

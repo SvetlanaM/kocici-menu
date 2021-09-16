@@ -65,17 +65,17 @@ const AuthForm = ({
       cs: {
         translation: {
           invalid_grant_email_not_confirmed:
-              'Emailová adresa zatím není ověřená. Zkontrolujte si příchozí emaily nebo spam složku.',
+            'Emailová adresa zatím není ověřená. Zkontrolujte si příchozí emaily nebo spam složku.',
           a_user_with_this_email_address_has_already_been_registered:
-              'Uživatel s touto emailovou adresou již existuje. Zadejte prosím jiný email.',
+            'Uživatel s touto emailovou adresou již existuje. Zadejte prosím jiný email.',
           invalid_grant_no_user_found_with_that_email_or_password_invalid:
-              'Uživatel s touto emailovou adresou nenalezen nebo nesprávná kombinace emailu a hesla.',
+            'Uživatel s touto emailovou adresou nenalezen nebo nesprávná kombinace emailu a hesla.',
           cannot_read_property_auth_of_undefined:
-              'Chyba v internetovém připojení. Opakujte Váš požadavek později.',
+            'Chyba v internetovém připojení. Opakujte Váš požadavek později.',
           server_se_zadaným_názvem_hostitele_nelze_nalézt:
-              'Chyba v internetovém připojení. Opakujte Váš požadavek později.',
+            'Chyba v internetovém připojení. Opakujte Váš požadavek později.',
           failed_to_fetch:
-              'Chyba v internetovém připojení. Opakujte Váš požadavek později.',
+            'Chyba v internetovém připojení. Opakujte Váš požadavek později.',
         },
       },
     },
@@ -156,6 +156,10 @@ const AuthForm = ({
             <FormInput
               {...register('email', {
                 required: { value: true, message: t(cs['email_required']) },
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                  message: t(cs['email_bad_format']),
+                },
               })}
               name="email"
               type="email"

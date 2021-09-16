@@ -60,7 +60,7 @@ const ToolTipBody = ({ itemName, item }: ToolTipBodyProps) => {
             }}
           ></p>
         </div>
-        {itemName === t(cs['avg_review']) ? (
+        {itemName === t(cs['avg_review_zoohit']) ? (
           <Image src={getQualityImage(item)} height={30} width={30} />
         ) : (
           ''
@@ -103,7 +103,7 @@ const ProductDetailsTooltipBox = ({ data }: ProductDetailsTooltipBoxProps) => {
   return (
     <div className="grid divide-y divide-gray_lightest" key={data.id}>
       {data.rating && (
-        <ToolTipBody itemName={t(cs['avg_review'])} item={data.rating} />
+        <ToolTipBody itemName={t(cs['avg_review_zoohit'])} item={data.rating} />
       )}
       {data.analysis_variant
         ? Object.entries(data.analysis_variant).map((item) => {

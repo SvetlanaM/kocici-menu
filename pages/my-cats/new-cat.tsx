@@ -216,6 +216,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
           color: catData.color ?? null,
           daily_food: catData.daily_food ?? null,
           image_url: catData.image_url ?? null,
+          year_date: DateFormatObject().getCatBornYear(catData.age) ?? null,
         },
       };
 
@@ -372,6 +373,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
         daily_food: catData.daily_food ?? null,
         id: catData.id,
         image_url: catData.image_url ?? null,
+        year_date: DateFormatObject().getCatBornYear(catData.age) ?? null,
       };
 
       try {

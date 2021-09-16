@@ -4,6 +4,7 @@ import moment from 'moment';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
+import { CURRENT_MONTH, CURRENT_YEAR } from '../utils/constants';
 interface CatDetailCostChartProps {
   data1: number[];
   data2: number[];
@@ -32,8 +33,8 @@ const CatDetailCostChart = ({
     t(cs['december']),
   ];
 
-  const currentMonth = moment(moment(), 'YYYY/MM/DD').format('M');
-  const currentYear = moment(moment(), 'YYYY/MM/DD').format('Y');
+  const currentMonth = CURRENT_MONTH;
+  const currentYear = CURRENT_YEAR;
 
   const data = useMemo(() => {
     return {

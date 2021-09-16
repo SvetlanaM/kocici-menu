@@ -13,9 +13,9 @@ const StatisticsList = ({ data, cols }: StatisticsListProps) => {
         className={`grid grid-cols xl-custom:${cols} grid-flow-row gap-y-11 xl-custom:gap-x-11 w-full`}
       >
         {data &&
-          data.map((item) => (
+          data.map((item, id) => (
             <StatisticBox
-              key={item.name}
+              key={item.name + id}
               icon={item.icon}
               name={item.name}
               title={item.title}

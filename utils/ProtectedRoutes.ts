@@ -22,11 +22,7 @@ const ProtectedRoutes = ({ router, children }) => {
     return null;
   }
 
-  if (isBrowser()) {
-    return children;
-  }
-
-  return null;
+  return children;
 };
 
 export default ProtectedRoutes;

@@ -7,6 +7,7 @@ import CatToggleDetail from './CatToggleDetail';
 import { ARRAY_REQUIREMENTS_LENGTH as arrayLength } from '../utils/constants';
 import cs from '../public/locales/cs/common.json';
 import CatBasicInfo from './CatBasicInfo';
+import DateFormatObject from '../utils/getFormatDate';
 
 export const CatFieldsFragment = gql`
   fragment CatFieldsFragment on Cat {
@@ -22,6 +23,7 @@ export const CatFieldsFragment = gql`
     gender
     note
     slug
+    year_date
     specials: SpecialRequirements {
       name
     }
@@ -73,7 +75,7 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
   const catData = {
     contact_doctor: {
       email: CatFieldsFragment.doctor_email,
-      age: CatFieldsFragment.age,
+      age: DateFormatObject().getCatAge(CatFieldsFragment.year_date),
       weight: CatFieldsFragment.weight,
       name: CatFieldsFragment.name,
       gender: CatFieldsFragment.gender,

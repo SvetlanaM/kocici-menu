@@ -97,7 +97,7 @@ export const SelectProductTypeFields = gql`
     value
     comment
   }
-`
+`;
 
 export const REVIEWS_QUERY = gql`
   query GetReviews($user_id: String) {
@@ -143,14 +143,10 @@ export const DASHBOARD_QUERY = gql`
     ) {
       ...TipFieldsFragment
     }
-    stats: brand_fav_type(
-      where: { id: { _eq: $user_id } }
-      order_by: { user_id: desc }
-      limit: 1
-    ) {
-      ...StatFieldsFragment
+    stats: brand_mine_type(where: { user_id: { _eq: $user_id } }, limit: 1) {
+      brand_type
     }
-    fav_stats: brand_fav_type {
+    fav_stats: brand_fav_type(limit: 1) {
       brand_type
     }
     selectCats: Cat(
@@ -192,11 +188,7 @@ export const USER_STATS_QUERY = gql`
     user_stats(where: { id: { _eq: $user_id } }) {
       ...UserStatsFieldFragment
     }
-    stats: brand_fav_type(
-      where: { id: { _eq: $user_id } }
-      order_by: { user_id: desc }
-      limit: 1
-    ) {
+    stats: brand_fav_type(limit: 1) {
       ...StatFieldsFragment
     }
     reviews_count: Review_aggregate(

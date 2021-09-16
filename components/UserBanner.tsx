@@ -74,9 +74,10 @@ const UserBanner = ({ data }: UserBannerProps) => {
                 <br />
               </span>
             )}
-            <p className="mt-5">
+            <br />
+            <span className="mt-5">
               <strong>{t(cs['new_product'])}</strong>
-            </p>
+            </span>
           </p>
           <Image
             src="/icons/user-profile-cat.svg"

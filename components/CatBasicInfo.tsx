@@ -9,6 +9,7 @@ import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
 import truncateText from '../utils/truncateText';
 import LoadingImage from './LoadingImage';
 import CatForm, { CAT_TYPE_NULL } from './CatForm';
+import DateFormatObject from '../utils/getFormatDate';
 
 interface CatBasicInfoProps {
   cat: CatFieldsFragmentFragment;
@@ -61,12 +62,12 @@ const CatBasicInfo = ({ cat }: CatBasicInfoProps) => {
       <div className="flex-col-base justify-between ml-3">
         <h4>{truncateText(cat.name, 12)}</h4>
         <p className="small-light-text">
-          {t(cs[cat.type] || sk[CAT_TYPE_NULL])}
+          {t(cs[cat.type] || cs[CAT_TYPE_NULL])}
         </p>
         <p className="small-light-text text-gray">
           {cat.age
             ? i18next.t('years.key', {
-                count: cat.age,
+                count: DateFormatObject().getCatAge(cat.year_date),
               })
             : cat.age === 0
             ? t(cs['to_year'])

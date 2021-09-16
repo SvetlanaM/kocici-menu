@@ -32,6 +32,7 @@ import RatingController from './RatingController';
 import useSearch from '../hooks/useSearch';
 import { uploadImage } from '../utils/uploadImage';
 import ErrorScreen from './ErrorScreen';
+import DateFormatObject from '../utils/getFormatDate';
 
 export type CatInputData = Omit<Cat_Insert_Input, 'CatTypeEnum'>;
 export const CAT_TYPE_NULL = 'CAT_TYPE_NULL';
@@ -128,7 +129,10 @@ const CatForm = ({
     defaultValues: {
       name: catData && catData.name,
       gender: catData && catData.gender,
-      age: catData && catData.age,
+      age:
+        catData &&
+        catData.age &&
+        DateFormatObject().getCatAge(catData.year_date),
       color: catData && catData.color,
       weight: catData && catData.weight,
       cat_image: catData && catData.image_url,
@@ -334,7 +338,7 @@ const CatForm = ({
     }
   };
 
-  const fileTypes = ['png', 'jpg', 'gif', 'webp', 'jpeg'];
+  const fileTypes = ['png', 'jpg', 'gif', 'webp', 'jpeg', 'heic'];
   const checkFileType = (file: File) => {
     if (file && file.name) {
       let value = file.name;
@@ -393,7 +397,7 @@ const CatForm = ({
     return newEnum.map((item) => {
       return (
         <option value={item} key={item}>
-          {t(cs[item] || sk[CAT_TYPE_NULL])}
+          {t(cs[item] || cs[CAT_TYPE_NULL])}
         </option>
       );
     });
@@ -432,7 +436,7 @@ const CatForm = ({
               <FileInput
                 onChange={handleFileChange}
                 type="file"
-                accept="image/png, image/jpeg, image/jpg, image/webp, image/gif"
+                accept="image/png, image/jpeg, image/jpg, image/webp, image/gif, image/heic, image/PNG, image/JPEG, image/JPG, image/WEBP, image/GIF, image/HEIC"
               />
             )}
             {...(errors.cat_image &&
@@ -525,7 +529,13 @@ const CatForm = ({
           <FormInputWrapper>
             <FormInputLabel name={t(cs['doctor_email'])} />
             <FormInput
-              {...register('doctor_email', { required: false })}
+              {...register('doctor_email', {
+                required: { value: false },
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                  message: t(cs['email_bad_format']),
+                },
+              })}
               type="email"
               name="doctor_email"
               placeholder={t(cs['email_placeholder'])}
@@ -631,7 +641,7 @@ const CatForm = ({
             watchedNote &&
             watchedNote.length <= 500
               ? `${t(cs['remain'])} ${500 - watchedNote?.length} ${t(
-                  sk['500_chars']
+                  cs['500_chars']
                 )}`
               : null}
           </span>

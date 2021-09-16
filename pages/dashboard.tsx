@@ -1,27 +1,28 @@
-import AddCatBox from '../components/AddCatBox'
-import CatsList from '../components/CatsList'
-import Container from '../components/Container'
-import Layout from '../components/Layout'
-import Sidebar from '../components/Sidebar'
-import StatisticsList from '../components/StatisticsList'
-import TipsList from '../components/TipsList'
-import Title from '../components/Title'
-import TopFiveTable from '../components/TopFiveTable'
+import AddCatBox from '../components/AddCatBox';
+import CatsList from '../components/CatsList';
+import Container from '../components/Container';
+import Layout from '../components/Layout';
+import Sidebar from '../components/Sidebar';
+import StatisticsList from '../components/StatisticsList';
+import TipsList from '../components/TipsList';
+import Title from '../components/Title';
+import TopFiveTable from '../components/TopFiveTable';
 import {
-  GetCatsQueryVariables, GetDashboardQuery,
+  GetCatsQueryVariables,
+  GetDashboardQuery,
   GetDashboardQueryVariables,
   useGetCatsQuery,
   useGetDashboardQuery,
-} from '../graphql/generated/graphql'
-import Header from '../components/Head'
-import CenterContainer from '../components/CenterContainer'
-import LeftContainer from '../components/LeftContainer'
-import ErrorScreen, { GeneralError } from '../components/ErrorScreen'
-import Loading from '../components/Loading'
-import getTitle from '../utils/getTitle'
-import { TIP_LIMIT } from '../utils/constants'
-import { getUser } from '../utils/user'
-import { BackLinkType } from '../utils/backlinks'
+} from '../graphql/generated/graphql';
+import Header from '../components/Head';
+import CenterContainer from '../components/CenterContainer';
+import LeftContainer from '../components/LeftContainer';
+import ErrorScreen, { GeneralError } from '../components/ErrorScreen';
+import Loading from '../components/Loading';
+import getTitle from '../utils/getTitle';
+import { TIP_LIMIT } from '../utils/constants';
+import { getUser } from '../utils/user';
+import { BackLinkType } from '../utils/backlinks';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
 //tu budu akoze ziskane macky uzivatela
@@ -67,7 +68,10 @@ const CenterContainerQuery = () => {
 
   const extendedData = [
     {
-      name: (mostFavouriteByAllOne && mostFavouriteByAllOne) || '--',
+      name:
+        (dashboardData && dashboardData.fav_stats.length > 0
+          ? dashboardData.fav_stats[0].brand_type
+          : '--') || '--',
       icon: '/icons/avg_cost.svg',
       title: t(cs['fav_brand_others']),
     },

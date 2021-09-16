@@ -170,6 +170,7 @@
     "product_required": "Produkt je povinný",
     "product": "Produkt*",
     "avg_review": "Prům. hodnocení:",
+    "avg_review_zoohit": "Hodnocení zo Zoohitu",
     "reccommended_feeding": "Doporučené dávkování:",
     "review_required_stars": "Hodnocení je povinné",
     "remove_confirmation": "Potvrdit vymazání kočky",
@@ -229,5 +230,6 @@
     "top_5": "Top 5 nejlépe hodnocených produktů z",
     "welcome": "Vítejte",
     "tips_and_recommendations": "Tipy a doporučení",
-    "search_from_characters": "Vyhledávat od 3 znaků"
+    "search_from_characters": "Vyhledávat od 3 znaků",
+    "email_bad_format": "Emailova adresa v nespravnom formate"
 }

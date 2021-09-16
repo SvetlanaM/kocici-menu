@@ -2,7 +2,7 @@ import Image from './Image';
 import Link from 'next/link';
 import cs from '../public/locales/cs/common.json';
 import { useTranslation } from 'react-i18next';
-import { BackLinkType } from "../utils/backlinks";
+import { BackLinkType } from '../utils/backlinks';
 interface TopTipsListProps {
   data: Array<any>;
   cols: string;
@@ -15,12 +15,14 @@ const TopTipsList = ({ data, cols }: TopTipsListProps) => {
       className={`grid ${cols} gap-y-8 xl-custom:gap-x-11 pt-8 xl-custom:pt-0`}
     >
       {data &&
-        data.map((item) => (
-          <Link href={{
-                    pathname: "/tips/[slug]",
-                    query: { slug: item.slug, backlink: BackLinkType.TIPS }
-                  }}
-                //as={`/tips/${encodeURIComponent(item.slug)}`}
+        data.map((item, index) => (
+          <Link
+            key={item.name + index}
+            href={{
+              pathname: '/tips/[slug]',
+              query: { slug: item.slug, backlink: BackLinkType.TIPS },
+            }}
+            //as={`/tips/${encodeURIComponent(item.slug)}`}
           >
             <a>
               <div className="flex pt-4 pr-10 bg-gray-light border-rounded-base border-gray_lightest h-full">
