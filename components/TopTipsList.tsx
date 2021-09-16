@@ -17,8 +17,8 @@ const TopTipsList = ({ data, cols }: TopTipsListProps) => {
       {data &&
         data.map((item) => (
           <Link href={{
-                    pathname: "/tips/[slug]",
-                    query: { slug: item.slug, backlink: BackLinkType.TIPS }
+                    pathname: `/tips/${item.slug}`,
+                    query: { backlink: BackLinkType.TIPS }
                   }}
                 //as={`/tips/${encodeURIComponent(item.slug)}`}
           >
