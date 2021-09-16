@@ -47,7 +47,7 @@ const Products = () => {
 
 export default function Home() {
   const { t } = useTranslation();
-  const pageTitle = getTitle(t(cs['products']));
+  const pageTitle = getTitle(t(cs['products_menu']));
   return (
     <Layout>
       <Header title={pageTitle} />

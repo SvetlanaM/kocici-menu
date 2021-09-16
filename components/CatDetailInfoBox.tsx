@@ -128,7 +128,7 @@ const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
             </li>
             <li>
               <span className="text-gray">{t(cs['gender'])}</span>{' '}
-              {data.gender || '--'}
+              {t(cs[data.gender]) || '--'}
             </li>
             <li>
               <span className="text-gray">{t(cs['color'])}</span>{' '}
@@ -180,8 +180,8 @@ const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
           <p className="uppercase text-gray text-sm ml-2 font-light">
             <Link
               href={{
-                pathname: '/my-cats/[slug]',
-                query: { slug: data.slug, backlink: BackLinkType.MY_CATS },
+                pathname: `/my-cats/${data.slug}`,
+                query: { backlink: BackLinkType.MY_CATS },
               }}
               //as={`/my-cats/${encodeURIComponent(data.slug)}`}
             >
