@@ -128,7 +128,7 @@ const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
             </li>
             <li>
               <span className="text-gray">{t(cs['gender'])}</span>{' '}
-              {data.gender || '--'}
+              {t(cs[data.gender]) || '--'}
             </li>
             <li>
               <span className="text-gray">{t(cs['color'])}</span>{' '}

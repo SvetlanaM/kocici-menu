@@ -174,7 +174,7 @@ const FilterForm = ({
           numberOfProducts={reviewData.length}
           title={`${t(cs['all'])} ${
             reviewData === reviews ? t(cs['reviewed']) : t(cs['filtered'])
-          } ${t(cs['products'])} ${reviewData.length}`}
+          } ${t(cs['products'])}: ${reviewData.length}`}
         />
       </CenterContainer>
       <LeftContainer>
