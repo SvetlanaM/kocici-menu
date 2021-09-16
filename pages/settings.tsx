@@ -30,7 +30,6 @@ const UserStatsQuery = () => {
     },
   });
 
-  console.log(statsData);
   return (
     <>
       <Container>

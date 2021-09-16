@@ -14,7 +14,7 @@ const PaginationTable = ({
   title,
   numberOfProducts,
 }: PaginationTableProps) => {
-  const offset = 3;
+  const offset = 10;
   const allPageNumber = Math.ceil(numberOfProducts / offset);
   const reviewsCopy = [...reviews];
   const [actualPageNumber, setActualPageNumber] = useState<number>(1);
@@ -22,10 +22,8 @@ const PaginationTable = ({
   const [offsetStart, setOffsetStartNumber] = useState<number>(0);
 
   useEffect(() => {
-    setActualPageNumber(1);
-    setOffsetNumber(offset);
-    setOffsetStartNumber(0);
-  }, []);
+    resetAfterSort()
+  }, [reviews])
 
   const resetAfterSort = () => {
     setActualPageNumber(1);

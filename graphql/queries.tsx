@@ -92,6 +92,13 @@ export const SelectCatFields = gql`
   }
 `;
 
+export const SelectProductTypeFields = gql`
+  fragment SelectProductTypeFields on ProductType {
+    value
+    comment
+  }
+`
+
 export const REVIEWS_QUERY = gql`
   query GetReviews($user_id: String) {
     reviews: Review(
@@ -110,10 +117,14 @@ export const REVIEWS_QUERY = gql`
     selectBrands: BrandType(order_by: { comment: asc }) {
       ...SelectBrandTypeFields
     }
+    selectProductTypes: ProductType {
+      ...SelectProductTypeFields
+    }
   }
   ${ReviewFieldsFragment}
   ${SelectCatFields}
   ${SelectBrandTypeFields}
+  ${SelectProductTypeFields}
 `;
 
 export const DASHBOARD_QUERY = gql`

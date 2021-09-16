@@ -97,6 +97,7 @@ const ProductDetailsTooltipBox = ({ data }: ProductDetailsTooltipBoxProps) => {
               <ToolTipBody
                 itemName={String(setUppercaseTitle(item[0]))}
                 item={`${item[1]} %`}
+                key={item[0]}
               />
             ) : null;
           })
@@ -107,6 +108,7 @@ const ProductDetailsTooltipBox = ({ data }: ProductDetailsTooltipBoxProps) => {
               <ToolTipBody
                 itemName={String(setUppercaseTitle(item[0]))}
                 item={`${item[1]} %`}
+                key={item[0]}
               />
             ) : null;
           })

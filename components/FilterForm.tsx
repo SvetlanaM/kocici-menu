@@ -1,7 +1,6 @@
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form'
 import SubmitButton from './SubmitButton';
 import Select from 'react-select';
-import NeutralButton from './NeutralButton';
 import {
   GetReviewsQuery,
   SelectCatFieldsFragment,
@@ -9,8 +8,8 @@ import {
   Review,
   Cat,
   ReviewType,
-  BrandType,
-} from '../graphql/generated/graphql';
+  BrandType, ProductType, SelectProductTypeFieldsFragment,
+} from '../graphql/generated/graphql'
 import PaginationTable from './PaginationTable';
 import { customStyles as style } from '../utils/formStyles';
 import { useState } from 'react';
@@ -20,24 +19,33 @@ import LeftContainer from './LeftContainer';
 import Title from './Title';
 import { useTranslation } from 'react-i18next';
 import sk from '../public/locales/sk/common.json';
+import RangeInput from './RangeInput'
+
 interface FilterFormProps {
   selectCats: GetReviewsQuery['selectCats'];
   selectBrands: GetReviewsQuery['selectBrands'];
   reviews: GetReviewsQuery['reviews'];
+  selectProductTypes: GetReviewsQuery['selectProductTypes'];
 }
 
-const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
+const FilterForm = ({ selectCats, selectBrands, reviews, selectProductTypes }: FilterFormProps) => {
   const { control, watch, setValue } = useForm();
   const { t } = useTranslation();
 
   const [reviewData, setReviewData] =
     useState<GetReviewsQuery['reviews']>(reviews);
 
-  const watchedBrand: GetReviewsQuery['selectBrands'] = watch('brand');
-  const watchedCat: GetReviewsQuery['selectCats'] = watch('cat');
-  const watchedRating: RatingOption = watch('rating');
+  const watchedBrand: GetReviewsQuery['selectBrands'] = watch('brand')
+  const watchedCat: GetReviewsQuery['selectCats'] = watch('cat')
+  const watchedRating: RatingOption[] = watch('rating')
+  const watchedEshopRating: RatingOption[] = watch('eshopRating')
+  const watchedType: GetReviewsQuery['selectProductTypes'] = watch('type')
 
-  useEffect(() => onFilter(), [watchedBrand, watchedCat, watchedRating]);
+  const rangeDefault = [0, 100]
+  const [ watchedProtein, setWatchedProtein ] = useState(rangeDefault)
+  const [ watchedFat, setWatchedFat ] = useState(rangeDefault)
+
+  useEffect(() => onFilter(), [watchedBrand, watchedCat, watchedRating, watchedType, watchedEshopRating, watchedProtein, watchedFat]);
 
   const onFilter = () => {
     let catFilterData = reviews;
@@ -65,27 +73,61 @@ const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
       );
     }
 
+    if (watchedEshopRating && watchedEshopRating.length > 0) {
+      catFilterData = catFilterData.filter((review) => {
+        const rating = review.product.rating
+        return rating && watchedEshopRating
+            .map((rating) => rating.value)
+            .includes(rating)
+      });
+    }
+
+    if (watchedType && watchedType.length > 0) {
+      catFilterData = catFilterData.filter(review =>
+        Object.values(watchedType)
+          .map((type: ProductType) => type.value)
+          .includes(review.product.product_type)
+      )
+    }
+
+    if (rangeFilterActive(watchedProtein)) {
+      catFilterData = catFilterData.filter(review => {
+            const protein = review.product.analysis_variant['bílkovina']
+            return protein && watchedProtein[0] <= protein && watchedProtein[1] >= protein
+          }
+      )
+    }
+
+    if (rangeFilterActive(watchedFat)) {
+      catFilterData = catFilterData.filter(review => {
+            const fat = review.product.analysis_variant['tuk']
+            return fat && watchedFat[0] <= fat && watchedFat[1] >= fat
+          }
+      )
+    }
+
     if (watchedCat !== undefined) {
-      if (
-        watchedCat.length === 0 &&
-        watchedRating.length === 0 &&
-        watchedBrand.length === 0
-      ) {
-        setReviewData(reviews);
-      } else {
-        setReviewData(catFilterData);
-      }
+      setReviewData(catFilterData)
     }
   };
 
   const resetFilter = (e) => {
     e.preventDefault();
     setReviewData(reviews);
-    let fields = ['cat', 'brand', 'rating'];
+    let fields = ['cat', 'brand', 'rating', 'type', 'eshopRating'];
     for (let field of fields) {
       setValue(field, []);
     }
+    resetRangeFilters()
   };
+
+  const resetRangeFilters = () => {
+    ['protein', 'fat'].forEach(field => setValue(field, rangeDefault))
+    setWatchedProtein(rangeDefault)
+    setWatchedFat(rangeDefault)
+  }
+
+  const rangeFilterActive = (value?: number[]) => value && value.length === 2 && (value[0] !== 0 || value[1] !== 100)
 
   interface RatingOption {
     value: number;
@@ -176,6 +218,82 @@ const FilterForm = ({ selectCats, selectBrands, reviews }: FilterFormProps) => {
                   placeholder={t(sk['by_rating'])}
                 />
               )}
+            />
+          </div>
+          <div className="mb-5">
+            <Controller
+                render={({ field, fieldState }) => (
+                    <Select<SelectProductTypeFieldsFragment, true>
+                        {...field}
+                        isMulti
+                        options={selectProductTypes}
+                        styles={customStyles}
+                        getOptionValue={ type => type.value }
+                        getOptionLabel={ type => type.comment}
+                        placeholder={t(sk['by_feed_type'])}
+                        noOptionsMessage={() => t(sk['no_results'])}
+                    />
+                )}
+                name="type"
+                control={control}
+                defaultValue={[]}
+            />
+          </div>
+          <div className="mb-5">
+            <Controller
+                name="eshopRating"
+                control={control}
+                defaultValue={[]}
+                render={({ field }) => (
+                    <Select<RatingOption, true>
+                        {...field}
+                        isMulti
+                        styles={customStyles}
+                        options={ratingOptions}
+                        noOptionsMessage={() => t(sk['no_results'])}
+                        placeholder={t(sk['by_eshop_reviews'])}
+                    />
+                )}
+            />
+          </div>
+          <div className="mb-5 mx-3">
+            <Controller
+                render={({ field }) => (
+                    <RangeInput
+                        {...field}
+                        onFinalChange={(value) => {
+                          setWatchedProtein(value)
+                        }}
+                        value={field.value}
+                        min={0}
+                        max={100}
+                        step={1}
+                        label={t(sk['by_protein'])}
+                    />
+                )}
+                name="protein"
+                control={control}
+                defaultValue={rangeDefault}
+            />
+          </div>
+          <div className="mb-5 mx-3">
+            <Controller
+                render={({ field }) => (
+                    <RangeInput
+                        {...field}
+                        onFinalChange={(value) => {
+                          setWatchedFat(value)
+                        }}
+                        value={field.value}
+                        min={0}
+                        max={100}
+                        step={1}
+                        label={t(sk['by_fat'])}
+                    />
+                )}
+                name="fat"
+                control={control}
+                defaultValue={rangeDefault}
             />
           </div>
           {reviewData !== reviews ? (
