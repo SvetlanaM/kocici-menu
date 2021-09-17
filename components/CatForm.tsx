@@ -252,10 +252,6 @@ const CatForm = ({
   let mergedInsertUpdate = diff ? diff : [];
 
   useEffect(() => {
-    setUpdateData(true), setUserDefaultValues(review);
-  }, [catData]);
-
-  useMemo(() => {
     if (review && review.length > 0) {
       setLimitedSearchedProducts((prevState) =>
         prevState.filter(
@@ -282,7 +278,7 @@ const CatForm = ({
         );
       }
     }
-  }, [updateData]);
+  }, []);
 
   const [isRemoved, setIsRemoved] = useState(false);
   useEffect(() => {
@@ -561,13 +557,6 @@ const CatForm = ({
                   control={control}
                   errors={errors}
                   showHint={false}
-                  // isDisabled={
-                  //   userDefaultValues &&
-                  //   index < userDefaultValues.length &&
-                  //   userDefaultValues.filter((item) => item !== false)
-                  //     ? true
-                  //     : false
-                  // }
                 />
               </div>
               <div className="pl-0 w-full xl-custom:w-2/6 mb-5">

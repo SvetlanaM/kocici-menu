@@ -26,6 +26,7 @@ const AddProductReviewModal = ({
     <Modal
       isOpen={isOpen}
       onRequestClose={closeModal}
+      ariaHideApp={false}
       contentLabel="Add product review"
       className="xl-custom:w-2/4 pt-8 pb-3 px-10 m-auto bg-white border-rounded-base w-full h-full xl-custom:h-auto center-modal overflow-x-auto"
     >

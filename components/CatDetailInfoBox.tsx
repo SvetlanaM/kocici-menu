@@ -24,6 +24,7 @@ import DoctorExportLink from './DoctorExportLink';
 import { BackLinkType } from '../utils/backlinks';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
+import i18n from 'i18next';
 interface CatDetailInfoBoxProps {
   data: CatFieldsFragmentFragment;
   onEditCat: () => void;
@@ -124,14 +125,14 @@ const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
         <div className="px-5">
           <ul className="small-light-text justify-evenly flex flex-col cat-detail-box">
             <li>
-              <span className="text-gray">{t(cs['nickname'])}</span> --
+              <span className="text-gray">{t(cs['nickname'])}:</span> --
             </li>
             <li>
-              <span className="text-gray">{t(cs['gender'])}</span>{' '}
+              <span className="text-gray">{t(cs['gender'])}:</span>{' '}
               {t(cs[data.gender]) || '--'}
             </li>
             <li>
-              <span className="text-gray">{t(cs['color'])}</span>{' '}
+              <span className="text-gray">{t(cs['color'])}:</span>{' '}
               {data.color || '--'}
             </li>
           </ul>
@@ -141,11 +142,11 @@ const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
         <div className="px-5">
           <ul className="small-light-text justify-evenly flex flex-col cat-detail-box">
             <li>
-              <span className="text-gray">{t(cs['weight'])}</span>{' '}
+              <span className="text-gray">{t(cs['weight'])}:</span>{' '}
               {data.weight || '--'} kg
             </li>
             <li>
-              <span className="text-gray">{t(cs['doctor_email'])}</span>
+              <span className="text-gray">{t(cs['doctor_email'])}:</span>
               {data.doctor_email ? (
                 <DoctorExportLink
                   catContactData={{
@@ -163,7 +164,7 @@ const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
               )}
             </li>
             <li>
-              <span className="text-gray">{t(cs['daily_food'])}</span>{' '}
+              <span className="text-gray">{t(cs['daily_food'])}:</span>{' '}
               {data.daily_food || '--'} g
             </li>
           </ul>

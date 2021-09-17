@@ -6,6 +6,8 @@ import { getUser } from '../utils/user';
 import ProtectedRoutes from '../utils/ProtectedRoutes';
 import { disableFragmentWarnings } from 'graphql-tag';
 
+import '../i18n';
+
 import {
   ApolloClient,
   InMemoryCache,

@@ -326,7 +326,7 @@ const AddProductReviewForm = ({
               <div className="flex items-center mb-2">
                 {[1, 2, 3, 4, 5].map((index) => {
                   return (
-                    <span className="mr-1">
+                    <span className="mr-1" key={index}>
                       <RatingIcon
                         index={index}
                         rating={reviewType !== '' ? Number(reviewType) : value}

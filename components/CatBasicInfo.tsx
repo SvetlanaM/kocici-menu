@@ -15,32 +15,6 @@ interface CatBasicInfoProps {
   cat: CatFieldsFragmentFragment;
 }
 const CatBasicInfo = ({ cat }: CatBasicInfoProps) => {
-  i18next.init({
-    lng: 'cs',
-    debug: false,
-    initImmediate: false,
-    resources: {
-      sk: {
-        translation: {
-          years: {
-            key_0: '{{count}} rok',
-            key_1: '{{count}} roky',
-            key_2: '{{count}} rokov',
-          },
-        },
-      },
-      cs: {
-        translation: {
-          years: {
-            key_0: '{{count}} rok',
-            key_1: '{{count}} roky',
-            key_2: '{{count}} roků',
-          },
-        },
-      },
-    },
-  });
-
   const { t } = useTranslation();
 
   // FIXME: toto je tu uplne zbytocne teraz

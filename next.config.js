@@ -1,5 +1,3 @@
-// const { i18n } = require('./next-i18next.config');
-
 module.exports = {
   typescript: {
     ignoreBuildErrors: true,
@@ -10,5 +8,4 @@ module.exports = {
     S3_UPLOAD_SECRET: process.env.S3_UPLOAD_SECRET,
     S3_UPLOAD_BUCKET: process.env.S3_UPLOAD_BUCKET,
   },
-  // i18n,
 };

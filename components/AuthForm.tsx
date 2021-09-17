@@ -16,6 +16,7 @@ import { getUser, user_id } from '../utils/user';
 import RoutingPath from '../pages/routing-path';
 import useLogger from '../hooks/useLogger';
 import cs from '../public/locales/cs/common.json';
+
 interface AuthFormProps {
   submitText: string;
   passwordPlaceholder: string;
@@ -40,46 +41,6 @@ const AuthForm = ({
 
   const { dirtyFields } = useFormState({
     control,
-  });
-
-  i18next.init({
-    lng: 'cs',
-    debug: false,
-    initImmediate: false,
-    resources: {
-      sk: {
-        translation: {
-          invalid_grant_email_not_confirmed:
-            'Emailova adresa nie je zatial potvrdena. Skontrolujte si prichadzajuce emaily alebo spam zlozku.',
-          a_user_with_this_email_address_has_already_been_registered:
-            'Užívateľ s touto emailovou adresou už existuje. Zadajte prosim iný email.',
-          invalid_grant_no_user_found_with_that_email_or_password_invalid:
-            'Užívateľ s touto emailovou adresou nenájdený alebo zle zadana kombinacia emailu a hesla.',
-          cannot_read_property_auth_of_undefined:
-            'Chyba v internetovom pripojení. Opakujte vasu poziadavku neskôr.',
-          server_se_zadaným_názvem_hostitele_nelze_nalézt:
-            'Chyba v internetovom pripojení. Opakujte vasu poziadavku neskôr.',
-          failed_to_fetch:
-            'Chyba v internetovom pripojení. Opakujte vasu poziadavku neskôr.',
-        },
-      },
-      cs: {
-        translation: {
-          invalid_grant_email_not_confirmed:
-            'Emailová adresa zatím není ověřená. Zkontrolujte si příchozí emaily nebo spam složku.',
-          a_user_with_this_email_address_has_already_been_registered:
-            'Uživatel s touto emailovou adresou již existuje. Zadejte prosím jiný email.',
-          invalid_grant_no_user_found_with_that_email_or_password_invalid:
-            'Uživatel s touto emailovou adresou nenalezen nebo nesprávná kombinace emailu a hesla.',
-          cannot_read_property_auth_of_undefined:
-            'Chyba v internetovém připojení. Opakujte Váš požadavek později.',
-          server_se_zadaným_názvem_hostitele_nelze_nalézt:
-            'Chyba v internetovém připojení. Opakujte Váš požadavek později.',
-          failed_to_fetch:
-            'Chyba v internetovém připojení. Opakujte Váš požadavek později.',
-        },
-      },
-    },
   });
 
   const { t } = useTranslation();
@@ -114,7 +75,7 @@ const AuthForm = ({
             router.push('/routing-path')
           )
         )
-        .catch((err) => setMessage(i18next.t(convertErrString(err.message))))
+        .catch((err) => setMessage(t(cs[convertErrString(err.message)])))
         .catch((err) => logger(err.message, 'error'));
     }
 
@@ -122,7 +83,7 @@ const AuthForm = ({
       loginUser(data.email, data.password)
         .then((data) => router.push('/routing-path'))
         .then(() => logger(null, 'success', 'login', user_id))
-        .catch((err) => setMessage(i18next.t(convertErrString(err.message))))
+        .catch((err) => setMessage(t(cs[convertErrString(err.message)])))
         .catch((err) => logger(err.message, 'error'));
     }
   };

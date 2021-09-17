@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { forwardRef, useCallback, useState } from 'react';
 import { Control, Controller, FieldValues } from 'react-hook-form';
 import Select, { components } from 'react-select';
 import { customStyles as style } from '../utils/formStyles';
@@ -30,64 +30,63 @@ const ratingOptions = [
   { value: 5, label: '5' },
 ];
 
-const RatingController = ({
-  name,
-  control,
-  defaultValue,
-  isDisabled,
-  errors,
-}: RatingControllerProps) => {
-  const onKeyDown = (e) => {
-    if (e.keyCode === 13) {
-      e.preventDefault();
-    }
-  };
+const RatingController = forwardRef(
+  (
+    { name, control, defaultValue, isDisabled, errors }: RatingControllerProps,
+    ref
+  ) => {
+    const onKeyDown = (e) => {
+      if (e.keyCode === 13) {
+        e.preventDefault();
+      }
+    };
 
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
-  return (
-    <>
-      <div className="mb-5">
-        <FormInputLabel name={`${t(cs['review'])}*`} />
-      </div>
-      <Controller
-        name={name}
-        control={control}
-        rules={{
-          required: { value: true, message: t(cs['review_required_stars']) },
-        }}
-        defaultValue={defaultValue}
-        render={({ field }) => (
-          <div className="flex items-center">
-            {[1, 2, 3, 4, 5].map((index) => {
-              return (
-                <span className="mr-1">
-                  <RatingIcon
-                    index={index}
-                    rating={field.value ? field.value : 0}
-                    hoverRating={field.value ? field.value : 0}
-                    onSaveRating={field.onChange}
-                    isDisabled={isDisabled}
-                  />
-                </span>
-              );
-            })}
-          </div>
+    return (
+      <>
+        <div className="mb-5">
+          <FormInputLabel name={`${t(cs['review'])}*`} />
+        </div>
+        <Controller
+          name={name}
+          control={control}
+          rules={{
+            required: { value: true, message: t(cs['review_required_stars']) },
+          }}
+          defaultValue={defaultValue}
+          render={({ field }) => (
+            <div className="flex items-center">
+              {[1, 2, 3, 4, 5].map((index) => {
+                return (
+                  <span className="mr-1" key={index}>
+                    <RatingIcon
+                      index={index}
+                      rating={field.value ? field.value : 0}
+                      hoverRating={field.value ? field.value : 0}
+                      onSaveRating={field.onChange}
+                      isDisabled={isDisabled}
+                    />
+                  </span>
+                );
+              })}
+            </div>
 
-          // <Select<RatingOption>
-          //   {...field}
-          //   styles={customStyles}
-          //   options={ratingOptions}
-          //   noOptionsMessage={() => 'Žiadne ďaľšie výsledky'}
-          //   isDisabled={isDisabled}
-          //   placeholder="ahoj"
-          //   isSearchable={true}
-          //   onKeyDown={onKeyDown}
-          // />
-        )}
-      />
-    </>
-  );
-};
+            // <Select<RatingOption>
+            //   {...field}
+            //   styles={customStyles}
+            //   options={ratingOptions}
+            //   noOptionsMessage={() => 'Žiadne ďaľšie výsledky'}
+            //   isDisabled={isDisabled}
+            //   placeholder="ahoj"
+            //   isSearchable={true}
+            //   onKeyDown={onKeyDown}
+            // />
+          )}
+        />
+      </>
+    );
+  }
+);
 
 export default RatingController;

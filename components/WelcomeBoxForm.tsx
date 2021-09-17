@@ -53,6 +53,7 @@ const WelcomeBoxForm = () => {
         {checkBoxData.map((item) => (
           <WelcomeBoxCheckbox
             name={item}
+            key={item}
             registerRules={{
               ...register('item', {}),
             }}

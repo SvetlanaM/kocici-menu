@@ -22,6 +22,7 @@ const RemoveConfirmationModal = ({
     <Modal
       isOpen={isOpen}
       onRequestClose={closeModal}
+      ariaHideApp={false}
       contentLabel="Add product review"
       className="w-full xl-custom:w-2/4 pt-8 pb-5 px-10 m-auto bg-white border-rounded-base center-modal"
     >

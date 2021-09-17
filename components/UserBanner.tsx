@@ -11,42 +11,6 @@ interface UserBannerProps {
 }
 
 const UserBanner = ({ data }: UserBannerProps) => {
-  i18next.init({
-    lng: 'cs',
-    debug: false,
-    initImmediate: false,
-    resources: {
-      sk: {
-        translation: {
-          reviews: {
-            key_0: '{{count}} hodnotenie',
-            key_1: '{{count}} hodnotenia',
-            key_2: '{{count}} hodnotení',
-          },
-          products: {
-            key_0: 'produktu',
-            key_1: 'produkty',
-            key_2: 'produktov',
-          },
-        },
-      },
-      cs: {
-        translation: {
-          reviews: {
-            key_0: '{{count}} hodnocení',
-            key_1: '{{count}} hodnocení',
-            key_2: '{{count}} hodnocení',
-          },
-          products: {
-            key_0: 'produktu',
-            key_1: 'produkty',
-            key_2: 'produktů',
-          },
-        },
-      },
-    },
-  });
-
   const { t } = useTranslation();
   return (
     <div className="flex pt-4 pb-2 pr-10 bg-gray-light border-rounded-base border-gray_lightest">
