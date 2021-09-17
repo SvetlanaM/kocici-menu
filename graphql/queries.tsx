@@ -40,13 +40,6 @@ export const PRODUCT_QUERY = gql`
   ${ProductFieldsFragment}
 `;
 
-export const CatDetailFieldsFragment = gql`
-  fragment CatDetailFieldsFragment on Cat {
-    ...CatFieldsFragment
-  }
-  ${CatFieldsFragment}
-`;
-
 export const CATS_DETAIL_QUERY = gql`
   query GetCatDetail(
     $user_id: String
@@ -59,10 +52,10 @@ export const CATS_DETAIL_QUERY = gql`
       where: { _and: { is_active: { _eq: true }, user_id: { _eq: $user_id } } }
       order_by: { name: asc }
     ) {
-      ...CatDetailFieldsFragment
+      ...CatFieldsFragment
     }
   }
-  ${CatDetailFieldsFragment}
+  ${CatFieldsFragment}
 `;
 export const SelectProductFields = gql`
   fragment SelectProductFields on Product {

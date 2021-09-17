@@ -4,6 +4,7 @@ import { IdentityContextProvider } from 'react-netlify-identity';
 import { getToken } from '../utils/token';
 import { getUser } from '../utils/user';
 import ProtectedRoutes from '../utils/ProtectedRoutes';
+import { disableFragmentWarnings } from 'graphql-tag';
 
 import {
   ApolloClient,
@@ -46,8 +47,11 @@ export const ApiClient = new ApolloClient({
       },
     },
   }),
+
   link: authMiddleware.concat(httpLink),
 });
+
+disableFragmentWarnings();
 
 function MyApp({ Component, pageProps, router }: AppProps) {
   return (

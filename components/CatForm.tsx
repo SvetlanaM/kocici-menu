@@ -51,7 +51,6 @@ interface CatFormInterface {
   submitText: string;
   catData?: CatFieldsFragmentFragment;
   products?: GetProductsQuery['products'];
-  loading?: boolean;
 }
 
 type CatFormProduct = {
@@ -64,7 +63,6 @@ const CatForm = ({
   submitText,
   catData,
   products,
-  loading,
 }: CatFormInterface) => {
   const catImage = useMemo<string>(
     () => (catData && catData.image_url ? catData.image_url : defaultImage),
@@ -72,7 +70,7 @@ const CatForm = ({
   );
   const [imageUrl, setImageUrl] = useState<string>(catImage);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isMainLoading, setIsMainLoading] = useState<boolean>(false);
+
   const { FileInput, openFileDialog } = useS3Upload();
   const { t } = useTranslation();
   const [searchProducts, setSearchProducts] = useState<
@@ -124,7 +122,7 @@ const CatForm = ({
     watch,
     setValue,
     control,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm({
     defaultValues: {
       name: catData && catData.name,
@@ -371,7 +369,6 @@ const CatForm = ({
       }).then((success: boolean) => {
         if (success) {
           if (catData) {
-            // setIsMainLoading(false);
             router.back();
           } else {
             router.back();
@@ -387,7 +384,6 @@ const CatForm = ({
       deletedReviews,
       diff,
       mergedInsertUpdate,
-      isMainLoading,
       watchedCatImage,
     ]
   );
@@ -403,17 +399,8 @@ const CatForm = ({
     });
   }, [catTypes]);
 
-  return isMainLoading ? (
-    <Loading />
-  ) : (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        // setIsMainLoading(false);
-        handleSubmit(onSubmit)();
-      }}
-      className="w-full"
-    >
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="w-full">
       <fieldset>
         <FormLegend name={t(cs['basic_info'])} />
         <div>

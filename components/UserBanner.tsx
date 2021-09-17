@@ -14,6 +14,7 @@ const UserBanner = ({ data }: UserBannerProps) => {
   i18next.init({
     lng: 'cs',
     debug: false,
+    initImmediate: false,
     resources: {
       sk: {
         translation: {

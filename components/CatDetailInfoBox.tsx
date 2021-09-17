@@ -1,6 +1,6 @@
 import Image from './Image';
 import {
-  CatDetailFieldsFragmentFragment,
+  CatFieldsFragmentFragment,
   DeleteCatMutation,
   DeleteCatMutationVariables,
 } from '../graphql/generated/graphql';
@@ -25,7 +25,7 @@ import { BackLinkType } from '../utils/backlinks';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
 interface CatDetailInfoBoxProps {
-  data: CatDetailFieldsFragmentFragment;
+  data: CatFieldsFragmentFragment;
   onEditCat: () => void;
 }
 const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {

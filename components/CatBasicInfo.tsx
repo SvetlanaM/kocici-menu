@@ -18,6 +18,7 @@ const CatBasicInfo = ({ cat }: CatBasicInfoProps) => {
   i18next.init({
     lng: 'cs',
     debug: false,
+    initImmediate: false,
     resources: {
       sk: {
         translation: {

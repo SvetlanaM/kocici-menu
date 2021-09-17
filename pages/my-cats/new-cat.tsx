@@ -38,7 +38,6 @@ import Center from '../../components/CenterContainer';
 import Header from '../../components/Head';
 import getTitle from '../../utils/getTitle';
 import Title from '../../components/Title';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Breadcrumb from '../../utils/breadcrumb';
 import setUppercaseTitle from '../../utils/setUppercaseTitle';

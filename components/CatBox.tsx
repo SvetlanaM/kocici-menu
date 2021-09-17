@@ -48,16 +48,16 @@ export const CatFieldsFragment = gql`
 `;
 
 interface CatBoxProps {
-  CatFieldsFragment: CatFieldsFragmentFragment;
+  CatFieldsFragmentMain: CatFieldsFragmentFragment;
   reviews: CatFieldsFragmentFragment['reviews'];
 }
 
-const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
+const CatBox = ({ CatFieldsFragmentMain, reviews }: CatBoxProps) => {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggleSlider = () => setIsOpen(!isOpen);
 
-  const arrayDiff = CatFieldsFragment.specials.length - arrayLength;
+  const arrayDiff = CatFieldsFragmentMain.specials.length - arrayLength;
   // const updatedSpecials =
   //   CatFieldsFragment.specials.length > arrayLength
   //     ? [
@@ -74,26 +74,26 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
 
   const catData = {
     contact_doctor: {
-      email: CatFieldsFragment.doctor_email,
-      age: DateFormatObject().getCatAge(CatFieldsFragment.year_date),
-      weight: CatFieldsFragment.weight,
-      name: CatFieldsFragment.name,
-      gender: CatFieldsFragment.gender,
+      email: CatFieldsFragmentMain.doctor_email,
+      age: DateFormatObject().getCatAge(CatFieldsFragmentMain.year_date),
+      weight: CatFieldsFragmentMain.weight,
+      name: CatFieldsFragmentMain.name,
+      gender: CatFieldsFragmentMain.gender,
     },
-    specials: CatFieldsFragment.note,
+    specials: CatFieldsFragmentMain.note,
   };
 
   return (
     <div className="flex flex-col flex-no-wrap justify-between h-75 py-3 border-rounded-base border-gray small-purple-text text-left my-cat">
       <div className="flex flex-row px-3">
-        <CatBasicInfo cat={CatFieldsFragment} />
+        <CatBasicInfo cat={CatFieldsFragmentMain} />
         {(catData.specials || catData.contact_doctor.email) && (
           <button
             type="button"
             onClick={toggleSlider}
             aria-haspopup
             aria-expanded={isOpen}
-            id={CatFieldsFragment.name}
+            id={CatFieldsFragmentMain.name}
             className="focus:outline-none ml-auto"
           >
             {isOpen ? (
@@ -116,7 +116,7 @@ const CatBox = ({ CatFieldsFragment, reviews }: CatBoxProps) => {
         )}
       </div>
       {isOpen ? (
-        <div aria-labelledby={CatFieldsFragment.name}>
+        <div aria-labelledby={CatFieldsFragmentMain.name}>
           <CatToggleDetail catData={catData} />
         </div>
       ) : null}

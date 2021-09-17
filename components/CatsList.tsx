@@ -11,7 +11,11 @@ const CatsList = ({ cats, rows }: CatSectionProps) => {
     <div className={`grid ${rows} gap-y-5 mt-7`}>
       {cats &&
         cats.map((cat) => (
-          <CatBox key={cat.id} CatFieldsFragment={cat} reviews={cat.reviews} />
+          <CatBox
+            key={cat.id}
+            CatFieldsFragmentMain={cat}
+            reviews={cat.reviews}
+          />
         ))}
     </div>
   );

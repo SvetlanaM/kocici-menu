@@ -7,6 +7,7 @@ import cs from '../public/locales/cs/common.json';
 i18next.init({
   lng: 'cs',
   debug: false,
+  initImmediate: false,
   resources: {
     sk: {
       translation: {

@@ -1,4 +1,5 @@
 import router from 'next/router';
+import React from 'react';
 import Breadcrumb from '../utils/breadcrumb';
 
 type BreadcrumbsProps = {
@@ -13,7 +14,7 @@ const Breadcrumbs = ({ breadcrumbs }: BreadcrumbsProps) => {
     <div className="text-sm font-light text-gray mb-4">
       {(crumbsCopy ?? []).map((breadcrumb, key) => {
         return (
-          <>
+          <React.Fragment key={key}>
             <a
               className="underline hover:text-purple-darkest cursor-pointer"
               onClick={() =>
@@ -26,7 +27,7 @@ const Breadcrumbs = ({ breadcrumbs }: BreadcrumbsProps) => {
             </a>
 
             {' / '}
-          </>
+          </React.Fragment>
         );
       })}
       {last ? <span>{last.name}</span> : null}
