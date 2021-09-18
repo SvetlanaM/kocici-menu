@@ -68,7 +68,7 @@ const AddProductReviewForm = ({
   onSuccess,
   props,
   index,
-}: AddProductReviewFormProps) => {
+}: AddProductReviewFormProps): JSX.Element => {
   const {
     handleSubmit,
     control,
