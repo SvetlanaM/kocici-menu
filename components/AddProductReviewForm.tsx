@@ -1,8 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { getUser } from '../utils/user';
 import { Controller, useForm } from 'react-hook-form';
-import SubmitButton from './SubmitButton';
-import { useMutation } from '@apollo/client';
 import FormErrorMessage from './FormErrorMessage';
+import FormInputLabel from './FormInputLabel';
+import SubmitButton from './SubmitButton';
+import NeutralButton from './NeutralButton';
+import { useMutation } from '@apollo/client';
 import {
   AddReviewHistoryMutation,
   AddReviewHistoryMutationVariables,
@@ -14,8 +17,6 @@ import {
   SelectCatFieldsFragment,
   SelectProductFieldsFragment,
 } from '../graphql/generated/graphql';
-import Select, { components } from 'react-select';
-import NeutralButton from './NeutralButton';
 import { ADD_REVIEW, ADD_REVIEW_HISTORY } from '../graphql/mutations';
 import {
   CATS_DETAIL_QUERY,
@@ -24,14 +25,12 @@ import {
   REVIEWS_QUERY,
   USER_STATS_QUERY,
 } from '../graphql/queries';
-import FormInputLabel from './FormInputLabel';
-import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
-import { getUser } from '../utils/user';
-import { TIP_LIMIT } from '../utils/constants';
+import Select, { components } from 'react-select';
 import { customStyles as style } from '../utils/formStyles';
+import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
+import { TIP_LIMIT } from '../utils/constants';
 import useSearch from '../hooks/useSearch';
 import ProductController from './ProductController';
-import RatingController from './RatingController';
 import DateFormatObject from '../utils/getFormatDate';
 import { Components } from 'react-select/src/components';
 import RatingIcon from './RatingIcon';
@@ -41,7 +40,6 @@ import cs from '../public/locales/cs/common.json';
 
 interface AddProductReviewFormProps {
   selectCats?: GetDashboardQuery['selectCats'];
-
   selectProducts: GetDashboardQuery['selectProducts'];
   onBackAction?: () => void;
   onSuccess?: () => void;
@@ -57,7 +55,6 @@ const Option: Components['Option'] = ({ children, ...props }) => {
           src={props.data.image_url || defaultImage}
           className="object-cover h-10 w-10 mr-4 float-right rounded-full py-0"
         />
-
         {children}
       </div>
     </components.Option>

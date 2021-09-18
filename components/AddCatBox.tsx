@@ -14,7 +14,7 @@ const AddCatBox = ({ backlink }: { backlink: BackLinkType }) => {
     >
       <a>
         <div className="relative">
-          <div className="flex pt-6 pb-6 xxl-custom:pt-9 xxl-custom:pb-9 pl-4 border-rounded-base border-yellow bg-yellow-light add-cat hover:bg-yellow-lightest">
+          <div className="flex py-6 xxl-custom:pt-9 xxl-custom:pb-9 pl-4 border-rounded-base border-yellow bg-yellow-light add-cat hover:bg-yellow-lightest">
             <span className="w-4/6 text-normal leading-tight font-semibold text-yellow-dark break-words">
               {t(cs['add_cat'])}
             </span>
