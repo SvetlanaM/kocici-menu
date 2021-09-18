@@ -91,9 +91,7 @@ const AuthForm = ({
   const hasUppercaseLetter = (value: string) => {
     if (authMethod === 'signupUser') {
       for (let char of value) {
-        if (char.toUpperCase() === char && !/^\d+$/.test(char)) {
-          return true;
-        }
+        return char.toUpperCase() === char && !/^\d+$/.test(char);
       }
       return false;
     }

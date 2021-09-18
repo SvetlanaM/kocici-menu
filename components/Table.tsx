@@ -47,7 +47,7 @@ const Table = ({
   const uniqueReviews = getUniqueReviews();
 
   const [sortedColumn, setSortedColumn] = useState(rules);
-  const { inputData, sortData } = useSortableData(
+  const { inputData, sortData } = useSortableData<GetDashboardQuery['reviews']>(
     uniqueReviews,
     sortedColumn,
     setSortedColumn,

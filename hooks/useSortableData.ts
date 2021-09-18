@@ -1,9 +1,13 @@
 import { useMemo } from 'react';
-import {SortType} from '../utils/constants';
+import { SortType } from '../utils/constants';
 
-
-
-const useSortableData = (inputData: Array<any>, sortedColumn: any, setSortedColumn: any, nestedColumn?: string, resetAfterSort?: () => void) => {
+const useSortableData = <T extends unknown>(
+  inputData: Array<T>,
+  sortedColumn: { column: string; direction: SortType },
+  setSortedColumn: ({ column: string, direction: SortType }) => void,
+  nestedColumn?: string,
+  resetAfterSort?: () => void
+): any => {
   let sortedTable = [...inputData];
 
   useMemo(() => {
@@ -30,35 +34,30 @@ const useSortableData = (inputData: Array<any>, sortedColumn: any, setSortedColu
       });
     }
 
-  
     return sortedColumn.direction === SortType.ASC
       ? sortedTable
       : sortedTable.reverse();
-    
   }, [inputData, sortedColumn]);
 
   const sortData = (column: string) => {
     let direction = SortType.ASC;
 
     if (
-      sortedColumn && 
+      sortedColumn &&
       sortedColumn.column === column &&
       sortedColumn.direction === SortType.ASC
     ) {
       direction = SortType.DESC;
     }
-    
+
     if (typeof resetAfterSort !== 'undefined') {
-      resetAfterSort()
+      resetAfterSort();
     }
 
     setSortedColumn({ column, direction });
-    
   };
 
-  
-
   return { inputData: sortedTable, sortData };
-}
+};
 
 export default useSortableData;

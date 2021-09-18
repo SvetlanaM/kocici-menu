@@ -34,7 +34,7 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
           .reverse();
         return {
           product_id: review.products.id,
-          review_type: reviews[0] ? reviews[0].review_type : [],
+          review_type: reviews[0] && reviews[0].review_type,
         };
       }),
     };
