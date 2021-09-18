@@ -7,7 +7,7 @@ import BackButton from './BackButton';
 import Breadcrumbs from './Breadcrumbs';
 import Breadcrumb from '../utils/breadcrumb';
 import { useEffect, useMemo, useState } from 'react';
-import router from 'next/router';
+import router, { useRouter } from 'next/router';
 import Image from './Image';
 import cs from '../public/locales/cs/common.json';
 import { useTranslation } from 'react-i18next';
@@ -28,9 +28,10 @@ const TipDetailBox = ({
   description,
   perex,
   category,
-}: Omit<TipDetailFragmentFragment, 'created_at'>) => {
+}: Omit<TipDetailFragmentFragment, 'created_at'>): JSX.Element => {
   const formattedDate = DateFormatObject(updated_at).formatDate();
   const { t } = useTranslation();
+  const router = useRouter();
   const breadcrumbs: Breadcrumb[] = useMemo(() => {
     const { backlink } = router.query;
     let previousLink = links.dashboard;
@@ -47,7 +48,7 @@ const TipDetailBox = ({
         name: name,
       },
     ];
-  }, [name, description, updated_at]);
+  }, [name, description, updated_at, router]);
 
   return (
     <div className="text-justify">

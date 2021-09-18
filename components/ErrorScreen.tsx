@@ -21,19 +21,18 @@ export class GeneralError {
   ) {}
 
   static fromApolloError(error: ApolloError): GeneralError {
-    const { t } = useTranslation();
     switch (error) {
       case error:
         return {
           error: error,
-          userMessage: t(cs['general_error']),
+          userMessage: 'general_error',
           errorType: 'error',
           message: error && error.message,
         };
       case error.networkError:
         return {
           error: error.networkError,
-          userMessage: t(cs['data_error']),
+          userMessage: 'data_error',
           errorType: 'error',
           message: error.networkError?.message,
         };
@@ -54,7 +53,7 @@ const ErrorScreen = ({ error, userMessage }: ErrorScreenProps) => {
     <div className="flex justify-center flex-col min-h-auto items-center py-16">
       <Image src="/icons/no-data.svg" height={205} width={300} />
       <h2 className="text-2xl font-medium text-purple-darkest mt-5">
-        {errorMessage}
+        {t(cs[errorMessage])}
       </h2>
       <p className="font-light px-32 text-center pt-3.6 pb-4 text-purple-darkest leading-normal">
         {t(cs['error_message'])}{' '}
