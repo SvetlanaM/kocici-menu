@@ -1,18 +1,18 @@
-import Image from './Image';
-import Title from './Title';
+import Image from '../Image';
+import Title from '../Title';
 import { Line } from 'react-chartjs-2';
-import FavouriteProducts from './FavouriteProducts';
+import FavouriteProducts from '../FavouriteProducts';
 import { gql } from '@apollo/client';
 import React, { useState } from 'react';
 import {
   CatFieldsFragmentFragment,
   GetProductsQuery,
-} from '../graphql/generated/graphql';
-import AddProductReviewModal from './AddProductReviewModal';
+} from '../../graphql/generated/graphql';
+import AddProductReviewModal from '../AddProductReviewModal';
 import Link from 'next/link';
-import NoReviews from './NoReviews';
+import NoReviews from '../NoReviews';
 import { useTranslation } from 'react-i18next';
-import cs from '../public/locales/cs/common.json';
+import cs from '../../public/locales/cs/common.json';
 
 export const ProductFieldsFragment = gql`
   fragment ProductFieldsFragment on Product {

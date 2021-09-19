@@ -1,8 +1,6 @@
 import { ApolloError } from '@apollo/client';
-import { userInfo } from 'os';
 import { useEffect, useState } from 'react';
 import useLogger from '../hooks/useLogger';
-import Link from 'next/link';
 import Image from './Image';
 import { SVETA_EMAIL } from '../utils/constants';
 import { useTranslation } from 'react-i18next';
@@ -40,10 +38,11 @@ export class GeneralError {
   }
 }
 
-const ErrorScreen = ({ error, userMessage }: ErrorScreenProps) => {
-  const logger = useLogger();
+const ErrorScreen = ({ error, userMessage }: ErrorScreenProps): JSX.Element => {
   const [errorMessage, setErrorMessage] = useState<string>(userMessage);
+  const logger = useLogger();
   const { t } = useTranslation();
+
   useEffect(() => {
     logger(error);
     setErrorMessage(error.userMessage);
