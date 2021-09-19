@@ -1,27 +1,18 @@
-import Image from './Image';
 import setUppercaseTitle from '../utils/setUppercaseTitle';
 import i18next from 'i18next';
 import cs from '../public/locales/cs/common.json';
 import { useTranslation } from 'next-i18next';
 import { CatFieldsFragmentFragment } from '../graphql/generated/graphql';
-import { useMemo } from 'react';
-import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
 import truncateText from '../utils/truncateText';
 import LoadingImage from './LoadingImage';
-import CatForm, { CAT_TYPE_NULL } from './CatForm';
+import { CAT_TYPE_NULL } from './CatForm';
 import DateFormatObject from '../utils/getFormatDate';
 
 interface CatBasicInfoProps {
   cat: CatFieldsFragmentFragment;
 }
-const CatBasicInfo = ({ cat }: CatBasicInfoProps) => {
+const CatBasicInfo = ({ cat }: CatBasicInfoProps): JSX.Element => {
   const { t } = useTranslation();
-
-  // FIXME: toto je tu uplne zbytocne teraz
-  // const catImage = useMemo<string>(
-  //   () => (cat.image_url ? cat.image_url : defaultImage),
-  //   [cat.image_url]
-  // );
 
   return (
     <>
