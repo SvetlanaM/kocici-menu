@@ -5,7 +5,6 @@ import {
   CatFieldsFragmentFragment,
   CatTypeEnum_Enum as catTypes,
   GetProductsQuery,
-  Product,
   Review_Insert_Input,
   ReviewHistory_Insert_Input,
   SelectProductFieldsFragment,
@@ -26,17 +25,12 @@ import cs from '../public/locales/cs/common.json';
 import UploadImage from './UploadImage';
 import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
 import { useS3Upload } from 'next-s3-upload';
-import Loading from './Loading';
-import ProductController from './ProductController';
 import RatingController from './RatingController';
 import useSearch from '../hooks/useSearch';
 import { uploadImage } from '../utils/uploadImage';
-import ErrorScreen from './ErrorScreen';
 import DateFormatObject from '../utils/getFormatDate';
 
 export type CatInputData = Omit<Cat_Insert_Input, 'CatTypeEnum'>;
-export const CAT_TYPE_NULL = 'CAT_TYPE_NULL';
-
 interface CatFormInterface {
   handleSubmit1: {
     (
@@ -63,23 +57,21 @@ const CatForm = ({
   submitText,
   catData,
   products,
-}: CatFormInterface) => {
+}: CatFormInterface): JSX.Element => {
   const catImage = useMemo<string>(
     () => (catData && catData.image_url ? catData.image_url : defaultImage),
     [catData]
   );
   const [imageUrl, setImageUrl] = useState<string>(catImage);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const { FileInput, openFileDialog } = useS3Upload();
-  const { t } = useTranslation();
   const [searchProducts, setSearchProducts] = useState<
     Array<SelectProductFieldsFragment>
   >([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [updateData, setUpdateData] = useState<boolean>(false);
-
+  const { FileInput, openFileDialog } = useS3Upload();
+  const { t } = useTranslation();
   const router = useRouter();
+
   const reviewFactory = (
     product: {
       name: string;
@@ -114,7 +106,8 @@ const CatForm = ({
       })
       .sort((a, b) => b.rating - a.rating);
 
-  const [userDefaultValues, setUserDefaultValues] = useState(review);
+  const [userDefaultValues, setUserDefaultValues] =
+    useState<CatFormProduct[]>(review);
 
   const {
     register,

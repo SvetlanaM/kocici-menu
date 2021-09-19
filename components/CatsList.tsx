@@ -6,7 +6,7 @@ interface CatSectionProps {
   rows: string;
 }
 
-const CatsList = ({ cats, rows }: CatSectionProps) => {
+const CatsList = ({ cats, rows }: CatSectionProps): JSX.Element => {
   return (
     <div className={`grid ${rows} gap-y-5 mt-7`}>
       {cats &&
