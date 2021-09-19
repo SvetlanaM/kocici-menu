@@ -41,7 +41,7 @@ export const PRODUCT_QUERY = gql`
 `;
 
 export const CATS_DETAIL_QUERY = gql`
-  query GetCatDetail($user_id: String) {
+  query GetCatDetail($user_id: String, $withProducts: Boolean!, $limit: Int) {
     cat: Cat(
       where: { _and: { is_active: { _eq: true }, user_id: { _eq: $user_id } } }
       order_by: { name: asc }

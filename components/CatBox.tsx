@@ -2,10 +2,7 @@ import { gql } from '@apollo/client';
 import Image from './Image';
 import { useState } from 'react';
 import { CatFieldsFragmentFragment } from '../graphql/generated/graphql';
-import { useTranslation } from 'next-i18next';
 import CatToggleDetail from './CatToggleDetail';
-import { ARRAY_REQUIREMENTS_LENGTH as arrayLength } from '../utils/constants';
-import cs from '../public/locales/cs/common.json';
 import CatBasicInfo from './CatBasicInfo';
 import DateFormatObject from '../utils/getFormatDate';
 
@@ -52,25 +49,9 @@ interface CatBoxProps {
   reviews: CatFieldsFragmentFragment['reviews'];
 }
 
-const CatBox = ({ CatFieldsFragmentMain, reviews }: CatBoxProps) => {
-  const { t } = useTranslation();
+const CatBox = ({ CatFieldsFragmentMain }: CatBoxProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggleSlider = () => setIsOpen(!isOpen);
-
-  const arrayDiff = CatFieldsFragmentMain.specials.length - arrayLength;
-  // const updatedSpecials =
-  //   CatFieldsFragment.specials.length > arrayLength
-  //     ? [
-  //         ...CatFieldsFragment.specials.slice(0, arrayLength),
-  //         {
-  //           name: `... ${t(sk.next_count.key, {
-  //             count: arrayDiff,
-  //           })} ${arrayDiff} ${t(sk.requirements_count.key, {
-  //             count: arrayDiff,
-  //           })}`,
-  //         },
-  //       ]
-  //     : CatFieldsFragment.specials;
 
   const catData = {
     contact_doctor: {

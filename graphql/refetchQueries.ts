@@ -1,5 +1,5 @@
 import { InternalRefetchQueryDescriptor } from '@apollo/client';
-import { LAST_WEEK, TIP_LIMIT } from './../utils/constants';
+import { LAST_WEEK, PRODUCT_LIMIT, TIP_LIMIT } from './../utils/constants';
 import {
   CATS_DETAIL_QUERY,
   DASHBOARD_QUERY,
@@ -24,6 +24,8 @@ export const getRefetchQueries = (
       query: CATS_DETAIL_QUERY,
       variables: {
         user_id: user_id,
+        withProducts: true,
+        limit: PRODUCT_LIMIT,
       },
     },
     CATS_QUERY: {
