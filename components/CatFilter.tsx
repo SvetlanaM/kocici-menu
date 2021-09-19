@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useRef } from 'react';
 import { useEffect, useState } from 'react';
 import Title from './Title';
 import { GetCatDetailQuery } from '../graphql/generated/graphql';
@@ -11,8 +11,14 @@ interface CatFilterProps {
   selectedCat: number;
 }
 
-const CatFilter = ({ cats, setCatFunction, selectedCat }: CatFilterProps) => {
+const CatFilter = ({
+  cats,
+  setCatFunction,
+  selectedCat,
+}: CatFilterProps): JSX.Element => {
   const { t } = useTranslation();
+  const ref = useRef(null);
+  const ref2 = useRef(null);
   const [catId, setCatId] = useState<number>(selectedCat);
 
   useEffect(() => {
@@ -24,24 +30,9 @@ const CatFilter = ({ cats, setCatFunction, selectedCat }: CatFilterProps) => {
     setCatFunction(newCatId);
   }, [cats]);
 
-  // useEffect(() => {
-  //   setCatFunction(catId);
-  // }, [selectedCat]);
-
-  const ref = useRef(null);
-  useEffect(() => {
-    console.log('ref', ref.current ? ref.current.scrollWidth : 0);
-  }, [ref.current]);
-
-  const ref2 = useRef(null);
-  useEffect(() => {
-    console.log('ref2', ref2.current ? ref2.current.scrollWidth : 0);
-  }, [ref2.current]);
-
   return (
     <div className="flex align-baseline w-full" ref={ref2}>
       <Title title={`${t(cs['choosen_cat'])}:`} classNames="flex-auto" />
-
       <ul
         className="flex flex-row ml-3 text-lg font-semibold cursor-pointer overflow-y-auto custom-scroll"
         style={{ width: String(ref) }}
