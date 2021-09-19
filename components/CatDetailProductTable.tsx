@@ -7,7 +7,6 @@ import React, { useState } from 'react';
 import {
   CatFieldsFragmentFragment,
   GetProductsQuery,
-  SelectCatFieldsFragment,
 } from '../graphql/generated/graphql';
 import AddProductReviewModal from './AddProductReviewModal';
 import Link from 'next/link';
@@ -30,12 +29,12 @@ export const ProductFieldsFragment = gql`
     analysis_variant
   }
 `;
-
 interface CatDetailProductTableProps {
-  data: GetProductsQuery['products'];
-  name: string;
+  data:
+    | CatFieldsFragmentFragment['reviews'][0]['products'][]
+    | GetProductsQuery['products'];
   title: string;
-  catReviews: Array<any>;
+  catReviews: number[][];
   shuffleData?: () => void;
   cats?: Record<string, unknown>[];
   products?: GetProductsQuery['products'];
@@ -43,15 +42,16 @@ interface CatDetailProductTableProps {
 
 const CatDetailProductTable = ({
   data,
-  name,
   title,
   catReviews,
   shuffleData,
   cats,
   products,
-}: CatDetailProductTableProps) => {
+}: CatDetailProductTableProps): JSX.Element => {
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+  const [rowNumber, setRowNumber] = useState<number>();
   const { t } = useTranslation();
-  const data1 = (order: number) => {
+  const graphData = (order: number) => {
     return {
       labels: ['1', '2', '3', '4', '5'],
       datasets: [
@@ -120,9 +120,6 @@ const CatDetailProductTable = ({
     },
   };
 
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [rowNumber, setRowNumber] = useState<number>();
-
   const openModal = (order: number) => {
     setRowNumber(order);
     setIsOpen(true);
@@ -151,7 +148,7 @@ const CatDetailProductTable = ({
           <>
             <Link href="/my-cats">
               <a
-                onClick={openModal}
+                onClick={() => openModal}
                 className="text-gray pb-5 xl-custom:mb-0 text-right"
               >
                 {t(cs['add_review_small'])}
@@ -172,7 +169,7 @@ const CatDetailProductTable = ({
                   </div>
                   <div className="canvas-graph ml-3 xl-custom:ml-0">
                     {item.reviewhistory && item.reviewhistory.length > 0 ? (
-                      <Line data={data1(index)} options={options} />
+                      <Line data={graphData(index)} options={options} />
                     ) : (
                       <>
                         <Link href="/my-cats">

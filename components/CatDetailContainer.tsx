@@ -56,6 +56,7 @@ const CatDetailContainer = ({
   const initialCat =
     cats.find((cat) => savedCat && cat.id === savedCat) ?? cats[0];
   const initialData = catFactory(initialCat);
+
   interface catSummaryDataProps {
     selectedCat: CatFieldsFragmentFragment['id'];
     catData: CatFieldsFragmentFragment;
@@ -202,7 +203,6 @@ const CatDetailContainer = ({
       <div className="grid grid-rows xl-custom:grid-rows-1 xl-custom:grid-cols-2 grid-flow-row gap-x-12 w-full">
         <CatDetailProductTable
           data={catProducts}
-          name={catSummaryData.catData.name}
           title={t(cs['newest_reviews'])}
           catReviews={catSummaryData.catReviews.slice(0, 5)}
           cats={[catSummaryData.catModalData]}
@@ -210,7 +210,6 @@ const CatDetailContainer = ({
         />
         <CatDetailProductTable
           data={getRProducts}
-          name={catSummaryData.catData.name}
           title={t(cs['suggested_reviews'])}
           catReviews={catSummaryData.catReviews}
           shuffleData={shuffleData}
