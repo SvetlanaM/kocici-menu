@@ -6,15 +6,15 @@ type BreadcrumbsProps = {
   breadcrumbs: Breadcrumb[];
 };
 
-const Breadcrumbs = ({ breadcrumbs }: BreadcrumbsProps) => {
+const Breadcrumbs = ({ breadcrumbs }: BreadcrumbsProps): JSX.Element => {
   const crumbsCopy = [...breadcrumbs];
   const last = crumbsCopy.pop();
 
   return (
     <div className="text-sm font-light text-gray mb-4">
-      {(crumbsCopy ?? []).map((breadcrumb, key) => {
+      {(crumbsCopy ?? []).map((breadcrumb) => {
         return (
-          <React.Fragment key={key}>
+          <React.Fragment key={breadcrumb.name}>
             <a
               className="underline hover:text-purple-darkest cursor-pointer"
               onClick={() =>
