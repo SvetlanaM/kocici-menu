@@ -5,6 +5,7 @@ import FavouriteProducts from './FavouriteProducts';
 import { gql } from '@apollo/client';
 import React, { useState } from 'react';
 import {
+  CatFieldsFragmentFragment,
   GetProductsQuery,
   SelectCatFieldsFragment,
 } from '../graphql/generated/graphql';
@@ -36,7 +37,7 @@ interface CatDetailProductTableProps {
   title: string;
   catReviews: Array<any>;
   shuffleData?: () => void;
-  cats?: SelectCatFieldsFragment;
+  cats?: Record<string, unknown>[];
   products?: GetProductsQuery['products'];
 }
 

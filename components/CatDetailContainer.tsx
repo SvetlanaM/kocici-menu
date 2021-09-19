@@ -9,21 +9,34 @@ import {
 } from '../graphql/generated/graphql';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import CenterContainer from './CenterContainer';
-import LeftContainer from './LeftContainer';
 import AddCatBox from './AddCatBox';
 import CatDetailPieChart from './CatDetailPieChart';
 import useLocalStorage, { LocalStorageKey } from '../hooks/useLocalStorage';
 import { BackLinkType } from '../utils/backlinks';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
+
 interface CatDetailContainerProps {
   cats: GetCatDetailQuery['cat'];
   products: GetProductsQuery['products'];
 }
 
-const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
+const CatDetailContainer = ({
+  cats,
+  products,
+}: CatDetailContainerProps): JSX.Element => {
   const { t } = useTranslation();
-  const catFactory = (cat: CatFieldsFragmentFragment) => {
+  const [savedCat, setSavedCat] = useLocalStorage(
+    LocalStorageKey.SELECTED_CAT,
+    null
+  );
+  const [isShuffled, setIsShuffled] = useState<boolean>(false);
+  const setCatEditOpened = () => {
+    setSavedCat(catSummaryData.selectedCat);
+  };
+  const catFactory = (
+    cat: CatFieldsFragmentFragment
+  ): Record<string, unknown> => {
     return {
       id: cat.id,
       name: cat.name,
@@ -40,36 +53,41 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
     };
   };
 
-  let [savedCat, setSavedCat] = useLocalStorage(
-    LocalStorageKey.SELECTED_CAT,
-    null
-  );
-  const setCatEditOpened = () => {
-    setSavedCat(selectedCat);
-  };
-
   const initialCat =
     cats.find((cat) => savedCat && cat.id === savedCat) ?? cats[0];
+  const initialData = catFactory(initialCat);
+  interface catSummaryDataProps {
+    selectedCat: CatFieldsFragmentFragment['id'];
+    catData: CatFieldsFragmentFragment;
+    catReviews: number[][];
+    catModalData: Record<string, unknown>;
+  }
 
-  let initialData = catFactory(initialCat);
-  const [[selectedCat, catData, catReviews, catModalData], setSelectedCat] =
-    useState([initialCat.id, initialCat, [], initialData]);
+  const [catSummaryData, setSelectedCat] = useState<catSummaryDataProps>({
+    selectedCat: initialCat.id,
+    catData: initialCat,
+    catReviews: [],
+    catModalData: initialData,
+  });
 
   useEffect(() => {
-    setSelectedCat([
-      initialCat.id,
-      initialCat,
-      getCatReviewHistory(initialCat),
-      initialData,
-    ]);
+    setSelectedCat({
+      selectedCat: initialCat.id,
+      catData: initialCat,
+      catReviews: getCatReviewHistory(initialCat),
+      catModalData: initialData,
+    });
     setSavedCat(null);
   }, []);
 
   const productsTemp = products.filter(
-    (x) => !catData.reviews.map((item) => item.products.id).includes(x.id)
+    (x) =>
+      !catSummaryData.catData.reviews
+        .map((item) => item.products.id)
+        .includes(x.id)
   );
 
-  const getCatReviewHistory = (cat) => {
+  const getCatReviewHistory = (cat: CatFieldsFragmentFragment): number[][] => {
     return cat.reviews.map((product) =>
       product.products.reviewhistory
         .filter((review) => review.cat_id === cat.id)
@@ -77,21 +95,24 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
         .reverse()
     );
   };
+
   const setCatData = useCallback(
     (id: number) => {
-      let cat = getCatData(id);
-      let review = cat ? getCatReviewHistory(cat) : [];
-
-      let catModal = catFactory(cat);
-
-      setSelectedCat([id, cat, review, catModal]);
-
+      const cat = getCatData(id);
+      const review = cat ? getCatReviewHistory(cat) : [];
+      const catModal = catFactory(cat);
+      setSelectedCat({
+        selectedCat: id,
+        catData: cat,
+        catReviews: review,
+        catModalData: catModal,
+      });
       return id;
     },
-    [cats]
+    [cats, initialCat, catSummaryData.selectedCat]
   );
 
-  const getCatData = (id: number) => {
+  const getCatData = (id: number): CatFieldsFragmentFragment => {
     return cats.find((i) => i.id === id);
   };
 
@@ -103,15 +124,13 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
     () => Math.floor(Math.random() * 3000) + 800
   );
 
-  const catProducts = Object.values(catData.reviews.slice(0, 5)!).map(
-    (review) => review.products
-  );
+  const catProducts = Object.values(
+    catSummaryData && catSummaryData.catData.reviews.slice(0, 5)
+  ).map((review) => review.products);
 
   const shuffleData = () => {
     setIsShuffled(!isShuffled);
   };
-
-  const [isShuffled, setIsShuffled] = useState<boolean>(false);
 
   const getRProducts = useMemo(() => {
     return products
@@ -119,19 +138,13 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
       .sort(() => 0.5 - Math.random())
       .filter((x) => !catProducts.map((item) => item.name).includes(x.name))
       .slice(0, 5);
-  }, [isShuffled, selectedCat]);
+  }, [isShuffled, catSummaryData.selectedCat]);
 
-  const getNumber = (item: any): number => {
-    const numberPattern = /\d+/g;
-
-    return Number(item && item.match(numberPattern)[0]);
-  };
-
-  const average = (arr) =>
+  const average = (arr: number[]): number =>
     arr.reduce((p, c) => Math.ceil(p) + Math.ceil(c), 0) / arr.length;
 
-  const getAnalysisValue = (value: string) => {
-    let data = catData.reviews.map((item) =>
+  const getAnalysisValue = (value: string): number => {
+    const data: unknown[] = catSummaryData.catData.reviews.map((item) =>
       item.products.analysis_variant
         ? Object.entries(item.products.analysis_variant)
             .filter((item) => item[0] === value)
@@ -146,7 +159,7 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
             })
         : [0]
     );
-    return Number(Math.ceil(average(data)).toFixed(2)) || 0;
+    return Number(Math.ceil(average([Number(data)])).toFixed(2)) || 0;
   };
 
   const avgBielType = getAnalysisValue('bílkovina');
@@ -154,7 +167,6 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
   const avgAsh = getAnalysisValue('popel/popelovina');
   const avgAll = [avgBielType, avgFiber, avgAsh];
   const sumAll = avgAll.reduce((a, b) => a + b, 0);
-
   const othersType = 100 - sumAll;
   const mergedStats = [...avgAll, othersType];
 
@@ -164,11 +176,14 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
         <CatFilter
           cats={cats}
           setCatFunction={setCatData}
-          selectedCat={selectedCat}
+          selectedCat={catSummaryData.selectedCat}
         />
       </CenterContainer>
       <div className="w-full flex justify-between">
-        <CatDetailInfoBox data={catData} onEditCat={setCatEditOpened} />
+        <CatDetailInfoBox
+          data={catSummaryData.catData}
+          onEditCat={setCatEditOpened}
+        />
         <div className="w-3/12 pl-7">
           <AddCatBox
             backlink={BackLinkType.MY_CATS}
@@ -180,27 +195,27 @@ const CatDetailContainer = ({ cats, products }: CatDetailContainerProps) => {
         <CatDetailCostChart
           data1={randomDataG}
           data2={randomDataK}
-          selectedCat={selectedCat}
+          selectedCat={catSummaryData.selectedCat}
         />
         <CatDetailPieChart aggData={mergedStats} />
       </div>
       <div className="grid grid-rows xl-custom:grid-rows-1 xl-custom:grid-cols-2 grid-flow-row gap-x-12 w-full">
         <CatDetailProductTable
           data={catProducts}
-          name={catData.name}
+          name={catSummaryData.catData.name}
           title={t(cs['newest_reviews'])}
-          catReviews={catReviews.slice(0, 5)}
-          cats={[catModalData]}
+          catReviews={catSummaryData.catReviews.slice(0, 5)}
+          cats={[catSummaryData.catModalData]}
           products={productsTemp}
         />
         <CatDetailProductTable
           data={getRProducts}
-          name={catData.name}
+          name={catSummaryData.catData.name}
           title={t(cs['suggested_reviews'])}
-          catReviews={catReviews}
+          catReviews={catSummaryData.catReviews}
           shuffleData={shuffleData}
           products={getRProducts}
-          cats={[catModalData]}
+          cats={[catSummaryData.catModalData]}
         />
       </div>
     </>
