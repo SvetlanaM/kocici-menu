@@ -5,7 +5,6 @@ import StarIconTest from './StarIconTest';
 interface RatingIconProps {
   index: number;
   rating: number;
-  hoverRating: number;
   onMouseEnter?: (index: number) => void;
   onMouseLeave?: () => void;
   onSaveRating?: (index: number) => void;

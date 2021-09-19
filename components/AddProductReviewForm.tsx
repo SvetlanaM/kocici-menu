@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getUser } from '../utils/user';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import FormErrorMessage from './FormErrorMessage';
 import FormInputLabel from './FormInputLabel';
 import SubmitButton from './SubmitButton';
@@ -18,26 +18,23 @@ import {
   SelectProductFieldsFragment,
 } from '../graphql/generated/graphql';
 import { ADD_REVIEW, ADD_REVIEW_HISTORY } from '../graphql/mutations';
-import {
-  CATS_DETAIL_QUERY,
-  CATS_QUERY,
-  DASHBOARD_QUERY,
-  REVIEWS_QUERY,
-  USER_STATS_QUERY,
-} from '../graphql/queries';
 import Select, { components } from 'react-select';
 import { customStyles as style } from '../utils/formStyles';
 import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
-import { TIP_LIMIT } from '../utils/constants';
 import useSearch from '../hooks/useSearch';
 import ProductController from './ProductController';
-import DateFormatObject from '../utils/getFormatDate';
 import { Components } from 'react-select/src/components';
 import RatingIcon from './RatingIcon';
 import useLogger from '../hooks/useLogger';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
+import { getRefetchQueries } from '../graphql/refetchQueries';
 
+type ReviewSubmissionTypeForm = {
+  cat: SelectCatFieldsFragment;
+  product: SelectProductFieldsFragment;
+  rating: string;
+};
 interface AddProductReviewFormProps {
   selectCats?: GetDashboardQuery['selectCats'];
   selectProducts: GetDashboardQuery['selectProducts'];
@@ -65,7 +62,6 @@ const AddProductReviewForm = ({
   selectCats,
   selectProducts,
   onBackAction,
-  onSuccess,
   props,
   index,
 }: AddProductReviewFormProps): JSX.Element => {
@@ -74,27 +70,29 @@ const AddProductReviewForm = ({
     control,
     watch,
     formState: { errors },
-  } = useForm();
-  const [rating, setRating] = useState<number>(0);
-  const [hoverRating, setHoverRating] = useState<number>(0);
-
-  const onMouseEnter = (index) => {
-    setHoverRating(index);
-  };
-
-  const onMouseLeave = () => {
-    setHoverRating(rating);
-  };
-
+  } = useForm<ReviewSubmissionTypeForm>();
   const [reviewType, setReviewType] = useState<string>('');
-
-  const onSaveRating = useCallback(
-    (index) => {
-      setRating(index);
-    },
-    [rating, hoverRating, reviewType]
-  );
-
+  const [searchProducts, setSearchProducts] = useState<
+    Array<SelectProductFieldsFragment>
+  >([]);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const refetchQueries = getRefetchQueries(getUser(), [
+    'DASHBOARD_QUERY',
+    'CATS_DETAIL_QUERY',
+    'CATS_QUERY',
+    'REVIEWS_QUERY',
+    'USER_STATS_QUERY',
+  ]);
+  const customStyles = style;
+  const productsCopy = [...selectProducts];
+  const productInput = 'product';
+  const watchedProduct: SelectProductFieldsFragment = watch(productInput);
+  const catInput = 'cat';
+  const watchedCat: SelectCatFieldsFragment = watch(catInput);
+  const watchedReview: string = watch('rating');
+  useSearch(searchTerm, productsCopy, setSearchProducts);
+  const logger = useLogger();
+  const { t } = useTranslation();
   const [createReview] = useMutation<
     AddReviewMutation,
     AddReviewMutationVariables
@@ -104,151 +102,6 @@ const AddProductReviewForm = ({
     AddReviewHistoryMutation,
     AddReviewHistoryMutationVariables
   >(ADD_REVIEW_HISTORY);
-  const lastWeek = DateFormatObject().lastWeek();
-  const logger = useLogger();
-
-  const onSubmit = (data: any) => {
-    const reviewInput: Review_Insert_Input = {
-      cat_id: Number(data.cat.id),
-      product_id: Number(data.product.id),
-      review_type: String(data.rating),
-    };
-
-    const reviewHistoryInput: ReviewHistory_Insert_Input = {
-      cat_id: Number(data.cat.id),
-      product_id: Number(data.product.id),
-      review_type: data.rating,
-    };
-
-    createReviewHistory({
-      variables: { review_history: reviewHistoryInput },
-    });
-
-    createReview({
-      variables: { review: reviewInput },
-      refetchQueries: [
-        {
-          query: DASHBOARD_QUERY,
-          variables: {
-            limitTips: TIP_LIMIT,
-            user_id: getUser(),
-          },
-        },
-        {
-          query: CATS_DETAIL_QUERY,
-          variables: {
-            user_id: getUser(),
-            limit: 5,
-            withProducts: true,
-            limitProducts: 5,
-            brand_type: 'Feringa',
-          },
-        },
-        {
-          query: CATS_QUERY,
-          variables: {
-            withProducts: true,
-            user_id: getUser(),
-            limit: 2,
-          },
-        },
-        {
-          query: USER_STATS_QUERY,
-          variables: {
-            user_id: getUser(),
-            updated_at: lastWeek,
-          },
-        },
-        {
-          query: REVIEWS_QUERY,
-          variables: {
-            user_id: getUser(),
-          },
-        },
-      ],
-      // update: (store, { data }) => {
-      //   const reviewsData = store.readQuery({
-      //     query: DASHBOARD_QUERY,
-      //     variables: {
-      //       limitTips: TIP_LIMIT,
-      //       user_id: getUser(),
-      //     },
-      //   });
-
-      //   const catData = store.readQuery({
-      //     query: CATS_QUERY,
-      //     variables: {
-      //       user_id: getUser(),
-      //       withProducts: true,
-      //     },
-      //   });
-
-      //   store.writeQuery({
-      //     query: DASHBOARD_QUERY,
-      //     variables: {
-      //       limitTips: TIP_LIMIT,
-      //       user_id: getUser(),
-      //     },
-      //     data: {
-      //       reviews: [
-      //         ...reviewsData.reviews,
-      //         ...data!.insert_Review?.returning,
-      //       ],
-      //     },
-      //   });
-
-      //   const newCats = catData.cats.map((cat) => {
-      //     const reviews = data!.insert_Review?.returning.filter(
-      //       (review) => review.cat.id === cat.id
-      //     );
-
-      //     return { ...cat, reviews: { ...cat.reviews, ...reviews } };
-      //   });
-
-      //   store.writeQuery({
-      //     query: CATS_QUERY,
-      //     variables: {
-      //       user_id: getUser(),
-      //       withProducts: true,
-      //     },
-      //     data: {
-      //       ...catData,
-      //       cats: newCats,
-      //     },
-      //   });
-      // },
-    })
-      .then((data) => {
-        // onSuccess();
-        onBackAction();
-      })
-      .catch((err) => logger(err));
-  };
-
-  interface RatingOption {
-    value: number;
-    label: string;
-  }
-
-  const customStyles = style;
-
-  const [searchProducts, setSearchProducts] = useState<
-    Array<SelectProductFieldsFragment>
-  >([]);
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const productsCopy = [...selectProducts];
-  const productInput = 'product';
-  const watchedProduct: SelectProductFieldsFragment = watch(productInput);
-  const catInput = 'cat';
-  const watchedCat: SelectCatFieldsFragment = watch(catInput);
-  const watchedReview: RatingOption = watch('rating');
-
-  useSearch(searchTerm, productsCopy, setSearchProducts);
-
-  useEffect(() => {
-    handleReviewCombination(watchedCat, watchedProduct);
-  }, [watchedCat, watchedProduct, watchedReview, reviewType]);
 
   const handleReviewCombination = (
     cat: SelectCatFieldsFragment,
@@ -263,7 +116,38 @@ const AddProductReviewForm = ({
       );
     }
   };
-  const { t } = useTranslation();
+
+  useEffect(() => {
+    handleReviewCombination(watchedCat, watchedProduct);
+  }, [watchedCat, watchedProduct, watchedReview, reviewType]);
+
+  const onSubmit: SubmitHandler<ReviewSubmissionTypeForm> = (data) => {
+    const reviewInput: Review_Insert_Input = {
+      cat_id: Number(data.cat.id),
+      product_id: Number(data.product.id),
+      review_type: String(data.rating),
+    };
+
+    const reviewHistoryInput: ReviewHistory_Insert_Input = {
+      cat_id: Number(data.cat.id),
+      product_id: Number(data.product.id),
+      review_type: Number(data.rating),
+    };
+
+    createReviewHistory({
+      variables: { review_history: reviewHistoryInput },
+    });
+
+    createReview({
+      variables: { review: reviewInput },
+      refetchQueries: refetchQueries,
+    })
+      .then(() => {
+        onBackAction();
+      })
+      .catch((err) => logger(err));
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
       <div className="mb-2 mt-4">
@@ -326,12 +210,9 @@ const AddProductReviewForm = ({
                     <span className="mr-1" key={index}>
                       <RatingIcon
                         index={index}
-                        rating={reviewType !== '' ? Number(reviewType) : value}
-                        hoverRating={
-                          reviewType !== '' ? Number(reviewType) : value
+                        rating={
+                          reviewType !== '' ? Number(reviewType) : Number(value)
                         }
-                        onMouseEnter={onMouseEnter}
-                        onMouseLeave={onMouseLeave}
                         onSaveRating={onChange}
                         isDisabled={reviewType !== ''}
                       />

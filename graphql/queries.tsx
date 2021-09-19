@@ -11,7 +11,7 @@ import {
 } from '../components/UserStats';
 
 export const CATS_QUERY = gql`
-  query GetCats($user_id: String, $withProducts: Boolean!, $limit: Int) {
+  query GetCats($user_id: String) {
     cats: Cat(
       where: { _and: { is_active: { _eq: true }, user_id: { _eq: $user_id } } }
       order_by: { name: asc }
@@ -41,13 +41,7 @@ export const PRODUCT_QUERY = gql`
 `;
 
 export const CATS_DETAIL_QUERY = gql`
-  query GetCatDetail(
-    $user_id: String
-    $withProducts: Boolean!
-    $limit: Int
-    $brand_type: String
-    $limitProducts: Int
-  ) {
+  query GetCatDetail($user_id: String) {
     cat: Cat(
       where: { _and: { is_active: { _eq: true }, user_id: { _eq: $user_id } } }
       order_by: { name: asc }

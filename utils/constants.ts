@@ -1,4 +1,5 @@
 import moment from 'moment';
+import DateFormatObject from './getFormatDate';
 
 export const DEFAULT_CAT_IMAGE = '/default_cat.svg';
 export const DEFAULT_PRODUCT_IMAGE = '/icons/default-product.svg';
@@ -14,3 +15,4 @@ export enum SortType {
 export const ARRAY_REQUIREMENTS_LENGTH = 3;
 export const CURRENT_MONTH = moment(moment(), 'YYYY/MM/DD').format('M');
 export const CURRENT_YEAR = moment(moment(), 'YYYY/MM/DD').format('Y');
+export const LAST_WEEK = DateFormatObject().lastWeek();

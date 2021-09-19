@@ -40,6 +40,7 @@
     "react/jsx-closing-tag-location": "error",
     "react/jsx-handler-names": "error",
     "react/jsx-key": "error",
-    "react/display-name": "off"
+    "react/display-name": "off",
+    "react/prop-types": "off"
   }
 }

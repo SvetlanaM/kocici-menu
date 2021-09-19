@@ -42,9 +42,9 @@ interface ProductControllerProps {
   watchedProduct?: SelectProductFieldsFragment;
   props?: Array<string>;
   name: string;
-  control?: Control<FieldValues>;
+  control?: Control<ReviewSubmissionTypeForm>;
   showHint: boolean;
-  defaultValue?: string;
+  defaultValue?: SelectProductFieldsFragment;
   isDisabled?: boolean;
   errors?: any;
 }
