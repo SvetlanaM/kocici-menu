@@ -1,21 +1,21 @@
-import Image from './Image';
+import Image from '../Image';
 import {
   CatFieldsFragmentFragment,
   DeleteCatMutation,
   DeleteCatMutationVariables,
-} from '../graphql/generated/graphql';
-import CatBasicInfo from './CatBasicInfo';
+} from '../../graphql/generated/graphql';
+import CatBasicInfo from '../CatDetailComponent/CatBasicInfo';
 import Link from 'next/link';
-import RemoveConfirmationModal from './RemoveConfirmationModal';
+import RemoveConfirmationModal from '../RemoveConfirmationModal';
 import { useCallback, useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { DELETE_CAT } from '../graphql/mutations';
-import { getUser } from '../utils/user';
-import DoctorExportLink from './DoctorExportLink';
-import { BackLinkType } from '../utils/backlinks';
+import { DELETE_CAT } from '../../graphql/mutations';
+import { getUser } from '../../utils/user';
+import DoctorExportLink from '../DoctorExportLink';
+import { BackLinkType } from '../../utils/backlinks';
 import { useTranslation } from 'react-i18next';
-import cs from '../public/locales/cs/common.json';
-import { getRefetchQueries } from '../graphql/refetchQueries';
+import cs from '../../public/locales/cs/common.json';
+import { getRefetchQueries } from '../../graphql/refetchQueries';
 interface CatDetailInfoBoxProps {
   data: CatFieldsFragmentFragment;
   onEditCat: () => void;

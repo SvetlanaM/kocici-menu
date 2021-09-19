@@ -6,15 +6,15 @@ import {
   CatFieldsFragmentFragment,
   GetCatDetailQuery,
   GetProductsQuery,
-} from '../graphql/generated/graphql';
+} from '../../graphql/generated/graphql';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import CenterContainer from './CenterContainer';
-import AddCatBox from './AddCatBox';
+import CenterContainer from '../Containers/CenterContainer';
+import AddCatBox from '../AddCatBox';
 import CatDetailPieChart from './CatDetailPieChart';
-import useLocalStorage, { LocalStorageKey } from '../hooks/useLocalStorage';
-import { BackLinkType } from '../utils/backlinks';
+import useLocalStorage, { LocalStorageKey } from '../../hooks/useLocalStorage';
+import { BackLinkType } from '../../utils/backlinks';
 import { useTranslation } from 'react-i18next';
-import cs from '../public/locales/cs/common.json';
+import cs from '../../public/locales/cs/common.json';
 
 interface CatDetailContainerProps {
   cats: GetCatDetailQuery['cat'];

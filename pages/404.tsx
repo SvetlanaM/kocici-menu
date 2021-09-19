@@ -1,5 +1,5 @@
 import Image from '../components/Image';
-import BackButton from '../components/BackButton';
+import BackButton from '../components/Buttons/BackButton';
 import Link from 'next/link';
 import { APP_NAME } from '../utils/constants';
 import Header from '../components/Head';

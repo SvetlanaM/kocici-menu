@@ -1,13 +1,13 @@
-import Container from '../components/Container'
-import Layout from '../components/Layout'
-import Sidebar from '../components/Sidebar'
-import { useGetReviewsQuery } from '../graphql/generated/graphql'
-import Header from '../components/Head'
-import CenterContainer from '../components/CenterContainer'
-import Loading from '../components/Loading'
-import getTitle from '../utils/getTitle'
-import { getUser } from '../utils/user'
-import FilterForm from '../components/FilterForm'
+import Container from '../components/Containers/Container';
+import Layout from '../components/Layout';
+import Sidebar from '../components/Sidebar';
+import { useGetReviewsQuery } from '../graphql/generated/graphql';
+import Header from '../components/Head';
+import CenterContainer from '../components/Containers/CenterContainer';
+import Loading from '../components/Loading';
+import getTitle from '../utils/getTitle';
+import { getUser } from '../utils/user';
+import FilterForm from '../components/FilterForm';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
 const Products = () => {

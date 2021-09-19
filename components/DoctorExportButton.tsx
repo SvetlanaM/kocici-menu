@@ -2,8 +2,20 @@ import Image from './Image';
 import DoctorExportLink from './DoctorExportLink';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
+import { CatFieldsFragmentFragment } from '../graphql/generated/graphql';
 
-const DoctorExportButton = ({ catContactData }) => {
+interface catContactDataProps {
+  catContactData: {
+    email: CatFieldsFragmentFragment['doctor_email'];
+    age: CatFieldsFragmentFragment['age'];
+    weight: CatFieldsFragmentFragment['weight'];
+    name: CatFieldsFragmentFragment['name'];
+    gender: CatFieldsFragmentFragment['gender'];
+  };
+}
+const DoctorExportButton = ({
+  catContactData,
+}: catContactDataProps): JSX.Element => {
   const { t } = useTranslation();
   return (
     <DoctorExportLink catContactData={catContactData}>

@@ -1,12 +1,12 @@
 import getTitle from '../utils/getTitle';
 import AddCatBox from '../components/AddCatBox';
-import Container from '../components/Container';
+import Container from '../components/Containers/Container';
 import Layout from '../components/Layout';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Head';
-import CenterContainer from '../components/CenterContainer';
+import CenterContainer from '../components/Containers/CenterContainer';
 import LeftContainer from '../components/LeftContainer';
-import CatDetailContainer from '../components/CatDetailContainer';
+import CatDetailContainer from '../components/CatDetailComponent/CatDetailContainer';
 import ErrorScreen, { GeneralError } from '../components/ErrorScreen';
 import Loading from '../components/Loading';
 import { getUser } from '../utils/user';
@@ -14,7 +14,7 @@ import {
   useGetCatDetailQuery,
   useGetProductsQuery,
 } from '../graphql/generated/graphql';
-import CatDetailEmptyBox from '../components/CatDetailEmptyBox';
+import CatDetailEmptyBox from '../components/CatDetailComponent/CatDetailEmptyBox';
 import { BackLinkType } from '../utils/backlinks';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';

@@ -3,7 +3,7 @@ import Image from './Image';
 import { useState } from 'react';
 import { CatFieldsFragmentFragment } from '../graphql/generated/graphql';
 import CatToggleDetail from './CatToggleDetail';
-import CatBasicInfo from './CatBasicInfo';
+import CatBasicInfo from './CatDetailComponent/CatBasicInfo';
 import DateFormatObject from '../utils/getFormatDate';
 
 export const CatFieldsFragment = gql`

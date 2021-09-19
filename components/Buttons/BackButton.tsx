@@ -1,6 +1,6 @@
 import router from 'next/router';
 import { useTranslation } from 'react-i18next';
-import cs from '../public/locales/cs/common.json';
+import cs from '../../public/locales/cs/common.json';
 
 const goBack = (e) => {
   e.preventDefault();

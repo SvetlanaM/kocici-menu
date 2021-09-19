@@ -16,7 +16,7 @@ import PaginationTable from './PaginationTable';
 import { customStyles as style } from '../utils/formStyles';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import CenterContainer from './CenterContainer';
+import CenterContainer from './Containers/CenterContainer';
 import LeftContainer from './LeftContainer';
 import Title from './Title';
 import { useTranslation } from 'react-i18next';

@@ -1,9 +1,9 @@
 import getTitle from '../utils/getTitle';
-import Container from '../components/Container';
+import Container from '../components/Containers/Container';
 import Layout from '../components/Layout';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Head';
-import CenterContainer from '../components/CenterContainer';
+import CenterContainer from '../components/Containers/CenterContainer';
 import ErrorScreen from '../components/ErrorScreen';
 import Loading from '../components/Loading';
 import { GeneralError } from '../components/ErrorScreen';

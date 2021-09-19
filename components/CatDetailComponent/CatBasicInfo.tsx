@@ -1,12 +1,12 @@
-import setUppercaseTitle from '../utils/setUppercaseTitle';
+import setUppercaseTitle from '../../utils/setUppercaseTitle';
 import i18next from 'i18next';
-import cs from '../public/locales/cs/common.json';
+import cs from '../../public/locales/cs/common.json';
 import { useTranslation } from 'next-i18next';
-import { CatFieldsFragmentFragment } from '../graphql/generated/graphql';
-import truncateText from '../utils/truncateText';
-import LoadingImage from './LoadingImage';
-import { CAT_TYPE_NULL } from './CatForm';
-import DateFormatObject from '../utils/getFormatDate';
+import { CatFieldsFragmentFragment } from '../../graphql/generated/graphql';
+import truncateText from '../../utils/truncateText';
+import LoadingImage from '../LoadingImage';
+import { CAT_TYPE_NULL } from '../../utils/constants';
+import DateFormatObject from '../../utils/getFormatDate';
 
 interface CatBasicInfoProps {
   cat: CatFieldsFragmentFragment;

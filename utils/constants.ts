@@ -16,3 +16,4 @@ export const ARRAY_REQUIREMENTS_LENGTH = 3;
 export const CURRENT_MONTH = moment(moment(), 'YYYY/MM/DD').format('M');
 export const CURRENT_YEAR = moment(moment(), 'YYYY/MM/DD').format('Y');
 export const LAST_WEEK = DateFormatObject().lastWeek();
+export const CAT_TYPE_NULL = 'CAT_TYPE_NULL';

@@ -1,6 +1,8 @@
 import { useMutation } from '@apollo/client';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import CatForm, { CAT_TYPE_NULL } from '../../components/CatForm';
+import CatForm, {
+  CAT_TYPE_NULL,
+} from '../../components/CatDetailComponent/CatForm';
 import {
   AddCatMutation,
   AddCatMutationVariables,
@@ -34,7 +36,7 @@ import {
 import Container from '../../components/Container';
 import Layout from '../../components/Layout';
 import Sidebar from '../../components/Sidebar';
-import Center from '../../components/CenterContainer';
+import Center from '../../components/Containers/CenterContainer';
 import Header from '../../components/Head';
 import getTitle from '../../utils/getTitle';
 import Title from '../../components/Title';

@@ -3,7 +3,7 @@ import Title from './Title';
 import { TipDetailFragmentFragment } from '../graphql/generated/graphql';
 import { TipFieldsFragment } from './TipBox';
 import DateFormatObject from '../utils/getFormatDate';
-import BackButton from './BackButton';
+import BackButton from './Buttons/BackButton';
 import Breadcrumbs from './Breadcrumbs';
 import Breadcrumb from '../utils/breadcrumb';
 import { useEffect, useMemo, useState } from 'react';

@@ -1,4 +1,3 @@
-import Image from './Image';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';

@@ -1,6 +1,6 @@
 import AddCatBox from '../components/AddCatBox';
-import CatsList from '../components/CatsList';
-import Container from '../components/Container';
+import CatsList from '../components/CatDetailComponent/CatsList';
+import Container from '../components/Containers/Container';
 import Layout from '../components/Layout';
 import Sidebar from '../components/Sidebar';
 import StatisticsList from '../components/StatisticsList';
@@ -15,7 +15,7 @@ import {
   useGetDashboardQuery,
 } from '../graphql/generated/graphql';
 import Header from '../components/Head';
-import CenterContainer from '../components/CenterContainer';
+import CenterContainer from '../components/Containers/CenterContainer';
 import LeftContainer from '../components/LeftContainer';
 import ErrorScreen, { GeneralError } from '../components/ErrorScreen';
 import Loading from '../components/Loading';

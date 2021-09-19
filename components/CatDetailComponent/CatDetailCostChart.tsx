@@ -1,9 +1,9 @@
-import Title from './Title';
+import Title from '../Title';
 import { Bar } from 'react-chartjs-2';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import cs from '../public/locales/cs/common.json';
-import { CURRENT_MONTH } from '../utils/constants';
+import cs from '../../public/locales/cs/common.json';
+import { CURRENT_MONTH } from '../../utils/constants';
 interface CatDetailCostChartProps {
   data1: number[];
   data2: number[];
