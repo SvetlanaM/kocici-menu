@@ -9,7 +9,9 @@ interface CatDetailPieChartProps {
   aggData: Array<number>;
 }
 
-const CatDetailPieChart = ({ aggData }: CatDetailPieChartProps) => {
+const CatDetailPieChart = ({
+  aggData,
+}: CatDetailPieChartProps): JSX.Element => {
   const { t } = useTranslation();
   const data = useMemo(() => {
     return {
@@ -39,7 +41,7 @@ const CatDetailPieChart = ({ aggData }: CatDetailPieChartProps) => {
     },
   };
 
-  function checkZeros() {
+  function checkZeros(): boolean {
     return !aggData.some((item) => item === 100);
   }
 
