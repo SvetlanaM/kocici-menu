@@ -10,29 +10,30 @@ import RemoveConfirmationModal from './RemoveConfirmationModal';
 import { useCallback, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { DELETE_CAT } from '../graphql/mutations';
-import {
-  CATS_DETAIL_QUERY,
-  CATS_QUERY,
-  DASHBOARD_QUERY,
-  REVIEWS_QUERY,
-  USER_STATS_QUERY,
-} from '../graphql/queries';
-import { TIP_LIMIT } from '../utils/constants';
 import { getUser } from '../utils/user';
-import DateFormatObject from '../utils/getFormatDate';
 import DoctorExportLink from './DoctorExportLink';
 import { BackLinkType } from '../utils/backlinks';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
-import i18n from 'i18next';
+import { getRefetchQueries } from '../graphql/refetchQueries';
 interface CatDetailInfoBoxProps {
   data: CatFieldsFragmentFragment;
   onEditCat: () => void;
 }
-const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
+const CatDetailInfoBox = ({
+  data,
+  onEditCat,
+}: CatDetailInfoBoxProps): JSX.Element => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [catId, setCatId] = useState<number>(data.id);
-
+  const { t } = useTranslation();
+  const refetchQueries = getRefetchQueries(getUser(), [
+    'CATS_DETAIL_QUERY',
+    'CATS_QUERY',
+    'DASHBOARD_QUERY',
+    'USER_STATS_QUERY',
+    'REVIEWS_QUERY',
+  ]);
   const openModal = () => {
     setIsOpen(true);
   };
@@ -41,52 +42,11 @@ const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
     setIsOpen(false);
   };
 
-  const lastWeek = DateFormatObject().lastWeek();
-  const { t } = useTranslation();
   const [deleteCat] = useMutation<
     DeleteCatMutation,
     DeleteCatMutationVariables
   >(DELETE_CAT, {
-    refetchQueries: [
-      {
-        query: CATS_DETAIL_QUERY,
-        variables: {
-          user_id: getUser(),
-          limit: 5,
-          withProducts: true,
-          limitProducts: 5,
-          brand_type: 'Feringa',
-        },
-      },
-      {
-        query: CATS_QUERY,
-        variables: {
-          withProducts: true,
-          user_id: getUser(),
-          limit: 2,
-        },
-      },
-      {
-        query: DASHBOARD_QUERY,
-        variables: {
-          limitTips: TIP_LIMIT,
-          user_id: getUser(),
-        },
-      },
-      {
-        query: USER_STATS_QUERY,
-        variables: {
-          user_id: getUser(),
-          updated_at: lastWeek,
-        },
-      },
-      {
-        query: REVIEWS_QUERY,
-        variables: {
-          user_id: getUser(),
-        },
-      },
-    ],
+    refetchQueries: refetchQueries,
   });
 
   const deleteMyCat = useCallback(
@@ -103,7 +63,6 @@ const CatDetailInfoBox = ({ data, onEditCat }: CatDetailInfoBoxProps) => {
           return false;
         }
       } catch (e) {
-        console.log(e);
         return false;
       }
     },
