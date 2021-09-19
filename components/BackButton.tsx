@@ -1,18 +1,13 @@
-import Link from 'next/link';
 import router from 'next/router';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
-
-interface Props {
-  url?: string;
-}
 
 const goBack = (e) => {
   e.preventDefault();
   router.back();
 };
 
-const BackButton = (props: Props): JSX.Element => {
+const BackButton = (): JSX.Element => {
   const { t } = useTranslation();
   return (
     <button
