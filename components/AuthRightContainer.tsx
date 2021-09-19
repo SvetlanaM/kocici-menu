@@ -1,7 +1,6 @@
 import { APP_NAME } from '../utils/constants';
 import Link from 'next/link';
 import { SVETA_EMAIL } from '../utils/constants';
-import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
 
@@ -10,24 +9,22 @@ type AuthRightContainerProps = {
   title?: string;
   subtitle?: string;
   link: { url: string; name: string };
-  form?: any;
+  form?: HTMLFormElement;
   footerLinks?: string;
   buttonInfo?: boolean;
 };
 
 const AuthRightContainer = ({
-  name,
   title,
   subtitle,
   link,
   form,
   buttonInfo,
-  footerLinks,
-}: AuthRightContainerProps) => {
+}: AuthRightContainerProps): JSX.Element => {
   const { t } = useTranslation();
   return (
     <div className="justify-center order-2 xl-custom:order-1 w-full xl-custom:w-1/2 flex items-start py-16 px-10 xl-custom:px-20 flex-col xl-custom:min-h-screen text-purple">
-      <Link href="/">
+      <Link href="/dashboard">
         <a className="font-logo font-bold text-lg uppercase text-purple-dark">
           {APP_NAME}
         </a>
