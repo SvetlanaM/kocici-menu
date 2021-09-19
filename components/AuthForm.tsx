@@ -1,4 +1,4 @@
-import { useForm, useFormState } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import FormErrorMessage from './FormErrorMessage';
 import FormInputWrapper from './FormInputWrapper';
@@ -8,12 +8,8 @@ import SubmitButton from './SubmitButton';
 import Link from 'next/link';
 import { useIdentityContext } from 'react-netlify-identity';
 import { useState } from 'react';
-
-import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
-import { useUserSeenStateQuery } from '../graphql/generated/graphql';
-import { getUser, user_id } from '../utils/user';
-import RoutingPath from '../pages/routing-path';
+import { user_id } from '../utils/user';
 import useLogger from '../hooks/useLogger';
 import cs from '../public/locales/cs/common.json';
 
@@ -23,47 +19,43 @@ interface AuthFormProps {
   authMethod: string;
 }
 
+type AuthSubmissionTypeForm = {
+  email: string;
+  password: string;
+};
+
 const AuthForm = ({
   authMethod,
   submitText,
   passwordPlaceholder,
-}: AuthFormProps) => {
+}: AuthFormProps): JSX.Element => {
+  const [message, setMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const { t } = useTranslation();
   const router = useRouter();
+  const logger = useLogger();
+  const { signupUser, loginUser } = useIdentityContext();
   const {
     handleSubmit,
     register,
-    control,
-    formState: { errors, isDirty, touchedFields, isValid },
-  } = useForm({
+    formState: { errors },
+  } = useForm<AuthSubmissionTypeForm>({
     mode: 'all',
     reValidateMode: 'onBlur',
   });
 
-  const { dirtyFields } = useFormState({
-    control,
-  });
-
-  const { t } = useTranslation();
-  const logger = useLogger();
-
   const convertErrString = (message: string) => {
-    let newMessage = message
+    const newMessage = message
       .replaceAll(':', '')
       .replaceAll(' ', '_')
       .replaceAll(',', '')
       .replaceAll('.', '')
       .replaceAll("'", '')
       .toLowerCase();
-    console.log(newMessage.toLowerCase());
     return newMessage.toLowerCase();
   };
 
-  const [message, setMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-
-  const { signupUser, loginUser } = useIdentityContext();
-
-  const onSubmit = (data: any) => {
+  const onSubmit: SubmitHandler<AuthSubmissionTypeForm> = (data) => {
     if (authMethod === 'signupUser') {
       signupUser(data.email, data.password, {
         data: 'signed up thru react-netlify-identity',
@@ -81,16 +73,16 @@ const AuthForm = ({
 
     if (authMethod === 'loginUser') {
       loginUser(data.email, data.password)
-        .then((data) => router.push('/routing-path'))
+        .then(() => router.push('/routing-path'))
         .then(() => logger(null, 'success', 'login', user_id))
         .catch((err) => setMessage(t(cs[convertErrString(err.message)])))
         .catch((err) => logger(err.message, 'error'));
     }
   };
 
-  const hasUppercaseLetter = (value: string) => {
+  const hasUppercaseLetter = (value: string): boolean => {
     if (authMethod === 'signupUser') {
-      for (let char of value) {
+      for (const char of value) {
         return char.toUpperCase() === char && !/^\d+$/.test(char);
       }
       return false;
@@ -156,7 +148,6 @@ const AuthForm = ({
               )}
           </FormInputWrapper>
         </div>
-
         <SubmitButton text={submitText} disabled={false} size="w-full" />
         {authMethod === 'signupUser' ? (
           <div className="text-gray text-sm leading-normal font-light">
