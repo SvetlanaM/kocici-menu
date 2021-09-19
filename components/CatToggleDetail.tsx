@@ -1,11 +1,25 @@
-import FavouriteProducts from './FavouriteProducts';
 import SpecialRequirements from './SpecialRequirements';
 import DoctorExportButton from './DoctorExportButton';
 import Title from './Title';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
+import { CatFieldsFragmentFragment } from '../graphql/generated/graphql';
 
-const CatToggleDetail = ({ catData }: any) => {
+interface CatToggleDetailProps {
+  catData: Record<
+    'contact_doctor',
+    {
+      email: CatFieldsFragmentFragment['doctor_email'];
+      age: CatFieldsFragmentFragment['age'];
+      weight: CatFieldsFragmentFragment['weight'];
+      name: CatFieldsFragmentFragment['name'];
+      gender: CatFieldsFragmentFragment['gender'];
+    }
+  > &
+    Record<'specials', CatFieldsFragmentFragment['note']>;
+}
+
+const CatToggleDetail = ({ catData }: CatToggleDetailProps): JSX.Element => {
   const { t } = useTranslation();
   const { contact_doctor, specials } = catData;
   return (
@@ -23,6 +37,7 @@ const CatToggleDetail = ({ catData }: any) => {
           </div>
         </div>
       )}
+
       {contact_doctor.email && (
         <div className={`${specials && 'mt-3'} pt-3.6 px-3`}>
           <DoctorExportButton catContactData={contact_doctor} />

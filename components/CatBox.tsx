@@ -53,7 +53,17 @@ const CatBox = ({ CatFieldsFragmentMain }: CatBoxProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const toggleSlider = () => setIsOpen(!isOpen);
 
-  const catData = {
+  const catData: Record<
+    'contact_doctor',
+    {
+      email: CatFieldsFragmentFragment['doctor_email'];
+      age: CatFieldsFragmentFragment['age'];
+      weight: CatFieldsFragmentFragment['weight'];
+      name: CatFieldsFragmentFragment['name'];
+      gender: CatFieldsFragmentFragment['gender'];
+    }
+  > &
+    Record<'specials', CatFieldsFragmentFragment['note']> = {
     contact_doctor: {
       email: CatFieldsFragmentMain.doctor_email,
       age: DateFormatObject().getCatAge(CatFieldsFragmentMain.year_date),
