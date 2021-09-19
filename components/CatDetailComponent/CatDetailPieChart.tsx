@@ -1,8 +1,8 @@
-import Title from './Title';
+import Title from '../Title';
 import { Pie } from 'react-chartjs-2';
-import Image from './Image';
+import Image from '../Image';
 import { useTranslation } from 'react-i18next';
-import cs from '../public/locales/cs/common.json';
+import cs from '../../public/locales/cs/common.json';
 import { useMemo } from 'react';
 
 interface CatDetailPieChartProps {

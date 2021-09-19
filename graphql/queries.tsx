@@ -4,7 +4,7 @@ import { TipFieldsFragment } from '../components/TipBox';
 import { ReviewFieldsFragment } from '../components/TableRow';
 import { TipDetailFieldsFragment } from '../components/TipDetail';
 import { StatFieldsFragment } from '../components/StatisticBox';
-import { ProductFieldsFragment } from '../components/CatDetailProductTable';
+import { ProductFieldsFragment } from '../components/CatDetailComponent/CatDetailProductTable';
 import {
   UserStatsFieldFragment,
   UserFieldFragment,

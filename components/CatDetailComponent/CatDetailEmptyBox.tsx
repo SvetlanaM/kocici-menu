@@ -1,7 +1,7 @@
 import Link from 'next/link';
-import Image from './Image';
+import Image from '../Image';
 import { useTranslation } from 'react-i18next';
-import cs from '../public/locales/cs/common.json';
+import cs from '../../public/locales/cs/common.json';
 
 export default function CatDetailEmptyBox(): JSX.Element {
   const { t } = useTranslation();

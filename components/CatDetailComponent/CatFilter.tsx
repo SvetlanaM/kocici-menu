@@ -1,9 +1,9 @@
 import { useRef } from 'react';
 import { useEffect, useState } from 'react';
-import Title from './Title';
-import { GetCatDetailQuery } from '../graphql/generated/graphql';
+import Title from '../Title';
+import { GetCatDetailQuery } from '../../graphql/generated/graphql';
 import { useTranslation } from 'react-i18next';
-import cs from '../public/locales/cs/common.json';
+import cs from '../../public/locales/cs/common.json';
 
 interface CatFilterProps {
   cats: GetCatDetailQuery['cat'];

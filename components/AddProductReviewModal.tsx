@@ -1,14 +1,25 @@
 import Modal from 'react-modal';
 import AddProductReviewForm from './AddProductReviewForm';
-import { GetDashboardQuery } from '../graphql/generated/graphql';
+import {
+  GetDashboardQuery,
+  SelectCatFieldsFragment,
+} from '../graphql/generated/graphql';
 import Image from './Image';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
+
+type CatSelectOptions = {
+  id: SelectCatFieldsFragment['id'];
+  name: SelectCatFieldsFragment['name'];
+  image_url: SelectCatFieldsFragment['image_url'];
+  reviews: SelectCatFieldsFragment['reviews'];
+};
+
 interface AddProductReviewModalProps {
   isOpen: boolean;
   closeModal: () => void;
   onSaveSuccess: () => void;
-  selectCats: GetDashboardQuery['selectCats'];
+  selectCats: Array<CatSelectOptions>;
   selectProducts: GetDashboardQuery['selectProducts'];
   index?: number;
 }

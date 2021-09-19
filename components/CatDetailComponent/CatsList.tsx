@@ -1,5 +1,5 @@
-import { GetCatsQuery } from '../graphql/generated/graphql';
-import CatBox from './CatBox';
+import { GetCatsQuery } from '../../graphql/generated/graphql';
+import CatBox from '../CatBox';
 
 interface CatSectionProps {
   cats: GetCatsQuery['cats'];

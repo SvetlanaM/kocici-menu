@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import {
   CatFieldsFragmentFragment,
   GetProductsQuery,
+  SelectCatFieldsFragment,
 } from '../../graphql/generated/graphql';
 import AddProductReviewModal from '../AddProductReviewModal';
 import Link from 'next/link';
@@ -29,6 +30,14 @@ export const ProductFieldsFragment = gql`
     analysis_variant
   }
 `;
+
+type CatSelectOptions = {
+  id: SelectCatFieldsFragment['id'];
+  name: SelectCatFieldsFragment['name'];
+  image_url: SelectCatFieldsFragment['image_url'];
+  reviews: SelectCatFieldsFragment['reviews'];
+};
+
 interface CatDetailProductTableProps {
   data:
     | CatFieldsFragmentFragment['reviews'][0]['products'][]
@@ -36,7 +45,7 @@ interface CatDetailProductTableProps {
   title: string;
   catReviews: number[][];
   shuffleData?: () => void;
-  cats?: Record<string, unknown>[];
+  cats?: Array<CatSelectOptions>;
   products?: GetProductsQuery['products'];
 }
 

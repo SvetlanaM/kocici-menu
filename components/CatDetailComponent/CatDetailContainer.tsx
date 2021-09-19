@@ -6,6 +6,7 @@ import {
   CatFieldsFragmentFragment,
   GetCatDetailQuery,
   GetProductsQuery,
+  SelectCatFieldsFragment,
 } from '../../graphql/generated/graphql';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import CenterContainer from '../Containers/CenterContainer';
@@ -21,6 +22,13 @@ interface CatDetailContainerProps {
   products: GetProductsQuery['products'];
 }
 
+type CatSelectOptions = {
+  id: SelectCatFieldsFragment['id'];
+  name: SelectCatFieldsFragment['name'];
+  image_url: SelectCatFieldsFragment['image_url'];
+  reviews: SelectCatFieldsFragment['reviews'];
+};
+
 const CatDetailContainer = ({
   cats,
   products,
@@ -34,41 +42,43 @@ const CatDetailContainer = ({
   const setCatEditOpened = () => {
     setSavedCat(catSummaryData.selectedCat);
   };
-  const catFactory = (
+
+  const modalFactory = (
     cat: CatFieldsFragmentFragment
-  ): Record<string, unknown> => {
-    return {
-      id: cat.id,
-      name: cat.name,
-      image_url: cat.image_url,
-      reviews: cat.reviews.map((review) => {
-        const reviews = review.products.reviewhistory
-          .filter((review) => review.cat_id === cat.id)
-          .reverse();
-        return {
-          product_id: review.products.id,
-          review_type: reviews[0] && reviews[0].review_type,
-        };
-      }),
-    };
+  ): Array<CatSelectOptions> => {
+    return [
+      {
+        id: cat.id,
+        name: cat.name,
+        image_url: cat.image_url,
+        reviews: cat.reviews.map((review) => {
+          const reviews = review.products.reviewhistory
+            .filter((review) => review.cat_id === cat.id)
+            .reverse();
+          return {
+            product_id: review.products.id,
+            review_type: reviews[0] && String(reviews[0].review_type),
+          };
+        }),
+      },
+    ];
   };
 
   const initialCat =
     cats.find((cat) => savedCat && cat.id === savedCat) ?? cats[0];
-  const initialData = catFactory(initialCat);
-
+  const modalData = modalFactory(initialCat);
   interface catSummaryDataProps {
     selectedCat: CatFieldsFragmentFragment['id'];
     catData: CatFieldsFragmentFragment;
     catReviews: number[][];
-    catModalData: Record<string, unknown>;
+    catModalData: Array<CatSelectOptions>;
   }
 
   const [catSummaryData, setSelectedCat] = useState<catSummaryDataProps>({
     selectedCat: initialCat.id,
     catData: initialCat,
     catReviews: [],
-    catModalData: initialData,
+    catModalData: modalData,
   });
 
   useEffect(() => {
@@ -76,7 +86,7 @@ const CatDetailContainer = ({
       selectedCat: initialCat.id,
       catData: initialCat,
       catReviews: getCatReviewHistory(initialCat),
-      catModalData: initialData,
+      catModalData: modalData,
     });
     setSavedCat(null);
   }, []);
@@ -101,7 +111,7 @@ const CatDetailContainer = ({
     (id: number) => {
       const cat = getCatData(id);
       const review = cat ? getCatReviewHistory(cat) : [];
-      const catModal = catFactory(cat);
+      const catModal = modalFactory(cat);
       setSelectedCat({
         selectedCat: id,
         catData: cat,
@@ -205,7 +215,7 @@ const CatDetailContainer = ({
           data={catProducts}
           title={t(cs['newest_reviews'])}
           catReviews={catSummaryData.catReviews.slice(0, 5)}
-          cats={[catSummaryData.catModalData]}
+          cats={modalData}
           products={productsTemp}
         />
         <CatDetailProductTable
@@ -214,7 +224,7 @@ const CatDetailContainer = ({
           catReviews={catSummaryData.catReviews}
           shuffleData={shuffleData}
           products={getRProducts}
-          cats={[catSummaryData.catModalData]}
+          cats={modalData}
         />
       </div>
     </>

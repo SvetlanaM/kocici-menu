@@ -35,8 +35,16 @@ type ReviewSubmissionTypeForm = {
   product: SelectProductFieldsFragment;
   rating: string;
 };
+
+type CatSelectOptions = {
+  id: SelectCatFieldsFragment['id'];
+  name: SelectCatFieldsFragment['name'];
+  image_url: SelectCatFieldsFragment['image_url'];
+  reviews: SelectCatFieldsFragment['reviews'];
+};
+
 interface AddProductReviewFormProps {
-  selectCats?: GetDashboardQuery['selectCats'];
+  selectCats?: Array<CatSelectOptions>;
   selectProducts: GetDashboardQuery['selectProducts'];
   onBackAction?: () => void;
   onSuccess?: () => void;
