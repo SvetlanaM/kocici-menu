@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import Image from './Image';
-import SubmitButton from './SubmitButton';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
-export default function CatDetailEmptyBox() {
+
+export default function CatDetailEmptyBox(): JSX.Element {
   const { t } = useTranslation();
+
   return (
     <div className="flex justify-center flex-col min-h-auto items-center py-10">
       <Image src="/icons/no_cats.svg" height={205} width={150} />
