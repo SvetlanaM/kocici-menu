@@ -1,10 +1,9 @@
 import Title from './Title';
 import { Bar } from 'react-chartjs-2';
-import moment from 'moment';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
-import { CURRENT_MONTH, CURRENT_YEAR } from '../utils/constants';
+import { CURRENT_MONTH } from '../utils/constants';
 interface CatDetailCostChartProps {
   data1: number[];
   data2: number[];
@@ -15,9 +14,8 @@ const CatDetailCostChart = ({
   data1,
   data2,
   selectedCat,
-}: CatDetailCostChartProps) => {
+}: CatDetailCostChartProps): JSX.Element => {
   const { t } = useTranslation();
-  const mergeData = [...data1, ...data2];
   const allMonths = [
     t(cs['january']),
     t(cs['february']),
@@ -33,12 +31,9 @@ const CatDetailCostChart = ({
     t(cs['december']),
   ];
 
-  const currentMonth = CURRENT_MONTH;
-  const currentYear = CURRENT_YEAR;
-
   const data = useMemo(() => {
     return {
-      labels: allMonths.slice(0, Number(currentMonth)).slice(-6),
+      labels: allMonths.slice(0, Number(CURRENT_MONTH)).slice(-6),
       datasets: [
         {
           label: t(cs['wet_food_short']),
@@ -64,7 +59,6 @@ const CatDetailCostChart = ({
     maintainAspectRatio: false,
     scales: {
       y: {
-        // defining min and max so hiding the dataset does not change scale range
         min: 500,
         max: 4000,
         backdropColor: '#000',
@@ -82,6 +76,7 @@ const CatDetailCostChart = ({
       },
     },
   };
+
   return (
     <div className="mt-5 w-full graph-container">
       <Title title={t(cs['half_year_costs'])} />
