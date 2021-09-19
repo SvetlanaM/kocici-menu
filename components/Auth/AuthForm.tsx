@@ -1,17 +1,17 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import FormErrorMessage from './FormErrorMessage';
-import FormInputWrapper from './FormInputWrapper';
-import FormInputLabel from './FormInputLabel';
-import FormInput from './FormInput';
-import SubmitButton from './SubmitButton';
+import FormErrorMessage from '../FormErrorMessage';
+import FormInputWrapper from '../FormInputWrapper';
+import FormInputLabel from '../FormInputLabel';
+import FormInput from '../FormInput';
+import SubmitButton from '../SubmitButton';
 import Link from 'next/link';
 import { useIdentityContext } from 'react-netlify-identity';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { user_id } from '../utils/user';
-import useLogger from '../hooks/useLogger';
-import cs from '../public/locales/cs/common.json';
+import { user_id } from '../../utils/user';
+import useLogger from '../../hooks/useLogger';
+import cs from '../../public/locales/cs/common.json';
 
 interface AuthFormProps {
   submitText: string;

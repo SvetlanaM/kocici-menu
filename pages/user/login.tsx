@@ -1,10 +1,10 @@
 import Layout from '../../components/Layout';
 import Header from '../../components/Head';
-import AuthWrapper from '../../components/AuthWrapper';
-import AuthRightContainer from '../../components/AuthRightContainer';
-import AuthLeftContainer from '../../components/AuthLeftContainer';
+import AuthWrapper from '../../components/Auth/AuthWrapper';
+import AuthRightContainer from '../../components/Auth/AuthRightContainer';
+import AuthLeftContainer from '../../components/Auth/AuthLeftContainer';
 import Image from '../../components/Image';
-import AuthForm from '../../components/AuthForm';
+import AuthForm from '../../components/Auth/AuthForm';
 import getTitle from '../../utils/getTitle';
 import { useTranslation } from 'react-i18next';
 import cs from '../../public/locales/cs/common.json';
