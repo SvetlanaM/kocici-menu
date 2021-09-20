@@ -1,10 +1,8 @@
-import Meta from './Meta';
-
-type ContainerProps = {
+interface ContainerProps {
   children: React.ReactNode;
-};
+}
 
-const Layout = ({ children }: ContainerProps) => {
+const Layout = ({ children }: ContainerProps): JSX.Element => {
   return (
     <div className="min-h-screen block xl-custom:flex font-sans tracking-wide">
       {children}
