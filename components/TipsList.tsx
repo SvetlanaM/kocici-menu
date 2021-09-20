@@ -7,7 +7,7 @@ import FormInput from './FormInput';
 import { useState } from 'react';
 import useSearch from '../hooks/useSearch';
 import Image from './Image';
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
 
 interface TipProps {
@@ -22,15 +22,13 @@ const calculateReadingTime = (readingText: string): number => {
   return Math.ceil(words / avgReadingTime);
 };
 
-const TipsList = ({ data, cols, isOnDashboard }: TipProps) => {
+const TipsList = ({ data, cols, isOnDashboard }: TipProps): JSX.Element => {
+  const { t } = useTranslation();
   const copyData = [...data];
   const [searchTerm, setSearchTerm] = useState('');
   const [searchTips, setSearchTips] = useState<
     GetDashboardQuery['tips'] | GetTipsQuery['tips']
   >(copyData);
-
-  const { t } = useTranslation();
-
   useSearch(searchTerm, data, setSearchTips, false);
 
   return (
