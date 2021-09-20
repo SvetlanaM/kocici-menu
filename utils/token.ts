@@ -1,9 +1,9 @@
 export let token: string | null = null;
 
-export function getToken() {
+export function getToken(): string {
   return token;
 }
 
-export function setToken(t: string) {
+export function setToken(t: string):void {
   token = t;
 }

@@ -1,34 +1,40 @@
-import { GroupType } from 'aws-sdk/clients/cognitoidentityserviceprovider';
-import { OptionsType, Styles, StylesConfig } from 'react-select';
+import { StylesConfig } from 'react-select';
+import {
+  SelectBrandTypeFieldsFragment,
+  SelectCatFieldsFragment,
+  SelectProductTypeFieldsFragment,
+} from '../graphql/generated/graphql';
 
 type IsMulti = true | false;
+interface RatingOption {
+  value: number;
+  label: string;
+}
 
-const options: MyOptionType[] = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
-];
-
-export const customStyles: StylesConfig<MyOptionType, IsMulti> = {
-  control: (styles, { isHovered, isFocused, isDisabled }) => ({
+export const customStyles: StylesConfig<
+  | SelectCatFieldsFragment
+  | SelectBrandTypeFieldsFragment
+  | RatingOption
+  | SelectProductTypeFieldsFragment,
+  IsMulti
+> = {
+  control: (styles, { isFocused, isDisabled }) => ({
     ...styles,
     display: 'flex',
     color: '#4B4261',
-    border: isHovered ? null : '1px solid #E1E5EE',
-    borderBottom: isHovered ? null : '1px solid #E1E5EE',
+    border: '1px solid #E1E5EE',
+    borderBottom: '1px solid #E1E5EE',
     backgroundColor: isDisabled ? 'white' : null,
-    // This line disable the blue border
     boxShadow: isFocused ? '1px solid #E1E5EE' : '0px',
     '&:hover': {
       border: isFocused ? null : '1px solid #B3BACC',
     },
   }),
-  option: (styles, { isDisabled, isFocused, isSelected, isHovered }) => {
-    const color = '#4B4261';
+  option: (styles, { isDisabled, isFocused, isSelected }) => {
     return {
       ...styles,
       padding: 20,
-      borderBottom: isHovered ? null : '1px solid #E1E5EE',
+      borderBottom: '1px solid #E1E5EE',
       color: isDisabled
         ? '#4B4261'
         : isSelected
@@ -59,7 +65,7 @@ export const customStyles: StylesConfig<MyOptionType, IsMulti> = {
   placeholder: (styles) => ({
     ...styles,
     color: '#B3BACC',
-    fontWeight: 'light',
+    fontWeight: 'lighter',
   }),
   singleValue: (styles) => ({
     ...styles,
@@ -69,14 +75,13 @@ export const customStyles: StylesConfig<MyOptionType, IsMulti> = {
     ...styles,
     color: '#4B4261',
   }),
-  multiValue: (styles, { data }) => {
-    const color = '#4B4261';
+  multiValue: (styles) => {
     return {
       ...styles,
       backgroundColor: '#bdbde',
     };
   },
-  multiValueRemove: (styles, { data }) => ({
+  multiValueRemove: (styles) => ({
     ...styles,
     color: '#4B4261',
     ':hover': {

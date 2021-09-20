@@ -9,6 +9,7 @@ import Title from '../components/Title';
 import TopFiveTable from '../components/TopFiveTable';
 import {
   GetDashboardQueryVariables,
+  SelectCatFieldsFragment,
   useGetCatsQuery,
   useGetDashboardQuery,
 } from '../graphql/generated/graphql';
@@ -23,6 +24,13 @@ import { getUser } from '../utils/user';
 import { BackLinkType } from '../utils/backlinks';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
+
+type CatSelectOptions = {
+  id: SelectCatFieldsFragment['id'];
+  name: SelectCatFieldsFragment['name'];
+  image_url: SelectCatFieldsFragment['image_url'];
+  reviews: SelectCatFieldsFragment['reviews'];
+};
 
 const getDashboardVariables: GetDashboardQueryVariables = {
   limitTips: TIP_LIMIT,
@@ -68,6 +76,17 @@ const CenterContainerQuery = () => {
       ? `${dashboardData?.reviews.length} ${t(cs['best_products'])}`
       : `${t(cs['top_5'])} ${dashboardData?.reviews.length}`;
 
+  const catSelectData: Array<CatSelectOptions> =
+    dashboardData &&
+    dashboardData?.selectCats.map((item) => {
+      return {
+        id: item.id,
+        name: item.name,
+        image_url: item.image_url,
+        reviews: item.reviews,
+      };
+    });
+
   return (
     <CenterContainer>
       {dashboardLoading && <Loading />}
@@ -78,7 +97,7 @@ const CenterContainerQuery = () => {
         <>
           <TopFiveTable
             reviews={dashboardData?.reviews}
-            selectCats={dashboardData?.selectCats}
+            selectCats={catSelectData}
             selectProducts={dashboardData?.selectProducts}
             numberOfProducts={5}
             title={tableTitle}
@@ -115,7 +134,7 @@ const DashboardCatQuery = () => {
   return <CatsList cats={CatsData ? CatsData.cats : []} rows={'grid-rows-1'} />;
 };
 
-export default function Home() {
+export default function Home(): JSX.Element {
   const { t } = useTranslation();
   const pageTitle = getTitle(t(cs['dashboard']));
   return (

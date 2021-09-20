@@ -1,6 +1,8 @@
-export default function getEshopUrl(product_brand: string) {
+export default function getEshopUrl(product_brand: string): string {
   if (product_brand) {
-    let brand = product_brand.toLowerCase().replace(' ', '_')
-    return `https://www.zoohit.cz/shop/kocky/konzervy/${encodeURIComponent(brand)}`
+    const brand = product_brand.toLowerCase().replace(' ', '_');
+    return `https://www.zoohit.cz/shop/kocky/konzervy/${encodeURIComponent(
+      brand
+    )}`;
   }
 }

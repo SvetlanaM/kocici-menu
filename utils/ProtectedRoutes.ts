@@ -1,21 +1,26 @@
-import { useEffect } from 'react';
+import router from 'next/router';
 import useAuth from '../hooks/useAuth';
-import { setToken } from './token';
-import { setUser } from './user';
 
 const isBrowser = () => typeof window !== 'undefined';
 
-const ProtectedRoutes = ({ router, children }) => {
-  const { isAuthenticated, token, user } = useAuth();
+interface ProtectedRoutesProps {
+  router: typeof router;
+  children: React.ReactNode;
+}
+const ProtectedRoutes = ({
+  router,
+  children,
+}: ProtectedRoutesProps): React.ReactNode | null => {
+  const { isAuthenticated } = useAuth();
 
-  let unprotectedRoutes = [
+  const unprotectedRoutes = [
     '/user/login',
     '/user/register',
     '/terms-and-conditions',
     '/gdpr-conditions',
   ];
 
-  let pathIsProtected = unprotectedRoutes.indexOf(router.pathname) === -1;
+  const pathIsProtected = unprotectedRoutes.indexOf(router.pathname) === -1;
 
   if (isBrowser() && !isAuthenticated && pathIsProtected) {
     router.push('/user/login');

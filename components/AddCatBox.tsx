@@ -3,13 +3,7 @@ import { BackLinkType } from '../utils/backlinks';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
 
-const AddCatBox = ({
-  backlink,
-  onNewCat,
-}: {
-  backlink: BackLinkType;
-  onNewCat: () => void;
-}): JSX.Element => {
+const AddCatBox = ({ backlink }: { backlink: BackLinkType }): JSX.Element => {
   const { t } = useTranslation();
   return (
     <Link

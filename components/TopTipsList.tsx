@@ -3,9 +3,15 @@ import Link from 'next/link';
 import cs from '../public/locales/cs/common.json';
 import { useTranslation } from 'react-i18next';
 import { BackLinkType } from '../utils/backlinks';
-import { GetDashboardQuery, GetTipsQuery } from '../graphql/generated/graphql';
+
 interface TopTipsListProps {
-  data: GetDashboardQuery['tips'] | GetTipsQuery['tips'];
+  data: {
+    name: string;
+    icon: string;
+    title: string;
+    category: string;
+    slug: string;
+  }[];
   cols: string;
 }
 
@@ -18,7 +24,7 @@ const TopTipsList = ({ data, cols }: TopTipsListProps): JSX.Element => {
       {data &&
         data.map((item) => (
           <Link
-            key={item.name + item.id}
+            key={item.name + item.title}
             href={{
               pathname: `/tips/${item.slug}`,
               query: { slug: item.slug, backlink: BackLinkType.TIPS },

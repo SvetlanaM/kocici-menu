@@ -1,9 +1,7 @@
 import StatisticBox from './StatisticBox';
 import InnerContainer from './InnerContainer';
-import { GetDashboardQuery } from '../graphql/generated/graphql';
-
 interface StatisticsListProps {
-  data: GetDashboardQuery['fav_stats'] | GetDashboardQuery['stats'];
+  data: { name: string; icon: string; title: string }[];
   cols: string;
 }
 

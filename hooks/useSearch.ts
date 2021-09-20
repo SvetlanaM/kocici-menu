@@ -4,7 +4,7 @@ import { replaceSpecialChars } from '../utils/replaceSpecialChars';
 const useSearch = <T extends unknown>(
   searchTerm: string,
   inputData: Array<T>,
-  setFunction: (e) => string,
+  setFunction: (e) => void,
   isEmpty = true
 ): void =>
   useEffect(() => {

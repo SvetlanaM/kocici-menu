@@ -19,7 +19,7 @@ export const uploadImage = async (
   return await axios
     .post(url, formData)
     .then((response) => response.data)
-    .then((result) => `${url}/${slug + file.name}`);
+    .then(() => `${url}/${slug + file.name}`);
 };
 
 const getPresignedURL = async (filename: string): Promise<PresignedPost> => {

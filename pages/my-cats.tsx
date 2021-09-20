@@ -50,22 +50,24 @@ const CatDetailQuery = () => {
         <CatDetailContainer
           cats={catData.cat}
           products={productData.products}
-        />
-      ) : <>
-          <CenterContainer>{catLoading && <Loading />}</CenterContainer>
-          <LeftContainer>
-            <div className="mt-4 mt-9.5 xl-custom:mt-9.5">
-              <AddCatBox backlink={BackLinkType.MY_CATS} />
-            </div>
-          </LeftContainer>
-        </> ? (
-        <>{catData && catData.cat.length === 0 && <CatDetailEmptyBox />}</>
+        /> ? (
+          <>
+            <CenterContainer>{catLoading && <Loading />}</CenterContainer>
+            <LeftContainer>
+              <div className="mt-4 mt-9.5 xl-custom:mt-9.5">
+                <AddCatBox backlink={BackLinkType.MY_CATS} />
+              </div>
+            </LeftContainer>
+          </>
+        ) : (
+          <>{catData && catData.cat.length === 0 && <CatDetailEmptyBox />}</>
+        )
       ) : null}
     </>
   );
 };
 
-export default function MyCats() {
+export default function MyCats(): JSX.Element {
   const { t } = useTranslation();
   const pageTitle = getTitle(t(cs['my_cats']));
   return (
