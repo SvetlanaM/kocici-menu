@@ -1,5 +1,6 @@
 import { StylesConfig } from 'react-select';
 import {
+  CatFieldsFragmentFragment,
   SelectBrandTypeFieldsFragment,
   SelectCatFieldsFragment,
   SelectProductTypeFieldsFragment,
@@ -15,7 +16,8 @@ export const customStyles: StylesConfig<
   | SelectCatFieldsFragment
   | SelectBrandTypeFieldsFragment
   | RatingOption
-  | SelectProductTypeFieldsFragment,
+  | SelectProductTypeFieldsFragment
+  | CatFieldsFragmentFragment,
   IsMulti
 > = {
   control: (styles, { isFocused, isDisabled }) => ({

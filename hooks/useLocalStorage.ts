@@ -4,10 +4,7 @@ export enum LocalStorageKey {
   SELECTED_CAT = 'catDetail.selectedCat',
 }
 
-const useLocalStorage = (
-  key: LocalStorageKey,
-  initialValue: string
-): Array<string> => {
+const useLocalStorage = (key: LocalStorageKey, initialValue: string): any[] => {
   const [storedValue, setStoredValue] = useState(() => {
     try {
       const item = window.localStorage.getItem(key);

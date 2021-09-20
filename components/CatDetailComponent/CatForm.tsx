@@ -8,27 +8,31 @@ import {
   Review_Insert_Input,
   ReviewHistory_Insert_Input,
   SelectProductFieldsFragment,
-} from '../graphql/generated/graphql';
+} from '../../graphql/generated/graphql';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
-import FormErrorMessage from './FormErrorMessage';
-import FormLegend from './FormLegend';
-import FormInputWrapper from './FormInputWrapper';
-import FormInputLabel from './FormInputLabel';
-import FormInput from './FormInput';
-import FormSelectBox from './FormSelectBox';
-import BackButton from './BackButton';
-import SubmitButton from './SubmitButton';
-import { getUser } from '../utils/user';
-import cs from '../public/locales/cs/common.json';
-import UploadImage from './UploadImage';
-import { DEFAULT_CAT_IMAGE as defaultImage } from '../utils/constants';
+import FormErrorMessage from '../FormErrorMessage';
+import FormLegend from '../FormLegend';
+import FormInputWrapper from '../FormInputWrapper';
+import FormInputLabel from '../FormInputLabel';
+import FormInput from '../FormInput';
+import FormSelectBox from '../FormSelectBox';
+import BackButton from '../Buttons/BackButton';
+import SubmitButton from '../SubmitButton';
+import { getUser } from '../../utils/user';
+import cs from '../../public/locales/cs/common.json';
+import UploadImage from '../UploadImage';
+import {
+  CAT_TYPE_NULL,
+  DEFAULT_CAT_IMAGE as defaultImage,
+} from '../../utils/constants';
 import { useS3Upload } from 'next-s3-upload';
-import RatingController from './RatingController';
-import useSearch from '../hooks/useSearch';
-import { uploadImage } from '../utils/uploadImage';
-import DateFormatObject from '../utils/getFormatDate';
+import RatingController from '../RatingController';
+import useSearch from '../../hooks/useSearch';
+import { uploadImage } from '../../utils/uploadImage';
+import DateFormatObject from '../../utils/getFormatDate';
+import ProductController from '../ProductController';
 
 export type CatInputData = Omit<Cat_Insert_Input, 'CatTypeEnum'>;
 interface CatFormInterface {
@@ -109,6 +113,19 @@ const CatForm = ({
   const [userDefaultValues, setUserDefaultValues] =
     useState<CatFormProduct[]>(review);
 
+  type CatSubmissionTypeForm = {
+    name: CatFieldsFragmentFragment['name'];
+    gender: CatFieldsFragmentFragment['gender'];
+    age: CatFieldsFragmentFragment['age'];
+    color: CatFieldsFragmentFragment['color'];
+    weight: CatFieldsFragmentFragment['weight'];
+    cat_image: CatFieldsFragmentFragment['image_url'];
+    daily_food: CatFieldsFragmentFragment['daily_food'];
+    doctor_email: CatFieldsFragmentFragment['doctor_email'];
+    note: CatFieldsFragmentFragment['note'];
+    type: CatFieldsFragmentFragment['type'];
+  };
+
   const {
     register,
     handleSubmit,
@@ -116,7 +133,7 @@ const CatForm = ({
     setValue,
     control,
     formState: { errors },
-  } = useForm({
+  } = useForm<CatSubmissionTypeForm>({
     defaultValues: {
       name: catData && catData.name,
       gender: catData && catData.gender,
@@ -138,10 +155,11 @@ const CatForm = ({
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'fieldArray',
+    name: 'weight',
+    keyName: 'fieldArray',
   });
 
-  const watchFieldArray = watch('fieldArray');
+  const watchFieldArray = watch('weight');
   const controlledFields = fields.map((field, index) => {
     return {
       ...field,
@@ -156,7 +174,7 @@ const CatForm = ({
   const resetPhoto = useCallback(() => {
     setIsLoading(true);
     setImageUrl(defaultImage);
-    let changedValue = setValue('cat_image', defaultImage);
+    const changedValue = setValue('cat_image', defaultImage);
     changedValue !== null && setIsLoading(false);
     setImageUrl(defaultImage);
     return changedValue;
@@ -193,13 +211,13 @@ const CatForm = ({
   }, [userDefaultValues]);
 
   useEffect(() => {
-    let userProductsArray =
+    const userProductsArray =
       watchFieldArray &&
       watchFieldArray.map(
         (item) => item.product !== undefined && item.product.id
       );
 
-    let deleted =
+    const deleted =
       deletedReviews && deletedReviews.map((item) => item.product.name);
 
     if (
@@ -242,7 +260,7 @@ const CatForm = ({
         )
     );
 
-  let mergedInsertUpdate = diff ? diff : [];
+  const mergedInsertUpdate = diff ? diff : [];
 
   useEffect(() => {
     if (review && review.length > 0) {
@@ -254,7 +272,7 @@ const CatForm = ({
 
       if (review.length === userDefaultValues.length) {
         setValue(
-          'fieldArray',
+          'weight',
           userDefaultValues &&
             userDefaultValues.map((item) => {
               return {
@@ -275,7 +293,7 @@ const CatForm = ({
 
   const [isRemoved, setIsRemoved] = useState(false);
   useEffect(() => {
-    let userProductsArray =
+    const userProductsArray =
       watchFieldArray &&
       watchFieldArray.map((item) => item.product !== undefined && item);
 
@@ -288,7 +306,7 @@ const CatForm = ({
       setUserDefaultValues(userProductsArray);
 
       setValue(
-        'fieldArray',
+        'weight',
         userProductsArray &&
           userProductsArray
             .map((item) => {
@@ -316,7 +334,7 @@ const CatForm = ({
   const handleFileChange = async (file: File) => {
     setIsLoading(true);
     if (checkFileType(file)) {
-      let url = await uploadImage(file, catData.slug);
+      const url = await uploadImage(file, catData.slug);
       setImageUrl(url);
       setValue('cat_image', url);
       setIsLoading(false);
@@ -328,8 +346,11 @@ const CatForm = ({
   const fileTypes = ['png', 'jpg', 'gif', 'webp', 'jpeg', 'heic'];
   const checkFileType = (file: File) => {
     if (file && file.name) {
-      let value = file.name;
-      let fileType = value.substring(value.lastIndexOf('.') + 1, value.length);
+      const value = file.name;
+      const fileType = value.substring(
+        value.lastIndexOf('.') + 1,
+        value.length
+      );
       return fileTypes.indexOf(fileType) > -1;
     }
   };
@@ -378,7 +399,7 @@ const CatForm = ({
   );
 
   const catTypeOptions = useMemo(() => {
-    let newEnum = [CAT_TYPE_NULL, ...Object.values(catTypes).sort()];
+    const newEnum = [CAT_TYPE_NULL, ...Object.values(catTypes).sort()];
     return newEnum.map((item) => {
       return (
         <option value={item} key={item}>
@@ -404,9 +425,6 @@ const CatForm = ({
             control={control}
             rules={{
               required: false,
-              validate: {
-                checkFileType: checkFileType,
-              },
             }}
             render={() => (
               <FileInput
@@ -443,9 +461,7 @@ const CatForm = ({
           </FormInputWrapper>
           <FormInputWrapper>
             <FormInputLabel name={t(cs['gender'])} />
-            <FormSelectBox
-              registerRules={{ ...register('gender', { required: false }) }}
-            >
+            <FormSelectBox {...register('gender', { required: false })}>
               <option value="" key="">
                 {t(cs['none'])}
               </option>
@@ -506,7 +522,6 @@ const CatForm = ({
             <FormInputLabel name={t(cs['doctor_email'])} />
             <FormInput
               {...register('doctor_email', {
-                required: { value: false },
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                   message: t(cs['email_bad_format']),
@@ -519,17 +534,12 @@ const CatForm = ({
           </FormInputWrapper>
           <FormInputWrapper>
             <FormInputLabel name={t(cs['cat_type'])} />
-            <FormSelectBox
-              registerRules={{ ...register('type', { required: false }) }}
-            >
+            <FormSelectBox {...register('type', { required: false })}>
               {catTypeOptions}
             </FormSelectBox>
           </FormInputWrapper>
         </div>
       </fieldset>
-      {/* <fieldset>
-          <FormLegend name="Specialne poziadavky" />
-        </fieldset> */}
       <fieldset>
         <FormLegend name={t(cs['cat_foods'])} />
         {controlledFields.map((field, index) => {
@@ -544,8 +554,8 @@ const CatForm = ({
                   onInputChange={(e) => {
                     setSearchTerm(e);
                   }}
-                  name={`fieldArray.${index}.product`}
-                  {...register(`fieldArray.${index}.product` as const)}
+                  name={`weight.${index}.product`}
+                  {...register(`weight.${index}.product` as const)}
                   defaultValue={field.product}
                   control={control}
                   errors={errors}
@@ -554,13 +564,13 @@ const CatForm = ({
               </div>
               <div className="pl-0 w-full xl-custom:w-2/6 mb-5">
                 <RatingController
-                  name={`fieldArray.${index}.rating`}
+                  name={`weight.${index}.rating`}
                   control={control}
                   defaultValue={field.rating}
                   isDisabled={false}
                   errors={errors}
                   placeholder={t(cs['choose_review_1'])}
-                  {...register(`fieldArray.${index}.rating` as const)}
+                  {...register(`weight.${index}.rating` as const)}
                 />
               </div>
               <button
@@ -577,7 +587,7 @@ const CatForm = ({
           );
         })}
         <div className="text-red-500 mb-4 -mt-2">
-          {errors.fieldArray && newReviews && t(cs['reviews_error'])}
+          {errors.weight && newReviews && t(cs['reviews_error'])}
         </div>
 
         <button

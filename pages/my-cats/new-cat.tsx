@@ -1,8 +1,6 @@
 import { useMutation } from '@apollo/client';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import CatForm, {
-  CAT_TYPE_NULL,
-} from '../../components/CatDetailComponent/CatForm';
+import { useCallback, useMemo, useState } from 'react';
+import CatForm from '../../components/CatDetailComponent/CatForm';
 import {
   AddCatMutation,
   AddCatMutationVariables,
@@ -10,8 +8,6 @@ import {
   AddReviewBulkMutationVariables,
   AddReviewHistoryBulkMutation,
   AddReviewHistoryBulkMutationVariables,
-  AddReviewMutation,
-  AddReviewMutationVariables,
   Cat_Insert_Input,
   Cat_Set_Input,
   DeleteReviewMutation,
@@ -20,20 +16,17 @@ import {
   Review_Insert_Input,
   UpdateCatMutation,
   UpdateCatMutationVariables,
-  useGetCatByIdLazyQuery,
   useGetCatByIdQuery,
   useGetProductsQuery,
 } from '../../graphql/generated/graphql';
 import {
   ADD_CAT,
   UPDATE_CAT,
-  ADD_REVIEW,
-  ADD_REVIEW_HISTORY,
   ADD_REVIEW_BULK,
   ADD_REVIEW_HISTORY_BULK,
   DELETE_REVIEW,
 } from '../../graphql/mutations';
-import Container from '../../components/Container';
+import Container from '../../components/Containers/Container';
 import Layout from '../../components/Layout';
 import Sidebar from '../../components/Sidebar';
 import Center from '../../components/Containers/CenterContainer';
@@ -63,10 +56,7 @@ import useLogger from '../../hooks/useLogger';
 import { useTranslation } from 'react-i18next';
 import cs from '../../public/locales/cs/common.json';
 
-interface CreateCatProps {
-  onClickTrigger?: () => void;
-}
-export default function CreateCat({ onClickTrigger }: CreateCatProps) {
+export default function CreateCat(): JSX.Element {
   const router = useRouter();
   const { id } = router.query;
   const { t } = useTranslation();
@@ -108,9 +98,9 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
     );
   };
 
-  let numberPattern = /\d+/g;
+  const numberPattern = /\d+/g;
   const [isSaving, setIsSaving] = useState(false);
-  let [, setSavedCat] = useLocalStorage(LocalStorageKey.SELECTED_CAT, 0);
+  const [, setSavedCat] = useLocalStorage(LocalStorageKey.SELECTED_CAT, '0');
 
   const EditCatForm = () => {
     const {
@@ -124,8 +114,6 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
         id: Number(String(id).match(numberPattern)),
       },
       skip: isSaving,
-
-      // pollInterval: 500,
     });
 
     const {
@@ -134,7 +122,6 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
       error: productError,
     } = useGetProductsQuery({
       skip: isSaving,
-      // pollInterval: 500,
     });
 
     return (
@@ -161,14 +148,14 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
     );
   };
 
-  const [createCat, { error, loading, data }] = useMutation<
+  const [createCat, { error }] = useMutation<
     AddCatMutation,
     AddCatMutationVariables
   >(ADD_CAT);
 
   const logger = useLogger();
 
-  const [updateCat, { loading: updateCatLoading }] = useMutation<
+  const [updateCat] = useMutation<
     UpdateCatMutation,
     UpdateCatMutationVariables
   >(UPDATE_CAT);
@@ -203,7 +190,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
   };
 
   const createNewCat = useCallback(
-    async (catData: Cat_Insert_Input, reviewData, reviewUpdatedData) => {
+    async (catData: Cat_Insert_Input, reviewData) => {
       const variables: AddCatMutationVariables = {
         cat: {
           name: setUppercaseTitle(catData.name) || '',
@@ -621,7 +608,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
       if (isEditCat()) {
         return await updateMyCat(catData, reviewData, reviewUpdatedData);
       } else {
-        return await createNewCat(catData, reviewData, reviewUpdatedData);
+        return await createNewCat(catData, reviewData);
       }
     },
     [createNewCat, updateMyCat, isSaving, isEditCat]
@@ -637,7 +624,7 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
     if (backlink) {
       previousLink = links[backlink as string] ?? previousLink;
     }
-    let currentLink = isEditCat() ? links.edit_cat : links.create_cat;
+    const currentLink = isEditCat() ? links.edit_cat : links.create_cat;
     return [
       {
         path: previousLink.path,
@@ -654,7 +641,6 @@ export default function CreateCat({ onClickTrigger }: CreateCatProps) {
     <Layout>
       <Header title={getTitle(title)} />
       <Sidebar />
-
       <Container>{isEditCat() ? <EditCatForm /> : <CreateCatForm />}</Container>
     </Layout>
   );

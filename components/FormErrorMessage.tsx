@@ -1,5 +1,7 @@
+import { FieldError } from 'react-hook-form';
+
 interface FormErrorMessageProps {
-  error: string;
+  error: string | FieldError;
 }
 
 const FormErrorMessage = ({ error }: FormErrorMessageProps): JSX.Element => {

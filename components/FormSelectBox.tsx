@@ -1,11 +1,9 @@
 interface FormSelectBoxProps {
-  registerRules: React.Ref<string>;
   children: React.ReactNode;
 }
-const FormSelectBox = ({ registerRules, children }: FormSelectBoxProps):JSX.Element => {
+const FormSelectBox = ({ children }: FormSelectBoxProps): JSX.Element => {
   return (
     <select
-      {...registerRules}
       className="form-select w-full mb-3 mt-2 text-purple block border-rounded-base border-gray 
               focus:outline-none focus:bg-white focus:border-gray
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray"

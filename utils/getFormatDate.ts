@@ -2,7 +2,7 @@ import { CURRENT_YEAR } from './constants';
 import moment from 'moment';
 import 'moment/locale/cs';
 
-const DateFormatObject = (_date?: Date): Record<string, unknown> => {
+const DateFormatObject = (_date?: Date) => {
   moment.locale('cs');
   return {
     _date,
