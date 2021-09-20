@@ -4,7 +4,7 @@ import TableHead from './TableHead';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
 import useSortableData from '../hooks/useSortableData';
-import { useEffect, useMemo, useState } from 'react';
+import { useState } from 'react';
 import {
   DEFAULT_TABLE_SORTING as default_sort,
   SortType,
@@ -25,14 +25,13 @@ const Table = ({
   numberOfProducts,
   offsetNumber,
   resetAfterSort,
-}: TableProps) => {
+}: TableProps): JSX.Element => {
   const rules = {
     column: default_sort,
     direction: SortType.DESC,
   };
-
   const { t } = useTranslation();
-  const getUniqueReviews = () => {
+  const getUniqueReviews = (): GetDashboardQuery['reviews'] => {
     if (numberOfProducts === 5) {
       return Array.from(new Set(reviews.map((item) => item.product.name)))
         .slice(0, 5)
@@ -48,7 +47,7 @@ const Table = ({
 
   const [sortedColumn, setSortedColumn] = useState(rules);
   const { inputData, sortData } = useSortableData<GetDashboardQuery['reviews']>(
-    uniqueReviews,
+    [uniqueReviews],
     sortedColumn,
     setSortedColumn,
     'product',
