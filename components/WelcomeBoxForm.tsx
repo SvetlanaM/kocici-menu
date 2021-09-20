@@ -1,13 +1,10 @@
 import { useMutation } from '@apollo/client';
 import router from 'next/router';
-import { useEffect } from 'react';
-import { useForm, useFormState } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import {
   UpdateUserMutation,
   UpdateUserMutationVariables,
   User_Insert_Input,
-  User_Set_Input,
-  User_Update_Column,
 } from '../graphql/generated/graphql';
 import { UPDATE_USER_PREFERENCES } from '../graphql/mutations';
 import { getUser } from '../utils/user';
@@ -15,20 +12,25 @@ import SubmitButton from './SubmitButton';
 import WelcomeBoxCheckbox from './WelcomeBoxCheckbox';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
-const WelcomeBoxForm = () => {
+
+type WelcomBoxSubmissionForm = {
+  item: ['wet_food', 'dry_food', 'barf'];
+};
+
+const WelcomeBoxForm = (): JSX.Element => {
   const {
     handleSubmit,
     register,
     watch,
-    formState: { errors, isDirty },
-  } = useForm();
+    formState: { isDirty },
+  } = useForm<WelcomBoxSubmissionForm>();
 
   const [updateUser] = useMutation<
     UpdateUserMutation,
     UpdateUserMutationVariables
   >(UPDATE_USER_PREFERENCES);
 
-  const onSubmit = (data) => {
+  const onSubmit: SubmitHandler<WelcomBoxSubmissionForm> = (data) => {
     const catUpdateInput: User_Insert_Input = {
       cats_preferences: JSON.stringify(
         data.item.length > 0 ? data.item.join(', ') : null
@@ -41,7 +43,7 @@ const WelcomeBoxForm = () => {
   };
 
   const checkBoxData = ['wet_food', 'dry_food', 'barf'];
-  const watchedInput: [string] = watch('item');
+  const watchedInput: ['wet_food', 'dry_food', 'barf'] = watch('item');
   const { t } = useTranslation();
   const disabled = isDirty
     ? (Array.isArray(watchedInput) && watchedInput.length) === 0
