@@ -1,12 +1,21 @@
 import Link from 'next/link';
 import AddProductReviewModal from './AddProductReviewModal';
 import { useState } from 'react';
-import { GetDashboardQuery } from '../graphql/generated/graphql';
+import {
+  GetDashboardQuery,
+  SelectCatFieldsFragment,
+} from '../graphql/generated/graphql';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
 
+type CatSelectOptions = {
+  id: SelectCatFieldsFragment['id'];
+  name: SelectCatFieldsFragment['name'];
+  image_url: SelectCatFieldsFragment['image_url'];
+  reviews: SelectCatFieldsFragment['reviews'];
+};
 interface TableFooterProps {
-  selectCats: GetDashboardQuery['selectCats'];
+  selectCats: Array<CatSelectOptions>;
   selectProducts: GetDashboardQuery['selectProducts'];
   onSaveSuccess: () => void;
 }
@@ -15,7 +24,8 @@ const TableFooter = ({
   selectCats,
   selectProducts,
   onSaveSuccess,
-}: TableFooterProps) => {
+}: TableFooterProps): JSX.Element => {
+  const { t } = useTranslation();
   const [modalIsOpen, setIsOpen] = useState(false);
 
   const openModal = () => {
@@ -25,8 +35,6 @@ const TableFooter = ({
   const closeModal = () => {
     setIsOpen(false);
   };
-
-  const { t } = useTranslation();
 
   return (
     <div className="w-full flex border-b-1 border-l-1 border-r-1 rounded-b-lg border-gray">
