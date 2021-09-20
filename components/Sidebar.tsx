@@ -9,15 +9,14 @@ import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
 const { items } = MenuLinks;
 
-const Sidebar = () => {
+const Sidebar = (): JSX.Element => {
   const router = useRouter();
+  const { t } = useTranslation();
   const [isClosed, setIsClosed] = useState<boolean>(false);
 
   const toggleMenu = () => {
     setIsClosed(!isClosed);
   };
-
-  const { t } = useTranslation();
 
   return (
     <>
