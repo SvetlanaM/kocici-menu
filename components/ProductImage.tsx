@@ -1,28 +1,21 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import Image from './Image';
 import { DEFAULT_PRODUCT_IMAGE as defaultImage } from '../utils/constants';
-import LoadingImage from './LoadingImage';
+
 interface ProductImageProps {
   src: string;
   alt: string;
   type?: string;
-  [otherProps: string]: any;
 }
 
-const ProductImage = ({ src, alt, type, ...otherProps }: ProductImageProps) => {
-  const [urlError, setUrlError] = useState<boolean>(true);
-
-  const onError = () => {
-    setUrlError(false);
-  };
-
+const ProductImage = ({ src, alt, type }: ProductImageProps): JSX.Element => {
   const productImage = useMemo<string>(() => {
-    if (urlError) {
+    if (src) {
       return src;
     } else {
       return defaultImage;
     }
-  }, [urlError, src]);
+  }, [src]);
 
   return (
     <Image
