@@ -3,7 +3,10 @@ type ContainerProps = {
   flexType: string;
 };
 
-const InnerContainer = ({ children, flexType }: ContainerProps) => {
+const InnerContainer = ({
+  children,
+  flexType,
+}: ContainerProps): JSX.Element => {
   return (
     <section className={`flex ${flexType} mt-9.5 w-full`}>{children}</section>
   );
