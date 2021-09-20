@@ -19,6 +19,7 @@ import {
   useGetCatByIdQuery,
   useGetProductsQuery,
 } from '../../graphql/generated/graphql';
+import { getRefetchQueries } from '../../graphql/refetchQueries';
 import {
   ADD_CAT,
   UPDATE_CAT,
@@ -36,19 +37,11 @@ import Title from '../../components/Title';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Breadcrumb from '../../utils/breadcrumb';
 import setUppercaseTitle from '../../utils/setUppercaseTitle';
-import {
-  CATS_DETAIL_QUERY,
-  CATS_QUERY,
-  DASHBOARD_QUERY,
-  REVIEWS_QUERY,
-  USER_STATS_QUERY,
-} from '../../graphql/queries';
 import { getUser } from '../../utils/user';
 import { useRouter } from 'next/router';
 import ErrorScreen from '../../components/ErrorScreen';
 import Loading from '../../components/Loading';
 import { GeneralError } from '../../components/ErrorScreen';
-import { TIP_LIMIT } from '../../utils/constants';
 import DateFormatObject from '../../utils/getFormatDate';
 import links from '../../utils/backlinks';
 import useLocalStorage, { LocalStorageKey } from '../../hooks/useLocalStorage';
@@ -100,7 +93,7 @@ export default function CreateCat(): JSX.Element {
 
   const numberPattern = /\d+/g;
   const [isSaving, setIsSaving] = useState(false);
-  const [, setSavedCat] = useLocalStorage(LocalStorageKey.SELECTED_CAT, '0');
+  const [, setSavedCat] = useLocalStorage(LocalStorageKey.SELECTED_CAT, 0);
 
   const EditCatForm = () => {
     const {
@@ -160,8 +153,6 @@ export default function CreateCat(): JSX.Element {
     UpdateCatMutationVariables
   >(UPDATE_CAT);
 
-  const lastWeek = DateFormatObject().lastWeek();
-
   const [createBulkReview] = useMutation<
     AddReviewBulkMutation,
     AddReviewBulkMutationVariables
@@ -189,6 +180,14 @@ export default function CreateCat(): JSX.Element {
     };
   };
 
+  const refetchQueries = getRefetchQueries(getUser(), [
+    'DASHBOARD_QUERY',
+    'CATS_DETAIL_QUERY',
+    'CATS_QUERY',
+    'REVIEWS_QUERY',
+    'USER_STATS_QUERY',
+  ]);
+
   const createNewCat = useCallback(
     async (catData: Cat_Insert_Input, reviewData) => {
       const variables: AddCatMutationVariables = {
@@ -212,53 +211,7 @@ export default function CreateCat(): JSX.Element {
         setIsSaving(true);
         const result = await createCat({
           variables,
-
-          refetchQueries: [
-            {
-              query: DASHBOARD_QUERY,
-              variables: {
-                limitTips: TIP_LIMIT,
-                user_id: getUser(),
-              },
-            },
-            {
-              query: CATS_DETAIL_QUERY,
-              variables: {
-                user_id: getUser(),
-                limit: 5,
-                withProducts: true,
-              },
-            },
-            {
-              query: CATS_QUERY,
-              variables: {
-                withProducts: true,
-                user_id: getUser(),
-                limit: 2,
-              },
-            },
-            {
-              query: CATS_DETAIL_QUERY,
-              variables: {
-                user_id: getUser(),
-                limit: 5,
-                withProducts: true,
-              },
-            },
-            {
-              query: USER_STATS_QUERY,
-              variables: {
-                user_id: getUser(),
-                updated_at: lastWeek,
-              },
-            },
-            {
-              query: REVIEWS_QUERY,
-              variables: {
-                user_id: getUser(),
-              },
-            },
-          ],
+          refetchQueries: refetchQueries,
         });
         if (result.data?.insert_Cat?.returning[0].id) {
           const reviews: Review_Insert_Input = reviewData.map((item) => {
@@ -291,38 +244,7 @@ export default function CreateCat(): JSX.Element {
             variables: {
               review_history: reviewsHistory,
             },
-            refetchQueries: [
-              {
-                query: DASHBOARD_QUERY,
-                variables: {
-                  limitTips: TIP_LIMIT,
-                  user_id: getUser(),
-                },
-              },
-              {
-                query: CATS_DETAIL_QUERY,
-                variables: {
-                  user_id: getUser(),
-                  limit: 5,
-                  withProducts: true,
-                },
-              },
-              {
-                query: CATS_QUERY,
-                variables: {
-                  withProducts: true,
-                  user_id: getUser(),
-                  limit: 2,
-                },
-              },
-              {
-                query: USER_STATS_QUERY,
-                variables: {
-                  user_id: getUser(),
-                  updated_at: lastWeek,
-                },
-              },
-            ],
+            refetchQueries: refetchQueries,
           });
 
           setSavedCat(result.data?.insert_Cat?.returning[0].id ?? 0);
@@ -371,44 +293,7 @@ export default function CreateCat(): JSX.Element {
             cats: setCatInput,
             id: catData.id,
           },
-          refetchQueries: [
-            {
-              query: DASHBOARD_QUERY,
-              variables: {
-                limitTips: TIP_LIMIT,
-                user_id: getUser(),
-              },
-            },
-            {
-              query: CATS_DETAIL_QUERY,
-              variables: {
-                user_id: getUser(),
-                limit: 5,
-                withProducts: true,
-              },
-            },
-            {
-              query: CATS_QUERY,
-              variables: {
-                withProducts: true,
-                user_id: getUser(),
-                limit: 2,
-              },
-            },
-            {
-              query: USER_STATS_QUERY,
-              variables: {
-                user_id: getUser(),
-                updated_at: lastWeek,
-              },
-            },
-            {
-              query: REVIEWS_QUERY,
-              variables: {
-                user_id: getUser(),
-              },
-            },
-          ],
+          refetchQueries: refetchQueries,
         });
         if (result.data?.update_Cat.returning[0].id) {
           const reviews: Review_Insert_Input =
@@ -435,88 +320,14 @@ export default function CreateCat(): JSX.Element {
           };
           const resultReview = await createBulkReview({
             variables: reviewVariables,
-            refetchQueries: [
-              {
-                query: DASHBOARD_QUERY,
-                variables: {
-                  limitTips: TIP_LIMIT,
-                  user_id: getUser(),
-                },
-              },
-              {
-                query: CATS_DETAIL_QUERY,
-                variables: {
-                  user_id: getUser(),
-                  limit: 5,
-                  withProducts: true,
-                },
-              },
-              {
-                query: CATS_QUERY,
-                variables: {
-                  withProducts: true,
-                  user_id: getUser(),
-                  limit: 2,
-                },
-              },
-              {
-                query: USER_STATS_QUERY,
-                variables: {
-                  user_id: getUser(),
-                  updated_at: lastWeek,
-                },
-              },
-              {
-                query: REVIEWS_QUERY,
-                variables: {
-                  user_id: getUser(),
-                },
-              },
-            ],
+            refetchQueries: refetchQueries,
           });
 
           const resultReviewHistory = await createBulkReviewHistory({
             variables: {
               review_history: reviewsHistory,
             },
-            refetchQueries: [
-              {
-                query: DASHBOARD_QUERY,
-                variables: {
-                  limitTips: TIP_LIMIT,
-                  user_id: getUser(),
-                },
-              },
-              {
-                query: CATS_DETAIL_QUERY,
-                variables: {
-                  user_id: getUser(),
-                  limit: 5,
-                  withProducts: true,
-                },
-              },
-              {
-                query: CATS_QUERY,
-                variables: {
-                  withProducts: true,
-                  user_id: getUser(),
-                  limit: 2,
-                },
-              },
-              {
-                query: USER_STATS_QUERY,
-                variables: {
-                  user_id: getUser(),
-                  updated_at: lastWeek,
-                },
-              },
-              {
-                query: REVIEWS_QUERY,
-                variables: {
-                  user_id: getUser(),
-                },
-              },
-            ],
+            refetchQueries: refetchQueries,
           });
 
           const deletedReviews =
@@ -536,44 +347,7 @@ export default function CreateCat(): JSX.Element {
                   cat_id: review.cat_id,
                   product_id: review.product_id,
                 },
-                refetchQueries: [
-                  {
-                    query: DASHBOARD_QUERY,
-                    variables: {
-                      limitTips: TIP_LIMIT,
-                      user_id: getUser(),
-                    },
-                  },
-                  {
-                    query: CATS_DETAIL_QUERY,
-                    variables: {
-                      user_id: getUser(),
-                      limit: 5,
-                      withProducts: true,
-                    },
-                  },
-                  {
-                    query: CATS_QUERY,
-                    variables: {
-                      withProducts: true,
-                      user_id: getUser(),
-                      limit: 2,
-                    },
-                  },
-                  {
-                    query: USER_STATS_QUERY,
-                    variables: {
-                      user_id: getUser(),
-                      updated_at: lastWeek,
-                    },
-                  },
-                  {
-                    query: REVIEWS_QUERY,
-                    variables: {
-                      user_id: getUser(),
-                    },
-                  },
-                ],
+                refetchQueries: refetchQueries,
               });
             })
           ).then(() => {

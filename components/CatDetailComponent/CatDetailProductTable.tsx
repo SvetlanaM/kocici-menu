@@ -129,7 +129,7 @@ const CatDetailProductTable = ({
     },
   };
 
-  const openModal = (order: number) => {
+  const openModal = (order?: number) => {
     setRowNumber(order);
     setIsOpen(true);
   };
@@ -138,8 +138,20 @@ const CatDetailProductTable = ({
     setIsOpen(false);
   };
 
+  console.log('modalIsOpen', modalIsOpen);
+
   return (
     <div className="mt-5 w-full">
+      {modalIsOpen ? (
+        <AddProductReviewModal
+          isOpen={modalIsOpen}
+          closeModal={closeModal}
+          selectCats={cats}
+          selectProducts={products}
+          onSaveSuccess={handleReviewAdded}
+          index={rowNumber}
+        />
+      ) : null}
       <div className="flex flex-col xl-custom:flex-row justify-between items-center xl-custom:items-center text-gray text-left">
         <Title title={`${title}`} />
         {title === t(cs['suggested_reviews']) ? (
@@ -157,7 +169,7 @@ const CatDetailProductTable = ({
           <>
             <Link href="/my-cats">
               <a
-                onClick={() => openModal}
+                onClick={() => openModal()}
                 className="text-gray pb-5 xl-custom:mb-0 text-right"
               >
                 {t(cs['add_review_small'])}
@@ -200,16 +212,6 @@ const CatDetailProductTable = ({
               </React.Fragment>
             ))}
           </div>
-          {modalIsOpen ? (
-            <AddProductReviewModal
-              isOpen={modalIsOpen}
-              closeModal={closeModal}
-              selectCats={cats}
-              selectProducts={products}
-              onSaveSuccess={handleReviewAdded}
-              index={rowNumber}
-            />
-          ) : null}
         </div>
       ) : (
         <NoReviews />

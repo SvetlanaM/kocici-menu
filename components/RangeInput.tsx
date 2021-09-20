@@ -13,16 +13,20 @@ interface RangeInputProps {
 }
 
 const RangeInput = forwardRef<HTMLInputElement, RangeInputProps>(
-  ({
-    value,
-    onChange,
-    onFinalChange,
-    min,
-    max,
-    step,
-    label,
-    ...rest
-  }: RangeInputProps): JSX.Element => {
+  (
+    {
+      value,
+      onChange,
+      onFinalChange,
+      min,
+      max,
+      step,
+      label,
+      ...rest
+    }: RangeInputProps,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ref
+  ): JSX.Element => {
     return (
       <>
         <div className={`mb-2 text-gray`}>{label}</div>

@@ -14,12 +14,11 @@ interface RatingControllerProps {
 }
 
 const RatingController = forwardRef<HTMLInputElement, RatingControllerProps>(
-  ({
-    name,
-    control,
-    defaultValue,
-    isDisabled,
-  }: RatingControllerProps): JSX.Element => {
+  (
+    { name, control, defaultValue, isDisabled }: RatingControllerProps,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ref
+  ): JSX.Element => {
     const { t } = useTranslation();
 
     return (

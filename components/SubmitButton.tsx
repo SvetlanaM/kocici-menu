@@ -23,9 +23,7 @@ const SubmitButton = ({
     }`}
     value={text}
     disabled={disabled}
-  >
-    {''}
-  </input>
+  />
 );
 
 SubmitButton.defaultProps = {

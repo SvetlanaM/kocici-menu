@@ -11,7 +11,7 @@ import {
 } from '../components/UserStats';
 
 export const CATS_QUERY = gql`
-  query GetCats($user_id: String) {
+  query GetCats($user_id: String, $withProducts: Boolean!) {
     cats: Cat(
       where: { _and: { is_active: { _eq: true }, user_id: { _eq: $user_id } } }
       order_by: { name: asc }

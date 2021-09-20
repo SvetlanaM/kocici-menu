@@ -142,7 +142,6 @@ const TableRow = ({
                       fill="#E0E0E0"
                     />
                   </svg>
-
                   <ProductDetailsTooltipBox data={product} />
                 </div>
               </div>

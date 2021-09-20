@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
 import { SortType } from '../utils/constants';
 
-const useSortableData = <T extends unknown>(
-  inputData: Array<T>,
+const useSortableData = <T extends Array<S>, S>(
+  inputData: T,
   sortedColumn: { column: string; direction: SortType },
   setSortedColumn: ({ column: string, direction: SortType }) => void,
   nestedColumn?: string,
   resetAfterSort?: () => void
-): Record<string, unknown> => {
+): { inputData: T[number][]; sortData: (column: string) => void } => {
   const sortedTable = [...inputData];
 
   useMemo(() => {

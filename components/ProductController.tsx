@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Control, Controller, DeepMap, FieldError } from 'react-hook-form';
 import Select, { components } from 'react-select';
 import { customStyles as style } from '../utils/formStyles';
@@ -14,7 +15,7 @@ import ProductImage from './ProductImage';
 const customStyles = style;
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
-import { forwardRef } from 'react';
+import { ComponentPropsWithRef, forwardRef } from 'react';
 import { Components } from 'react-select/src/components';
 
 type ReviewSubmissionTypeForm = {
@@ -43,26 +44,30 @@ const Option: Components['Option'] = ({ children, ...props }) => {
 interface ProductControllerProps {
   searchProducts: GetDashboardQuery['selectProducts'];
   onInputChange: (value: React.SetStateAction<string>) => void;
-  watchedProduct?: SelectProductFieldsFragment;
   props?: Array<string>;
   control?: Control<ReviewSubmissionTypeForm>;
   showHint: boolean;
   defaultValue?: SelectProductFieldsFragment;
   isDisabled?: boolean;
   errors?: DeepMap<ReviewSubmissionTypeForm, FieldError>;
+  name?: any;
 }
 
 const ProductController = forwardRef<HTMLInputElement, ProductControllerProps>(
-  ({
-    searchProducts,
-    onInputChange,
-    props,
-    control,
-    showHint,
-    defaultValue,
-    isDisabled,
-    errors,
-  }: ProductControllerProps): JSX.Element => {
+  (
+    {
+      searchProducts,
+      onInputChange,
+      props,
+      control,
+      showHint,
+      defaultValue,
+      isDisabled,
+      name = 'product',
+      errors,
+    }: ProductControllerProps,
+    ref
+  ): JSX.Element => {
     const { t } = useTranslation();
     return (
       <>
@@ -104,7 +109,7 @@ const ProductController = forwardRef<HTMLInputElement, ProductControllerProps>(
               isDisabled={isDisabled}
             />
           )}
-          name="product"
+          name={name}
           control={control}
           rules={{ required: true }}
           defaultValue={defaultValue}

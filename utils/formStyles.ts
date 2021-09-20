@@ -1,8 +1,8 @@
 import { StylesConfig } from 'react-select';
 import {
-  CatFieldsFragmentFragment,
   SelectBrandTypeFieldsFragment,
   SelectCatFieldsFragment,
+  SelectProductFieldsFragment,
   SelectProductTypeFieldsFragment,
 } from '../graphql/generated/graphql';
 
@@ -17,7 +17,7 @@ export const customStyles: StylesConfig<
   | SelectBrandTypeFieldsFragment
   | RatingOption
   | SelectProductTypeFieldsFragment
-  | CatFieldsFragmentFragment,
+  | SelectProductFieldsFragment,
   IsMulti
 > = {
   control: (styles, { isFocused, isDisabled }) => ({

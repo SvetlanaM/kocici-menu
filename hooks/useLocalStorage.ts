@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 export enum LocalStorageKey {
   SELECTED_CAT = 'catDetail.selectedCat',
 }
 
-const useLocalStorage = (key: LocalStorageKey, initialValue: string): any[] => {
+const useLocalStorage = <T>(
+  key: LocalStorageKey,
+  initialValue: T
+): [T, Dispatch<SetStateAction<T>>] => {
   const [storedValue, setStoredValue] = useState(() => {
     try {
       const item = window.localStorage.getItem(key);

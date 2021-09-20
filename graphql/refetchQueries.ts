@@ -32,6 +32,7 @@ export const getRefetchQueries = (
       query: CATS_QUERY,
       variables: {
         user_id: user_id,
+        withProducts: false,
       },
     },
     USER_STATS_QUERY: {

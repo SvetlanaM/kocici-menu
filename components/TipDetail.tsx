@@ -80,9 +80,7 @@ const TipDetailBox = ({
         dangerouslySetInnerHTML={{
           __html: description,
         }}
-      >
-        {''}
-      </div>
+      />
       <BackButton />
     </div>
   );

@@ -162,7 +162,6 @@ const AddProductReviewForm = ({
         <div className="w-full">
           <ProductController
             searchProducts={searchProducts}
-            watchedProduct={watchedProduct}
             onInputChange={(e) => {
               setSearchTerm(e);
             }}

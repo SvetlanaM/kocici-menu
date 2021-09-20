@@ -25,9 +25,7 @@ const ToolTipBody = ({ itemName, item }: ToolTipBodyProps): JSX.Element => {
             dangerouslySetInnerHTML={{
               __html: item || '--',
             }}
-          >
-            {''}
-          </p>
+          />
         </div>
         {itemName === t(cs['avg_review_zoohit']) ? (
           <Image src={getQualityImage(Number(item))} height={30} width={30} />

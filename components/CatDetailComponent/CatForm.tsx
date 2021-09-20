@@ -42,7 +42,7 @@ interface CatFormInterface {
       reviews?: [Review_Insert_Input] | [ReviewHistory_Insert_Input],
       updatedReviews?: {
         deleted: Array<CatFormProduct>;
-        merged: Array<SelectProductFieldsFragment>;
+        merged: Array<CatFormProduct>;
       }
     ): Promise<boolean>;
   };
@@ -124,6 +124,7 @@ const CatForm = ({
     doctor_email: CatFieldsFragmentFragment['doctor_email'];
     note: CatFieldsFragmentFragment['note'];
     type: CatFieldsFragmentFragment['type'];
+    fieldArray: Array<CatFormProduct>;
   };
 
   const {
@@ -148,6 +149,7 @@ const CatForm = ({
       doctor_email: catData && catData.doctor_email,
       note: catData && catData.note,
       type: catData && catData.type,
+      fieldArray: [],
     },
     mode: 'all',
     reValidateMode: 'onBlur',
@@ -155,11 +157,11 @@ const CatForm = ({
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'weight',
+    name: 'fieldArray',
     keyName: 'fieldArray',
   });
 
-  const watchFieldArray = watch('weight');
+  const watchFieldArray = watch('fieldArray');
   const controlledFields = fields.map((field, index) => {
     return {
       ...field,
@@ -248,7 +250,7 @@ const CatForm = ({
                 .includes(x.product !== undefined && x.product.id)
           )
       : [];
-  }, [userProductsArrayMain, deletedReviews]);
+  }, [userProductsArrayMain, deletedReviews, review]);
 
   const diff =
     userProductsArrayMain &&
@@ -261,6 +263,8 @@ const CatForm = ({
     );
 
   const mergedInsertUpdate = diff ? diff : [];
+  console.log('review', review);
+  console.log('userProductsArrayMain', userProductsArrayMain);
 
   useEffect(() => {
     if (review && review.length > 0) {
@@ -272,7 +276,7 @@ const CatForm = ({
 
       if (review.length === userDefaultValues.length) {
         setValue(
-          'weight',
+          'fieldArray',
           userDefaultValues &&
             userDefaultValues.map((item) => {
               return {
@@ -306,25 +310,20 @@ const CatForm = ({
       setUserDefaultValues(userProductsArray);
 
       setValue(
-        'weight',
+        'fieldArray',
         userProductsArray &&
-          userProductsArray
-            .map((item) => {
-              return {
-                product: {
-                  brand_type:
-                    item.product !== undefined && item.product.brand_type,
-                  id: item.product !== undefined && item.product.id,
-                  image_url:
-                    item.product !== undefined && item.product.image_url,
-                  name: item.product !== undefined && item.product.name,
-                  __typename:
-                    item.product !== undefined && item.product.__typename,
-                },
-                rating: item.rating !== undefined && item.rating,
-              };
-            })
-            .filter((item) => item.product.id !== false)
+          userProductsArray.map((item) => {
+            return {
+              product: {
+                brand_type: item.product.brand_type,
+                id: item.product.id,
+                image_url: item.product.image_url,
+                name: item.product.name,
+                __typename: item.product.__typename,
+              },
+              rating: item.rating,
+            };
+          })
       );
 
       setIsRemoved(false);
@@ -545,7 +544,7 @@ const CatForm = ({
         {controlledFields.map((field, index) => {
           return (
             <div
-              key={field.id}
+              key={field.rating + field.fieldArray[0]}
               className="flex flex-col xl-custom:flex-row justify-between xl-custom:items-center mb-3"
             >
               <div className="w-full xl-custom:w-1/2 mb-5 xl-custom:mb-0 xl-custom:pr-3">
@@ -554,8 +553,8 @@ const CatForm = ({
                   onInputChange={(e) => {
                     setSearchTerm(e);
                   }}
-                  name={`weight.${index}.product`}
-                  {...register(`weight.${index}.product` as const)}
+                  name={`fieldArray.${index}.product`}
+                  {...register(`fieldArray.${index}.product` as const)}
                   defaultValue={field.product}
                   control={control}
                   errors={errors}
@@ -564,13 +563,13 @@ const CatForm = ({
               </div>
               <div className="pl-0 w-full xl-custom:w-2/6 mb-5">
                 <RatingController
-                  name={`weight.${index}.rating`}
+                  name={`fieldArray.${index}.rating`}
                   control={control}
-                  defaultValue={field.rating}
+                  defaultValue={String(field.rating)}
                   isDisabled={false}
                   errors={errors}
                   placeholder={t(cs['choose_review_1'])}
-                  {...register(`weight.${index}.rating` as const)}
+                  {...register(`fieldArray.${index}.rating` as const)}
                 />
               </div>
               <button
@@ -587,7 +586,7 @@ const CatForm = ({
           );
         })}
         <div className="text-red-500 mb-4 -mt-2">
-          {errors.weight && newReviews && t(cs['reviews_error'])}
+          {errors.fieldArray && newReviews && t(cs['reviews_error'])}
         </div>
 
         <button
