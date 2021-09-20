@@ -5,7 +5,12 @@ type TitleProps = {
   classNames?: string;
 };
 
-const Title = ({ title, fontSize, classNames, paddingBottom }: TitleProps) => (
+const Title = ({
+  title,
+  fontSize,
+  classNames,
+  paddingBottom,
+}: TitleProps): JSX.Element => (
   <h3
     className={`${fontSize} ${paddingBottom} font-semibold text-purple ${classNames}`}
   >
