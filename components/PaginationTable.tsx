@@ -3,6 +3,7 @@ import { GetDashboardQuery } from '../graphql/generated/graphql';
 import Table from './Table';
 import PaginationFooter from './PaginationFooter';
 import { useEffect, useState } from 'react';
+import { OFFSET } from '../utils/constants';
 interface PaginationTableProps {
   reviews: GetDashboardQuery['reviews'];
   title: string;
@@ -13,8 +14,8 @@ const PaginationTable = ({
   reviews,
   title,
   numberOfProducts,
-}: PaginationTableProps) => {
-  const offset = 5;
+}: PaginationTableProps): JSX.Element => {
+  const offset = OFFSET;
   const allPageNumber = Math.ceil(numberOfProducts / offset);
   const reviewsCopy = [...reviews];
   const [actualPageNumber, setActualPageNumber] = useState<number>(1);
@@ -47,7 +48,6 @@ const PaginationTable = ({
   return (
     <div className="w-full">
       <Title title={title} />
-
       <Table
         reviews={reviewsCopy}
         Footer={
