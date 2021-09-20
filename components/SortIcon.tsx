@@ -3,7 +3,10 @@ interface SortIconProps {
   rotate?: string;
 }
 
-export default function SortIcon({ className, rotate }: SortIconProps) {
+export default function SortIcon({
+  className,
+  rotate,
+}: SortIconProps): JSX.Element {
   return (
     <div className={rotate}>
       <svg
