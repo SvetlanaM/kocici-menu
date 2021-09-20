@@ -1,10 +1,15 @@
 import SortIcon from './SortIcon';
 
+interface TableHeadSortButtonProps {
+  classNameFunction: (e) => void;
+  onClick: () => void;
+  value: string;
+}
 export default function TableHeadSortButton({
   classNameFunction,
   onClick,
   value,
-}) {
+}: TableHeadSortButtonProps): JSX.Element {
   return (
     <button
       type="button"
