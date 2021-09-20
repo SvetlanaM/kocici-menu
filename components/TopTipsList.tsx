@@ -3,26 +3,26 @@ import Link from 'next/link';
 import cs from '../public/locales/cs/common.json';
 import { useTranslation } from 'react-i18next';
 import { BackLinkType } from '../utils/backlinks';
+import { GetDashboardQuery, GetTipsQuery } from '../graphql/generated/graphql';
 interface TopTipsListProps {
-  data: Array<any>;
+  data: GetDashboardQuery['tips'] | GetTipsQuery['tips'];
   cols: string;
 }
 
-const TopTipsList = ({ data, cols }: TopTipsListProps) => {
+const TopTipsList = ({ data, cols }: TopTipsListProps): JSX.Element => {
   const { t } = useTranslation();
   return (
     <div
       className={`grid ${cols} gap-y-8 xl-custom:gap-x-11 pt-8 xl-custom:pt-0`}
     >
       {data &&
-        data.map((item, index) => (
+        data.map((item) => (
           <Link
-            key={item.name + index}
+            key={item.name + item.id}
             href={{
               pathname: `/tips/${item.slug}`,
               query: { slug: item.slug, backlink: BackLinkType.TIPS },
             }}
-            //as={`/tips/${encodeURIComponent(item.slug)}`}
           >
             <a>
               <div className="flex pt-4 pr-10 bg-gray-light border-rounded-base border-gray_lightest h-full">
