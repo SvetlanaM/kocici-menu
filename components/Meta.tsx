@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-const Meta = () => {
+const Meta = (): JSX.Element => {
   return (
     <Head>
       <link
@@ -62,7 +62,6 @@ const Meta = () => {
       />
       <meta name="msapplication-TileColor" content="#ffffff" />
       <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
-
       <meta name="description" content={'Cat app'} />
     </Head>
   );
