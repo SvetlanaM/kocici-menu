@@ -1,8 +1,9 @@
-import { Control, Controller, FieldValues } from 'react-hook-form';
+import { Control, Controller, DeepMap, FieldError } from 'react-hook-form';
 import Select, { components } from 'react-select';
 import { customStyles as style } from '../utils/formStyles';
 import {
   GetDashboardQuery,
+  SelectCatFieldsFragment,
   SelectProductFieldsFragment,
 } from '../graphql/generated/graphql';
 import { SVETA_EMAIL } from '../utils/constants';
@@ -14,16 +15,19 @@ const customStyles = style;
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
 import { forwardRef } from 'react';
+import { Components } from 'react-select/src/components';
 
-const Option = ({ children, ...props }) => {
+type ReviewSubmissionTypeForm = {
+  cat: SelectCatFieldsFragment;
+  product: SelectProductFieldsFragment;
+  rating: string;
+};
+
+const Option: Components['Option'] = ({ children, ...props }) => {
   return (
     <components.Option {...props}>
       <div className="mr-4 flex flex-row items-center cursor-pointer">
         {props.data.__typename === 'Product' && (
-          // <img
-          //   src={props.data.image_url}
-          //   className="object-fill h-10 w-10 mr-4 float-right"
-          // />
           <ProductImage
             src={props.data.image_url}
             alt={props.data.name}
@@ -41,31 +45,24 @@ interface ProductControllerProps {
   onInputChange: (value: React.SetStateAction<string>) => void;
   watchedProduct?: SelectProductFieldsFragment;
   props?: Array<string>;
-  name: string;
   control?: Control<ReviewSubmissionTypeForm>;
   showHint: boolean;
   defaultValue?: SelectProductFieldsFragment;
   isDisabled?: boolean;
-  errors?: any;
+  errors?: DeepMap<ReviewSubmissionTypeForm, FieldError>;
 }
 
-const ProductController = forwardRef(
-  (
-    {
-      searchProducts,
-      onInputChange,
-      watchedProduct,
-      props,
-      name,
-      control,
-      showHint,
-      defaultValue,
-      isDisabled,
-      errors,
-    }: ProductControllerProps,
-    ref
-  ) => {
-    console.log(errors.fieldArray && errors.fieldArray);
+const ProductController = forwardRef<HTMLInputElement, ProductControllerProps>(
+  ({
+    searchProducts,
+    onInputChange,
+    props,
+    control,
+    showHint,
+    defaultValue,
+    isDisabled,
+    errors,
+  }: ProductControllerProps): JSX.Element => {
     const { t } = useTranslation();
     return (
       <>
@@ -86,7 +83,6 @@ const ProductController = forwardRef(
             <FormInputLabel name={t(cs['product'])} />
           </div>
         )}
-
         <Controller
           render={({ field, fieldState }) => (
             <Select<SelectProductFieldsFragment>
@@ -104,18 +100,17 @@ const ProductController = forwardRef(
               }
               onInputChange={onInputChange}
               placeholder={t(cs['search_product'])}
-              // value={watchedProduct}
               noOptionsMessage={() => t(cs['no_results'])}
               isDisabled={isDisabled}
             />
           )}
-          name={name}
+          name="product"
           control={control}
           rules={{ required: true }}
           defaultValue={defaultValue}
         />
         <div className="mt-3">
-          {errors && errors[name] && (
+          {errors && errors['product'] && (
             <FormErrorMessage error={t(cs['product_required'])} />
           )}
         </div>

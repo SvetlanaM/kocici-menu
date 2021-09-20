@@ -166,7 +166,6 @@ const AddProductReviewForm = ({
             onInputChange={(e) => {
               setSearchTerm(e);
             }}
-            name="product"
             errors={errors}
             control={control}
             showHint={true}
