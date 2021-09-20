@@ -6,8 +6,8 @@ import DateFormatObject from '../utils/getFormatDate';
 import BackButton from './Buttons/BackButton';
 import Breadcrumbs from './Breadcrumbs';
 import Breadcrumb from '../utils/breadcrumb';
-import { useEffect, useMemo, useState } from 'react';
-import router, { useRouter } from 'next/router';
+import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 import Image from './Image';
 import cs from '../public/locales/cs/common.json';
 import { useTranslation } from 'react-i18next';
@@ -80,8 +80,10 @@ const TipDetailBox = ({
         dangerouslySetInnerHTML={{
           __html: description,
         }}
-      ></div>
-      <BackButton url={'/'} />
+      >
+        {''}
+      </div>
+      <BackButton />
     </div>
   );
 };
