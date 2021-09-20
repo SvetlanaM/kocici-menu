@@ -5,9 +5,6 @@ import {
   GetReviewsQuery,
   SelectCatFieldsFragment,
   SelectBrandTypeFieldsFragment,
-  Review,
-  Cat,
-  ReviewType,
   BrandType,
   ProductType,
   SelectProductTypeFieldsFragment,
@@ -30,27 +27,38 @@ interface FilterFormProps {
   selectProductTypes: GetReviewsQuery['selectProductTypes'];
 }
 
+interface RatingOption {
+  value: number;
+  label: string;
+}
+
 const FilterForm = ({
   selectCats,
   selectBrands,
   reviews,
   selectProductTypes,
-}: FilterFormProps) => {
-  const { control, watch, setValue } = useForm();
-  const { t } = useTranslation();
-
+}: FilterFormProps): JSX.Element => {
   const [reviewData, setReviewData] =
     useState<GetReviewsQuery['reviews']>(reviews);
-
+  const rangeDefault = [0, 100];
+  const customStyles = style;
+  const { control, watch, setValue } = useForm();
+  const { t } = useTranslation();
   const watchedBrand: GetReviewsQuery['selectBrands'] = watch('brand');
   const watchedCat: GetReviewsQuery['selectCats'] = watch('cat');
   const watchedRating: RatingOption[] = watch('rating');
   const watchedEshopRating: RatingOption[] = watch('eshopRating');
   const watchedType: GetReviewsQuery['selectProductTypes'] = watch('type');
-
-  const rangeDefault = [0, 100];
   const [watchedProtein, setWatchedProtein] = useState(rangeDefault);
   const [watchedFat, setWatchedFat] = useState(rangeDefault);
+
+  const ratingOptions = [
+    { value: 1, label: t(cs['first']) },
+    { value: 2, label: '2' },
+    { value: 3, label: '3' },
+    { value: 4, label: '4' },
+    { value: 5, label: t(cs['fifth']) },
+  ];
 
   useEffect(
     () => onFilter(),
@@ -135,8 +143,8 @@ const FilterForm = ({
   const resetFilter = (e) => {
     e.preventDefault();
     setReviewData(reviews);
-    let fields = ['cat', 'brand', 'rating', 'type', 'eshopRating'];
-    for (let field of fields) {
+    const fields = ['cat', 'brand', 'rating', 'type', 'eshopRating'];
+    for (const field of fields) {
       setValue(field, []);
     }
     resetRangeFilters();
@@ -150,21 +158,6 @@ const FilterForm = ({
 
   const rangeFilterActive = (value?: number[]) =>
     value && value.length === 2 && (value[0] !== 0 || value[1] !== 100);
-
-  interface RatingOption {
-    value: number;
-    label: string;
-  }
-
-  const ratingOptions = [
-    { value: 1, label: t(cs['first']) },
-    { value: 2, label: '2' },
-    { value: 3, label: '3' },
-    { value: 4, label: '4' },
-    { value: 5, label: t(cs['fifth']) },
-  ];
-
-  const customStyles = style;
 
   return (
     <>
@@ -185,10 +178,10 @@ const FilterForm = ({
               render={({ field, fieldState }) => (
                 <Select<SelectBrandTypeFieldsFragment, true>
                   {...field}
+                  styles={customStyles}
                   {...fieldState}
                   isMulti
                   options={selectBrands}
-                  styles={customStyles}
                   getOptionValue={(brand: SelectBrandTypeFieldsFragment) =>
                     brand.value.toString()
                   }
@@ -206,10 +199,9 @@ const FilterForm = ({
           </div>
           <div className="mb-5">
             <Controller
-              render={({ field, fieldState }) => (
+              render={({ field }) => (
                 <Select<SelectCatFieldsFragment, true>
                   {...field}
-                  isMulti
                   options={selectCats}
                   styles={customStyles}
                   getOptionValue={(cat: SelectCatFieldsFragment) =>
@@ -218,6 +210,7 @@ const FilterForm = ({
                   getOptionLabel={(cat: SelectCatFieldsFragment) => cat.name}
                   placeholder={t(cs['by_cat'])}
                   noOptionsMessage={() => t(cs['no_results'])}
+                  isMulti
                 />
               )}
               name="cat"
@@ -244,7 +237,7 @@ const FilterForm = ({
           </div>
           <div className="mb-5">
             <Controller
-              render={({ field, fieldState }) => (
+              render={({ field }) => (
                 <Select<SelectProductTypeFieldsFragment, true>
                   {...field}
                   isMulti

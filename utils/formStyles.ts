@@ -1,7 +1,7 @@
 import { GroupType } from 'aws-sdk/clients/cognitoidentityserviceprovider';
 import { OptionsType, Styles, StylesConfig } from 'react-select';
 
-type IsMulti = false;
+type IsMulti = true | false;
 
 const options: MyOptionType[] = [
   { value: 'chocolate', label: 'Chocolate' },
