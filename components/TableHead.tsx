@@ -8,7 +8,15 @@ enum ColumnTypes {
   REVIEW_TYPE = 'review_type',
 }
 
-const TableHead = ({ sortedFunction, className }) => {
+interface TableHeadProps {
+  sortedFunction: (e) => void;
+  className: (e) => void;
+}
+
+const TableHead = ({
+  sortedFunction,
+  className,
+}: TableHeadProps): JSX.Element => {
   const { t } = useTranslation();
   return (
     <thead className="font-bold leading-normal h-20 xl-custom:h-auto">
