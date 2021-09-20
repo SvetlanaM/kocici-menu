@@ -2,15 +2,13 @@ import Image from './Image';
 import { GetUserStatsQuery } from '../graphql/generated/graphql';
 import { useTranslation } from 'next-i18next';
 import i18next from 'i18next';
-import setUppercaseTitle from '../utils/setUppercaseTitle';
 import { getUsername } from '../utils/getUsername';
-
 import cs from '../public/locales/cs/common.json';
 interface UserBannerProps {
   data: GetUserStatsQuery;
 }
 
-const UserBanner = ({ data }: UserBannerProps) => {
+const UserBanner = ({ data }: UserBannerProps): JSX.Element => {
   const { t } = useTranslation();
   return (
     <div className="flex pt-4 pb-2 pr-10 bg-gray-light border-rounded-base border-gray_lightest">
