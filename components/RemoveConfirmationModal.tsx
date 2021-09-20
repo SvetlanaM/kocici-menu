@@ -8,7 +8,7 @@ interface RemoveConfirmationModalProps {
   isOpen: boolean;
   closeModal: () => void;
   onClickAction: () => void;
-  rest: any;
+  rest: string | number;
 }
 
 const RemoveConfirmationModal = ({
@@ -16,7 +16,7 @@ const RemoveConfirmationModal = ({
   closeModal,
   rest,
   onClickAction,
-}: RemoveConfirmationModalProps) => {
+}: RemoveConfirmationModalProps): JSX.Element => {
   const { t } = useTranslation();
   return (
     <Modal
