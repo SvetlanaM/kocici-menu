@@ -1,4 +1,8 @@
-const FormSelectBox = ({ registerRules, children }) => {
+interface FormSelectBoxProps {
+  registerRules: React.Ref<string>;
+  children: React.ReactNode;
+}
+const FormSelectBox = ({ registerRules, children }: FormSelectBoxProps):JSX.Element => {
   return (
     <select
       {...registerRules}
