@@ -1,22 +1,6 @@
-import Layout from '../components/Layout';
-import Header from '../components/Head';
-import getTitle from '../utils/getTitle';
-import WelcomeBox from '../components/WelcomeBox';
-import Link from 'next/link';
-import { APP_NAME } from '../utils/constants';
-import { useMutation } from '@apollo/client';
-import {
-  UpdateUserMutation,
-  UpdateUserMutationVariables,
-  User_Insert_Input,
-  useUserSeenStateQuery,
-} from '../graphql/generated/graphql';
-import { UPDATE_USER_PREFERENCES } from '../graphql/mutations';
+import { useUserSeenStateQuery } from '../graphql/generated/graphql';
 import { getUser } from '../utils/user';
-import { useEffect } from 'react';
-import router, { NextRouter, useRouter } from 'next/router';
-import Welcome from './welcome';
-import Home from './products';
+import { useRouter } from 'next/router';
 import Loading from '../components/Loading';
 
 const DashboardCatQuery = () => {
@@ -36,7 +20,7 @@ const DashboardCatQuery = () => {
   }
 };
 
-export default function RoutingPath() {
+export default function RoutingPath(): JSX.Element {
   const router = useRouter();
   const url = DashboardCatQuery();
   url && router.push(url);

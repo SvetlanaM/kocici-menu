@@ -9,7 +9,7 @@ import getTitle from '../../utils/getTitle';
 import { useTranslation } from 'react-i18next';
 import cs from '../../public/locales/cs/common.json';
 
-export default function Register() {
+export default function Register(): JSX.Element {
   const { t } = useTranslation();
   const link = {
     url: '/user/login',
@@ -47,8 +47,8 @@ export default function Register() {
             Pridaj si svoje mačky a nakupuj Victoria, a young white cat
           </h2>
           <ul className="pt-6 text-white font-light">
-            {registerProItems.map((item, index) => (
-              <li key={index} className="mb-7">
+            {registerProItems.map((item) => (
+              <li key={item} className="mb-7">
                 <Image
                   src="/icons/checked-white.svg"
                   height={15}

@@ -1,5 +1,4 @@
 import Image from '../components/Image';
-import BackButton from '../components/Buttons/BackButton';
 import Link from 'next/link';
 import { APP_NAME } from '../utils/constants';
 import Header from '../components/Head';
@@ -7,7 +6,7 @@ import getTitle from '../utils/getTitle';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
 
-export default function Custom404() {
+export default function Custom404(): JSX.Element {
   const { t } = useTranslation();
   return (
     <>

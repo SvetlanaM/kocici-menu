@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Header from '../components/Head';
 import getTitle from '../utils/getTitle';
 
-const TermsAndConditions = () => {
+const TermsAndConditions = (): JSX.Element => {
   return (
     <>
       <Header title={getTitle('Podmienky používania')} />

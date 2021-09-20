@@ -10,6 +10,7 @@ import { getUser } from '../utils/user';
 import FilterForm from '../components/FilterForm';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
+import ErrorScreen, { GeneralError } from '../components/ErrorScreen';
 const Products = () => {
   const {
     data: reviewsData,
@@ -45,7 +46,7 @@ const Products = () => {
   );
 };
 
-export default function Home() {
+export default function Home(): JSX.Element {
   const { t } = useTranslation();
   const pageTitle = getTitle(t(cs['products_menu']));
   return (

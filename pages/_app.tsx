@@ -5,7 +5,7 @@ import { getToken } from '../utils/token';
 import { getUser } from '../utils/user';
 import ProtectedRoutes from '../utils/ProtectedRoutes';
 import { disableFragmentWarnings } from 'graphql-tag';
-
+import Meta from '../components/Meta';
 import '../i18n';
 
 import {
@@ -13,12 +13,8 @@ import {
   InMemoryCache,
   ApolloProvider,
   ApolloLink,
-  from,
   HttpLink,
 } from '@apollo/client';
-
-import { setContext } from '@apollo/client/link/context';
-import Meta from '../components/Meta';
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   operation.setContext(({ headers }) => {
@@ -55,7 +51,7 @@ export const ApiClient = new ApolloClient({
 
 disableFragmentWarnings();
 
-function MyApp({ Component, pageProps, router }: AppProps) {
+function MyApp({ Component, pageProps, router }: AppProps): JSX.Element {
   return (
     <IdentityContextProvider url="https://catappreact.netlify.app/">
       <ProtectedRoutes router={router}>

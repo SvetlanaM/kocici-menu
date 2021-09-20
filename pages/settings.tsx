@@ -12,13 +12,11 @@ import UserStats from '../components/UserStats';
 import LeftContainer from '../components/LeftContainer';
 import { useGetUserStatsQuery } from '../graphql/generated/graphql';
 import { getUser } from '../utils/user';
-import DateFormatObject from '../utils/getFormatDate';
-import UploadImage from '../components/UploadImage';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
+import { LAST_WEEK } from '../utils/constants';
 const UserStatsQuery = () => {
-  const lastWeek = DateFormatObject().lastWeek();
-
+  const lastWeek = LAST_WEEK;
   const {
     data: statsData,
     error: statsError,
@@ -48,7 +46,7 @@ const UserStatsQuery = () => {
   );
 };
 
-export default function Settings() {
+export default function Settings(): JSX.Element {
   const { t } = useTranslation();
   const pageTitle = getTitle(t(cs['settings']));
   return (

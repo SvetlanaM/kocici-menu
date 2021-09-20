@@ -52,8 +52,7 @@ const TipsQuery = () => {
       .sort((a, b) => b.created_at - a.created_at)
       .slice(0, 2);
 
-  let top;
-  top =
+  const top =
     tipData &&
     user &&
     topArticles.map((article, index) => {
@@ -87,7 +86,7 @@ const TipsQuery = () => {
   );
 };
 
-export default function Tips() {
+export default function Tips(): JSX.Element {
   const { t } = useTranslation();
   const pageTitle = getTitle(t(cs['tips']));
   return (

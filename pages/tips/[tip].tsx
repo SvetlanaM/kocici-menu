@@ -35,9 +35,9 @@ const TipDetailQuery = () => {
         <TipDetailBox
           name={TipData?.tip?.name}
           updated_at={TipData?.tip?.updated_at}
-          description={TipData?.tip?.description!}
-          slug={TipData?.tip?.slug!}
-          id={TipData?.tip?.id!}
+          description={TipData?.tip && TipData?.tip?.description}
+          slug={TipData?.tip?.slug}
+          id={TipData?.tip?.id}
           perex={TipData?.tip?.perex}
           category={TipData?.tip?.category}
         />
@@ -46,7 +46,7 @@ const TipDetailQuery = () => {
   );
 };
 
-export default function TipDetail() {
+export default function TipDetail(): JSX.Element {
   return (
     <Layout>
       <Sidebar />

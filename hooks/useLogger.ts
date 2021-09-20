@@ -8,12 +8,12 @@ import {
 } from '../graphql/generated/graphql';
 import { ADD_LOG } from '../graphql/mutations';
 
-const useLogger = (): void => {
+const useLogger = () => {
   const [insertLog] = useMutation<AddLogMutation, AddLogMutationVariables>(
     ADD_LOG
   );
 
-  useCallback(
+  return useCallback(
     (
       error?: GeneralError,
       errorType = 'error',

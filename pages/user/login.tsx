@@ -9,7 +9,7 @@ import getTitle from '../../utils/getTitle';
 import { useTranslation } from 'react-i18next';
 import cs from '../../public/locales/cs/common.json';
 
-export default function Login() {
+export default function Login(): JSX.Element {
   const { t } = useTranslation();
   const link = {
     url: '/user/register',

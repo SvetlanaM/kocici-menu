@@ -8,8 +8,6 @@ import TipsList from '../components/TipsList';
 import Title from '../components/Title';
 import TopFiveTable from '../components/TopFiveTable';
 import {
-  GetCatsQueryVariables,
-  GetDashboardQuery,
   GetDashboardQueryVariables,
   useGetCatsQuery,
   useGetDashboardQuery,
@@ -25,15 +23,10 @@ import { getUser } from '../utils/user';
 import { BackLinkType } from '../utils/backlinks';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
-//tu budu akoze ziskane macky uzivatela
+
 const getDashboardVariables: GetDashboardQueryVariables = {
   limitTips: TIP_LIMIT,
   user_id: getUser(),
-};
-
-const getCatVariables: GetCatsQueryVariables = {
-  user_id: getUser(),
-  withProducts: true,
 };
 
 const CenterContainerQuery = () => {
@@ -48,23 +41,6 @@ const CenterContainerQuery = () => {
       limitTips: TIP_LIMIT,
     },
   });
-
-  const arrToInstanceCountObj = (arr: GetDashboardQuery['fav_stats']) =>
-    arr &&
-    arr.reduce((obj, e) => {
-      obj[e.brand_type] = (obj[e.brand_type] || 0) + 1;
-      return obj;
-    }, {});
-
-  const mostFavouriteByAll = arrToInstanceCountObj(
-    dashboardData && dashboardData.fav_stats
-  );
-
-  const mostFavouriteByAllOne =
-    mostFavouriteByAll &&
-    Object.keys(mostFavouriteByAll).reduce((a, b) => {
-      return mostFavouriteByAll[a] > mostFavouriteByAll[b] ? a : b;
-    }, null);
 
   const extendedData = [
     {

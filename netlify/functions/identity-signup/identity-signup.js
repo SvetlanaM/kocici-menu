@@ -23,7 +23,7 @@ const createJWT = (user_id) => {
   return token;
 };
 
-exports.handler = async function (event, context) {
+exports.handler = async function (event) {
   const { user } = JSON.parse(event.body);
 
   const responseBody = {
@@ -66,7 +66,7 @@ exports.handler = async function (event, context) {
       },
     }
   );
-  const { errors, data } = await result.json();
+  const { errors } = await result.json();
 
   if (errors) {
     return {

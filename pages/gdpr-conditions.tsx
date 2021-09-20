@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Header from '../components/Head';
 import getTitle from '../utils/getTitle';
 
-const GDPRConditions = () => {
+const GDPRConditions = (): JSX.Element => {
   return (
     <>
       <Header title={getTitle('Zásady ochrany osobních údajů')} />

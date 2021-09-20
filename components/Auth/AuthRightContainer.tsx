@@ -1,15 +1,15 @@
-import { APP_NAME } from '../utils/constants';
+import { APP_NAME } from '../../utils/constants';
 import Link from 'next/link';
-import { SVETA_EMAIL } from '../utils/constants';
+import { SVETA_EMAIL } from '../../utils/constants';
 import { useTranslation } from 'react-i18next';
-import cs from '../public/locales/cs/common.json';
+import cs from '../../public/locales/cs/common.json';
 
 type AuthRightContainerProps = {
   name?: string;
   title?: string;
   subtitle?: string;
   link: { url: string; name: string };
-  form?: HTMLFormElement;
+  form?: JSX.Element;
   footerLinks?: string;
   buttonInfo?: boolean;
 };
