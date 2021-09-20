@@ -4,7 +4,6 @@ import { ReviewFieldsFragmentFragment } from '../graphql/generated/graphql';
 import ProductImage from './ProductImage';
 import ProductName from './ProductName';
 import DateFormatObject from '../utils/getFormatDate';
-import ReactTooltip from 'react-tooltip';
 import StarIcon from './StarIcon';
 import setUppercaseTitle from '../utils/setUppercaseTitle';
 import truncateText from '../utils/truncateText';
@@ -46,17 +45,16 @@ const TableRow = ({
   product,
   updated_at,
   review_type,
-}: ReviewFieldsFragmentFragment) => {
+}: ReviewFieldsFragmentFragment): JSX.Element => {
   const formattedDate = DateFormatObject(updated_at).formatWithReplace();
   const reviewArray = [1, 2, 3, 4, 5];
   const [isHidden, setIsHidden] = useState<boolean>(true);
-  const nodeRef = useRef<HTMLDivElement | null>(null);
-
+  const nodeRef = useRef<HTMLTableRowElement | null>(null);
+  const { t } = useTranslation();
   const closeCollapse = () => {
     setIsHidden(true);
   };
 
-  const { t } = useTranslation();
   useOnClickOutside(nodeRef, closeCollapse);
   useOnKeyPress('Escape', closeCollapse);
 
@@ -86,10 +84,9 @@ const TableRow = ({
       </td>
       <td className="text-center px-10 xl-custom:px-2 py-5">
         <div className="flex flex-row justify-items-center justify-center">
-          {reviewArray.map((review, key) => (
-            <span className="mr-1" key={key}>
+          {reviewArray.map((review) => (
+            <span className="mr-1" key={review}>
               <StarIcon
-                key={key}
                 isChecked={review <= Number(review_type) ? true : false}
               />
             </span>
