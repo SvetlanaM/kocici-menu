@@ -4,13 +4,13 @@ import { useTranslation } from 'react-i18next';
 
 interface WelcomeBoxCheckboxProps {
   name: string;
-  registerRules: any;
+  registerRules: Omit<React.Ref<HTMLFormControlsCollection>, 'current'>;
 }
 
 export default function WelcomeBoxCheckbox({
   name,
   registerRules,
-}: WelcomeBoxCheckboxProps) {
+}: WelcomeBoxCheckboxProps): JSX.Element {
   const { t } = useTranslation();
   return (
     <div className="flex items-center">
