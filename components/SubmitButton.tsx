@@ -2,7 +2,7 @@ interface SubmitButtonProps {
   text: string;
   disabled?: boolean;
   size: string;
-  color: string;
+  color?: string;
   hover?: string;
   onClick?: (e?) => void;
 }

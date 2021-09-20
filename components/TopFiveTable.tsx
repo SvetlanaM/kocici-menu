@@ -1,11 +1,20 @@
 import Title from './Title';
-import { GetDashboardQuery } from '../graphql/generated/graphql';
+import {
+  GetDashboardQuery,
+  SelectCatFieldsFragment,
+} from '../graphql/generated/graphql';
 import TableFooter from './TableFooter';
 import Table from './Table';
 
+type CatSelectOptions = {
+  id: SelectCatFieldsFragment['id'];
+  name: SelectCatFieldsFragment['name'];
+  image_url: SelectCatFieldsFragment['image_url'];
+  reviews: SelectCatFieldsFragment['reviews'];
+};
 interface TopFiveTableProps {
   reviews: GetDashboardQuery['reviews'];
-  selectCats?: GetDashboardQuery['selectCats'];
+  selectCats?: Array<CatSelectOptions>;
   selectProducts?: GetDashboardQuery['selectProducts'];
   onReviewSaveSuccess?: () => void;
   title: string;
@@ -20,7 +29,7 @@ const TopFiveTable = ({
   title,
   numberOfProducts,
   onReviewSaveSuccess,
-}: TopFiveTableProps) => {
+}: TopFiveTableProps): JSX.Element => {
   return (
     <>
       <Title title={title} />
@@ -29,8 +38,8 @@ const TopFiveTable = ({
         reviews={reviews}
         Footer={
           <TableFooter
-            selectCats={selectCats!}
-            selectProducts={selectProducts!}
+            selectCats={selectCats && selectCats}
+            selectProducts={selectProducts && selectProducts}
             onSaveSuccess={onReviewSaveSuccess}
           />
         }

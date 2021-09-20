@@ -220,7 +220,7 @@ const AddProductReviewForm = ({
                         rating={
                           reviewType !== '' ? Number(reviewType) : Number(value)
                         }
-                        onSaveRating={onChange}
+                        handleOnSaveRating={onChange}
                         isDisabled={reviewType !== ''}
                       />
                     </span>
