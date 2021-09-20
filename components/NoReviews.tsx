@@ -1,7 +1,8 @@
 import Image from './Image';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
-const NoReviews = () => {
+
+const NoReviews = (): JSX.Element => {
   const { t } = useTranslation();
   return (
     <div className="border-rounded-base border-gray">
