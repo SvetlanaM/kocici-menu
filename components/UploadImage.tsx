@@ -14,7 +14,7 @@ export default function UploadImage({
   openFileDialog,
   isLoading,
   resetPhoto,
-}: UploadImageProps) {
+}: UploadImageProps): JSX.Element {
   const isImageSet = imageUrl && imageUrl.includes('catappreact');
   const { t } = useTranslation();
   return (
