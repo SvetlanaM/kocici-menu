@@ -12,7 +12,8 @@ const PaginationFooter = ({
   actualPageNumber,
   allPageNumber,
   getActualPageNumber,
-}: PaginationFooterProps) => {
+}: PaginationFooterProps): JSX.Element => {
+  const { t } = useTranslation();
   const isHidden = () => {
     if (actualPageNumber === 1) {
       return 'hidden';
@@ -24,8 +25,6 @@ const PaginationFooter = ({
       return 'hidden';
     }
   };
-
-  const { t } = useTranslation();
 
   return (
     <div className="w-full flex border-b-1 border-l-1 border-r-1 rounded-b-lg border-gray">
