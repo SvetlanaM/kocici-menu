@@ -7,8 +7,8 @@ const useSortableData = <T extends unknown>(
   setSortedColumn: ({ column: string, direction: SortType }) => void,
   nestedColumn?: string,
   resetAfterSort?: () => void
-): any => {
-  let sortedTable = [...inputData];
+): Record<string, unknown> => {
+  const sortedTable = [...inputData];
 
   useMemo(() => {
     if (sortedColumn !== null) {
