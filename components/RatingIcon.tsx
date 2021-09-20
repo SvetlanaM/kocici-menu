@@ -1,32 +1,29 @@
 import { useMemo } from 'react';
 import StarIcon from './StarIcon';
-import StarIconTest from './StarIconTest';
-
 interface RatingIconProps {
   index: number;
   rating: number;
-  onMouseEnter?: (index: number) => void;
-  onMouseLeave?: () => void;
   handleOnSaveRating?: (index: number) => void;
   isDisabled?: boolean;
 }
 
-const RatingIcon = (props: RatingIconProps) => {
+const RatingIcon = ({
+  index,
+  rating,
+  handleOnSaveRating,
+  isDisabled,
+}: RatingIconProps): JSX.Element => {
   const fill = useMemo(() => {
-    if (props.hoverRating >= props.index) {
-      return true;
-    } else if (props.hoverRating && props.rating >= props.index) {
+    if (rating >= index) {
       return true;
     }
     return null;
-  }, [props.rating, props.hoverRating, props.index]);
+  }, [rating, index]);
 
   return (
     <div
-      className={`${!props.isDisabled ? 'cursor-pointer' : 'cursor-none'}`}
-      onClick={() =>
-        !props.isDisabled ? props.handleOnSaveRating(props.index) : null
-      }
+      className={`${!isDisabled ? 'cursor-pointer' : 'cursor-none'}`}
+      onClick={() => (!isDisabled ? handleOnSaveRating(index) : null)}
     >
       <StarIcon isChecked={fill} />
     </div>
