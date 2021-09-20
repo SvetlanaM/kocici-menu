@@ -1,4 +1,3 @@
-import i18next from 'i18next';
 import { ReviewFieldsFragmentFragment } from '../graphql/generated/graphql';
 import setUppercaseTitle from '../utils/setUppercaseTitle';
 import Image from './Image';
@@ -14,7 +13,7 @@ interface ToolTipBodyProps {
   item: string;
 }
 
-const ToolTipBody = ({ itemName, item }: ToolTipBodyProps) => {
+const ToolTipBody = ({ itemName, item }: ToolTipBodyProps): JSX.Element => {
   const { t } = useTranslation();
   return (
     <div className="w-full px-4 py-3 flex flex-col text-xs">
@@ -26,10 +25,12 @@ const ToolTipBody = ({ itemName, item }: ToolTipBodyProps) => {
             dangerouslySetInnerHTML={{
               __html: item || '--',
             }}
-          ></p>
+          >
+            {''}
+          </p>
         </div>
         {itemName === t(cs['avg_review_zoohit']) ? (
-          <Image src={getQualityImage(item)} height={30} width={30} />
+          <Image src={getQualityImage(Number(item))} height={30} width={30} />
         ) : (
           ''
         )}
@@ -41,9 +42,6 @@ const ToolTipBody = ({ itemName, item }: ToolTipBodyProps) => {
 const getQualityImage = (
   rating: number
 ): ReviewFieldsFragmentFragment['product']['rating'] => {
-  // var numberPattern = /\d+/g;
-  // let number = Number(rating.match(numberPattern)[0]);
-
   return rating >= 4
     ? '/icons/smile-cat.svg'
     : rating >= 2.5
@@ -66,7 +64,9 @@ const allovedValues = [
   'Cukr',
 ];
 
-const ProductDetailsTooltipBox = ({ data }: ProductDetailsTooltipBoxProps) => {
+const ProductDetailsTooltipBox = ({
+  data,
+}: ProductDetailsTooltipBoxProps): JSX.Element => {
   const { t } = useTranslation();
   return (
     <div className="grid divide-y divide-gray_lightest" key={data.id}>
@@ -96,7 +96,6 @@ const ProductDetailsTooltipBox = ({ data }: ProductDetailsTooltipBoxProps) => {
             ) : null;
           })
         : null}
-
       {data.feeding && (
         <ToolTipBody
           itemName={t(cs['reccommended_feeding'])}
