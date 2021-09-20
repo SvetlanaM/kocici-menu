@@ -26,7 +26,7 @@ export const UserFieldFragment = gql`
   }
 `;
 
-const UserStats = ({ data }: UserStatsProps) => {
+const UserStats = ({ data }: UserStatsProps): JSX.Element => {
   const { t } = useTranslation();
   const userDataObject = useMemo(() => {
     return (
@@ -75,13 +75,16 @@ const UserStats = ({ data }: UserStatsProps) => {
   return (
     <div className="border-rounded-base border-gray">
       <div className="grid divide-y divide-gray_lightest">
-        {mergedObject.map((item, index) => {
+        {mergedObject.map((item) => {
           return (
-            <div className="pt-1 flex justify-between items-center" key={index}>
+            <div
+              className="pt-1 flex justify-between items-center"
+              key={item[0].labels}
+            >
               <div className="w-full px-5 pb-2 pt-4">
                 <ul className="small-light-text">
-                  {item.map((item, index) => (
-                    <li key={index} className="mb-4">
+                  {item.map((item) => (
+                    <li key={item.data_values} className="mb-4">
                       {String(item.data_values).length < 3 ? (
                         <p className="text-gray">
                           {item.labels}:{' '}
