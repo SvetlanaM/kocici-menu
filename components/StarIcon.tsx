@@ -2,7 +2,7 @@ interface StarIconProps {
   isChecked: boolean;
 }
 
-export default function StarIcon({ isChecked }: StarIconProps) {
+export default function StarIcon({ isChecked }: StarIconProps): JSX.Element {
   return (
     <div>
       {!isChecked ? (
