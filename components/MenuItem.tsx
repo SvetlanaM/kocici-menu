@@ -3,7 +3,6 @@ import Image from './Image';
 import { useState } from 'react';
 import { useIdentityContext } from 'react-netlify-identity';
 import router from 'next/router';
-import { ApiClient } from '../pages/_app';
 import useLogger from '../hooks/useLogger';
 import { getUser } from '../utils/user';
 import { useTranslation } from 'react-i18next';
@@ -15,13 +14,15 @@ interface MenuItemProps {
   active: boolean;
 }
 
-const MenuItem = ({ icon, name, url, active }: MenuItemProps) => {
+const MenuItem = ({ icon, name, url, active }: MenuItemProps): JSX.Element => {
   const { t } = useTranslation();
   const hoverIcon = `/icons/${icon}-purple.svg`;
   const basicIcon = `/icons/${icon}.svg`;
   const [isHover, setIsHover] = useState(basicIcon);
   const activeLinkStyle = 'text-purple-light';
   const { logoutUser } = useIdentityContext();
+  const logger = useLogger();
+  const userId = getUser();
 
   const showHover = () => {
     setIsHover((prevState) => {
@@ -31,13 +32,10 @@ const MenuItem = ({ icon, name, url, active }: MenuItemProps) => {
     });
   };
 
-  const logger = useLogger();
-  const userId = getUser();
   const logout = () => {
     logger(null, 'success', 'logout', userId && userId);
     logoutUser()
       .then(() => router.push('/user/login'))
-      // .then(() => ApiClient.resetStore())
       .catch((err) => {
         alert(t(cs['logout_error'])), logger(err);
       });
