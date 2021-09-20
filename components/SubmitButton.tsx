@@ -1,6 +1,4 @@
-import Link from 'next/link';
-
-interface Props {
+interface SubmitButtonProps {
   text: string;
   disabled?: boolean;
   size: string;
@@ -9,22 +7,28 @@ interface Props {
   onClick?: (e?) => void;
 }
 
-const SubmitButton = (props: Props): JSX.Element => (
+const SubmitButton = ({
+  text,
+  disabled,
+  size,
+  color = 'bg-purple-darkest',
+  hover,
+  onClick,
+}: SubmitButtonProps): JSX.Element => (
   <input
-    onClick={props.onClick}
+    onClick={onClick}
     type="submit"
-    className={`text-white ${props.color} ${
-      props.size
-    } float-right mb-5 py-1.5 h-10 cursor-pointer border-rounded-base font-medium text-center transition duration-500 ease-in ${
-      props.disabled ? null : props.hover
+    className={`text-white ${color} ${size} float-right mb-5 py-1.5 h-10 cursor-pointer border-rounded-base font-medium text-center transition duration-500 ease-in ${
+      disabled ? null : hover
     }`}
-    value={props.text}
-    disabled={props.disabled}
-  ></input>
+    value={text}
+    disabled={disabled}
+  >
+    {''}
+  </input>
 );
 
 SubmitButton.defaultProps = {
-  color: 'bg-purple-darkest',
   hover: 'hover:bg-yellow-dark',
 };
 
