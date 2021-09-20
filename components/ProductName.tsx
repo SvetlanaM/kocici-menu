@@ -5,7 +5,7 @@ interface ProductNameProps {
   name: Product['name'];
 }
 
-const ProductName = ({ brand, name }: ProductNameProps) => {
+const ProductName = ({ brand, name }: ProductNameProps): JSX.Element => {
   return (
     <>
       <span className="base-medium-text text-purple">{brand}</span>
