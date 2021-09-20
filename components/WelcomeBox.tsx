@@ -6,7 +6,8 @@ import UseAuth from '../hooks/useAuth';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
 import { useEffect, useState } from 'react';
-export default function WelcomeBox() {
+
+export default function WelcomeBox(): JSX.Element {
   const { t } = useTranslation();
   const email = UseAuth().user_data && UseAuth().user_data.email;
   const [greeting, setGreeting] = useState(`${t(cs['greeting'])}!`);
