@@ -1,6 +1,4 @@
-import Link from 'next/link';
 import React from 'react';
-
 interface Props {
   title: string;
   onClick: () => void;
