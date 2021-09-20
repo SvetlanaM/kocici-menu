@@ -1,7 +1,7 @@
 import SortIcon from './SortIcon';
 
 interface TableHeadSortButtonProps {
-  classNameFunction: (e) => void;
+  classNameFunction: void;
   onClick: () => void;
   value: string;
 }

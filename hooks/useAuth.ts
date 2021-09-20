@@ -1,4 +1,4 @@
-import { useIdentityContext } from 'react-netlify-identity';
+import { useIdentityContext, User } from 'react-netlify-identity';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { setToken } from '../utils/token';
@@ -6,7 +6,12 @@ import { setUser } from '../utils/user';
 
 const isBrowser = () => typeof window !== 'undefined';
 
-export default function useAuth(): Record<string, unknown> {
+export default function useAuth(): {
+  isAuthenticated: boolean;
+  user: string;
+  token: string;
+  user_data: User;
+} {
   const auth = useIdentityContext();
   const { user } = auth;
   const router = useRouter();

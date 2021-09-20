@@ -1,16 +1,16 @@
-import router from 'next/router';
+import { Router } from 'next/router';
 import useAuth from '../hooks/useAuth';
 
 const isBrowser = () => typeof window !== 'undefined';
 
 interface ProtectedRoutesProps {
-  router: typeof router;
-  children: React.ReactNode;
+  router: Router;
+  children: JSX.Element;
 }
 const ProtectedRoutes = ({
   router,
   children,
-}: ProtectedRoutesProps): React.ReactNode | null => {
+}: ProtectedRoutesProps): JSX.Element | null => {
   const { isAuthenticated } = useAuth();
 
   const unprotectedRoutes = [

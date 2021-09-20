@@ -2,7 +2,18 @@ import { CURRENT_YEAR } from './constants';
 import moment from 'moment';
 import 'moment/locale/cs';
 
-const DateFormatObject = (_date?: Date) => {
+const DateFormatObject = (
+  _date?: Date
+): {
+  _date: Date;
+  formatDate(): string;
+  formatDateToText(): string;
+  formatWithReplace(): string;
+  lastWeek(): string;
+  formatDateTime(): string;
+  getCatBornYear(_number: number): number;
+  getCatAge(_number: number): number;
+} => {
   moment.locale('cs');
   return {
     _date,

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from 'react';
 
 // taken and modified from https://usehooks.com/useKeyPress/
