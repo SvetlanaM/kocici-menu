@@ -36,16 +36,16 @@ const TipBox = ({
   order,
   isOnDashboard,
   readingTime,
-}: TipBoxInterface) => {
+}: TipBoxInterface): JSX.Element => {
   const backlink = isOnDashboard ? BackLinkType.DASHBOARD : BackLinkType.TIPS;
   const { t } = useTranslation();
   return (
     <div className="w-full pb-3.6 mb-4 border-b border-gray tips-list">
-      <Link href={{
+      <Link
+        href={{
           pathname: `/tips/${slug}`,
           query: { backlink: backlink },
         }}
-        //as={`/tips/${encodeURIComponent(slug)}`}
       >
         <a className="small-purple-text font-light flex flex-row items-center justify-between">
           <div>
