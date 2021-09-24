@@ -444,7 +444,7 @@ const CatForm = ({
           <FormInputWrapper>
             <FormInputLabel name={t(cs['cat_name'])} />
             <FormInput
-              {...register('name', {
+              registerRules={register('name', {
                 required: { value: true, message: t(cs['cat_name_required']) },
                 maxLength: {
                   value: 100,
@@ -477,7 +477,11 @@ const CatForm = ({
           <FormInputWrapper>
             <FormInputLabel name={t(cs['cat_age'])} />
             <FormInput
-              {...register('age', { min: 0, max: 30, required: false })}
+              registerRules={register('age', {
+                min: 0,
+                max: 30,
+                required: false,
+              })}
               type="number"
               name="age"
               step={1}
@@ -489,7 +493,7 @@ const CatForm = ({
           <FormInputWrapper>
             <FormInputLabel name={t(cs['cat_color'])} />
             <FormInput
-              {...register('color', { required: false })}
+              registerRules={register('color', { required: false })}
               type="text"
               name="color"
             />
@@ -499,7 +503,7 @@ const CatForm = ({
           <FormInputWrapper>
             <FormInputLabel name={t(cs['cat_weight'])} />
             <FormInput
-              {...register('weight', { required: false })}
+              registerRules={register('weight', { required: false })}
               type="number"
               placeholder="1,5 kg"
               step={0.1}
@@ -509,7 +513,7 @@ const CatForm = ({
           <FormInputWrapper>
             <FormInputLabel name={t(cs['cat_daily_food'])} />
             <FormInput
-              {...register('daily_food', { required: false })}
+              registerRules={register('daily_food', { required: false })}
               type="number"
               placeholder={t(cs['cat_daily_food_placeholder'])}
               name="daily_food"
@@ -520,7 +524,7 @@ const CatForm = ({
           <FormInputWrapper>
             <FormInputLabel name={t(cs['doctor_email'])} />
             <FormInput
-              {...register('doctor_email', {
+              registerRules={register('doctor_email', {
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                   message: t(cs['email_bad_format']),
@@ -548,7 +552,7 @@ const CatForm = ({
               className="flex flex-col xl-custom:flex-row justify-between xl-custom:items-center mb-3"
             >
               <div className="w-full xl-custom:w-1/2 mb-5 xl-custom:mb-0 xl-custom:pr-3">
-                <ProductController
+                <ProductController<CatSubmissionTypeForm>
                   searchProducts={searchProducts}
                   onInputChange={(e) => {
                     setSearchTerm(e);

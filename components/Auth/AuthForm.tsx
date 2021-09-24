@@ -40,8 +40,8 @@ const AuthForm = ({
     register,
     formState: { errors },
   } = useForm<AuthSubmissionTypeForm>({
-    mode: 'all',
-    reValidateMode: 'onBlur',
+    mode: 'onBlur',
+    // reValidateMode: 'onBlur',
   });
 
   const convertErrString = (message: string) => {
@@ -106,7 +106,7 @@ const AuthForm = ({
           <FormInputWrapper>
             <FormInputLabel name={`${t(cs['email'])}*`} />
             <FormInput
-              {...register('email', {
+              registerRules={register('email', {
                 required: { value: true, message: t(cs['email_required']) },
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
@@ -128,7 +128,7 @@ const AuthForm = ({
               errors={errors.password && errors.password}
               type="password"
               name="password"
-              {...register('password', {
+              registerRules={register('password', {
                 required: { value: true, message: t(cs['password_required']) },
                 validate: {
                   hasUppercaseLetter: hasUppercaseLetter,

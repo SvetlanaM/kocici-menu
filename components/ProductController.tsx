@@ -42,19 +42,22 @@ const Option: Components['Option'] = ({ children, ...props }) => {
   );
 };
 
-interface ProductControllerProps {
+interface ProductControllerProps<T extends unknown> {
   searchProducts: GetDashboardQuery['selectProducts'];
   onInputChange: (value: React.SetStateAction<string>) => void;
   props?: Array<string>;
-  control?: Control<ReviewSubmissionTypeForm>;
+  control?: Control<T>;
   showHint: boolean;
   defaultValue?: SelectProductFieldsFragment;
   isDisabled?: boolean;
   errors?: DeepMap<ReviewSubmissionTypeForm, FieldError>;
-  name?: any;
+  name?: string;
 }
 
-const ProductController = forwardRef<HTMLInputElement, ProductControllerProps>(
+const ProductController = forwardRef<
+  HTMLInputElement,
+  ProductControllerProps<unknown>
+>(
   (
     {
       searchProducts,
@@ -66,7 +69,7 @@ const ProductController = forwardRef<HTMLInputElement, ProductControllerProps>(
       isDisabled,
       name = 'product',
       errors,
-    }: ProductControllerProps,
+    }: ProductControllerProps<unknown>,
     ref
   ): JSX.Element => {
     const { t } = useTranslation();

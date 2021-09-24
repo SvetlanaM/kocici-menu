@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { FieldError } from 'react-hook-form';
+import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 
 interface FormInputProps {
   errors?: FieldError;
@@ -11,6 +11,7 @@ interface FormInputProps {
   onChange?: (e) => void;
   name?: string;
   required?: boolean;
+  registerRules: UseFormRegisterReturn;
 }
 
 const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
@@ -24,6 +25,7 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
       name,
       step,
       onChange,
+      registerRules,
     }: FormInputProps,
     ref
   ): JSX.Element => {
@@ -36,6 +38,7 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
               focus:outline-none focus:bg-white focus:border-gray
               focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray`}
         type={type}
+        {...registerRules}
         placeholder={placeholder}
         onChange={onChange}
         value={defaultValue}

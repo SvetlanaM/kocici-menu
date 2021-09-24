@@ -56,9 +56,7 @@ const WelcomeBoxForm = (): JSX.Element => {
           <WelcomeBoxCheckbox
             name={item}
             key={item}
-            registerRules={{
-              ...register('item', {}),
-            }}
+            registerRules={register('item', {})}
           />
         ))}
       </fieldset>
