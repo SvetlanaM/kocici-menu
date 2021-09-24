@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Control, Controller, DeepMap, FieldError } from 'react-hook-form';
 import Select, { components } from 'react-select';
 import { customStyles as style } from '../utils/formStyles';
@@ -15,7 +16,7 @@ import ProductImage from './ProductImage';
 const customStyles = style;
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
-import { ComponentPropsWithRef, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { Components } from 'react-select/src/components';
 
 type ReviewSubmissionTypeForm = {
