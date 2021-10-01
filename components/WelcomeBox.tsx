@@ -19,7 +19,7 @@ export default function WelcomeBox(): JSX.Element {
   return (
     <div className="w-full px-10 min-h-screen">
       <Link href="/dashboard">
-        <a className="font-logo font-bold text-lg uppercase text-purple-dark pt-8 flex">
+        <a className="logo font-logo font-bold text-lg uppercase text-purple-dark pt-8 flex">
           {APP_NAME}
         </a>
       </Link>
