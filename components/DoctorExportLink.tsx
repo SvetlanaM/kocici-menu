@@ -21,17 +21,17 @@ const DoctorExportLink = ({
   const { t } = useTranslation();
   const notDefined = t(cs['none']);
   const subject = `${t(cs['information_about_cat'])} ${catContactData.name}`;
-  const body = `${t(cs['email_body'])} %0D ${t(cs['cat_name'])} ${
+  const body = `${t(cs['email_body'])} %0D ${t(cs['cat_name'])}: ${
     catContactData.name
-  } %0D ${t(cs['cat_age'])} ${
+  } %0D ${t(cs['cat_age'])}: ${
     catContactData.age
       ? catContactData.age
       : catContactData.age === 0
       ? t(cs['to_year'])
       : notDefined
-  } %0D ${t(cs['gender'])} ${
+  } %0D ${t(cs['gender'])}: ${
     catContactData.gender ? t(cs[catContactData.gender]) : notDefined
-  } %0D ${t(cs['cat_weight'])} ${
+  } %0D ${t(cs['cat_weight'])}: ${
     catContactData.weight ? catContactData.weight : notDefined
   } %0D`;
 

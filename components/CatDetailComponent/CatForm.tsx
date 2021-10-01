@@ -442,7 +442,7 @@ const CatForm = ({
         </div>
         <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-3 xl-custom:gap-10">
           <FormInputWrapper>
-            <FormInputLabel name={t(cs['cat_name'])} />
+            <FormInputLabel name={`${t(cs['cat_name'])}*`} />
             <FormInput
               registerRules={register('name', {
                 required: { value: true, message: t(cs['cat_name_required']) },

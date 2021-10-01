@@ -113,7 +113,7 @@
     "add_cat_error_modal": "Kočku sa nepodařilo přidat. Zkuste to později nebo nás kontaktujte.",
     "basic_info": "Základní informace",
     "file_error": "Nahrajte subor v jednom z těchto formátů ",
-    "cat_name": "Jméno kočky*",
+    "cat_name": "Jméno kočky",
     "cat_name_required": "Jméno kočky je povinné",
     "cat_name_length": "Jméno kočky nesmí být delší než 100 znaků",
     "cat_name_placeholder": "Jméno kočky do 100 znaků",
