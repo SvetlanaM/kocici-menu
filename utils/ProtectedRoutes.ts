@@ -18,6 +18,7 @@ const ProtectedRoutes = ({
     '/user/register',
     '/terms-and-conditions',
     '/gdpr-conditions',
+    '/404',
   ];
 
   const pathIsProtected = unprotectedRoutes.indexOf(router.pathname) === -1;
