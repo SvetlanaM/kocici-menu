@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 module.exports = {
   purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   darkMode: false, // or 'media' or 'class'
   theme: {
     fontFamily: {
       sans: ['Public Sans', 'sans-serif'],
-      logo: ['Quantico', 'sans-serif'],
+      logo: ['Staatliches', 'sans-serif'],
     },
     screens: {
       'xl-custom': '1240px',

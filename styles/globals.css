@@ -133,6 +133,11 @@ input:focus {
     width: 65px;
 }
 
+.logo {
+    font-size: 24px;
+    letter-spacing: 2px;
+}
+
 .add-review-btn::before {
     position: relative;
     content: '+';

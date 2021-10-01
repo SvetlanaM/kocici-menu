@@ -9,7 +9,7 @@ const TermsAndConditions = (): JSX.Element => {
       <Header title={getTitle('Podmienky používania')} />
       <div className="w-full flex items-start py-16 px-10 xl-custom:px-20 flex-col xl-custom:min-h-screen text-purple">
         <Link href="/user/register">
-          <a className="font-logo font-bold text-lg uppercase text-purple-dark">
+          <a className="logo font-logo font-bold text-lg uppercase text-purple-dark">
             {APP_NAME}
           </a>
         </Link>

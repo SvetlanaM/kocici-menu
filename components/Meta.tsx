@@ -4,7 +4,7 @@ const Meta = (): JSX.Element => {
   return (
     <Head>
       <link
-        href="https://fonts.googleapis.com/css2?family=Quantico:wght@700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap"
         rel="stylesheet"
       />
       <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
