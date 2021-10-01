@@ -32,7 +32,7 @@ const CatDetailQuery = () => {
 
   return (
     <>
-      {catLoading && (
+      {catLoading && !catError && (
         <CenterContainer>
           <Loading />
         </CenterContainer>
