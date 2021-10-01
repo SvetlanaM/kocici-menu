@@ -24,7 +24,6 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
       width,
       name,
       step,
-      onChange,
       registerRules,
     }: FormInputProps,
     ref
@@ -40,7 +39,6 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
         type={type}
         {...registerRules}
         placeholder={placeholder}
-        onChange={onChange}
         value={defaultValue}
         step={step}
         name={name}

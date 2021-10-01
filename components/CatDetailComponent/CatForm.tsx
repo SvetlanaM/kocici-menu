@@ -9,7 +9,12 @@ import {
   ReviewHistory_Insert_Input,
   SelectProductFieldsFragment,
 } from '../../graphql/generated/graphql';
-import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import {
+  Controller,
+  useFieldArray,
+  useForm,
+  FieldValues,
+} from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/router';
 import FormErrorMessage from '../FormErrorMessage';
@@ -113,7 +118,7 @@ const CatForm = ({
   const [userDefaultValues, setUserDefaultValues] =
     useState<CatFormProduct[]>(review);
 
-  type CatSubmissionTypeForm = {
+  interface CatSubmissionTypeForm extends FieldValues {
     name: CatFieldsFragmentFragment['name'];
     gender: CatFieldsFragmentFragment['gender'];
     age: CatFieldsFragmentFragment['age'];
@@ -125,7 +130,7 @@ const CatForm = ({
     note: CatFieldsFragmentFragment['note'];
     type: CatFieldsFragmentFragment['type'];
     fieldArray: Array<CatFormProduct>;
-  };
+  }
 
   const {
     register,
@@ -552,7 +557,7 @@ const CatForm = ({
               className="flex flex-col xl-custom:flex-row justify-between xl-custom:items-center mb-3"
             >
               <div className="w-full xl-custom:w-1/2 mb-5 xl-custom:mb-0 xl-custom:pr-3">
-                <ProductController<CatSubmissionTypeForm>
+                <ProductController
                   searchProducts={searchProducts}
                   onInputChange={(e) => {
                     setSearchTerm(e);

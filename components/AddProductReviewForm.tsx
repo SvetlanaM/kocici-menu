@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { getUser } from '../utils/user';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import {
+  Controller,
+  FieldValues,
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form';
 import FormErrorMessage from './FormErrorMessage';
 import FormInputLabel from './FormInputLabel';
 import SubmitButton from './SubmitButton';
@@ -30,11 +35,11 @@ import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
 import { getRefetchQueries } from '../graphql/refetchQueries';
 
-type ReviewSubmissionTypeForm = {
+interface ReviewSubmissionTypeForm extends FieldValues {
   cat: SelectCatFieldsFragment;
   product: SelectProductFieldsFragment;
   rating: string;
-};
+}
 
 type CatSelectOptions = {
   id: SelectCatFieldsFragment['id'];
@@ -161,6 +166,7 @@ const AddProductReviewForm = ({
       <div className="mb-2 mt-4">
         <div className="w-full">
           <ProductController
+            name={'product'}
             searchProducts={searchProducts}
             onInputChange={(e) => {
               setSearchTerm(e);

@@ -1,6 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Control, Controller, DeepMap, FieldError } from 'react-hook-form';
+import {
+  Control,
+  Controller,
+  DeepMap,
+  FieldError,
+  FieldValues,
+  Path,
+  PathValue,
+  UnpackNestedValue,
+} from 'react-hook-form';
 import Select, { components } from 'react-select';
 import { customStyles as style } from '../utils/formStyles';
 import {
@@ -19,12 +28,6 @@ import cs from '../public/locales/cs/common.json';
 import { forwardRef } from 'react';
 import { Components } from 'react-select/src/components';
 
-type ReviewSubmissionTypeForm = {
-  cat: SelectCatFieldsFragment;
-  product: SelectProductFieldsFragment;
-  rating: string;
-};
-
 const Option: Components['Option'] = ({ children, ...props }) => {
   return (
     <components.Option {...props}>
@@ -42,23 +45,20 @@ const Option: Components['Option'] = ({ children, ...props }) => {
   );
 };
 
-interface ProductControllerProps<T extends unknown> {
+interface ProductControllerProps<T extends FieldValues> {
   searchProducts: GetDashboardQuery['selectProducts'];
   onInputChange: (value: React.SetStateAction<string>) => void;
   props?: Array<string>;
   control?: Control<T>;
   showHint: boolean;
-  defaultValue?: SelectProductFieldsFragment;
+  defaultValue?: UnpackNestedValue<PathValue<T, Path<T>>>;
   isDisabled?: boolean;
-  errors?: DeepMap<ReviewSubmissionTypeForm, FieldError>;
-  name?: string;
+  errors?: DeepMap<T, FieldError>;
+  name?: Path<T>;
 }
 
-const ProductController = forwardRef<
-  HTMLInputElement,
-  ProductControllerProps<unknown>
->(
-  (
+const ProductController = forwardRef(
+  <T extends FieldValues>(
     {
       searchProducts,
       onInputChange,
@@ -67,9 +67,9 @@ const ProductController = forwardRef<
       showHint,
       defaultValue,
       isDisabled,
-      name = 'product',
+      name,
       errors,
-    }: ProductControllerProps<unknown>,
+    }: ProductControllerProps<T>,
     ref
   ): JSX.Element => {
     const { t } = useTranslation();

@@ -1,21 +1,31 @@
 import { forwardRef } from 'react';
-import { Control, Controller, FieldValues } from 'react-hook-form';
+import {
+  Control,
+  Controller,
+  DeepMap,
+  FieldError,
+  FieldValues,
+  Path,
+  PathValue,
+  UnpackNestedValue,
+} from 'react-hook-form';
 import FormInputLabel from './FormInputLabel';
 import RatingIcon from './RatingIcon';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
-interface RatingControllerProps {
+interface RatingControllerProps<T extends FieldValues> {
   props?: Array<string>;
-  name: string;
-  control?: Control<FieldValues>;
+  name: Path<T>;
+  control?: Control<T>;
   isDisabled?: boolean;
   placeholder?: string;
-  defaultValue?: string;
+  defaultValue?: UnpackNestedValue<PathValue<T, Path<T>>>;
+  errors?: DeepMap<T, FieldError>;
 }
 
-const RatingController = forwardRef<HTMLInputElement, RatingControllerProps>(
-  (
-    { name, control, defaultValue, isDisabled }: RatingControllerProps,
+const RatingController = forwardRef(
+  <T extends FieldValues>(
+    { name, control, defaultValue, isDisabled }: RatingControllerProps<T>,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ref
   ): JSX.Element => {

@@ -41,7 +41,6 @@ const AuthForm = ({
     formState: { errors },
   } = useForm<AuthSubmissionTypeForm>({
     mode: 'onBlur',
-    // reValidateMode: 'onBlur',
   });
 
   const convertErrString = (message: string) => {
