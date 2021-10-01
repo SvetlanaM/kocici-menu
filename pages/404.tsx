@@ -13,7 +13,7 @@ export default function Custom404(): JSX.Element {
       <Header title={getTitle(t(cs['404']))} />
       <div className="flex flex-col xl-custom:flex-row w-full justify-center h-screen items-center my-2">
         <div className="xl-custom:w-1/2 flex items-center px-10 xl-custom:px-20 flex-col text-purple">
-          <Link href="/">
+          <Link href="/dashboard">
             <a className="font-logo font-bold text-lg uppercase text-purple-dark">
               {APP_NAME}
             </a>

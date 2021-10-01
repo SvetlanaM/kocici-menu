@@ -124,7 +124,6 @@ const DashboardCatQuery = () => {
     variables: {
       user_id: getUser(),
       withProducts: true,
-      limit: 2,
     },
   });
 
