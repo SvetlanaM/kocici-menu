@@ -134,8 +134,8 @@ input:focus {
 }
 
 .logo {
-    font-size: 24px;
-    letter-spacing: 2px;
+    font-size: 20px;
+    letter-spacing: 1px;
 }
 
 .add-review-btn::before {

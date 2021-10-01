@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: ['Public Sans', 'sans-serif'],
-      logo: ['Staatliches', 'sans-serif'],
+      logo: ['Public Sans', 'sans-serif'],
     },
     screens: {
       'xl-custom': '1240px',
