@@ -32,11 +32,11 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
     return (
       <input
         ref={ref}
-        className={`form-input mb-3 mt-2 text-purple block border-rounded-base ${width} ${
-          errors ? 'border-red-400' : 'border-gray'
-        }
-              focus:outline-none focus:bg-white focus:border-gray
-              focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray`}
+        className={`form-input mb-3 mt-2 text-purple block focus:border border-rounded-base focus:bg-white focus:outline-none placeholder-gray ${width} ${
+          errors
+            ? 'border-red-400 focus:border-red-400 focus:ring-red-400'
+            : 'border-gray focus:border-gray focus:ring-gray focus:ring-opacity-50'
+        }`}
         type={type}
         {...registerRules}
         placeholder={placeholder}
