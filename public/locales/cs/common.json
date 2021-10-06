@@ -139,6 +139,7 @@
     "reviews_error": "Pro nové položky je hodnocení povinné vyplnit, nebo hodnocení odebrat.",
     "write_doctor": "Napsat lékaři",
     "information_about_cat": "Informace k kočce:",
+    "homepage": "Úvod",
     "email_body": "Obsah emailu:",
     "general_error": "Ajaj...něco se pokazilo",
     "data_error": "Chyba ve stahování dat nebo internetovém připojení. Zkuste to prosím později",
@@ -242,5 +243,14 @@
     "invalid_grant_no_user_found_with_that_email_or_password_invalid": "Uživatel s touto emailovou adresou nenalezen nebo nesprávná kombinace emailu a hesla.",
     "cannot_read_property_auth_of_undefined": "Chyba v internetovém připojení. Opakujte Váš požadavek později.",
     "server_se_zadaným_názvem_hostitele_nelze_nalézt": "Chyba v internetovém připojení. Opakujte Váš požadavek později.",
-    "failed_to_fetch": "Chyba v internetovém připojení. Opakujte Váš požadavek později."
+    "failed_to_fetch": "Chyba v internetovém připojení. Opakujte Váš požadavek později.",
+    "menu_of_my_cat": "Jedalnicek",
+    "menu_cat": "mojej macky",
+    "web_banner_description": "Už žiadne nedojedené misky a konzervy, ktoré stoja v skrini celé mesiace. Plánujte jedlo pre svoju mačku",
+    "web_banner_span": "efektívne, zdravo a inteligentne.",
+    "register_me": "Registrovat sa",
+    "why_1": "Hladate, co vasim mackam chuti a zaroven je kvalitnou a vyváženou stravou?",
+    "why_1_desc": "Už žiadne nedojedené misky a konzervy, ktoré stoja v skrini celé mesiace. Plánujte jedlo pre svoju mačku efektívne, zdravo a chytre.",
+    "why_2": "Máte mačku, ktorá má špeciálne stravovacie požiadavky?",
+    "why_2_desc": "Už žiadne nedojedené misky a konzervy, ktoré stoja v skrini celé mesiace. Plánujte jedlo pre svoju mačku efektívne, zdravo a chytre."
 }
