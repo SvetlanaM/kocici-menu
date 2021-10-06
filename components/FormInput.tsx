@@ -11,7 +11,7 @@ interface FormInputProps {
   onChange?: (e) => void;
   name?: string;
   required?: boolean;
-  registerRules: UseFormRegisterReturn;
+  registerRules?: UseFormRegisterReturn;
 }
 
 const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
