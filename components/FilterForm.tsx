@@ -32,6 +32,7 @@ interface RatingOption {
   label: string;
 }
 
+
 const FilterForm = ({
   selectCats,
   selectBrands,

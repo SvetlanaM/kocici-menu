@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getUser } from '../utils/user';
-import {
-  Controller,
-  FieldValues,
-  SubmitHandler,
-  useForm,
-} from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import FormErrorMessage from './FormErrorMessage';
 import FormInputLabel from './FormInputLabel';
 import SubmitButton from './SubmitButton';
@@ -35,7 +30,7 @@ import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
 import { getRefetchQueries } from '../graphql/refetchQueries';
 
-interface ReviewSubmissionTypeForm extends FieldValues {
+interface ReviewSubmissionTypeForm {
   cat: SelectCatFieldsFragment;
   product: SelectProductFieldsFragment;
   rating: string;
