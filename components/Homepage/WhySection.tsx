@@ -2,7 +2,7 @@ import WhySectionWrapperProps from './WhySectionWrapper';
 
 export default function WhySection(): JSX.Element {
   return (
-    <div className="bg-gray-light pt-14 pb-10 flex items-center px-10 grid grid-cols-2 gap-12 text-purple-darkest">
+    <div className="bg-gray-light pt-14 pb-10 flex items-center px-10 grid grid-cols-2 gap-12 text-purple-darkest flex items-stretch">
       <WhySectionWrapperProps
         src="/icons/avg_cost.svg"
         title="why_1"

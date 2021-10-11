@@ -29,7 +29,7 @@ import useLogger from '../hooks/useLogger';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
 import { getRefetchQueries } from '../graphql/refetchQueries';
-
+import setUppercaseTitle from '../utils/setUppercaseTitle';
 interface ReviewSubmissionTypeForm {
   cat: SelectCatFieldsFragment;
   product: SelectProductFieldsFragment;
@@ -177,7 +177,7 @@ const AddProductReviewForm = ({
       <div className="flex xl-custom:flex-col justify-between">
         <div className="w-full mb-4">
           <div className="mb-2">
-            <FormInputLabel name={`${t(cs['cat'])}*`} />
+            <FormInputLabel name={`${setUppercaseTitle(t(cs['cat']))}*`} />
           </div>
           <Controller
             name="cat"
