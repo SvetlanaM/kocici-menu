@@ -20,6 +20,19 @@ button:focus {
     box-sizing: border-box;
 }
 
+ol,
+ul {
+    margin-left: 20px;
+}
+
+ol li {
+    list-style-type: decimal;
+}
+
+ul li {
+    list-style-type: circle;
+}
+
 table {
     border-collapse: separate;
     border-spacing: 0;
