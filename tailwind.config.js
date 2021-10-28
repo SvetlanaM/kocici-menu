@@ -7,14 +7,14 @@ module.exports = {
       sans: ['Public Sans', 'sans-serif'],
       logo: ['Public Sans', 'sans-serif'],
     },
-    screens: {
-      'xl-custom': '1240px',
-      'xxl-custom': '1920px',
-    },
     flex: {
       auto: '0 0 auto',
     },
     extend: {
+      screens: {
+        'xl-custom': '1240px',
+        'xxl-custom': '1920px',
+      },
       colors: {
         transparent: 'transparent',
         current: 'currentColor',

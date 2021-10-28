@@ -16,11 +16,13 @@ export default function WhySectionWrapper({
   const { t } = useTranslation();
   return (
     <section>
-      <div className="flex items-center w-10/12">
+      <div className="flex flex-col lg:flex-row items-center w-full lg:w-10/12">
         <Image src={src} width={67} />
-        <h2 className="mx-4 font-bold">{t(cs[title])}</h2>
+        <h2 className="lg:mx-4 text-center lg:text-left mt-5 lg:mt-0 font-bold">
+          {t(cs[title])}
+        </h2>
       </div>
-      <p className="pt-5">{t(cs[description])}</p>
+      <p className="w-full lg:w-11/12 pt-5">{t(cs[description])}</p>
     </section>
   );
 }

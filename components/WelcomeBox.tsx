@@ -23,15 +23,15 @@ export default function WelcomeBox(): JSX.Element {
           {APP_NAME}
         </a>
       </Link>
-      <div className="flex flex-col items-center justify-center text-center min-h-auto pt-7">
+      <div className="flex flex-col items-center justify-center text-left lg:text-center min-h-auto pt-7">
         <h2 className="text-3xl font-medium text-purple-darkest">{greeting}</h2>
-        <p className="font-light px-48 pt-6 text-purple-darkest leading-normal">
+        <p className="font-light lg:px-48 pt-6 text-purple-darkest leading-normal">
           {t(cs['welcome_to_app'])}{' '}
           <span className="text-purple-light">{APP_NAME}</span>.{' '}
           {t(cs['first_step'])}{' '}
           <span className="font-bold">{t(cs['1_or_more'])}</span>.
         </p>
-        <div className="pt-8 w-3/5">
+        <div className="pt-8 w-full lg:w-3/5">
           <WelcomeBoxForm />
         </div>
         <Link href="/my-cats">

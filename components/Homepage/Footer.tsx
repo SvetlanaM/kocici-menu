@@ -7,10 +7,10 @@ export default function Footer(): JSX.Element {
   const { t } = useTranslation();
   return (
     <footer>
-      <div className="container mx-auto px-10">
-        <div className="mt-24 border-t-1 border-gray-light flex flex-row items-baseline justify-between text-purple-darkest">
-          <div className="w-1/2 py-6">
-            <ul className="inline-flex">
+      <div className="lg:container lg:mx-auto px-5 lg:px-10">
+        <div className="mt-10 lg:mt-24 border-t-1 border-gray-light flex flex-col lg:flex-row items-baseline justify-between text-purple-darkest">
+          <div className="w-full lg:w-1/2 py-6">
+            <ul className="flex flex-col lg:flex-row lg:inline-flex">
               <li className="pr-6">
                 <Link href="/terms-and-conditions">
                   <a className="target_new hover:text-purple-light">
@@ -34,7 +34,7 @@ export default function Footer(): JSX.Element {
               </li>
             </ul>
           </div>
-          <div className="py-6 text-purple-darkest">
+          <div className="pb-5 lg:py-6 text-purple-darkest">
             <p className="font-bold">
               © {CURRENT_YEAR} by{' '}
               <Link href="https://kompilator.cz/">

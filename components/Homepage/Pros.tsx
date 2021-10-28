@@ -25,7 +25,7 @@ export default function Pros({
         className="mx-auto"
       />
       <p className="font-bold py-6">{t(cs[title])}</p>
-      <p>{t(cs[description])}</p>
+      <p className="text-left lg:text-center">{t(cs[description])}</p>
     </div>
   );
 }

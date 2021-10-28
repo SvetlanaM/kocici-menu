@@ -11,7 +11,7 @@ type FeatureProps = {
 export default function Feature({
   title,
   description,
-  width = 'w-2/3',
+  width = 'w-full lg:w-2/3',
   flexType = 'flex-col',
 }: FeatureProps): JSX.Element {
   const { t } = useTranslation();
@@ -21,7 +21,7 @@ export default function Feature({
         {t(cs[title])}
       </h3>
       {description && (
-        <div className="text-purple-darkest text-lg font-light leading-normal w-5/6">
+        <div className="text-purple-darkest text-lg font-light leading-normal w-full lg:w-5/6">
           {t(cs[description])}
         </div>
       )}

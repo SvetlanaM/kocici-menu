@@ -10,7 +10,7 @@ export default function Title({ title, color }: TitleProps): JSX.Element {
   const { t } = useTranslation();
   return (
     <h2
-      className={`${color} text-center font-extrabold text-5xl leading-none uppercase`}
+      className={`${color} text-center font-extrabold text-4xl lg:text-5xl leading-none uppercase`}
     >
       {t(cs[title])}
     </h2>

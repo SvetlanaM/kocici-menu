@@ -51,7 +51,7 @@ const WelcomeBoxForm = (): JSX.Element => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <fieldset className="flex justify-between mb-6">
+      <fieldset className="grid grid-rows-3 lg:grid-rows-1 gap-12 lg:gap-5 lg:grid-cols-3 lg:flex-row justify-center lg:justify-between mb-6">
         {checkBoxData.map((item) => (
           <WelcomeBoxCheckbox
             name={item}
@@ -64,7 +64,7 @@ const WelcomeBoxForm = (): JSX.Element => {
       <div className="flex justify-center mt-10">
         <SubmitButton
           text={t(cs['save_meal'])}
-          size="w-full xl-custom:w-1/3"
+          size="w-full lg:w-1/3"
           disabled={disabled}
         />
       </div>

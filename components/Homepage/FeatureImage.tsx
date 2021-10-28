@@ -14,7 +14,7 @@ export default function FeatureImage({
   imageUrl,
   width,
   height,
-  extraStyling = 'w-full',
+  extraStyling = 'w-full mt-10 lg:mt-0',
   alt,
 }: FeatureImageProps): JSX.Element {
   const { t } = useTranslation();
