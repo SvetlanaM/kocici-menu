@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 type ContainerProps = {
   children: React.ReactNode;
 };
@@ -11,10 +13,14 @@ export const checkProductURL = (): boolean => {
       url.includes('my-cats')
     );
   }
-  return false;
+  return true;
 };
 
 const CenterContainer = ({ children }: ContainerProps): JSX.Element => {
+  useEffect(() => {
+    checkProductURL();
+  }, []);
+
   return (
     <div
       className={`w-full xl-custom:w-9/12 xl-custom:mt-0 ${

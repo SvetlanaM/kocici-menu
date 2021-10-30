@@ -11,10 +11,6 @@ module.exports = {
       auto: '0 0 auto',
     },
     extend: {
-      screens: {
-        'xl-custom': '1240px',
-        'xxl-custom': '1920px',
-      },
       colors: {
         transparent: 'transparent',
         current: 'currentColor',
@@ -50,6 +46,10 @@ module.exports = {
       },
       borderWidth: {
         1: '1px',
+      },
+      screens: {
+        'xl-custom': '1240px',
+        'xxl-custom': '1920px',
       },
       borderColor: (theme) => ({
         yellow: theme('colors.yellow.lightest'),

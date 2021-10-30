@@ -67,7 +67,7 @@ const TipsList = ({ data, cols, isOnDashboard }: TipProps): JSX.Element => {
         {searchTips.map(({ id, ...item }, index) => (
           <TipBox
             order={`${index + 1}. `}
-            name={truncateText(`${item.name}`, 45)}
+            name={truncateText(`${item.name}`, 40)}
             slug={item.slug}
             key={id}
             isOnDashboard={isOnDashboard}
