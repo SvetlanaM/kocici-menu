@@ -20,7 +20,8 @@ button:focus {
     box-sizing: border-box;
 }
 
-ol,
+
+/* ol,
 ul {
     margin-left: 20px;
 }
@@ -31,7 +32,7 @@ ol li {
 
 ul li {
     list-style-type: circle;
-}
+} */
 
 table {
     border-collapse: separate;
@@ -227,4 +228,24 @@ input:checked+div svg {
 
 button:disabled {
     cursor: not-allowed;
+}
+
+.pass {
+    background-repeat: no-repeat;
+    cursor: pointer;
+    background-size: 25px;
+    background-position: center;
+    display: flex;
+    top: 22px;
+    height: 15px;
+    right: 3px;
+    width: 8%;
+}
+
+.show-pass {
+    background-image: url('../public/icons/show_pass.svg');
+}
+
+.hide-pass {
+    background-image: url('../public/icons/hide_pass.svg');
 }

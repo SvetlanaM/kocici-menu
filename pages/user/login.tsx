@@ -13,7 +13,7 @@ export default function Login(): JSX.Element {
   const { t } = useTranslation();
   const link = {
     url: '/user/register',
-    name: t(cs['register']),
+    name: t(cs['register_to']),
   };
 
   return (

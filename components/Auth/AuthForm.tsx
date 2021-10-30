@@ -41,7 +41,10 @@ const AuthForm = ({
     formState: { errors },
   } = useForm<AuthSubmissionTypeForm>({
     mode: 'onBlur',
+    reValidateMode: 'onChange',
   });
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const convertErrString = (message: string) => {
     const newMessage = message
@@ -82,8 +85,12 @@ const AuthForm = ({
   const hasUppercaseLetter = (value: string): boolean => {
     if (authMethod === 'signupUser') {
       for (const char of value) {
-        return char.toUpperCase() === char && !/^\d+$/.test(char);
+        console.log(char);
+        if (char.toUpperCase() === char && !/^\d+$/.test(char)) {
+          return true;
+        }
       }
+
       return false;
     }
   };
@@ -125,18 +132,35 @@ const AuthForm = ({
             <FormInput
               placeholder={passwordPlaceholder}
               errors={errors.password && errors.password}
-              type="password"
+              type={!showPassword ? 'password' : 'text'}
               name="password"
-              registerRules={register('password', {
-                required: { value: true, message: t(cs['password_required']) },
-                validate: {
-                  hasUppercaseLetter: hasUppercaseLetter,
-                },
-                minLength: {
-                  value: 8,
-                  message: t(cs['password_rule_min_length']),
-                },
-              })}
+              onClick={(e) => {
+                e.preventDefault();
+                setShowPassword(!showPassword);
+              }}
+              passClass={!showPassword ? 'show-pass' : 'hide-pass'}
+              registerRules={
+                authMethod === 'signupUser'
+                  ? register('password', {
+                      required: {
+                        value: true,
+                        message: t(cs['password_required']),
+                      },
+                      validate: {
+                        hasUppercaseLetter: hasUppercaseLetter,
+                      },
+                      minLength: {
+                        value: 8,
+                        message: t(cs['password_rule_min_length']),
+                      },
+                    })
+                  : register('password', {
+                      required: {
+                        value: true,
+                        message: t(cs['password_required']),
+                      },
+                    })
+              }
             />
             {errors.password && (
               <FormErrorMessage error={errors.password?.message} />
