@@ -31,7 +31,9 @@ const PaginationFooter = ({
       <div className="flex items-center justify-between w-full">
         <div className="py-3 pl-3.6 base-medium-text text-purple">
           <Link href="https://www.zoohit.cz/">
-            <a target="new">{t(cs['to_eshop'])}</a>
+            <a target="new" className="hover:text-purple-light">
+              {t(cs['to_eshop'])}
+            </a>
           </Link>
         </div>
 
