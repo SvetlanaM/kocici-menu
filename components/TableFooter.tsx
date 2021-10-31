@@ -41,7 +41,10 @@ const TableFooter = ({
       <div className="flex items-center justify-between w-full">
         <div className="py-3 pl-3.6 base-medium-text text-purple">
           <Link href="/dashboard">
-            <a onClick={openModal} className="add-review-btn">
+            <a
+              onClick={openModal}
+              className="add-review-btn hover:text-purple-light"
+            >
               {t(cs['add_new_review'])}
             </a>
           </Link>

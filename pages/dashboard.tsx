@@ -19,7 +19,7 @@ import LeftContainer from '../components/LeftContainer';
 import ErrorScreen, { GeneralError } from '../components/ErrorScreen';
 import Loading from '../components/Loading';
 import getTitle from '../utils/getTitle';
-import { TIP_LIMIT } from '../utils/constants';
+import { TIP_LIMIT, getUniqueReviews } from '../utils/constants';
 import { getUser } from '../utils/user';
 import { BackLinkType } from '../utils/backlinks';
 import { useTranslation } from 'react-i18next';
@@ -69,11 +69,13 @@ const CenterContainerQuery = () => {
     },
   ];
 
+  const reviews = getUniqueReviews(dashboardData?.reviews, 5);
+
   const tableTitle =
-    dashboardData && dashboardData?.reviews.length === 0
+    dashboardData && reviews.length === 0
       ? `${t(cs['no_reviewed_products'])}`
-      : dashboardData?.reviews.length < 5
-      ? `${dashboardData?.reviews.length} ${t(cs['best_products'])}`
+      : reviews.length < 5
+      ? `${reviews.length} ${t(cs['best_products'])}`
       : `${t(cs['top_5'])} ${dashboardData?.reviews.length}`;
 
   const catSelectData: Array<CatSelectOptions> =
@@ -96,7 +98,7 @@ const CenterContainerQuery = () => {
       {dashboardData && (
         <>
           <TopFiveTable
-            reviews={dashboardData?.reviews}
+            reviews={reviews}
             selectCats={catSelectData}
             selectProducts={dashboardData?.selectProducts}
             numberOfProducts={5}

@@ -49,7 +49,7 @@ const TableRow = ({
   const formattedDate = DateFormatObject(updated_at).formatWithReplace();
   const reviewArray = [1, 2, 3, 4, 5];
   const [isHidden, setIsHidden] = useState<boolean>(true);
-  const nodeRef = useRef<HTMLTableRowElement | null>(null);
+  const nodeRef = useRef<HTMLTableCellElement | null>(null);
   const { t } = useTranslation();
   const closeCollapse = () => {
     setIsHidden(true);
@@ -59,8 +59,8 @@ const TableRow = ({
   useOnKeyPress('Escape', closeCollapse);
 
   return (
-    <tr className="h-auto my-12" ref={nodeRef}>
-      <td className="px-10 xl-custom:px-2 py-5">
+    <tr className="h-auto my-12">
+      <td className="px-10 xl-custom:px-2 py-5" ref={nodeRef}>
         <ProductImage
           src={product.image_url}
           alt={`${product.brand_type} - ${product.name}`}

@@ -19,9 +19,9 @@ const DoctorExportButton = ({
   const { t } = useTranslation();
   return (
     <DoctorExportLink catContactData={catContactData}>
-      <div className="flex flex-start">
+      <div className="flex flex-start cursor-pointer">
         <Image src="/icons/email.svg" width={25} height={15} />
-        <h3 className="text-gray font-lg font-bold ml-2">
+        <h3 className="text-gray font-lg font-bold ml-2 hover:text-gray-600">
           {t(cs['write_doctor'])}
         </h3>
       </div>

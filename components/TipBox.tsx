@@ -47,7 +47,7 @@ const TipBox = ({
           query: { backlink: backlink },
         }}
       >
-        <a className="small-purple-text font-light flex flex-row items-center justify-between">
+        <a className="small-purple-text font-light flex flex-row items-center justify-between hover:text-purple-light">
           <div>
             {!isOnDashboard ? (
               <Image

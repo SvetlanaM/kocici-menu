@@ -31,19 +31,8 @@ const Table = ({
     direction: SortType.DESC,
   };
   const { t } = useTranslation();
-  const getUniqueReviews = (): GetDashboardQuery['reviews'] => {
-    if (numberOfProducts === 5) {
-      return Array.from(new Set(reviews.map((item) => item.product.name)))
-        .slice(0, 5)
-        .map((name) => {
-          return reviews.find((item) => item.product.name === name);
-        });
-    } else {
-      return reviews;
-    }
-  };
 
-  const uniqueReviews = getUniqueReviews();
+  const uniqueReviews = reviews;
 
   const [sortedColumn, setSortedColumn] = useState(rules);
   const { inputData, sortData } = useSortableData(
