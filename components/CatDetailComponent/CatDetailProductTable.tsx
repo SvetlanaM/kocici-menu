@@ -138,8 +138,6 @@ const CatDetailProductTable = ({
     setIsOpen(false);
   };
 
-  console.log('modalIsOpen', modalIsOpen);
-
   return (
     <div className="mt-5 w-full">
       {modalIsOpen ? (

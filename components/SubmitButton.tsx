@@ -19,7 +19,7 @@ const SubmitButton = ({
     onClick={onClick}
     type="submit"
     className={`text-white ${color} ${size} float-right mb-5 py-1.5 h-10 cursor-pointer border-rounded-base font-medium text-center transition duration-500 ease-in ${
-      disabled ? null : hover
+      disabled ? 'btn-disabled' : hover
     }`}
     value={text}
     disabled={disabled}

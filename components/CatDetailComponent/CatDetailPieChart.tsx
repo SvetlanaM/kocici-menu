@@ -45,8 +45,6 @@ const CatDetailPieChart = ({
     return !aggData.some((item) => item === 100);
   }
 
-  console.log(aggData);
-
   return (
     <div className="mt-5 w-full graph-container">
       <Title title={t(cs['food_quality_%'])} />

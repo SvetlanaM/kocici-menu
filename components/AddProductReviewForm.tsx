@@ -30,6 +30,8 @@ import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
 import { getRefetchQueries } from '../graphql/refetchQueries';
 import setUppercaseTitle from '../utils/setUppercaseTitle';
+import Image from './Image';
+
 interface ReviewSubmissionTypeForm {
   cat: SelectCatFieldsFragment;
   product: SelectProductFieldsFragment;
@@ -156,6 +158,14 @@ const AddProductReviewForm = ({
       .catch((err) => logger(err));
   };
 
+  const CustomDropdownIndicator = () => {
+    return (
+      <div className="cursor-pointer mr-3">
+        <Image src="/icons/down.svg" height={15} width={15} />
+      </div>
+    );
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full">
       <div className="mb-2 mt-4">
@@ -190,7 +200,12 @@ const AddProductReviewForm = ({
                 styles={customStyles}
                 options={selectCats}
                 {...props}
-                components={{ Option }}
+                components={{
+                  Option,
+                  DropdownIndicator: () =>
+                    selectCats.length === 1 ? null : CustomDropdownIndicator(),
+                  IndicatorSeparator: () => selectCats.length === 1 && null,
+                }}
                 getOptionValue={(cat: SelectCatFieldsFragment) =>
                   cat.id.toString()
                 }
@@ -239,7 +254,7 @@ const AddProductReviewForm = ({
 
       {reviewType !== '' ? (
         <span className="flex text-red-500 mb-5">
-          {`${t(cs['for_cat'])} ${watchedCat.name} ${t(cs['and_food'])} ${
+          {`${t(cs['for_cat'])} ${watchedCat.name} ${t(cs['and_my_food'])} ${
             watchedProduct.name
           } ${t(cs['review_exists'])} ${reviewType}.`}
         </span>

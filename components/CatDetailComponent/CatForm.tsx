@@ -268,8 +268,6 @@ const CatForm = ({
     );
 
   const mergedInsertUpdate = diff ? diff : [];
-  console.log('review', review);
-  console.log('userProductsArrayMain', userProductsArrayMain);
 
   useEffect(() => {
     if (review && review.length > 0) {

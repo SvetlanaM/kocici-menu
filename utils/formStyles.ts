@@ -12,6 +12,26 @@ interface RatingOption {
   label: string;
 }
 
+export const errorStyles: StylesConfig<
+  | SelectCatFieldsFragment
+  | SelectBrandTypeFieldsFragment
+  | RatingOption
+  | SelectProductTypeFieldsFragment
+  | SelectProductFieldsFragment,
+  IsMulti
+> = {
+  control: (styles, { isFocused }) => ({
+    ...styles,
+    borderColor: 'rgba(239, 68, 68)',
+    borderWidth: '1px',
+    '&:hover': {
+      borderColor: 'red',
+      border: isFocused ? null : '1px solid #B3BACC',
+    },
+    boxShadow: isFocused ? '1px solid #E1E5EE' : '0px',
+  }),
+};
+
 export const customStyles: StylesConfig<
   | SelectCatFieldsFragment
   | SelectBrandTypeFieldsFragment

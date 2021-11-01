@@ -11,10 +11,9 @@ import {
   UnpackNestedValue,
 } from 'react-hook-form';
 import Select, { components } from 'react-select';
-import { customStyles as style } from '../utils/formStyles';
+import { customStyles as style, errorStyles } from '../utils/formStyles';
 import {
   GetDashboardQuery,
-  SelectCatFieldsFragment,
   SelectProductFieldsFragment,
 } from '../graphql/generated/graphql';
 import { SVETA_EMAIL } from '../utils/constants';
@@ -27,6 +26,7 @@ import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
 import { forwardRef } from 'react';
 import { Components } from 'react-select/src/components';
+import Image from './Image';
 
 const Option: Components['Option'] = ({ children, ...props }) => {
   return (
@@ -73,6 +73,7 @@ const ProductController = forwardRef(
     ref
   ): JSX.Element => {
     const { t } = useTranslation();
+
     return (
       <>
         {showHint ? (
@@ -97,10 +98,18 @@ const ProductController = forwardRef(
             <Select<SelectProductFieldsFragment>
               {...field}
               {...fieldState}
-              styles={customStyles}
+              styles={
+                errors.product
+                  ? { ...customStyles, ...errorStyles }
+                  : customStyles
+              }
               options={searchProducts}
               {...props}
-              components={{ Option }}
+              components={{
+                Option,
+                DropdownIndicator: () => null,
+                IndicatorSeparator: () => null,
+              }}
               getOptionValue={(product: SelectProductFieldsFragment) =>
                 product.id.toString()
               }
@@ -111,6 +120,7 @@ const ProductController = forwardRef(
               placeholder={t(cs['search_product'])}
               noOptionsMessage={() => t(cs['no_results'])}
               isDisabled={isDisabled}
+              errors={errors}
             />
           )}
           name={name}

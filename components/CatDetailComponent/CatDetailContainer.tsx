@@ -112,7 +112,7 @@ const CatDetailContainer = ({
       const cat = getCatData(id);
       const review = cat ? getCatReviewHistory(cat) : [];
       const catModal = modalFactory(cat);
-      console.log('cat', cat);
+
       setSelectedCat({
         selectedCat: id,
         catData: cat,
