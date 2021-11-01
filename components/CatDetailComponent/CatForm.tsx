@@ -234,7 +234,9 @@ const CatForm = ({
     ) {
       setLimitedSearchedProducts([
         ...getUniqueReviews().filter((x) => !userProductsArray.includes(x.id)),
-        ...getUniqueReviews().filter((x) => deleted.includes(x.name)),
+        ...getUniqueReviews().filter(
+          (x) => deleted && deleted.includes(x.name)
+        ),
       ]);
     }
   }, [searchTerm, deletedReviews]);
@@ -336,7 +338,7 @@ const CatForm = ({
   const handleFileChange = async (file: File) => {
     setIsLoading(true);
     if (checkFileType(file)) {
-      const url = await uploadImage(file, catData.slug);
+      const url = await uploadImage(file, catData?.slug);
       setImageUrl(url);
       setValue('cat_image', url);
       setIsLoading(false);
