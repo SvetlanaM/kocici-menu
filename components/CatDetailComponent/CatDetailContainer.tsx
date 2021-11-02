@@ -9,7 +9,6 @@ import {
   SelectCatFieldsFragment,
 } from '../../graphql/generated/graphql';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import CenterContainer from '../Containers/CenterContainer';
 import AddCatBox from '../AddCatBox';
 import CatDetailPieChart from './CatDetailPieChart';
 import useLocalStorage, { LocalStorageKey } from '../../hooks/useLocalStorage';
@@ -103,7 +102,6 @@ const CatDetailContainer = ({
       product.products.reviewhistory
         .filter((review) => review.cat_id === cat.id)
         .map((review) => review.review_type)
-        .reverse()
     );
   };
 
@@ -172,7 +170,11 @@ const CatDetailContainer = ({
         : [0]
     );
 
-    return Number(Math.ceil(average([Number(data[0])])).toFixed(2)) || 0;
+    const pieChartSum = data.reduce(
+      (sum, amount) => Number(sum) + Number(amount),
+      []
+    );
+    return Number(Math.ceil(average([Number(pieChartSum)])).toFixed(2)) || 0;
   };
 
   const avgBielType = getAnalysisValue('bílkovina');
@@ -185,13 +187,11 @@ const CatDetailContainer = ({
 
   return (
     <>
-      <CenterContainer>
-        <CatFilter
-          cats={cats}
-          setCatFunction={setCatData}
-          selectedCat={catSummaryData.selectedCat}
-        />
-      </CenterContainer>
+      <CatFilter
+        cats={cats}
+        setCatFunction={setCatData}
+        selectedCat={catSummaryData.selectedCat}
+      />
       <div className="w-full flex justify-between">
         <CatDetailInfoBox
           data={catSummaryData.catData}
@@ -213,7 +213,7 @@ const CatDetailContainer = ({
         <CatDetailProductTable
           data={catProducts}
           title={t(cs['newest_reviews'])}
-          catReviews={catSummaryData.catReviews.slice(0, 5)}
+          catReviews={catSummaryData.catReviews}
           cats={catSummaryData.catModalData}
           products={productsTemp}
         />

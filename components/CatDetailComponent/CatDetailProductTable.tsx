@@ -60,12 +60,14 @@ const CatDetailProductTable = ({
   const [modalIsOpen, setIsOpen] = useState<boolean>(false);
   const [rowNumber, setRowNumber] = useState<number>();
   const { t } = useTranslation();
+
+  console.log(catReviews);
   const graphData = (order: number) => {
     return {
       labels: ['1', '2', '3', '4', '5'],
       datasets: [
         {
-          data: catReviews[order],
+          data: catReviews[order].slice(0, 5).reverse(),
           fill: false,
           borderColor: '#9595bc',
           tension: 0,

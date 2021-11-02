@@ -145,7 +145,9 @@ const CatDetailInfoBox = ({
               }}
               //as={`/my-cats/${encodeURIComponent(data.slug)}`}
             >
-              <a onClick={onEditCat}>{t(cs['edit_cat'])}</a>
+              <a className="hover:text-gray-dark" onClick={onEditCat}>
+                {t(cs['edit_cat'])}
+              </a>
             </Link>
           </p>
         </div>
@@ -154,6 +156,7 @@ const CatDetailInfoBox = ({
           <p className="uppercase text-gray text-sm ml-2 font-light">
             <Link href="/my-cats">
               <a
+                className="hover:text-gray-dark"
                 onClick={() => {
                   openModal();
                   setCatId(data.id);

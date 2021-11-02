@@ -4,6 +4,7 @@ import Title from '../Title';
 import { GetCatDetailQuery } from '../../graphql/generated/graphql';
 import { useTranslation } from 'react-i18next';
 import cs from '../../public/locales/cs/common.json';
+import truncateText from '../../utils/truncateText';
 
 interface CatFilterProps {
   cats: GetCatDetailQuery['cat'];
@@ -53,7 +54,7 @@ const CatFilter = ({
                   setCatId(cat.id);
                 }}
               >
-                {cat.name}
+                {truncateText(cat.name, 20)}
               </li>
             );
           })}
