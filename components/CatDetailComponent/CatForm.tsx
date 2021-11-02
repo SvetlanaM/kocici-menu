@@ -199,13 +199,14 @@ const CatForm = ({
   >(getUniqueReviews());
 
   useSearch(searchTerm, limitedSearchProducts, setSearchProducts);
+  const [isRemoved, setIsRemoved] = useState(false);
 
   const userProductsArrayMain =
     watchFieldArray && watchFieldArray.map((item) => item);
 
   const deletedReviews = useMemo(() => {
     return userProductsArrayMain && userProductsArrayMain
-      ? userProductsArrayMain.length > 1
+      ? userProductsArrayMain.length >= 0
         ? review &&
           review.filter(
             (x) =>
@@ -213,9 +214,11 @@ const CatForm = ({
                 .map((item) => item.product !== undefined && item.product.id)
                 .includes(x.product !== undefined && x.product.id)
           )
-        : review
+        : isRemoved && []
       : [];
-  }, [userDefaultValues]);
+  }, [isRemoved]);
+
+  console.log('dlete', deletedReviews);
 
   useEffect(() => {
     const userProductsArray =
@@ -265,7 +268,7 @@ const CatForm = ({
       ({ rating: id1, product: p1 }) =>
         review &&
         !review.some(
-          ({ rating: id2, product: p2 }) => id2 === id1 && p1.id === p2.id
+          ({ rating: id2, product: p2 }) => id2 === id1 && p1?.id === p2?.id
         )
     );
 
@@ -273,8 +276,8 @@ const CatForm = ({
 
   useEffect(() => {
     if (review && review.length > 0) {
-      setLimitedSearchedProducts((prevState) =>
-        prevState.filter(
+      setLimitedSearchedProducts(() =>
+        limitedSearchProducts.filter(
           (x) => !review.map((item) => item.product.name).includes(x && x.name)
         )
       );
@@ -300,7 +303,6 @@ const CatForm = ({
     }
   }, []);
 
-  const [isRemoved, setIsRemoved] = useState(false);
   useEffect(() => {
     const userProductsArray =
       watchFieldArray &&
@@ -465,7 +467,11 @@ const CatForm = ({
           </FormInputWrapper>
           <FormInputWrapper>
             <FormInputLabel name={t(cs['gender'])} />
-            <FormSelectBox {...register('gender', { required: false })}>
+            <FormSelectBox
+              {...register('gender', { required: false })}
+              name="gender"
+              control={control}
+            >
               <option value="" key="">
                 {t(cs['none'])}
               </option>
@@ -520,6 +526,7 @@ const CatForm = ({
             <FormInput
               registerRules={register('daily_food', { required: false })}
               type="number"
+              step={0.1}
               placeholder={t(cs['cat_daily_food_placeholder'])}
               name="daily_food"
             />
@@ -542,7 +549,11 @@ const CatForm = ({
           </FormInputWrapper>
           <FormInputWrapper>
             <FormInputLabel name={t(cs['cat_type'])} />
-            <FormSelectBox {...register('type', { required: false })}>
+            <FormSelectBox
+              {...register('type', { required: false })}
+              name="type"
+              control={control}
+            >
               {catTypeOptions}
             </FormSelectBox>
           </FormInputWrapper>
@@ -550,50 +561,50 @@ const CatForm = ({
       </fieldset>
       <fieldset>
         <FormLegend name={t(cs['cat_foods'])} />
-        {controlledFields.map((field, index) => {
-          return (
-            <div
-              key={field.rating + field.fieldArray[0]}
-              className="flex flex-col xl-custom:flex-row justify-between xl-custom:items-center mb-3"
-            >
-              <div className="w-full xl-custom:w-1/2 mb-5 xl-custom:mb-0 xl-custom:pr-3">
-                <ProductController
-                  searchProducts={searchProducts}
-                  onInputChange={(e) => {
-                    setSearchTerm(e);
-                  }}
-                  name={`fieldArray.${index}.product`}
-                  {...register(`fieldArray.${index}.product` as const)}
-                  defaultValue={field.product}
-                  control={control}
-                  errors={errors}
-                  showHint={false}
-                />
-              </div>
-              <div className="pl-0 w-full xl-custom:w-2/6 mb-5">
-                <RatingController
-                  name={`fieldArray.${index}.rating`}
-                  control={control}
-                  defaultValue={String(field.rating)}
-                  isDisabled={false}
-                  errors={errors}
-                  placeholder={t(cs['choose_review_1'])}
-                  {...register(`fieldArray.${index}.rating` as const)}
-                />
-              </div>
-              <button
-                type="button"
-                className="mt-5 text-left xl-custom:mt-5 text-red-500"
-                onClick={() => {
-                  remove(index);
-                  setIsRemoved(true);
+        {controlledFields.map((field, index) => (
+          <div
+            key={field.fieldArray}
+            className="flex flex-col xl-custom:flex-row justify-between xl-custom:items-center mb-3"
+          >
+            <div className="w-full xl-custom:w-1/2 mb-5 xl-custom:mb-0 xl-custom:pr-3">
+              <ProductController
+                searchProducts={searchProducts}
+                onInputChange={(e) => {
+                  setSearchTerm(e);
                 }}
-              >
-                {t(cs['remove'])}
-              </button>
+                name={`fieldArray.${index}.product`}
+                {...register(`fieldArray.${index}.product` as const)}
+                defaultValue={field.product}
+                control={control}
+                errors={errors}
+                showHint={false}
+              />
             </div>
-          );
-        })}
+            <div className="pl-0 w-full xl-custom:w-2/6 mb-5">
+              <RatingController
+                name={`fieldArray.${index}.rating`}
+                control={control}
+                defaultValue={field.rating}
+                isDisabled={false}
+                errors={errors}
+                placeholder={t(cs['choose_review_1'])}
+                {...register(`fieldArray.${index}.rating` as const, {
+                  required: true,
+                })}
+              />
+            </div>
+            <button
+              type="button"
+              className="mt-5 text-left xl-custom:mt-5 text-red-500"
+              onClick={() => {
+                remove(index);
+                setIsRemoved(true);
+              }}
+            >
+              {t(cs['remove'])}
+            </button>
+          </div>
+        ))}
         <div className="text-red-500 mb-4 -mt-2">
           {errors.fieldArray && newReviews && t(cs['reviews_error'])}
         </div>

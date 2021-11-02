@@ -1,18 +1,24 @@
 import { useMemo } from 'react';
+import {
+  DeepMap,
+  FieldError,
+  FieldValues,
+} from '../node_modules/react-hook-form/dist';
 import StarIcon from './StarIcon';
-interface RatingIconProps {
+interface RatingIconProps<T extends FieldValues> {
   index: number;
   rating: number;
   handleOnSaveRating?: (index: number) => void;
   isDisabled?: boolean;
+  errors?: DeepMap<T, FieldError>;
 }
 
-const RatingIcon = ({
+const RatingIcon = <T extends FieldValues>({
   index,
   rating,
   handleOnSaveRating,
   isDisabled,
-}: RatingIconProps): JSX.Element => {
+}: RatingIconProps<T>): JSX.Element => {
   const fill = useMemo(() => {
     if (rating >= index) {
       return true;

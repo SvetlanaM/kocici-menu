@@ -26,7 +26,6 @@ import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
 import { forwardRef } from 'react';
 import { Components } from 'react-select/src/components';
-import Image from './Image';
 
 const Option: Components['Option'] = ({ children, ...props }) => {
   return (

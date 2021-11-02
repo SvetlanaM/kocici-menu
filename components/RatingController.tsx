@@ -25,7 +25,13 @@ interface RatingControllerProps<T extends FieldValues> {
 
 const RatingController = forwardRef(
   <T extends FieldValues>(
-    { name, control, defaultValue, isDisabled }: RatingControllerProps<T>,
+    {
+      name,
+      control,
+      defaultValue,
+      isDisabled,
+      errors,
+    }: RatingControllerProps<T>,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ref
   ): JSX.Element => {
@@ -53,6 +59,7 @@ const RatingController = forwardRef(
                       rating={field.value ? field.value : 0}
                       handleOnSaveRating={field.onChange}
                       isDisabled={isDisabled}
+                      errors={errors}
                     />
                   </span>
                 );

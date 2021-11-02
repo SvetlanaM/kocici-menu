@@ -82,7 +82,7 @@ export default function CreateCat(): JSX.Element {
           <CatForm
             handleSubmit1={handleSubmit1}
             submitText={title}
-            products={productData.products}
+            products={productData.products.slice(0, 2000)}
           />
         ) : (
           <Loading />
@@ -132,7 +132,7 @@ export default function CreateCat(): JSX.Element {
             handleSubmit1={handleSubmit1}
             submitText={title}
             catData={catData.cat}
-            products={productData.products}
+            products={productData.products.slice(0, 2000)}
           />
         ) : (
           <Loading />
