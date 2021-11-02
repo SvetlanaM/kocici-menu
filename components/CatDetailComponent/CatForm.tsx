@@ -201,24 +201,18 @@ const CatForm = ({
   useSearch(searchTerm, limitedSearchProducts, setSearchProducts);
   const [isRemoved, setIsRemoved] = useState(false);
 
-  const userProductsArrayMain =
-    watchFieldArray && watchFieldArray.map((item) => item);
+  const userProductsArrayMain = watchFieldArray;
 
-  const deletedReviews = useMemo(() => {
-    return userProductsArrayMain && userProductsArrayMain
-      ? userProductsArrayMain.length >= 0
-        ? review &&
-          review.filter(
-            (x) =>
-              !userProductsArrayMain
-                .map((item) => item.product !== undefined && item.product.id)
-                .includes(x.product !== undefined && x.product.id)
-          )
-        : isRemoved && []
+  const deletedReviews =
+    userProductsArrayMain && userProductsArrayMain
+      ? review &&
+        review.filter(
+          (x) =>
+            !userProductsArrayMain
+              .map((item) => item?.product?.id)
+              .includes(x?.product?.id)
+        )
       : [];
-  }, [isRemoved]);
-
-  console.log('dlete', deletedReviews);
 
   useEffect(() => {
     const userProductsArray =
@@ -242,7 +236,7 @@ const CatForm = ({
         ),
       ]);
     }
-  }, [searchTerm, deletedReviews]);
+  }, []);
 
   const newReviews = useMemo(() => {
     return userProductsArrayMain
@@ -260,7 +254,7 @@ const CatForm = ({
                 .includes(x.product !== undefined && x.product.id)
           )
       : [];
-  }, [userProductsArrayMain, deletedReviews, review]);
+  }, [review]);
 
   const diff =
     userProductsArrayMain &&
@@ -322,7 +316,7 @@ const CatForm = ({
           userProductsArray.map((item) => {
             return {
               product: {
-                brand_type: item.product.brand_type,
+                brand_type: item?.product?.brand_type,
                 id: item.product.id,
                 image_url: item.product.image_url,
                 name: item.product.name,
