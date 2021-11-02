@@ -31,13 +31,13 @@ const TopTipsList = ({ data, cols }: TopTipsListProps): JSX.Element => {
             }}
           >
             <a>
-              <div className="flex pt-4 pr-10 bg-gray-light border-rounded-base border-gray_lightest h-full">
-                <div className="mb-0 xxl-custom:w-auto xl-custom:w-1/2 h-auto overflow-hidden flex items-end xl-custom:justify-center xl-custom:ml-5">
-                  <Image
-                    src={item.icon}
-                    className="mt-auto mr-auto hidden xl-custom:block"
-                  />
-                </div>
+              <div className="flex pt-4 pr-10 bg-gray-light border-rounded-base border-gray_lightest h-full hover:bg-gray-lightest">
+                <Image
+                  src={item.icon}
+                  className="mt-auto mr-auto hidden xl-custom:block ml-3"
+                  height={200}
+                />
+
                 <div className="flex-col-base justify-evenly mb-5 mt-3 ml-6 leading-tight">
                   <h4 className="mb-3 text-purple font-medium text-1xl">
                     {item.title}

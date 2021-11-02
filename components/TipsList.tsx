@@ -42,6 +42,7 @@ const TipsList = ({ data, cols, isOnDashboard }: TipProps): JSX.Element => {
               name="search"
               placeholder={t(cs['search_from_characters'])}
               width={'w-full xl-custom:w-1/2'}
+              allowOnChange={true}
               onChange={(e) => {
                 setSearchTerm(e.target.value);
               }}

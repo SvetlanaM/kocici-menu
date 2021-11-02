@@ -67,7 +67,7 @@ const CatDetailProductTable = ({
       labels: ['1', '2', '3', '4', '5'],
       datasets: [
         {
-          data: catReviews[order].slice(0, 5).reverse(),
+          data: catReviews[order]?.slice(0, 5)?.reverse(),
           fill: false,
           borderColor: '#9595bc',
           tension: 0,

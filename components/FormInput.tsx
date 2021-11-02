@@ -14,6 +14,7 @@ interface FormInputProps {
   registerRules?: UseFormRegisterReturn;
   passClass?: string;
   onClick?: (e) => void;
+  allowOnChange?: boolean;
 }
 
 const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
@@ -28,27 +29,44 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
       step,
       registerRules,
       passClass,
+      allowOnChange = false,
+      onChange,
       onClick,
     }: FormInputProps,
     ref
   ): JSX.Element => {
     return (
-      <div className="relative">
-        <input
-          ref={ref}
-          className={`w-full form-input mb-3 mt-2 text-purple block focus:border border-rounded-base focus:bg-white focus:outline-none placeholder-gray ${width} ${
-            errors
-              ? 'border-red-400 focus:border-red-400 focus:ring-red-400'
-              : 'border-gray focus:border-gray focus:ring-gray focus:ring-opacity-50'
-          }`}
-          type={type}
-          {...registerRules}
-          placeholder={placeholder}
-          value={defaultValue}
-          step={step}
-          name={name}
-          autoComplete="on"
-        />
+      <div className={`${passClass && 'relative'} w-full flex justify-end`}>
+        {!allowOnChange ? (
+          <input
+            ref={ref}
+            className={`w-full form-input mb-3 mt-2 text-purple block focus:border border-rounded-base focus:bg-white focus:outline-none placeholder-gray ${width} ${
+              errors
+                ? 'border-red-400 focus:border-red-400 focus:ring-red-400'
+                : 'border-gray focus:border-gray focus:ring-gray focus:ring-opacity-50'
+            }`}
+            type={type}
+            {...registerRules}
+            placeholder={placeholder}
+            value={defaultValue}
+            step={step}
+            name={name}
+            autoComplete="on"
+          />
+        ) : (
+          <input
+            ref={ref}
+            className={`w-full form-input mb-3 mt-2 text-purple block focus:border border-rounded-base focus:bg-white focus:outline-none placeholder-gray ${width} ${
+              errors
+                ? 'border-red-400 focus:border-red-400 focus:ring-red-400'
+                : 'border-gray focus:border-gray focus:ring-gray focus:ring-opacity-50'
+            }`}
+            type={type}
+            placeholder={placeholder}
+            name={name}
+            onChange={onChange}
+          />
+        )}
         {passClass && (
           <img
             src=""
