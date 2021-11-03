@@ -154,28 +154,25 @@ const CatDetailContainer = ({
     arr.reduce((p, c) => Math.ceil(p) + Math.ceil(c), 0) / arr.length;
 
   const getAnalysisValue = (value: string): number => {
-    const data: unknown[] = catSummaryData.catData.reviews.map((item) =>
-      item.products.analysis_variant
-        ? Object.entries(item.products.analysis_variant)
-            .filter((item) => item[0] === value)
-            .map((item) => {
-              return item[1];
-            })
-        : item.products.analysis_main
-        ? Object.entries(item.products.analysis_main)
-            .filter((item) => item[0] === value)
-            .map((item) => {
-              return item[1];
-            })
-        : [0]
-    );
+    const data: number[] = catSummaryData.catData.reviews
+      .flatMap((item) =>
+        item.products.analysis_variant
+          ? Object.entries(item.products.analysis_variant)
+              .filter((item) => item[0] === value)
+              .map((item) => {
+                return item[1] as number;
+              })
+          : item.products.analysis_main
+          ? Object.entries(item.products.analysis_main)
+              .filter((item) => item[0] === value)
+              .map((item) => {
+                return item[1] as number;
+              })
+          : [0]
+      )
+      .filter(Number);
 
-    const pieChartSum = data.reduce(
-      (sum, amount) => (Number(sum) + Number(amount)) / data.length,
-      []
-    );
-
-    return Number(Math.ceil(average([Number(pieChartSum)])).toFixed(2)) || 0;
+    return Number(Math.ceil(average(data))) || 0;
   };
 
   const avgBielType = getAnalysisValue('bílkovina');
