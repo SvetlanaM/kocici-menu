@@ -175,8 +175,8 @@ export const USER_STATS_QUERY = gql`
     user_stats(where: { id: { _eq: $user_id } }) {
       ...UserStatsFieldFragment
     }
-    stats: brand_fav_type(limit: 1) {
-      ...StatFieldsFragment
+    stats: brand_mine_type(where: { user_id: { _eq: $user_id } }, limit: 1) {
+      brand_type
     }
     reviews_count: Review_aggregate(
       where: {
@@ -195,7 +195,6 @@ export const USER_STATS_QUERY = gql`
     }
   }
   ${UserStatsFieldFragment}
-  ${StatFieldsFragment}
   ${UserFieldFragment}
 `;
 

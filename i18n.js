@@ -4,6 +4,7 @@ import { initReactI18next } from 'react-i18next';
 i18next.use(initReactI18next);
 i18next.init({
   fallbackLng: 'cs',
+  nsSeparator: '|',
   debug: false,
   initImmediate: false,
   resources: {
@@ -43,7 +44,6 @@ i18next.init({
           key_1: '{{count}} roky',
           key_2: '{{count}} roků',
         },
-        nickanme: 'hovnoe',
       },
     },
   },

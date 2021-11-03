@@ -74,7 +74,9 @@ const CenterContainerQuery = () => {
   const tableTitle =
     dashboardData && reviews.length === 0
       ? `${t(cs['no_reviewed_products'])}`
-      : reviews.length < 5
+      : reviews.length === 1
+      ? `${reviews.length} ${t(cs['best_products_nominal'])}`
+      : reviews.length > 1 && reviews.length < 5
       ? `${reviews.length} ${t(cs['best_products'])}`
       : `${t(cs['top_5'])} ${dashboardData?.reviews.length}`;
 
