@@ -11,7 +11,7 @@ module.exports = {
 
   async exportPathMap() {
     const pathMap = {
-      '/tips': { page: '/tips', query: { slug: '' } },
+      '/tips': { page: '/tips', query: { slug: 'about' } },
     };
     // now get the dynamic stuff:
     // const articles = await getPosts();
