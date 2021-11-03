@@ -27,11 +27,15 @@ interface FilterFormProps {
   selectProductTypes: GetReviewsQuery['selectProductTypes'];
 }
 
-interface RatingOption {
+export interface RatingOption {
   value: number;
   label: string;
 }
 
+export type MeatSort = {
+  value: string
+  label: string
+}
 
 const FilterForm = ({
   selectCats,
@@ -50,6 +54,7 @@ const FilterForm = ({
   const watchedRating: RatingOption[] = watch('rating');
   const watchedEshopRating: RatingOption[] = watch('eshopRating');
   const watchedType: GetReviewsQuery['selectProductTypes'] = watch('type');
+  const watchedMeatSort: MeatSort[] = watch('meatSort')
   const [watchedProtein, setWatchedProtein] = useState(rangeDefault);
   const [watchedFat, setWatchedFat] = useState(rangeDefault);
 
@@ -61,6 +66,21 @@ const FilterForm = ({
     { value: 5, label: t(cs['fifth']) },
   ];
 
+  const meatSortOptions = [
+    { value: 'ku[rř]e|dr[ůu]be[zž][ií]?|slepi[cč][ií]?', label: t(cs['chicken'])},
+    { value: 'kachn[aií]|hus[aií]', label: t(cs['duck'])},
+    { value: 'kr[aá]l[ií][kč][ií]?', label: t(cs['rabbit'])},
+    { value: 'hov[eě]z[ií]|telec?[ií]?', label: t(cs['beef'])},
+    { value: 'jehn[ěe][cč]?[ií]?', label: t(cs['lamb'])},
+    { value: 'kr[uů]t[aií]|krocan[ií]?', label: t(cs['turkey'])},
+    { value: 'losos', label: t(cs['salmon'])},
+    { value: 'pstruh', label: t(cs['trout'])},
+    { value: 'tres[kcč][aií]', label: t(cs['cod']) },
+    { value: 'tu[nň][aá]k', label: t(cs['tuna']) },
+    { value: 'krevet[ay]|mo[rř]sk[eé] plody|kalam[aá]ry|s[eé]pi[ae]', label: t(cs['sea_products']) },
+    { value: 'zv[eě][rř]ina|divo[cč][aiá][kn]a?', label: t(cs['venison'])}
+  ]
+
   useEffect(
     () => onFilter(),
     [
@@ -68,6 +88,7 @@ const FilterForm = ({
       watchedCat,
       watchedRating,
       watchedType,
+      watchedMeatSort,
       watchedEshopRating,
       watchedProtein,
       watchedFat,
@@ -118,6 +139,14 @@ const FilterForm = ({
       );
     }
 
+    if (watchedMeatSort && watchedMeatSort.length > 0) {
+      catFilterData = catFilterData.filter((review) =>
+        Object.values(watchedMeatSort)
+          .map(meat => meat.value)
+          .some(meat => (new RegExp(`${meat}`, 'mis')).test(review.product.name))
+      )
+    }
+
     if (rangeFilterActive(watchedProtein)) {
       catFilterData = catFilterData.filter((review) => {
         const protein = review.product.analysis_variant['bílkovina'];
@@ -144,7 +173,7 @@ const FilterForm = ({
   const resetFilter = (e) => {
     e.preventDefault();
     setReviewData(reviews);
-    const fields = ['cat', 'brand', 'rating', 'type', 'eshopRating'];
+    const fields = ['cat', 'brand', 'rating', 'type', 'meatSort', 'eshopRating'];
     for (const field of fields) {
       setValue(field, []);
     }
@@ -251,6 +280,23 @@ const FilterForm = ({
                 />
               )}
               name="type"
+              control={control}
+              defaultValue={[]}
+            />
+          </div>
+          <div className="mb-5">
+            <Controller
+              render={({ field }) => (
+                <Select<MeatSort, true>
+                    {...field}
+                    isMulti
+                    options={meatSortOptions}
+                    styles={customStyles}
+                    placeholder={t(cs['by_meat_sort'])}
+                    noOptionsMessage={() => t(cs['no_results'])}
+                />
+              )}
+              name="meatSort"
               control={control}
               defaultValue={[]}
             />

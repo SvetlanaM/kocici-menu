@@ -42,7 +42,7 @@ i18next.init({
         years: {
           key_0: '{{count}} rok',
           key_1: '{{count}} roky',
-          key_2: '{{count}} roků',
+          key_2: '{{count}} let',
         },
       },
     },
