@@ -302,5 +302,7 @@
     "reg_pros2": "Filtrovat podle druhu masa, ceny, hodnocení",
     "reg_pros3": "Editovat nebo mazat kočky a jejich hodnocení v čase",
     "reg_pros4": "Kontaktovat doktora s předvyplněnými údaji o kočce",
-    "reg_pros5": "Sledovat novinky a kvalitu jídla koček"
+    "reg_pros5": "Sledovat novinky a kvalitu jídla koček",
+    "cancel": "Zrušit",
+    "delete": "Vymazat"
 }

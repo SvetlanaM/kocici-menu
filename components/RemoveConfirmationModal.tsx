@@ -38,9 +38,9 @@ const RemoveConfirmationModal = ({
           <Image src="/icons/cat-trash.svg" height={50} width={100} />
         </div>
         <div className="flex justify-between flex-row pt-1">
-          <NeutralButton title="Zrušiť" onClick={closeModal} />
+          <NeutralButton title={t(cs['cancel'])} onClick={closeModal} />
           <SubmitButton
-            text="Vymazať"
+            text={t(cs['delete'])}
             size="w-full xl-custom:w-1/4 ml-5 xl-custom:ml-0"
             color="bg-red-500"
             onClick={onClickAction}
