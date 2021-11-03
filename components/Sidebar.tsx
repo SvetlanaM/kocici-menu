@@ -22,7 +22,7 @@ const Sidebar = (): JSX.Element => {
     <>
       <aside className="relative h-screen w-72 px-8.5 bg-purple-darkest hidden xl-custom:flex xl-custom:flex-col xl-custom:justify-between">
         <div className="mt-9.5">
-          <Link href="/dashboard">
+          <Link href="/">
             <a className="logo font-logo font-bold text-xl uppercase text-purple-dark">
               {APP_NAME}
             </a>
@@ -45,7 +45,7 @@ const Sidebar = (): JSX.Element => {
       </aside>
       <header className="w-full xl-custom:hidden bg-purple-darkest px-8 py-3 fixed z-20">
         <div className="flex items-center justify-between">
-          <Link href="/dashboard">
+          <Link href="/">
             <a className="logo font-logo font-bold text-lg uppercase text-purple-dark">
               {APP_NAME}
             </a>

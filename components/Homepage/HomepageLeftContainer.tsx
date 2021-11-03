@@ -9,12 +9,12 @@ const HomepageLeftContainer = (): JSX.Element => {
     <div className="w-full lg:w-1/2 py-5 lg:py-8 px-8 lg:flex lg:flex-col">
       <Menu />
       <div className="flex justify-center flex-col h-auto lg:h-full mt-8 lg:mt-0">
-        <h1 className="font-extrabold text-4xl lg:text-5xl text-purple-darkest leading-none mb-8">
+        <h1 className="font-extrabold text-4xl lg:text-5xl text-purple-darkest leading-none mb-6">
           {t(cs['menu_of_my_cat'])}
-          <br />
-          {t(cs['menu_cat'])}
+
+          <p className="">{t(cs['menu_cat'])}</p>
         </h1>
-        <div className="text-purple-darkest text-lg font-light leading-normal w-full lg:w-3/4 mb-10">
+        <div className="text-purple-darkest text-md font-light leading-normal w-full lg:w-3/4 mb-8">
           {t(cs['web_banner_description'])}{' '}
           <span className="text-purple-light">{t(cs['web_banner_span'])}</span>
         </div>

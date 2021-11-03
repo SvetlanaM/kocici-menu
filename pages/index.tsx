@@ -15,16 +15,18 @@ export default function HomePage(): JSX.Element {
   const { t } = useTranslation();
   const pageTitle = getTitle(t(cs['homepage']));
   return (
-    <div className="font-light leading-normal">
+    <div>
       <Header title={pageTitle} />
       <HomepageWrapper>
         <HomepageLeftContainer />
         <HomepageRightContainer />
       </HomepageWrapper>
-      <WhySection />
-      <FeatureWrapper />
-      <AboutWrapper />
-      <ProsWrapper />
+      <div className="font-light leading-normal">
+        <WhySection />
+        <FeatureWrapper />
+        <AboutWrapper />
+        <ProsWrapper />
+      </div>
       <Footer />
     </div>
   );
