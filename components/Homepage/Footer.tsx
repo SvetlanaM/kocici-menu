@@ -36,9 +36,9 @@ export default function Footer(): JSX.Element {
           </div>
           <div className="pb-5 lg:py-6 text-purple-darkest">
             <p className="font-bold">
-              © {CURRENT_YEAR} by{' '}
+              © {CURRENT_YEAR}{' '}
               <Link href="https://kompilator.cz/">
-                <a className="target_new hover:text-purple-light">Kompilator</a>
+                <a className="target_new hover:text-purple-light">Kompilátor</a>
               </Link>
             </p>
           </div>

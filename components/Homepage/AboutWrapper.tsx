@@ -11,7 +11,7 @@ export default function AboutWrapper(): JSX.Element {
         {t(cs['about_project_desc'])}
 
         <p className="text-purple-light mt-10 font-bold leading-normal">
-          Svetlana Margetova
+          Sveťa Margetová
         </p>
       </div>
     </section>
