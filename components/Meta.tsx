@@ -64,27 +64,52 @@ const Meta = (): JSX.Element => {
       <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
       <meta property=" og:type" content="website" />
       <meta property="og:url" content="https://kocicimenu.cz/" />
-      <meta property="og:title" content="Kočičí menu - jídelníček mé kočky a jejího mlsného jazyka" />
-      <meta property="og:description" content="Potrava pro vaši kočku tvořená vaší kočkou. Výběr kvalitního krmiva a zároveň úspora financí, nebo přírody na (ne)vyhozeném jídle." />
-      <meta property="og:image" content="https://www.kompilator.cz/img/kompilator_meta_image.jpg">
-    <meta property="og:site_name" content="Kompilátor" />
-    <meta property="og:type" content="article" />
-<meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://kompilator.cz/">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="https://kompilator.cz/">
-    <meta property="twitter:title" content="Kompilátor - z řeči klientů, do řeči uživatelů">
-    <meta property="twitter:description" content="Měníme nápady na reálné digitální produkty. Už žádné nedorozumění mezi IT a byznysem, všichni pracujeme jako jeden tým.">
-    <meta property="twitter:image" content="https://www.kompilator.cz/img/kompilator_meta_image.jpg">
-<meta name="title" content="Kompilátor - z řeči klientů, do řeči uživatelů">
-    <meta name="description" content="Měníme nápady na reálné digitální produkty. Už žádné nedorozumění mezi IT a byznysem, všichni pracujeme jako jeden tým.">
-    <meta name="author" content="Kompilátor s. r. o.">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="seznam-wmt" content="7EXe6O8iBq0WvVggTh3fhgBa0M5VlTs1" />
-    <meta name="keywords" content="web, aplikace, rebrand, redesign, produkt, proč?, design">
-    <meta name="application-name" content="Kompilator.cz">
-    <link rel="canonical" href="https://kompilator.cz/" />
+      <meta
+        property="og:title"
+        content="Kočičí menu - mlsný jídelníček mé kočky"
+      />
+      <meta
+        property="og:description"
+        content="Potrava pro vaši kočku tvořená vaší kočkou. Výběr kvalitního krmiva a zároveň úspora financí, nebo přírody na (ne)vyhozeném jídle."
+      />
+      <meta
+        property="og:image"
+        content="https://catappreact.s3.eu-west-2.amazonaws.com/kocicimenu.png"
+      />
+      <meta property="og:site_name" content="Kočičí menu" />
+      <meta property="og:type" content="article" />
+
+      <meta property="twitter:card" content="summary_large_image" />
+      <meta property="twitter:url" content="https://kocicimenu.cz/" />
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:site" content="https://kocicimenu.cz/" />
+      <meta
+        property="twitter:title"
+        content="Kočičí menu - mlsný jídelníček mé kočky"
+      />
+      <meta
+        property="twitter:description"
+        content="Potrava pro vaši kočku tvořená vaší kočkou. Výběr kvalitního krmiva a zároveň úspora financí, nebo přírody na (ne)vyhozeném jídle."
+      />
+      <meta
+        property="twitter:image"
+        content="https://catappreact.s3.eu-west-2.amazonaws.com/kocicimenu.png"
+      />
+
+      <meta name="title" content="Kočičí menu - mlsný jídelníček mé kočky" />
+      <meta
+        name="description"
+        content="Potrava pro vaši kočku tvořená vaší kočkou. Výběr kvalitního krmiva a zároveň úspora financí, nebo přírody na (ne)vyhozeném jídle."
+      />
+      <meta name="author" content="Kompilátor s. r. o." />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta name="format-detection" content="telephone=no" />
+      <meta
+        name="keywords"
+        content="kočka, jídlo, kvalita, stravování, krmivo, zdravé, kočičí kapsičky, granule"
+      />
+      <meta name="application-name" content="Kočičí menu" />
+      <link rel="canonical" href="https://kocicimenu.cz/" />
     </Head>
   );
 };
