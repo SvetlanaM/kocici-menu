@@ -2,7 +2,7 @@
   command = "yarn introspect && yarn codegen && yarn build"
   functions = "netlify/functions"
   publish = "out"
-[redirects]
+[[redirects]]
 from = “/tips/*”
 to = “/tips/[slug].html”
 status = 200
