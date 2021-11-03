@@ -27,7 +27,7 @@ const TopTipsList = ({ data, cols }: TopTipsListProps): JSX.Element => {
             key={item.name + item.title}
             href={{
               pathname: `/tips/${item.slug}`,
-              query: { slug: item.slug, backlink: BackLinkType.TIPS },
+              query: { backlink: BackLinkType.TIPS },
             }}
           >
             <a>
