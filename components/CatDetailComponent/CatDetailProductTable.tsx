@@ -61,7 +61,6 @@ const CatDetailProductTable = ({
   const [rowNumber, setRowNumber] = useState<number>();
   const { t } = useTranslation();
 
-  console.log(catReviews);
   const graphData = (order: number) => {
     return {
       labels: ['1', '2', '3', '4', '5'],

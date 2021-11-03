@@ -54,7 +54,7 @@ const ErrorScreen = ({ error, userMessage }: ErrorScreenProps): JSX.Element => {
       <h2 className="text-2xl font-medium text-purple-darkest mt-5">
         {t(cs[errorMessage])}
       </h2>
-      <p className="font-light px-32 text-center pt-3.6 pb-4 text-purple-darkest leading-normal">
+      <p className="font-light px-10 md:px-32 text-center pt-3.6 pb-4 text-purple-darkest leading-normal">
         {t(cs['error_message'])}{' '}
         <a
           href={`mailto:${SVETA_EMAIL}`}

@@ -36,7 +36,11 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
     ref
   ): JSX.Element => {
     return (
-      <div className={`${passClass && 'relative'} w-full flex justify-end`}>
+      <div
+        className={`${
+          passClass && 'relative pass-input'
+        } w-full flex justify-end`}
+      >
         {!allowOnChange ? (
           <input
             ref={ref}

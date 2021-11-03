@@ -21,7 +21,7 @@ export default function Feature({
         {t(cs[title])}
       </h3>
       {description && (
-        <div className="text-purple-darkest text-md font-light leading-normal w-full lg:w-6/6">
+        <div className="text-purple-darkest text-md font-light leading-normal w-full lg:w-5/6">
           {t(cs[description])}
         </div>
       )}

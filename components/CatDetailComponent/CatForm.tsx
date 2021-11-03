@@ -385,6 +385,7 @@ const CatForm = ({
           }
         } else {
           alert(t(cs['add_cat_error_modal']));
+          router.back();
         }
       });
     },

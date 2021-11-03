@@ -17,11 +17,14 @@ export default function Register(): JSX.Element {
   };
 
   const registerProItems = [
-    'Cats is a 2019 musical fantasy film based',
-    '1981 Tony Award-winning stage musical',
-    'Cats was theatrically released in the United Kingdom',
-    'Cats is a 2019 musical fantasy film based',
-    'Budget of $80 – $100 million, and is estimated to have lost',
+    { key: 1, value: 'Cats is a 2019 musical fantasy film based' },
+    { key: 2, value: '1981 Tony Award-winning stage musical' },
+    { key: 3, value: 'Cats was theatrically released in the United Kingdom' },
+    { key: 4, value: 'Cats is a 2019 musical fantasy film based' },
+    {
+      key: 5,
+      value: 'Budget of $80 – $100 million, and is estimated to have lost',
+    },
   ];
 
   return (
@@ -48,14 +51,14 @@ export default function Register(): JSX.Element {
           </h2>
           <ul className="pt-6 text-white font-light">
             {registerProItems.map((item) => (
-              <li key={item} className="mb-7">
+              <li key={item.key} className="mb-7">
                 <Image
                   src="/icons/checked-white.svg"
                   height={15}
                   width={15}
                   className="inline mr-3"
                 />
-                {item}
+                {item.value}
               </li>
             ))}
           </ul>

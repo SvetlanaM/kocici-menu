@@ -119,23 +119,24 @@ export default function CreateCat(): JSX.Element {
 
     return (
       <Center>
-        {catLoading && productLoading && <Loading />}
-        {catError && productError && (
+        {(catLoading || productLoading) && <Loading />}
+        {(catError || productError) && (
           <ErrorScreen
             error={GeneralError.fromApolloError(catError || productError)}
           />
         )}
-        <Title title={title} />
-        <Breadcrumbs breadcrumbs={breadcrumbs} />
-        {catData && productData ? (
-          <CatForm
-            handleSubmit1={handleSubmit1}
-            submitText={title}
-            catData={catData.cat}
-            products={productData.products.slice(0, 2000)}
-          />
-        ) : (
-          <Loading />
+
+        {catData && productData && (
+          <>
+            <Title title={title} />
+            <Breadcrumbs breadcrumbs={breadcrumbs} />
+            <CatForm
+              handleSubmit1={handleSubmit1}
+              submitText={title}
+              catData={catData.cat}
+              products={productData.products.slice(0, 2000)}
+            />
+          </>
         )}
       </Center>
     );

@@ -98,6 +98,27 @@ button.descending svg .up {
     fill: #bdbde7;
 }
 
+input::-webkit-textfield-decoration-container {
+    visibility: hidden;
+    background-color: transparent;
+}
+
+input::-webkit-caps-lock-indicator {
+    display: none;
+}
+
+input::-webkit-credentials-auto-fill-button {
+    display: none;
+}
+
+input::-ms-clear {
+    display: none;
+}
+
+input::-ms-reveal {
+    display: none;
+}
+
 @layer utilities {
     .flex-col-base {
         @apply flex flex-col;
@@ -235,6 +256,9 @@ button:disabled {
 .pass {
     background-repeat: no-repeat;
     cursor: pointer;
+    outline: none;
+    border: none;
+    background-color: transparent;
     background-size: 25px;
     background-position: center;
     display: flex;
@@ -242,6 +266,11 @@ button:disabled {
     height: 15px;
     right: 3px;
     width: 8%;
+}
+
+input[type='password'],
+.pass-input>input[type='text'] {
+    padding-right: 45px;
 }
 
 .show-pass {

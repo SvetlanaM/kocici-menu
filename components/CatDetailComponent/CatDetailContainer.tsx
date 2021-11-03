@@ -171,9 +171,10 @@ const CatDetailContainer = ({
     );
 
     const pieChartSum = data.reduce(
-      (sum, amount) => Number(sum) + Number(amount),
+      (sum, amount) => (Number(sum) + Number(amount)) / data.length,
       []
     );
+
     return Number(Math.ceil(average([Number(pieChartSum)])).toFixed(2)) || 0;
   };
 
