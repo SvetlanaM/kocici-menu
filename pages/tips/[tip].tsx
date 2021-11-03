@@ -10,6 +10,7 @@ import { GeneralError } from '../../components/ErrorScreen';
 import Center from '../../components/Containers/CenterContainer';
 import Header from '../../components/Head';
 import getTitle from '../../utils/getTitle';
+import { GetStaticPaths } from 'next';
 
 const TipDetailQuery = () => {
   const router = useRouter();
@@ -54,3 +55,16 @@ export default function TipDetail(): JSX.Element {
     </Layout>
   );
 }
+
+export async function getStaticProps() {
+  return {
+    props: {},
+  };
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [{ params: { tip: 'halloween-s-mojou-mackou' } }],
+    fallback: false,
+  };
+};
