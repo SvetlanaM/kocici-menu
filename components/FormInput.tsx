@@ -68,8 +68,7 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
           />
         )}
         {passClass && (
-          <img
-            src=""
+          <div
             className={`${passClass} absolute pass`}
             onClick={onClick}
           />
