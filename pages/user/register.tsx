@@ -17,13 +17,13 @@ export default function Register(): JSX.Element {
   };
 
   const registerProItems = [
-    { key: 1, value: 'Cats is a 2019 musical fantasy film based' },
-    { key: 2, value: '1981 Tony Award-winning stage musical' },
-    { key: 3, value: 'Cats was theatrically released in the United Kingdom' },
-    { key: 4, value: 'Cats is a 2019 musical fantasy film based' },
+    { key: 1, value: 'reg_pros1' },
+    { key: 2, value: 'reg_pros2' },
+    { key: 3, value: 'reg_pros3' },
+    { key: 4, value: 'reg_pros4' },
     {
       key: 5,
-      value: 'Budget of $80 – $100 million, and is estimated to have lost',
+      value: 'reg_pros5',
     },
   ];
 
@@ -47,7 +47,7 @@ export default function Register(): JSX.Element {
         />
         <AuthLeftContainer className="flex flex-col pt-10  px-10 xl-custom:px-20 justify-center">
           <h2 className="text-white text-3xl font-medium">
-            Pridaj si svoje mačky a nakupuj Victoria, a young white cat
+            {t(cs['register_title_pros'])}
           </h2>
           <ul className="pt-6 text-white font-light">
             {registerProItems.map((item) => (
@@ -56,9 +56,9 @@ export default function Register(): JSX.Element {
                   src="/icons/checked-white.svg"
                   height={15}
                   width={15}
-                  className="inline mr-3"
+                  className="inline mr-3 -mt-1"
                 />
-                {item.value}
+                {t(cs[item.value])}
               </li>
             ))}
           </ul>
