@@ -29,7 +29,7 @@ const RangeInput = forwardRef<HTMLInputElement, RangeInputProps>(
   ): JSX.Element => {
     return (
       <>
-        <div className={`mb-2 text-gray`}>{label}</div>
+        <div className={`mb-2 text-gray-600 font-light`}>{label}</div>
         <Range
           {...rest}
           values={value}

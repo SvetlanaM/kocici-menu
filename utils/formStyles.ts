@@ -5,19 +5,17 @@ import {
   SelectProductFieldsFragment,
   SelectProductTypeFieldsFragment,
 } from '../graphql/generated/graphql';
+import { MeatSort, RatingOption } from '../components/FilterForm'
 
 type IsMulti = true | false;
-interface RatingOption {
-  value: number;
-  label: string;
-}
 
 export const errorStyles: StylesConfig<
   | SelectCatFieldsFragment
   | SelectBrandTypeFieldsFragment
   | RatingOption
   | SelectProductTypeFieldsFragment
-  | SelectProductFieldsFragment,
+  | SelectProductFieldsFragment
+  | MeatSort,
   IsMulti
 > = {
   control: (styles, { isFocused }) => ({
@@ -37,7 +35,8 @@ export const customStyles: StylesConfig<
   | SelectBrandTypeFieldsFragment
   | RatingOption
   | SelectProductTypeFieldsFragment
-  | SelectProductFieldsFragment,
+  | SelectProductFieldsFragment
+  | MeatSort,
   IsMulti
 > = {
   control: (styles, { isFocused, isDisabled }) => ({
