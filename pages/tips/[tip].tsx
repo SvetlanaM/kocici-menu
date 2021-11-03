@@ -10,8 +10,11 @@ import { GeneralError } from '../../components/ErrorScreen';
 import Center from '../../components/Containers/CenterContainer';
 import Header from '../../components/Head';
 import getTitle from '../../utils/getTitle';
+import { useTranslation } from 'react-i18next';
+import cs from '../../public/locales/cs/common.json';
 
 const TipDetailQuery = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const { tip } = router.query;
   const {
@@ -31,7 +34,11 @@ const TipDetailQuery = () => {
         {TipError && (
           <ErrorScreen error={GeneralError.fromApolloError(TipError)} />
         )}
-        <Header title={getTitle(TipData?.tip?.name) || '...'} />
+        <Header
+          title={
+            TipData?.tip?.name ? getTitle(TipData?.tip?.name) : t(cs['loading'])
+          }
+        />
         <TipDetailBox
           name={TipData?.tip?.name}
           updated_at={TipData?.tip?.updated_at}
