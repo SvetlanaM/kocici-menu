@@ -8,4 +8,19 @@ module.exports = {
     S3_UPLOAD_SECRET: process.env.S3_UPLOAD_SECRET,
     S3_UPLOAD_BUCKET: process.env.S3_UPLOAD_BUCKET,
   },
+
+  async exportPathMap() {
+    const pathMap = {
+      '/tips': { page: '/tips', query: { slug: '' } },
+    };
+    // now get the dynamic stuff:
+    // const articles = await getPosts();
+    // articles.map((post) => {
+    //   pathMap[`/article/${post.link}`] = {
+    //     page: '/post',
+    //     query: { slug: post.link },
+    //   };
+    // });
+    return pathMap;
+  },
 };
