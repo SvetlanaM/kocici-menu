@@ -9,8 +9,8 @@ const LeftContainer = ({ children }: ContainerProps): JSX.Element => {
     <div
       className={`w-full  lg:pt-0 xl-custom:pt-0 xl-custom:w-3/12 xl-custom:pl-7 ${
         checkProductURL()
-          ? 'order-1 lg:order-2 pt-12'
-          : 'order-2 lg:order-1 pt-0 lg:pt-5'
+          ? 'order-1 lg:order-2 pt-0'
+          : 'order-2 lg:order-1 pt-10 lg:pt-5'
       }`}
     >
       {children}

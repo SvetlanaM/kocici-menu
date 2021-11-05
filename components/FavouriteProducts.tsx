@@ -12,12 +12,12 @@ const FavouriteProducts = ({
   product,
 }: FavouriteProductsProps): JSX.Element => {
   return (
-    <div className="flex justify-start items-center py-2 h-20">
-      <div className="cat-image justify-center items-center flex">
+    <div className="flex justify-start items-center py-2 xl-custom:h-20 h-auto">
+      <div className="cat-image justify-center items-center hidden xl-custom:flex">
         <ProductImage src={product.image_url} alt={product.name} />
       </div>
 
-      <div className="ml-3.6">
+      <div className="ml-3.6 xxl-custom:ml-10">
         <ProductName
           brand={product.brand_type}
           name={setUppercaseTitle(truncateText(product.name, 35))}

@@ -54,7 +54,7 @@ const TipDetailBox = ({
     <div className="text-justify">
       <Title title={name} />
       <Breadcrumbs breadcrumbs={breadcrumbs} />
-      <div className="flex justify-between items-center pt-3">
+      <div className="flex flex-col xl-custom:flex-row justify-between items-start xl-custom:items-center xl-custom:pt-3">
         {category && (
           <div>
             <Image
@@ -68,7 +68,7 @@ const TipDetailBox = ({
             </span>
           </div>
         )}
-        <p className="text-sm font-light text-gray">
+        <p className="text-sm font-light text-gray mt-3 xl-custom:mt-0">
           {t(cs['published_date'])} {formattedDate}
         </p>
       </div>

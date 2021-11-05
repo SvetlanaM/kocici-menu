@@ -23,9 +23,7 @@ const CenterContainer = ({ children }: ContainerProps): JSX.Element => {
   return (
     <div
       className={`w-full xl-custom:w-9/12 xl-custom:mt-0 ${
-        checkProductURL()
-          ? 'order-2 mt-5 lg:mt-12 lg:order-1'
-          : 'order-1 mt-14 lg:order-1'
+        checkProductURL() ? 'order-2 lg:mt-12 lg:order-1' : 'order-1 lg:order-1'
       }`}
     >
       {children}

@@ -7,8 +7,8 @@ export default function Footer(): JSX.Element {
   const { t } = useTranslation();
   return (
     <footer>
-      <div className="lg:container lg:mx-auto px-5 lg:px-10">
-        <div className="mt-10 lg:mt-24 border-t-1 border-gray-light flex flex-col lg:flex-row items-baseline justify-between text-purple-darkest">
+      <div className="lg:container lg:mx-auto lg:px-10 container-width">
+        <div className="mt-10 lg:mt-24 border-t-1 border-gray-light flex flex-col lg:flex-row items-baseline justify-between text-purple-darkest container-width">
           <div className="w-full lg:w-1/2 py-6">
             <ul className="flex flex-col lg:flex-row lg:inline-flex">
               <li className="pr-6">

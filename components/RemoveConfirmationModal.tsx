@@ -24,18 +24,23 @@ const RemoveConfirmationModal = ({
       onRequestClose={closeModal}
       ariaHideApp={false}
       contentLabel="Add product review"
-      className="w-full xl-custom:w-2/4 pt-8 pb-5 px-10 m-auto bg-white border-rounded-base center-modal"
+      className="w-full xl-custom:w-2/4 pb-5 px-10 m-auto bg-white border-rounded-base center-modal xl-custom:h-auto"
     >
-      <div className="flex flex-col justify-between text-purple leading-normal">
+      <div className="flex flex-col justify-between text-purple leading-normal mt-9">
         <h2 className="font-medium text-2xl">
           {t(cs['remove_confirmation'])} {rest} {t(cs['sad_face'])}
         </h2>
-        <div className="flex justify-between items-center mt-5 mb-5">
+        <div className="flex flex-col xl-custom:flex-row justify-between items-center mt-5 mb-5">
           <div className="font-light text-sm w-full pr-3.6">
             {t(cs['cat_remove_info'])} {rest}
             {t(cs['cat_remove_detail'])}
           </div>
-          <Image src="/icons/cat-trash.svg" height={50} width={100} />
+          <Image
+            src="/icons/cat-trash.svg"
+            height={50}
+            width={100}
+            className="mt-8 xl-custom:mt-0"
+          />
         </div>
         <div className="flex justify-between flex-row pt-1">
           <NeutralButton title={t(cs['cancel'])} onClick={closeModal} />

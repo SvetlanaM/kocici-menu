@@ -12,7 +12,7 @@ const Title = ({
   paddingBottom,
 }: TitleProps): JSX.Element => (
   <h3
-    className={`${fontSize} ${paddingBottom} font-semibold text-purple ${classNames}`}
+    className={`${fontSize} ${paddingBottom} font-semibold text-purple text-left ${classNames}`}
   >
     {title}
   </h3>

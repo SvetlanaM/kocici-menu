@@ -179,11 +179,11 @@ const CatDetailProductTable = ({
       </div>
 
       {data && data.length > 0 ? (
-        <div className="border-rounded-base border-gray">
+        <div className="border-rounded-base border-gray xl-custom:pb-0">
           <div className="grid divide-y divide-gray_lightest">
             {data.map((item, index) => (
               <React.Fragment key={item.id}>
-                <div className="pt-2 flex pb-1 justify-between items-center">
+                <div className="pt-2 flex pb-6 xl-custom:pb-1 justify-between items-start xl-custom:items-center flex-col xl-custom:flex-row">
                   <div className="w-full">
                     <FavouriteProducts key={item.id} product={item} />
                   </div>
@@ -200,7 +200,7 @@ const CatDetailProductTable = ({
                             <Image
                               src="/icons/add.svg"
                               width={30}
-                              className="mr-10"
+                              className="mr-10 mt-2 xl-custom:mt-0"
                             />
                           </a>
                         </Link>

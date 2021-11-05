@@ -2,7 +2,7 @@ import Pros from './Pros';
 
 export default function ProsWrapper(): JSX.Element {
   return (
-    <div className="grid grid-rows-3 lg:grid-rows-1 lg:grid-cols-3 gap-12 grid-flow-col mt-16 lg:mt-28 mx-5 lg:mx-10 text-center text-purple-darkest text-md font-light leading-normal">
+    <div className="grid grid-rows-3 lg:grid-rows-1 lg:grid-cols-3 gap-12 grid-flow-col mt-16 lg:mt-28 mx-5 text-center text-purple-darkest text-md font-light leading-normal container-width">
       <Pros
         imageAlt="pros_alt1"
         imageUrl="/icons/pros1.svg"

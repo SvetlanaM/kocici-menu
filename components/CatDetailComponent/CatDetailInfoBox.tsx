@@ -129,7 +129,7 @@ const CatDetailInfoBox = ({
           </ul>
         </div>
       </div>
-      <div className="grid grid-flow-row xl-custom:grid-flow-col gap-5 xl-custom:gap-0 py-5 xl-custom:py-0 xl-custom:grid-flow-row xl-custom:divide-y border-gray">
+      <div className="grid gap-5 xl-custom:gap-0 py-5 xl-custom:py-0 xl-custom:grid-flow-row xl-custom:divide-y border-gray">
         <div className="edit-box flex flex-row items-center justify-start pl-3">
           <Image
             src="/icons/change_stars.svg"
