@@ -12,7 +12,7 @@ export const checkProductURL = (): boolean => {
     }
   }
 
-  return false;
+  return true;
 };
 
 const CenterContainer = ({ children }: ContainerProps): JSX.Element => {
@@ -22,7 +22,7 @@ const CenterContainer = ({ children }: ContainerProps): JSX.Element => {
 
   return (
     <div
-      className={`w-full xl-custom:w-9/12 xl-custom:mt-0 ${
+      className={`w-full xl-custom:w-9/12 xl-custom:mt-0 mt-10 ${
         checkProductURL() ? 'order-2 lg:mt-12 lg:order-1' : 'order-1 lg:order-1'
       }`}
     >

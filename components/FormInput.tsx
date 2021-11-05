@@ -69,13 +69,11 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
             placeholder={placeholder}
             name={name}
             onChange={onChange}
+            value={defaultValue}
           />
         )}
         {passClass && (
-          <div
-            className={`${passClass} absolute pass`}
-            onClick={onClick}
-          />
+          <div className={`${passClass} absolute pass`} onClick={onClick} />
         )}
       </div>
     );

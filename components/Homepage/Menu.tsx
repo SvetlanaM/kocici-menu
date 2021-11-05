@@ -6,7 +6,7 @@ import cs from '../../public/locales/cs/common.json';
 export default function Menu(): JSX.Element {
   const { t } = useTranslation();
   return (
-    <nav className="flex flex-col lg:flex-row items-center justify-between">
+    <nav className="flex flex-col lg:flex-row items-center justify-between pl-0">
       <Link href="/">
         <a className="logo font-logo font-bold text-lg uppercase text-purple-dark">
           {APP_NAME}
@@ -18,13 +18,8 @@ export default function Menu(): JSX.Element {
             {t(cs['login'])}
           </a>
         </Link>
-        <Link href="/user/register">
-          <a className="block hover:text-purple-light mx-3 lg:mx-6">
-            {t(cs['register'])}
-          </a>
-        </Link>
         <Link href={`mailto:${SVETA_EMAIL}`}>
-          <a className="block hover:text-purple-light mx-3 lg:mx-6 pr-3 lg:pr-6 hidden lg:block">
+          <a className="block hover:text-purple-light mx-3 lg:mx-6 pr-3 lg:pr-6">
             {t(cs['write_me'])}
           </a>
         </Link>
