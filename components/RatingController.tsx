@@ -39,7 +39,7 @@ const RatingController = forwardRef(
 
     return (
       <>
-        <div className="mb-5">
+        <div className="mb-3 xl-custom:mb-5">
           <FormInputLabel name={`${t(cs['review'])}*`} />
         </div>
         <Controller
@@ -53,7 +53,7 @@ const RatingController = forwardRef(
             <div className="flex items-center">
               {[1, 2, 3, 4, 5].map((index) => {
                 return (
-                  <span className="mr-1" key={index}>
+                  <span className="mr-5 xl-custom:mr-1" key={index}>
                     <RatingIcon
                       index={index}
                       rating={field.value ? field.value : 0}

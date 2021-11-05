@@ -223,6 +223,7 @@ input:focus {
 
 .graph-container {
     height: 250px;
+    width: 250px;
 }
 
 .filter-cancel {

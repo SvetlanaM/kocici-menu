@@ -190,12 +190,12 @@ const CatDetailContainer = ({
         setCatFunction={setCatData}
         selectedCat={catSummaryData.selectedCat}
       />
-      <div className="w-full flex justify-between">
+      <div className="w-full flex justify-between flex-col xl-custom:flex-row">
         <CatDetailInfoBox
           data={catSummaryData.catData}
           onEditCat={setCatEditOpened}
         />
-        <div className="w-3/12 pl-7">
+        <div className="w-full xl-custom:w-3/12 xl-custom:pl-7 h-full mt-8 xl-custom:mt-0">
           <AddCatBox backlink={BackLinkType.MY_CATS} />
         </div>
       </div>

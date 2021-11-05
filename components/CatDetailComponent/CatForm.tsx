@@ -238,24 +238,6 @@ const CatForm = ({
     }
   }, []);
 
-  const newReviews = useMemo(() => {
-    return userProductsArrayMain
-      ? userProductsArrayMain &&
-          review &&
-          userProductsArrayMain.filter(
-            (x) =>
-              !review
-                .map(
-                  (item) =>
-                    item !== undefined &&
-                    x.product !== undefined &&
-                    item.product.id
-                )
-                .includes(x.product !== undefined && x.product.id)
-          )
-      : [];
-  }, [review]);
-
   const diff =
     userProductsArrayMain &&
     userProductsArrayMain.filter(
@@ -317,12 +299,12 @@ const CatForm = ({
             return {
               product: {
                 brand_type: item?.product?.brand_type,
-                id: item.product.id,
-                image_url: item.product.image_url,
-                name: item.product.name,
-                __typename: item.product.__typename,
+                id: item?.product?.id,
+                image_url: item?.product?.image_url,
+                name: item?.product?.name,
+                __typename: item?.product?.__typename,
               },
-              rating: item.rating,
+              rating: item?.rating,
             };
           })
       );
@@ -442,7 +424,7 @@ const CatForm = ({
               ))}
           />
         </div>
-        <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-3 xl-custom:gap-10">
+        <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-0 xl-custom:gap-10">
           <FormInputWrapper>
             <FormInputLabel name={`${t(cs['cat_name'])}*`} />
             <FormInput
@@ -479,7 +461,7 @@ const CatForm = ({
             </FormSelectBox>
           </FormInputWrapper>
         </div>
-        <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-3 xl-custom:gap-10">
+        <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-0 xl-custom:gap-10">
           <FormInputWrapper>
             <FormInputLabel name={t(cs['cat_age'])} />
             <FormInput
@@ -505,7 +487,7 @@ const CatForm = ({
             />
           </FormInputWrapper>
         </div>
-        <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-3 xl-custom:gap-10">
+        <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-0 xl-custom:gap-10">
           <FormInputWrapper>
             <FormInputLabel name={t(cs['cat_weight'])} />
             <FormInput
@@ -527,7 +509,7 @@ const CatForm = ({
             />
           </FormInputWrapper>
         </div>
-        <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-3 xl-custom:gap-10 mt-3">
+        <div className="grid grid-cols-1 xl-custom:grid-cols-2 gap-0 xl-custom:gap-10">
           <FormInputWrapper>
             <FormInputLabel name={t(cs['doctor_email'])} />
             <FormInput
@@ -561,7 +543,7 @@ const CatForm = ({
             key={field.fieldArray}
             className="flex flex-col xl-custom:flex-row justify-between xl-custom:items-center mb-3"
           >
-            <div className="w-full xl-custom:w-1/2 mb-5 xl-custom:mb-0 xl-custom:pr-3">
+            <div className="w-full xl-custom:w-1/2 mb-1 xl-custom:mb-0 xl-custom:pr-3">
               <ProductController
                 searchProducts={searchProducts}
                 onInputChange={(e) => {
@@ -575,7 +557,7 @@ const CatForm = ({
                 showHint={false}
               />
             </div>
-            <div className="pl-0 w-full xl-custom:w-2/6 mb-5">
+            <div className="pl-0 w-full xl-custom:w-2/6 xxl-custom:w-2/5 mb-2 xl-custom:mb-5">
               <RatingController
                 name={`fieldArray.${index}.rating`}
                 control={control}
@@ -590,7 +572,7 @@ const CatForm = ({
             </div>
             <button
               type="button"
-              className="mt-5 text-left xl-custom:mt-5 text-red-500"
+              className="mt-2 xl-custom:mt-5 text-left xl-custom:mt-5 text-red-500"
               onClick={() => {
                 remove(index);
                 setIsRemoved(true);
@@ -601,7 +583,7 @@ const CatForm = ({
           </div>
         ))}
         <div className="text-red-500 mb-4 -mt-2">
-          {errors.fieldArray && newReviews && t(cs['reviews_error'])}
+          {errors.fieldArray && t(cs['reviews_error'])}
         </div>
 
         <button
@@ -627,7 +609,7 @@ const CatForm = ({
             placeholder={t(cs['cat_note_placeholder'])}
             className="form-textarea w-full mb-3 mt-2 text-purple block border-rounded-base border-gray
               focus:outline-none focus:bg-white focus:border-gray
-              focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray"
+              focus:border focus:ring-gray focus:ring-opacity-50 placeholder-gray h-200 xl-custom:h-32"
           />
           <span className="text-sm font-light text-gray">
             {watchedNote !== undefined &&

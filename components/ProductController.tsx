@@ -110,10 +110,10 @@ const ProductController = forwardRef(
                 IndicatorSeparator: () => null,
               }}
               getOptionValue={(product: SelectProductFieldsFragment) =>
-                product.id.toString()
+                product?.id?.toString()
               }
               getOptionLabel={(product: SelectProductFieldsFragment) =>
-                `${product.brand_type} - ${product.name}`
+                `${product?.brand_type || ''} - ${product?.name || ''}`
               }
               onInputChange={onInputChange}
               placeholder={t(cs['search_product'])}

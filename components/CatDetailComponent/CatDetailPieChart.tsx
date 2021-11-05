@@ -46,7 +46,7 @@ const CatDetailPieChart = ({
   }
 
   return (
-    <div className="mt-5 w-full graph-container">
+    <div className="mt-10 xl-custom:mt-5 w-full graph-container">
       <Title title={t(cs['food_quality_%'])} />
       {checkZeros() ? (
         <Pie data={data} options={options} />

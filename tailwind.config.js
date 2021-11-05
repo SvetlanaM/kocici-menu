@@ -50,6 +50,7 @@ module.exports = {
       screens: {
         'xl-custom': '1240px',
         'xxl-custom': '1920px',
+        '2xl': '1440px',
       },
       borderColor: (theme) => ({
         yellow: theme('colors.yellow.lightest'),

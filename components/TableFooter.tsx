@@ -37,9 +37,9 @@ const TableFooter = ({
   };
 
   return (
-    <div className="w-full flex border-b-1 border-l-1 border-r-1 rounded-b-lg border-gray">
+    <div className="w-full flex xl-custom:border-b-1 xl-custom:border-l-1 xl-custom:border-r-1 xl-custom:rounded-b-lg xl-custom:border-gray">
       <div className="flex items-center justify-between w-full">
-        <div className="py-3 pl-3.6 base-medium-text text-purple">
+        <div className="pt-3 md:py-3 pl-3.6 base-medium-text text-purple">
           <Link href="/dashboard">
             <a
               onClick={openModal}
@@ -57,7 +57,7 @@ const TableFooter = ({
           />
         </div>
 
-        <div className="pr-3.6 text-sm font-light text-gray text-right">
+        <div className="pr-3.6 text-sm font-light text-gray text-right hidden md:flex">
           <Link href="/products">
             <a className="hover:text-gray-dark">{t(cs['show_all'])}</a>
           </Link>

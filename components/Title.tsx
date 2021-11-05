@@ -20,7 +20,7 @@ const Title = ({
 
 Title.defaultProps = {
   fontSize: 'text-lg',
-  paddingBottom: 'pb-5',
+  paddingBottom: 'xl-custom:pb-5 pb-3',
 };
 
 export default Title;

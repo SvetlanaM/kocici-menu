@@ -9,7 +9,7 @@ const StatisticsList = ({ data, cols }: StatisticsListProps): JSX.Element => {
   return (
     <InnerContainer flexType="flew-col">
       <div
-        className={`grid grid-cols xl-custom:${cols} grid-flow-row gap-y-11 xl-custom:gap-x-11 w-full`}
+        className={`grid grid-cols xl-custom:${cols} grid-flow-row gap-y-9 md:gap-y-8 xl-custom:gap-y-11 xl-custom:gap-x-11 w-full`}
       >
         {data &&
           data.map((item) => (

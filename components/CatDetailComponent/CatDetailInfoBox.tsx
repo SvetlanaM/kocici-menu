@@ -74,7 +74,7 @@ const CatDetailInfoBox = ({
   }, [catId]);
 
   return (
-    <div className="grid xl-custom:grid-cols-4 xl-custom:grid-rows-0 divide-y xl-custom:divide-y-0 xl-custom:divide-x gap-y-2 divide-gray_lightest border-rounded-base border-gray w-9/12">
+    <div className="grid xl-custom:grid-cols-4 xl-custom:grid-rows-0 divide-y xl-custom:divide-y-0 xl-custom:divide-x gap-y-2 divide-gray_lightest border-rounded-base border-gray w-full xl-custom:w-9/12">
       <div className="flex small-purple-text text-left my-cat">
         <div className="flex flex-row px-3 align-middle py-3 justify-between cat-detail-box">
           <CatBasicInfo cat={data} />
@@ -129,7 +129,7 @@ const CatDetailInfoBox = ({
           </ul>
         </div>
       </div>
-      <div className="grid grid-flow-col py-5 xl-custom:py-0 xl-custom:grid-flow-row xl-custom:divide-y border-gray">
+      <div className="grid grid-flow-row xl-custom:grid-flow-col gap-5 xl-custom:gap-0 py-5 xl-custom:py-0 xl-custom:grid-flow-row xl-custom:divide-y border-gray">
         <div className="edit-box flex flex-row items-center justify-start pl-3">
           <Image
             src="/icons/change_stars.svg"

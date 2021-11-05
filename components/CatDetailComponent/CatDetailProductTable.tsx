@@ -151,7 +151,7 @@ const CatDetailProductTable = ({
           index={rowNumber}
         />
       ) : null}
-      <div className="flex flex-col xl-custom:flex-row justify-between items-center xl-custom:items-center text-gray text-left">
+      <div className="flex flex-col xl-custom:flex-row justify-between items-start xl-custom:items-center xl-custom:items-center text-gray text-left">
         <Title title={`${title}`} />
         {title === t(cs['suggested_reviews']) ? (
           <button

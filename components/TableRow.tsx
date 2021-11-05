@@ -60,7 +60,7 @@ const TableRow = ({
 
   return (
     <tr className="h-auto my-12">
-      <td className="px-10 xl-custom:px-2 py-5" ref={nodeRef}>
+      <td className="px-2 xl-custom:px-2 py-5" ref={nodeRef}>
         <ProductImage
           src={product.image_url}
           alt={`${product.brand_type} - ${product.name}`}

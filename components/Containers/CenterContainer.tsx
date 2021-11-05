@@ -7,12 +7,12 @@ type ContainerProps = {
 export const checkProductURL = (): boolean => {
   if (typeof window !== 'undefined') {
     const url = window.location.href;
-    if (url.includes('products') || url.includes('dashboard')) {
+    if (url.includes('products')) {
       return true;
     }
   }
 
-  return true;
+  return false;
 };
 
 const CenterContainer = ({ children }: ContainerProps): JSX.Element => {
@@ -24,8 +24,8 @@ const CenterContainer = ({ children }: ContainerProps): JSX.Element => {
     <div
       className={`w-full xl-custom:w-9/12 xl-custom:mt-0 ${
         checkProductURL()
-          ? 'order-2 mt-0 lg:order-1'
-          : 'order-1 mt-16 lg:order-1'
+          ? 'order-2 mt-5 lg:mt-12 lg:order-1'
+          : 'order-1 mt-14 lg:order-1'
       }`}
     >
       {children}

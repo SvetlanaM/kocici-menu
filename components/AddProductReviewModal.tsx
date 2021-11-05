@@ -39,7 +39,7 @@ const AddProductReviewModal = ({
       onRequestClose={closeModal}
       ariaHideApp={false}
       contentLabel={t(cs['add_product_review_modal_title'])}
-      className="xl-custom:w-2/4 pt-8 pb-3 px-10 m-auto bg-white border-rounded-base w-full h-full xl-custom:h-auto center-modal overflow-x-auto"
+      className="xl-custom:w-2/4 pt-8 pb-20 xl-custom:pb-3 px-7 xl-custom:px-10 m-auto bg-white border-rounded-base w-full h-full xl-custom:h-auto center-modal overflow-x-auto"
     >
       <div className="flex flex-col justify-between text-purple leading-normal">
         <h2 className="font-medium text-2xl pt-10 xl-custom:pt-0">

@@ -184,7 +184,7 @@ const AddProductReviewForm = ({
           />
         </div>
       </div>
-      <div className="flex xl-custom:flex-col justify-between">
+      <div className="flex flex-col xl-custom:flex-col justify-between">
         <div className="w-full mb-4">
           <div className="mb-2">
             <FormInputLabel name={`${setUppercaseTitle(t(cs['cat']))}*`} />

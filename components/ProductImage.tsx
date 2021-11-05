@@ -26,7 +26,9 @@ const ProductImage = ({ src, alt, type }: ProductImageProps): JSX.Element => {
       placeholder={productImage}
       quality={100}
       className={
-        type !== 'search' ? 'ml-3.5' : 'object-fill h-10 w-10 mr-4 float-right'
+        type !== 'search'
+          ? 'ml-5 md:ml-3.5 2xl:ml-6 xxl-custom:ml-14'
+          : 'object-fill h-10 w-10 mr-4 float-right'
       }
       type={type}
     />
