@@ -8,12 +8,56 @@ body {
 }
 
 .container-width {
-    width: 90%;
-    max-width: 1600px;
     margin: 0 auto;
     float: none;
-    padding-left: 10x;
+    padding-left: 10px;
     padding-right: 10px;
+}
+
+@media screen and (min-width: 768px) {
+    .container-width {
+        max-width: 750px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .container-width {
+        max-width: 970px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .container-width {
+        max-width: 1140px;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    .container-width {
+        max-width: 1600px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .container-left-half-width {
+        width: 100%;
+        max-width: 485px;
+        margin-left: auto;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .container-left-half-width {
+        max-width: 570px;
+    }
+}
+
+@media screen and (min-width: 1920px) {
+    .container-left-half-width {
+        max-width: 800px;
+    }
 }
 
 a {
