@@ -13,7 +13,7 @@ export default function WelcomeBoxCheckbox({
 }: WelcomeBoxCheckboxProps): JSX.Element {
   const { t } = useTranslation();
   return (
-    <div className="flex items-center">
+    <div className="flex justify-center">
       <input
         type="checkbox"
         name={name}
