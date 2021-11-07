@@ -63,7 +63,7 @@ const MenuItem = ({ icon, name, url, active }: MenuItemProps): JSX.Element => {
   ) : (
     <Link href={url}>
       <a
-        className={`flex pt-6 text-gray-100 hover:text-purple-light`}
+        className={`flex mt-6 text-gray-100 hover:text-purple-light`}
         onMouseEnter={showHover}
         onMouseLeave={showHover}
         onFocus={() => setIsHover(hoverIcon)}

@@ -23,7 +23,7 @@ const AuthRightContainer = ({
 }: AuthRightContainerProps): JSX.Element => {
   const { t } = useTranslation();
   return (
-    <div className="justify-center order-2 xl-custom:order-1 w-full xl-custom:w-1/2 flex items-start px-10 xl-custom:px-20 flex-col xl-custom:min-h-screen text-purple">
+    <div className="justify-center order-2 xl-custom:order-1 w-full xl-custom:w-1/2 py-16 flex items-start px-10 xl-custom:px-20 flex-col xl-custom:min-h-screen text-purple">
       <Link href="/">
         <a className="logo font-logo font-bold text-lg uppercase text-purple-dark">
           {APP_NAME}

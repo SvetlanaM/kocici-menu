@@ -14,8 +14,9 @@ textarea {
 }
 
 body:focus-visible,
-a:focus-visible {
-    outline: none;
+a:focus-visible,
+li:focus-visible {
+    outline: none !important;
 }
 
 .container-width {

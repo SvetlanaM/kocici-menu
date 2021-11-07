@@ -4,10 +4,10 @@ import { MenuLinks } from './Menu';
 import { useRouter } from 'next/router';
 import { APP_NAME, SVETA_EMAIL } from '../utils/constants';
 import { useState } from 'react';
-import Image from './Image';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
 const { items } = MenuLinks;
+import Image from 'next/image';
 
 const Sidebar = (): JSX.Element => {
   const router = useRouter();
@@ -51,7 +51,12 @@ const Sidebar = (): JSX.Element => {
             </a>
           </Link>
           <a onClick={toggleMenu} className="cursor-pointer">
-            <Image src={'/icons/hamburger.svg'} width={25} height={25} />
+            <Image
+              src={'/icons/hamburger.svg'}
+              width={25}
+              height={25}
+              priority
+            />
           </a>
         </div>
         <nav className={isClosed ? 'flex' : 'hidden'}>
