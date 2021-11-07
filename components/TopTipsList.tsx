@@ -19,7 +19,7 @@ const TopTipsList = ({ data, cols }: TopTipsListProps): JSX.Element => {
   const { t } = useTranslation();
   return (
     <div
-      className={`grid ${cols} gap-y-8 xl-custom:gap-x-11 pt-8 xl-custom:pt-0`}
+      className={`grid ${cols} gap-y-8 xl-custom:gap-x-11 pt-4 xl-custom:pt-0`}
     >
       {data &&
         data.map((item) => (

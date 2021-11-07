@@ -47,6 +47,7 @@ const MenuItem = ({ icon, name, url, active }: MenuItemProps): JSX.Element => {
         className={`flex pt-6 text-gray-100 hover:text-purple-light`}
         onMouseEnter={showHover}
         onMouseLeave={showHover}
+        onFocus={() => setIsHover(hoverIcon)}
       >
         <div className="menu-icon">
           <Image
@@ -65,6 +66,7 @@ const MenuItem = ({ icon, name, url, active }: MenuItemProps): JSX.Element => {
         className={`flex pt-6 text-gray-100 hover:text-purple-light`}
         onMouseEnter={showHover}
         onMouseLeave={showHover}
+        onFocus={() => setIsHover(hoverIcon)}
       >
         <div className="menu-icon">
           <Image

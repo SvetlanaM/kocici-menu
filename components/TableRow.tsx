@@ -49,7 +49,7 @@ const TableRow = ({
   const formattedDate = DateFormatObject(updated_at).formatWithReplace();
   const reviewArray = [1, 2, 3, 4, 5];
   const [isHidden, setIsHidden] = useState<boolean>(true);
-  const nodeRef = useRef<HTMLTableCellElement | null>(null);
+  const nodeRef = useRef<HTMLButtonElement | null>(null);
   const { t } = useTranslation();
   const closeCollapse = () => {
     setIsHidden(true);
@@ -60,7 +60,7 @@ const TableRow = ({
 
   return (
     <tr className="h-auto my-12">
-      <td className="px-2 xl-custom:px-2 py-5" ref={nodeRef}>
+      <td className="px-2 xl-custom:px-2 py-5">
         <ProductImage
           src={product.image_url}
           alt={`${product.brand_type} - ${product.name}`}
@@ -106,12 +106,13 @@ const TableRow = ({
               </a>
             </Link>
           </div>
-          <div className="relative">
+          <div className="relative hidden xl-custom:flex">
             <button
               onClick={() => setIsHidden((prevState) => !prevState)}
               aria-controls={REVIEW_TOGGLE_ID}
               aria-haspopup
               aria-expanded={isHidden}
+              ref={nodeRef}
             >
               <Image
                 src="/icons/add-review.svg"

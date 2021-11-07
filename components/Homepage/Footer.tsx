@@ -7,7 +7,7 @@ export default function Footer(): JSX.Element {
   const { t } = useTranslation();
   return (
     <footer className="container-width">
-      <div className="lg:container lg:mx-auto px-5 custom-lg:px-0">
+      <div className="lg:container lg:mx-auto">
         <div className="mt-10 lg:mt-24 border-t-1 border-gray-light flex flex-col lg:flex-row items-baseline justify-between text-purple-darkest">
           <div className="w-full lg:w-1/2 py-6">
             <ul className="flex flex-col lg:flex-row lg:inline-flex">
@@ -19,7 +19,7 @@ export default function Footer(): JSX.Element {
                 </Link>
               </li>
               <li className="pr-6">
-                <Link href="/privacy">
+                <Link href="/gdpr-conditions">
                   <a className="target_new hover:text-purple-light">
                     {t(cs['privacy'])}
                   </a>

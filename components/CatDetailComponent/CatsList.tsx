@@ -8,7 +8,7 @@ interface CatSectionProps {
 
 const CatsList = ({ cats, rows }: CatSectionProps): JSX.Element => {
   return (
-    <div className={`grid ${rows} gap-y-5 mt-7`}>
+    <div className={`grid ${rows} gap-y-5 mt-7 pb-8`}>
       {cats &&
         cats.map((cat) => (
           <CatBox

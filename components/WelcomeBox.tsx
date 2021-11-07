@@ -28,7 +28,7 @@ export default function WelcomeBox(): JSX.Element {
           <h2 className="text-3xl font-medium text-purple-darkest">
             {greeting}
           </h2>
-          <p className="font-light lg:px-48 pt-6 text-purple-darkest leading-normal">
+          <p className="font-light lg:px-48 pt-6 text-purple-darkest leading-normal w-full xl-custom:w-4/5">
             {t(cs['welcome_to_app'])}{' '}
             <span className="text-purple-light">{APP_NAME}</span>.{' '}
             {t(cs['first_step'])}{' '}

@@ -7,8 +7,8 @@ const GDPRConditions = (): JSX.Element => {
   return (
     <>
       <Header title={getTitle('Zásady ochrany osobních údajů')} />
-      <div className="w-full flex items-start py-16 px-10 xl-custom:px-20 flex-col xl-custom:min-h-screen text-purple">
-        <Link href="/user/register">
+      <div className="w-full flex items-start py-10 xl-custom:py-16 px-10 xl-custom:px-20 flex-col xl-custom:min-h-screen text-purple">
+        <Link href="/">
           <a className="logo font-logo font-bold text-lg uppercase text-purple-dark">
             {APP_NAME}
           </a>

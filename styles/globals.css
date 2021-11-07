@@ -1,5 +1,5 @@
-@tailwind base;
 @tailwind components;
+@tailwind base;
 @tailwind utilities;
 html,
 body {
@@ -7,11 +7,22 @@ body {
     margin: 0;
 }
 
+input,
+select,
+textarea {
+    border-radius: 10px !important;
+}
+
+body:focus-visible,
+a:focus-visible {
+    outline: none;
+}
+
 .container-width {
     margin: 0 auto;
     float: none;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
 }
 
 @media screen and (min-width: 768px) {
@@ -38,13 +49,22 @@ body {
     }
 }
 
+.container-left-half-width {
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.container-full {
+    width: 100%;
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
 @media screen and (min-width: 1024px) {
     .container-left-half-width {
         width: 100%;
         max-width: 485px;
         margin-left: auto;
-        padding-left: 10px;
-        padding-right: 10px;
     }
 }
 

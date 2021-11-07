@@ -63,7 +63,7 @@ const Sidebar = (): JSX.Element => {
                 {...item}
               />
             ))}
-            <div className="mb-5 mt-2 py-1.5 border-rounded-base border-purple font-medium text-center text-purple-light transition duration-500 ease-in hover:bg-purple-light hover:text-white">
+            <div className="mb-5 mt-6 xl-custom:mt-2 py-1.5 border-rounded-base border-purple font-medium text-center text-purple-light transition duration-500 ease-in hover:bg-purple-light hover:text-white">
               <Link href={`mailto:${SVETA_EMAIL}`}>
                 <a>{t(cs['write_me_1'])}</a>
               </Link>

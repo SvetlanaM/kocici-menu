@@ -74,43 +74,45 @@ const UserStats = ({ data }: UserStatsProps): JSX.Element => {
   }, [data]);
 
   return (
-    <div className="border-rounded-base border-gray">
-      <div className="grid divide-y divide-gray_lightest">
-        {mergedObject &&
-          mergedObject.map((item, index) => {
-            return (
-              <div
-                className="pt-1 flex justify-between items-center"
-                key={index}
-              >
-                <div className="w-full px-5 pb-2 pt-4">
-                  <ul className="small-light-text">
-                    {item.map((item) => (
-                      <li key={item.labels} className="mb-4">
-                        {String(item.data_values).length < 3 ? (
-                          <p className="text-gray">
-                            {item.labels}:{' '}
-                            <span className="text-purple">
-                              {item.data_values}
-                            </span>
-                          </p>
-                        ) : (
-                          <>
-                            <p className="text-gray">{item.labels}</p>
-                            <p className="text-purple mt-1">
-                              {item.data_values}
+    <section className="pt-5 pb-12 xl-custom:pt-0">
+      <div className="border-rounded-base border-gray">
+        <div className="grid divide-y divide-gray_lightest">
+          {mergedObject &&
+            mergedObject.map((item, index) => {
+              return (
+                <div
+                  className="pt-1 flex justify-between items-center"
+                  key={index}
+                >
+                  <div className="w-full px-5 pb-2 pt-4">
+                    <ul className="small-light-text">
+                      {item.map((item) => (
+                        <li key={item.labels} className="mb-4">
+                          {String(item.data_values).length < 3 ? (
+                            <p className="text-gray">
+                              {item.labels}:{' '}
+                              <span className="text-purple">
+                                {item.data_values}
+                              </span>
                             </p>
-                          </>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
+                          ) : (
+                            <>
+                              <p className="text-gray">{item.labels}</p>
+                              <p className="text-purple mt-1">
+                                {item.data_values}
+                              </p>
+                            </>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

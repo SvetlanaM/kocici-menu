@@ -2,6 +2,7 @@ import Menu from './Menu';
 import { useTranslation } from 'react-i18next';
 import cs from '../../public/locales/cs/common.json';
 import SubmitButton from '../SubmitButton';
+import Link from 'next/link';
 
 const HomepageLeftContainer = (): JSX.Element => {
   const { t } = useTranslation();
@@ -10,7 +11,7 @@ const HomepageLeftContainer = (): JSX.Element => {
       <div className="container-left-half-width">
         <Menu />
       </div>
-      <div className="container-left-half-width flex justify-center flex-col h-auto lg:h-full mt-8 lg:mt-0 pl-0">
+      <div className="container-left-half-width flex justify-center flex-col h-auto lg:h-full mt-8 lg:mt-0">
         <h1 className="font-extrabold text-4xl lg:text-5xl text-purple-darkest leading-none mb-6">
           {t(cs['menu_of_my_cat'])}
 
@@ -20,11 +21,13 @@ const HomepageLeftContainer = (): JSX.Element => {
           {t(cs['web_banner_description'])}{' '}
           <span className="text-purple-light">{t(cs['web_banner_span'])}</span>
         </div>
-        <SubmitButton
-          text={t(cs['register_me'])}
-          disabled={false}
-          size="w-full lg:w-1/2"
-        />
+        <Link href="/user/register">
+          <SubmitButton
+            text={t(cs['register_me'])}
+            disabled={false}
+            size="w-full lg:w-1/2"
+          />
+        </Link>
       </div>
     </div>
   );
