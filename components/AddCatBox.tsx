@@ -14,7 +14,7 @@ const AddCatBox = ({ backlink }: { backlink: BackLinkType }): JSX.Element => {
     >
       <a>
         <div
-          className={`relative ${
+          className={`relative mb-8 xl-custom:mb-0 ${
             backlink.includes('/my-cats/new-cat') ? 'h-full' : 'h-24'
           }`}
         >

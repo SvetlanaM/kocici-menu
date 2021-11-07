@@ -43,7 +43,7 @@ const Sidebar = (): JSX.Element => {
           </Link>
         </div>
       </aside>
-      <header className="w-full xl-custom:hidden bg-purple-darkest px-8 py-3 z-20">
+      <header className="w-full xl-custom:hidden bg-purple-darkest px-8 py-3 fixed z-20">
         <div className="flex items-center justify-between">
           <Link href="/">
             <a className="logo font-logo font-bold text-lg uppercase text-purple-dark">

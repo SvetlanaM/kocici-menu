@@ -199,7 +199,7 @@ const CatDetailContainer = ({
           <AddCatBox backlink={BackLinkType.MY_CATS} />
         </div>
       </div>
-      <div className="w-full grid grid-rows-2 xl-custom:grid-rows-1 xl-custom:grid-cols-2 gap-11 pb-16 mt-3">
+      <div className="w-full grid grid-rows-2 xl-custom:grid-rows-1 xl-custom:grid-cols-2 gap-11 pb-16 -mt-5 xl-custom:mt-3">
         <CatDetailCostChart
           data1={randomDataG}
           data2={randomDataK}
