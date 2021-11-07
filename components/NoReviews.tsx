@@ -15,7 +15,7 @@ const NoReviews = (): JSX.Element => {
   const { t } = useTranslation();
   return (
     <div className="border-rounded-base border-gray">
-      <div className="flex flex-col justify-between items-center px-8 pt-5 pb-4">
+      <div className="flex flex-col justify-between items-center px-8 pb-4">
         <Image src="/icons/no-reviews.svg" width={150} />
         <h1 className="font-semibold text-gray mt-4 text-center">
           {t(cs['no_reviews_products'])}{' '}
