@@ -5,3 +5,8 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+  [plugins.inputs]
+	build_dir_path = "frontend"
+	custom_build_dir_name = ".next-build"
+[[plugins]]
+  package = "netlify-plugin-cache-nextjs"

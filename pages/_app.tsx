@@ -53,7 +53,7 @@ disableFragmentWarnings();
 
 function MyApp({ Component, pageProps, router }: AppProps): JSX.Element {
   return (
-    <IdentityContextProvider url="https://catappreact.netlify.app/">
+    <IdentityContextProvider url={process.env.NEXT_PUBLIC_WEBSITE_URL}>
       <ProtectedRoutes router={router}>
         <ApolloProvider client={ApiClient}>
           <Meta />

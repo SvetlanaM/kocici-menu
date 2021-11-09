@@ -7,7 +7,6 @@ interface CatSectionProps {
 }
 
 const CatsList = ({ cats, rows }: CatSectionProps): JSX.Element => {
-  console.log(cats);
   return (
     cats.length > 0 && (
       <div className={`grid ${rows} gap-y-5 mt-7 pb-8`}>
