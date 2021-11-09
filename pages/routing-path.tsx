@@ -23,6 +23,7 @@ const DashboardCatQuery = () => {
 export default function RoutingPath(): JSX.Element {
   const router = useRouter();
   const url = DashboardCatQuery();
-  url && router.push(url);
+  url && router.replace(url);
+
   return <Loading />;
 }
