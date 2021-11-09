@@ -1,5 +1,6 @@
 import { Router } from 'next/router';
 import useAuth from '../hooks/useAuth';
+import Loading from '../components/Loading';
 
 const isBrowser = () => typeof window !== 'undefined';
 
@@ -26,7 +27,7 @@ const ProtectedRoutes = ({
 
   if (isBrowser() && !isAuthenticated && pathIsProtected) {
     router.replace('/user/login');
-    return null;
+    return <Loading />;
   }
 
   if (
@@ -35,10 +36,16 @@ const ProtectedRoutes = ({
     ['/', '/user/login', '/user/register'].indexOf(router.pathname) > -1
   ) {
     router.replace('/dashboard');
-    return null;
+    return <Loading />;
   }
 
-  return children;
+  if (
+    isBrowser() &&
+    (isAuthenticated ||
+      ['/', '/user/login', '/user/register'].indexOf(router.pathname) > -1)
+  )
+    return children;
+  else return null;
 };
 
 export default ProtectedRoutes;
