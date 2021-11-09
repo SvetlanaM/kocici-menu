@@ -25,25 +25,27 @@ const ProtectedRoutes = ({
 
   const pathIsProtected = unprotectedRoutes.indexOf(router.pathname) === -1;
 
-  if (isBrowser()) {
-    if (isBrowser() && !isAuthenticated && pathIsProtected) {
-      router.replace('/user/login');
-      return <Loading />;
-    }
-
-    if (
-      isBrowser() &&
-      isAuthenticated &&
-      ['/', '/user/login', '/user/register'].indexOf(router.pathname) > -1
-    ) {
-      router.replace('/dashboard');
-      return <Loading />;
-    }
-
-    return children;
-  } else {
-    return null;
+  if (isBrowser() && !isAuthenticated && pathIsProtected) {
+    router.replace('/user/login');
+    return <Loading />;
   }
+
+  if (
+    isBrowser() &&
+    isAuthenticated &&
+    ['/', '/user/login', '/user/register'].indexOf(router.pathname) > -1
+  ) {
+    router.replace('/dashboard');
+    return <Loading />;
+  }
+
+  if (
+    isBrowser() &&
+    (isAuthenticated ||
+      ['/', '/user/login', '/user/register'].indexOf(router.pathname) > -1)
+  )
+    return children;
+  else return null;
 };
 
 export default ProtectedRoutes;

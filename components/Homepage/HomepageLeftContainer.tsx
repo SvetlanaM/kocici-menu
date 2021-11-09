@@ -2,7 +2,7 @@ import Menu from './Menu';
 import { useTranslation } from 'react-i18next';
 import cs from '../../public/locales/cs/common.json';
 import SubmitButton from '../SubmitButton';
-import Link from 'next/link';
+import router from 'next/router';
 
 const HomepageLeftContainer = (): JSX.Element => {
   const { t } = useTranslation();
@@ -21,13 +21,12 @@ const HomepageLeftContainer = (): JSX.Element => {
           {t(cs['web_banner_description'])}{' '}
           <span className="text-purple-light">{t(cs['web_banner_span'])}</span>
         </div>
-        <Link href="/user/register">
-          <SubmitButton
-            text={t(cs['register_me'])}
-            disabled={false}
-            size="w-full lg:w-1/2"
-          />
-        </Link>
+        <SubmitButton
+          text={t(cs['register_me'])}
+          disabled={false}
+          size="w-full lg:w-1/2"
+          onClick={() => router.push('/user/register')}
+        />
       </div>
     </div>
   );
