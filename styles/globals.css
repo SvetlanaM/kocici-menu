@@ -230,6 +230,12 @@ input:focus {
     transform: translate(-50%, -50%);
 }
 
+@media (min-width: 1280px) {
+    .center-modal {
+        overflow-y: hidden;
+    }
+}
+
 .select-photo {
     margin-top: -7px;
 }
