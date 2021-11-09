@@ -29,7 +29,11 @@ const ProtectedRoutes = ({
     return null;
   }
 
-  if (isBrowser() && isAuthenticated && router.pathname === '/') {
+  if (
+    isBrowser() &&
+    isAuthenticated &&
+    ['/', '/user/login', '/user/register'].indexOf(router.pathname) > -1
+  ) {
     router.push('/dashboard');
     return null;
   }
