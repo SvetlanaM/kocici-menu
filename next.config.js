@@ -8,4 +8,5 @@ module.exports = {
     S3_UPLOAD_SECRET: process.env.S3_UPLOAD_SECRET,
     S3_UPLOAD_BUCKET: process.env.S3_UPLOAD_BUCKET,
   },
+  generateBuildId: () => 'build',
 };
