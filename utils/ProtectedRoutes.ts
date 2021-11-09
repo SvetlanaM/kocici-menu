@@ -25,7 +25,7 @@ const ProtectedRoutes = ({
   const pathIsProtected = unprotectedRoutes.indexOf(router.pathname) === -1;
 
   if (isBrowser() && !isAuthenticated && pathIsProtected) {
-    router.push('/user/login');
+    router.replace('/user/login');
     return null;
   }
 
@@ -34,7 +34,7 @@ const ProtectedRoutes = ({
     isAuthenticated &&
     ['/', '/user/login', '/user/register'].indexOf(router.pathname) > -1
   ) {
-    router.push('/dashboard');
+    router.replace('/dashboard');
     return null;
   }
 
