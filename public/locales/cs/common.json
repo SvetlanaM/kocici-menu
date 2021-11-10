@@ -297,12 +297,12 @@
     "pros_alt1": "Šetření přírody a životního prostředí díky efektivnímu plánování nákupu",
     "pros_alt2": "Spokojená najedená kočka",
     "pros_alt3": "Šetření financí díky efektivnímu nakupování krmiva",
-    "register_title_pros": "Přidej si své kočky, nakupuj a ušetři na (ne)vyhozeném jídle",
-    "reg_pros1": "Přidat hodnocení krmiva pro více koček",
-    "reg_pros2": "Filtrovat podle druhu masa, ceny, hodnocení",
-    "reg_pros3": "Editovat nebo mazat kočky a jejich hodnocení v čase",
-    "reg_pros4": "Kontaktovat doktora s předvyplněnými údaji o kočce",
-    "reg_pros5": "Sledovat novinky a kvalitu jídla koček",
+    "register_title_pros": "Přidej si své kočky, nakupuj, poznač si a ušetři na (ne)vyhozeném jídle",
+    "reg_pros1": "Přidej hodnocení krmiva pro více koček",
+    "reg_pros2": "Filtruj podle druhu masa, ceny, hodnocení",
+    "reg_pros3": "Edituj nebo maž kočky a jejich hodnocení jídla v čase",
+    "reg_pros4": "Kontaktuj kočičího doktora s předvyplněnými údaji o kočce",
+    "reg_pros5": "Sleduj novinky a kvalitu jídla koček",
     "cancel": "Zrušit",
     "delete": "Vymazat"
 }
