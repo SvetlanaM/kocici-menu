@@ -11,11 +11,11 @@ const DashboardCatQuery = () => {
     fetchPolicy: 'no-cache',
   });
 
-  if (data && data.user.seen_tutorial) {
+  if (data && data.user.seen_tutorial && typeof window !== 'undefined') {
     return '/dashboard';
   }
 
-  if (data && !data.user.seen_tutorial) {
+  if (data && !data.user.seen_tutorial && typeof window !== 'undefined') {
     return '/welcome';
   }
 };
@@ -23,7 +23,7 @@ const DashboardCatQuery = () => {
 export default function RoutingPath(): JSX.Element {
   const router = useRouter();
   const url = DashboardCatQuery();
-  url && router.replace(url);
+  url && router.push(url);
 
   return <Loading />;
 }
