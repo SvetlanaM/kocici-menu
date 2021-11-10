@@ -29,25 +29,23 @@ const ProtectedRoutes = ({
     setIsLoaded(true);
   }, []);
 
-  const pathIsLogin =
-    ['/', '/user/login', '/user/register'].indexOf(router.pathname) > -1;
-
-  if (!isLoaded) {
-    return <Loading />;
-  }
-
-  if (isAuthenticated) {
-    if (pathIsLogin) {
-      router.push('/dashboard');
+  if (isLoaded) {
+    if (!isAuthenticated && pathIsProtected) {
+      router.replace('/user/login');
       return <Loading />;
-    } else {
-      return children;
     }
-  } else if (pathIsProtected) {
-    router.push('/user/login');
-    return <Loading />;
-  } else {
+
+    if (
+      isAuthenticated &&
+      ['/', '/user/login', '/user/register'].indexOf(router.pathname) > -1
+    ) {
+      router.replace('/routing-path');
+      return <Loading />;
+    }
+
     return children;
+  } else {
+    return <Loading />;
   }
 };
 
