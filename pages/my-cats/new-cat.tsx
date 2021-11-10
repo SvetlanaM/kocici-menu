@@ -94,11 +94,7 @@ export default function CreateCat(): JSX.Element {
   const [, setSavedCat] = useLocalStorage(LocalStorageKey.SELECTED_CAT, 0);
 
   const EditCatForm = () => {
-    const {
-      data: catData,
-      error: catError,
-      loading: catLoading,
-    } = useGetCatByIdQuery({
+    const { data: catData, error: catError } = useGetCatByIdQuery({
       variables: {
         limit: 5,
         withProducts: true,
@@ -107,24 +103,19 @@ export default function CreateCat(): JSX.Element {
       skip: isSaving,
     });
 
-    const {
-      data: productData,
-      loading: productLoading,
-      error: productError,
-    } = useGetProductsQuery({
+    const { data: productData, error: productError } = useGetProductsQuery({
       skip: isSaving,
     });
 
     return (
       <Center>
-        {(catLoading || productLoading) && <Loading />}
         {(catError || productError) && (
           <ErrorScreen
             error={GeneralError.fromApolloError(catError || productError)}
           />
         )}
 
-        {catData && productData && (
+        {catData && productData ? (
           <>
             <Title title={title} />
             <Breadcrumbs breadcrumbs={breadcrumbs} />
@@ -135,6 +126,8 @@ export default function CreateCat(): JSX.Element {
               products={productData.products.slice(0, 2000)}
             />
           </>
+        ) : (
+          <Loading />
         )}
       </Center>
     );
