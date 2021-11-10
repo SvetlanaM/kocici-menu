@@ -1,7 +1,12 @@
 import { APP_NAME } from './constants';
 
-const getTitle = (title: string): string => {
+const getTitle = (title?: string): string => {
   const base_title = APP_NAME.toUpperCase();
+
+  if (title === '') {
+    return base_title;
+  }
+
   if (!process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT) {
     title += ' | TEST';
   } else {
