@@ -123,7 +123,7 @@ tbody tr td {
 }
 
 .more-info::after {
-    content: url('../public/icons/more.svg');
+    content: url('../public/icons/more.png');
     margin-left: 0px;
     float: right;
     top: 0px;
@@ -136,7 +136,7 @@ tbody tr td {
 
 @media (min-width: 1025px) {
     .add-cat::after {
-        content: url('../public/icons/add_cat.svg');
+        content: url('../public/icons/add_cat.png');
         position: absolute;
         right: 4px;
         top: -17px;
@@ -234,7 +234,8 @@ input:focus {
 .basic-menu .dashboard_svg__test,
 .basic-menu .products_svg__test,
 .basic-menu .tips_svg__test,
-.basic-menu .settings_svg__test {
+.basic-menu .settings_svg__test,
+.basic-menu .logout_svg__test {
     fill: white;
     stroke-width: 0.4px;
 }
@@ -243,6 +244,7 @@ input:focus {
 .active-menu .dashboard_svg__test,
 .active-menu .products_svg__test,
 .active-menu .tips_svg__test,
+.active-menu .logout_svg__test,
 .active-menu .settings_svg__test {
     fill: #9f9fc6;
     stroke-width: 0.4px;
@@ -252,6 +254,7 @@ input:focus {
 .basic-menu:hover .dashboard_svg__test,
 .basic-menu:hover .products_svg__test,
 .basic-menu:hover .tips_svg__test,
+.basic-menu:hover .logout_svg__test,
 .basic-menu:hover .settings_svg__test {
     fill: #9f9fc6;
     stroke-width: 0.4px;
@@ -388,9 +391,9 @@ input[type='password'],
 }
 
 .show-pass {
-    background-image: url('../public/icons/show_pass.svg');
+    background-image: url('../public/icons/show_pass.png');
 }
 
 .hide-pass {
-    background-image: url('../public/icons/hide_pass.svg');
+    background-image: url('../public/icons/hide_pass.png');
 }

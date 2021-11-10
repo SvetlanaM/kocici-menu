@@ -3,6 +3,7 @@ import Dashboard from '../public/icons/dashboard.svg';
 import Products from '../public/icons/products.svg';
 import Tips from '../public/icons/tips.svg';
 import Settings from '../public/icons/settings.svg';
+import Logout from '../public/icons/logout.svg';
 
 export const MenuLinks = Object.freeze({
   items: [
@@ -32,7 +33,7 @@ export const MenuLinks = Object.freeze({
       name: 'settings',
     },
     {
-      icon: 'logout',
+      icon: <Logout />,
       url: '',
       name: 'logout',
     },
