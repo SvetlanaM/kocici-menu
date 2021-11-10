@@ -41,7 +41,7 @@ const ProtectedRoutes = ({
 
     return children;
   } else {
-    return <Loading />;
+    return null;
   }
 };
 
