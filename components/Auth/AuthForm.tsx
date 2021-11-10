@@ -1,5 +1,4 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
 import FormErrorMessage from '../FormErrorMessage';
 import FormInputWrapper from '../FormInputWrapper';
 import FormInputLabel from '../FormInputLabel';
@@ -32,7 +31,6 @@ const AuthForm = ({
   const [message, setMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const { t } = useTranslation();
-  const router = useRouter();
   const logger = useLogger();
   const { signupUser, loginUser } = useIdentityContext();
   const {
@@ -64,18 +62,13 @@ const AuthForm = ({
       })
         .then(() => setSuccessMessage(t(cs['registration_success'])))
         .then(() => setMessage(''))
-        .then(() =>
-          loginUser(data.email, data.password).then(() =>
-            router.push('/routing-path')
-          )
-        )
+        .then(() => loginUser(data.email, data.password))
         .catch((err) => setMessage(t(cs[convertErrString(err.message)])))
         .catch((err) => logger(err.message, 'error'));
     }
 
     if (authMethod === 'loginUser') {
       loginUser(data.email, data.password)
-        .then(() => router.push('/routing-path'))
         .then(() => logger(null, 'success', 'login', user_id))
         .catch((err) => setMessage(t(cs[convertErrString(err.message)])))
         .catch((err) => logger(err.message, 'error'));
@@ -85,7 +78,7 @@ const AuthForm = ({
   const hasUppercaseLetter = (value: string): boolean => {
     if (authMethod === 'signupUser') {
       for (const char of value) {
-        if (char.toUpperCase() === char && !/^\d+$/.test(char)) {
+        if (char.toUpperCase() === char && /^[A-Z]+$/.test(char)) {
           return true;
         }
       }

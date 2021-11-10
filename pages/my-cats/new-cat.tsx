@@ -72,13 +72,13 @@ export default function CreateCat(): JSX.Element {
 
     return (
       <Center>
+        <Title title={title} />
+        <Breadcrumbs breadcrumbs={breadcrumbs} />
         {productLoading && <Loading />}
         {productError && (
           <ErrorScreen error={GeneralError.fromApolloError(productError)} />
         )}
-        <Title title={title} />
-        <Breadcrumbs breadcrumbs={breadcrumbs} />
-        {productData ? (
+        {productData && !productError ? (
           <CatForm
             handleSubmit1={handleSubmit1}
             submitText={title}

@@ -3,8 +3,8 @@ import { getUser } from '../utils/user';
 import { useRouter } from 'next/router';
 import Loading from '../components/Loading';
 
-const DashboardCatQuery = () => {
-  const { data: data } = useUserSeenStateQuery({
+const getUrl = () => {
+  const { data: data, error: error } = useUserSeenStateQuery({
     variables: {
       user_id: getUser(),
     },
@@ -18,12 +18,17 @@ const DashboardCatQuery = () => {
   if (data && !data.user.seen_tutorial && typeof window !== 'undefined') {
     return '/welcome';
   }
+
+  if (error) {
+    return '/dashboard';
+  }
+
+  return null;
 };
 
 export default function RoutingPath(): JSX.Element {
   const router = useRouter();
-  const url = DashboardCatQuery();
+  const url = getUrl();
   url && router.push(url);
-
   return <Loading />;
 }

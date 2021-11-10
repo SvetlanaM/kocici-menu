@@ -8,6 +8,8 @@ interface FormInputProps {
   defaultValue?: string;
   width?: string;
   step?: number;
+  min?: number;
+  max?: number;
   onChange?: (e) => void;
   name?: string;
   required?: boolean;
@@ -30,6 +32,8 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
       registerRules,
       passClass,
       allowOnChange = false,
+      min,
+      max,
       onChange,
       onClick,
     }: FormInputProps,
@@ -56,6 +60,8 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
             step={step}
             name={name}
             autoComplete="on"
+            min={min}
+            max={max}
           />
         ) : (
           <input

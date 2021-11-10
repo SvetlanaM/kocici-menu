@@ -194,11 +194,7 @@ const CatForm = ({
       }
     );
   };
-  const [limitedSearchProducts, setLimitedSearchedProducts] = useState<
-    Array<SelectProductFieldsFragment>
-  >(getUniqueReviews());
 
-  useSearch(searchTerm, limitedSearchProducts, setSearchProducts);
   const [isRemoved, setIsRemoved] = useState(false);
 
   const userProductsArrayMain = watchFieldArray;
@@ -214,29 +210,25 @@ const CatForm = ({
         )
       : [];
 
-  useEffect(() => {
-    const userProductsArray =
-      watchFieldArray &&
-      watchFieldArray.map(
-        (item) => item.product !== undefined && item.product.id
-      );
+  let limitedSearchProducts =
+    review &&
+    review.length > 0 &&
+    getUniqueReviews().filter(
+      (x) => !review.map((item) => item.product.name).includes(x && x.name)
+    );
+  limitedSearchProducts = [
+    ...getUniqueReviews().filter(
+      (x) =>
+        !userProductsArrayMain
+          .map((item) => item.product !== undefined && item.product.id)
+          .includes(x.id)
+    ),
+    ...getUniqueReviews().filter(
+      (x) => deletedReviews && deletedReviews.includes(x.name)
+    ),
+  ];
 
-    const deleted =
-      deletedReviews && deletedReviews.map((item) => item.product.name);
-
-    if (
-      userProductsArray &&
-      userProductsArray.length > 0 &&
-      searchTerm !== ' '
-    ) {
-      setLimitedSearchedProducts([
-        ...getUniqueReviews().filter((x) => !userProductsArray.includes(x.id)),
-        ...getUniqueReviews().filter(
-          (x) => deleted && deleted.includes(x.name)
-        ),
-      ]);
-    }
-  }, []);
+  useSearch(searchTerm, limitedSearchProducts, setSearchProducts);
 
   const diff =
     userProductsArrayMain &&
@@ -251,31 +243,23 @@ const CatForm = ({
   const mergedInsertUpdate = diff ? diff : [];
 
   useEffect(() => {
-    if (review && review.length > 0) {
-      setLimitedSearchedProducts(() =>
-        limitedSearchProducts.filter(
-          (x) => !review.map((item) => item.product.name).includes(x && x.name)
-        )
+    if (review && review.length === userDefaultValues.length) {
+      setValue(
+        'fieldArray',
+        userDefaultValues &&
+          userDefaultValues.map((item) => {
+            return {
+              product: {
+                brand_type: item.product.brand_type,
+                id: item.product.id,
+                image_url: item.product.image_url,
+                name: item.product.name,
+                __typename: item.product.__typename,
+              },
+              rating: item.rating,
+            };
+          })
       );
-
-      if (review.length === userDefaultValues.length) {
-        setValue(
-          'fieldArray',
-          userDefaultValues &&
-            userDefaultValues.map((item) => {
-              return {
-                product: {
-                  brand_type: item.product.brand_type,
-                  id: item.product.id,
-                  image_url: item.product.image_url,
-                  name: item.product.name,
-                  __typename: item.product.__typename,
-                },
-                rating: item.rating,
-              };
-            })
-        );
-      }
     }
   }, []);
 
@@ -329,10 +313,9 @@ const CatForm = ({
   const checkFileType = (file: File) => {
     if (file && file.name) {
       const value = file.name;
-      const fileType = value.substring(
-        value.lastIndexOf('.') + 1,
-        value.length
-      );
+      const fileType = value
+        .substring(value.lastIndexOf('.') + 1, value.length)
+        .toLowerCase();
       return fileTypes.indexOf(fileType) > -1;
     }
   };
@@ -493,6 +476,7 @@ const CatForm = ({
             <FormInput
               registerRules={register('weight', { required: false })}
               type="number"
+              min={0}
               placeholder="1,5 kg"
               step={0.1}
               name="weight"
@@ -504,6 +488,7 @@ const CatForm = ({
               registerRules={register('daily_food', { required: false })}
               type="number"
               step={0.1}
+              min={0}
               placeholder={t(cs['cat_daily_food_placeholder'])}
               name="daily_food"
             />
