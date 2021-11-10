@@ -22,6 +22,7 @@ export default function Pros({
         src={imageUrl}
         alt={t(cs[imageAlt])}
         height={100}
+        width={'auto'}
         className="mx-auto"
       />
       <p className="font-bold text-lg py-6">{t(cs[title])}</p>

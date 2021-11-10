@@ -1,7 +1,7 @@
 type ImageProps = {
   src: string;
-  width?: number;
-  height?: number;
+  width?: number | string;
+  height?: number | string;
   alt?: string;
   [otherProps: string]: string | number | undefined;
 };

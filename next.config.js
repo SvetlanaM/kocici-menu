@@ -9,4 +9,12 @@ module.exports = {
     S3_UPLOAD_BUCKET: process.env.S3_UPLOAD_BUCKET,
   },
   generateBuildId: () => 'build',
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    });
+
+    return config;
+  },
 };

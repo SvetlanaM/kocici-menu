@@ -9,8 +9,9 @@ export default function FeatureWrapper(): JSX.Element {
       <div className="lg:mt-10 grid grid-rows-1 lg:grid-cols-2 lg:grid-flow-row lg:auto-rows-max flex items-center py-10 container-width">
         <Feature title={'feature1'} description={'feature_desc1'} />
         <FeatureImage
-          imageUrl={'/icons/feature1.png'}
+          imageUrl={'/icons/feature1.webp'}
           width={615}
+          height={250}
           alt="feature_alt1"
         />
       </div>
@@ -33,10 +34,11 @@ export default function FeatureWrapper(): JSX.Element {
           flexType="flex-row"
         />
         <FeatureImage
-          imageUrl={'/icons/feature3.png'}
+          imageUrl={'/icons/feature3.webp'}
           width={900}
           extraStyling={'pt-3 lg:pt-10 mx-auto'}
           alt="feature_alt3"
+          height={609}
         />
       </div>
       <div className="my-10 lg:my-32 grid grid-rows-1 lg:grid-cols-2 grid-flow-row auto-rows-max flex items-center container-width">

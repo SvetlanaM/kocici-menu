@@ -230,6 +230,33 @@ input:focus {
     transform: translate(-50%, -50%);
 }
 
+.basic-menu .my_cats_svg__test,
+.basic-menu .dashboard_svg__test,
+.basic-menu .products_svg__test,
+.basic-menu .tips_svg__test,
+.basic-menu .settings_svg__test {
+    fill: white;
+    stroke-width: 0.4px;
+}
+
+.active-menu .my_cats_svg__test,
+.active-menu .dashboard_svg__test,
+.active-menu .products_svg__test,
+.active-menu .tips_svg__test,
+.active-menu .settings_svg__test {
+    fill: #9f9fc6;
+    stroke-width: 0.4px;
+}
+
+.basic-menu:hover .my_cats_svg__test,
+.basic-menu:hover .dashboard_svg__test,
+.basic-menu:hover .products_svg__test,
+.basic-menu:hover .tips_svg__test,
+.basic-menu:hover .settings_svg__test {
+    fill: #9f9fc6;
+    stroke-width: 0.4px;
+}
+
 @media (min-width: 1280px) {
     .center-modal {
         overflow-y: hidden;

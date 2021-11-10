@@ -7,6 +7,7 @@ import useLogger from '../hooks/useLogger';
 import { getUser } from '../utils/user';
 import { useTranslation } from 'react-i18next';
 import cs from '../public/locales/cs/common.json';
+
 interface MenuItemProps {
   icon: string;
   name: string;
@@ -63,19 +64,11 @@ const MenuItem = ({ icon, name, url, active }: MenuItemProps): JSX.Element => {
   ) : (
     <Link href={url}>
       <a
-        className={`flex mt-6 text-gray-100 hover:text-purple-light`}
-        onMouseEnter={showHover}
-        onMouseLeave={showHover}
-        onFocus={() => setIsHover(hoverIcon)}
+        className={`flex mt-6 text-gray-100 hover:text-purple-light ${
+          active ? 'active-menu' : 'basic-menu'
+        }`}
       >
-        <div className="menu-icon">
-          <Image
-            src={active ? hoverIcon : isHover}
-            width={20}
-            height={20}
-            className="ml-0 mr-5"
-          />
-        </div>
+        <div className="menu-icon ml-0 mr-5">{icon}</div>
         <span className={active ? activeLinkStyle : ''}>{t(cs[name])}</span>
       </a>
     </Link>

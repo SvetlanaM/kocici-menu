@@ -2,6 +2,7 @@
     "name": "cat-app",
     "version": "0.1.0",
     "private": true,
+    "license": "MIT",
     "scripts": {
         "dev": "next dev",
         "lint": "next lint",
@@ -14,6 +15,7 @@
     "dependencies": {
         "@apollo/client": "^3.3.12",
         "@auth0/auth0-react": "^1.4.0",
+        "@svgr/webpack": "^5.5.0",
         "@tailwindcss/forms": "^0.3.4",
         "@types/react-modal": "^3.12.0",
         "@types/react-select": "^4.0.15",

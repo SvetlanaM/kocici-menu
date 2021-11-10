@@ -17,7 +17,7 @@ export default function WhySectionWrapper({
   return (
     <section>
       <div className="flex flex-col lg:flex-row items-center w-full lg:w-10/12">
-        <Image src={src} width={67} />
+        <Image src={src} width={67} height={67} />
         <h2 className="lg:mx-4 text-center lg:text-left mt-5 lg:mt-0 font-bold">
           {t(cs[title])}
         </h2>

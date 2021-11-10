@@ -63,7 +63,7 @@ const Meta = (): JSX.Element => {
       <meta name="msapplication-TileColor" content="#ffffff" />
       <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
       <meta property=" og:type" content="website" />
-      <meta property="og:url" content="https://kocicimenu.cz/" />
+      <meta property="og:url" content="https://www.kocicimenu.cz/" />
       <meta
         property="og:title"
         content="Kočičí menu - mlsný jídelníček mé kočky"
@@ -76,13 +76,17 @@ const Meta = (): JSX.Element => {
         property="og:image"
         content="https://catappreact.s3.eu-west-2.amazonaws.com/kocicimenu.png"
       />
+      <meta
+        property="og:image-alt"
+        content="Potrava pro vaši kočku tvořená vaší kočkou. Výběr kvalitního krmiva a zároveň úspora financí, nebo přírody na (ne)vyhozeném jídle."
+      />
       <meta property="og:site_name" content="Kočičí menu" />
       <meta property="og:type" content="article" />
 
       <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content="https://kocicimenu.cz/" />
+      <meta property="twitter:url" content="https://www.kocicimenu.cz/" />
       <meta name="twitter:card" content="summary" />
-      <meta name="twitter:site" content="https://kocicimenu.cz/" />
+      <meta name="twitter:site" content="https://www.kocicimenu.cz/" />
       <meta
         property="twitter:title"
         content="Kočičí menu - mlsný jídelníček mé kočky"

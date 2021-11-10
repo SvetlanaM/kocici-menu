@@ -1,27 +1,33 @@
+import MyCats from '../public/icons/my_cats.svg';
+import Dashboard from '../public/icons/dashboard.svg';
+import Products from '../public/icons/products.svg';
+import Tips from '../public/icons/tips.svg';
+import Settings from '../public/icons/settings.svg';
+
 export const MenuLinks = Object.freeze({
   items: [
     {
-      icon: 'dashboard',
+      icon: <Dashboard />,
       url: '/dashboard',
       name: 'dashboard',
     },
     {
-      icon: 'my_cats',
+      icon: <MyCats />,
       url: '/my-cats',
       name: 'my_cats',
     },
     {
-      icon: 'products',
+      icon: <Products />,
       url: '/products',
       name: 'products_menu',
     },
     {
-      icon: 'tips',
+      icon: <Tips />,
       url: '/tips',
       name: 'tips',
     },
     {
-      icon: 'settings',
+      icon: <Settings />,
       url: '/settings',
       name: 'settings',
     },
