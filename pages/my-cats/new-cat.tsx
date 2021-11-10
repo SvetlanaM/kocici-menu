@@ -64,17 +64,15 @@ export default function CreateCat(): JSX.Element {
   };
 
   const CreateCatForm = () => {
-    const {
-      data: productData,
-      error: productError,
-      loading: productLoading,
-    } = useGetProductsQuery({ skip: isSaving });
+    const { data: productData, error: productError } = useGetProductsQuery({
+      skip: isSaving,
+    });
 
     return (
       <Center>
         <Title title={title} />
         <Breadcrumbs breadcrumbs={breadcrumbs} />
-        {productLoading && <Loading />}
+
         {productError && (
           <ErrorScreen error={GeneralError.fromApolloError(productError)} />
         )}
@@ -85,7 +83,7 @@ export default function CreateCat(): JSX.Element {
             products={productData.products.slice(0, 2000)}
           />
         ) : (
-          <Loading />
+          !productError && <Loading />
         )}
       </Center>
     );
