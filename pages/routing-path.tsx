@@ -11,11 +11,11 @@ const DashboardCatQuery = () => {
     fetchPolicy: 'no-cache',
   });
 
-  if (data && data.user.seen_tutorial) {
+  if (data && data?.user?.seen_tutorial) {
     return '/dashboard';
   }
 
-  if (data && !data.user.seen_tutorial) {
+  if (data && !data?.user?.seen_tutorial) {
     return '/welcome';
   }
 };

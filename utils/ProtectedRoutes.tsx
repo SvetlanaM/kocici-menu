@@ -1,7 +1,6 @@
 import { Router } from 'next/router';
 import useAuth from '../hooks/useAuth';
 import Loading from '../components/Loading';
-import { useEffect, useState } from 'react';
 
 interface ProtectedRoutesProps {
   router: Router;
@@ -13,6 +12,8 @@ const ProtectedRoutes = ({
 }: ProtectedRoutesProps): JSX.Element | null => {
   const { isAuthenticated } = useAuth();
 
+  const isBrowser = () => typeof window !== 'undefined';
+
   const unprotectedRoutes = [
     '/user/login',
     '/user/register',
@@ -23,13 +24,8 @@ const ProtectedRoutes = ({
   ];
 
   const pathIsProtected = unprotectedRoutes.indexOf(router.pathname) === -1;
-  const [isLoaded, setIsLoaded] = useState(false);
 
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
-
-  if (isLoaded) {
+  if (isBrowser()) {
     if (!isAuthenticated && pathIsProtected) {
       router.replace('/user/login');
       return <Loading />;
