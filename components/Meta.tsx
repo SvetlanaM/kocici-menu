@@ -67,7 +67,7 @@ const Meta = (): JSX.Element => {
       <meta property="og:url" content="https://www.kocicimenu.cz/" />
       <meta
         property="og:title"
-        content="Kočičí menu - mlsný jídelníček mé kočky"
+        content="Kočičí menu - jídelníček mé mlsné kočky"
         key="ogtitle"
       />
       <meta
