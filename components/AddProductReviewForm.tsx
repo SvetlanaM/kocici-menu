@@ -213,6 +213,7 @@ const AddProductReviewForm = ({
                 placeholder={t(cs['choose_cat'])}
                 noOptionsMessage={() => t(cs['no_results'])}
                 isDisabled={selectCats.length === 1 ? true : false}
+                maxMenuHeight={150}
               />
             )}
           />

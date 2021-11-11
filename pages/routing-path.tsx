@@ -11,11 +11,11 @@ const getUrl = () => {
     fetchPolicy: 'no-cache',
   });
 
-  if (data && data.user.seen_tutorial && typeof window !== 'undefined') {
+  if (data && data.user?.seen_tutorial && typeof window !== 'undefined') {
     return '/dashboard';
   }
 
-  if (data && !data.user.seen_tutorial && typeof window !== 'undefined') {
+  if (data && !data.user?.seen_tutorial && typeof window !== 'undefined') {
     return '/welcome';
   }
 

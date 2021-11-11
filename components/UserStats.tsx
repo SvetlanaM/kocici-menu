@@ -34,12 +34,12 @@ const UserStats = ({ data }: UserStatsProps): JSX.Element => {
       (data && [
         {
           labels: t(cs['email']),
-          data_values: data.user_data[0].email || '--',
+          data_values: data.user_data[0]?.email || '--',
         },
         {
           labels: t(cs['registration_date']),
           data_values:
-            DateFormatObject(data.user_data[0].created_at).formatDateTime() ||
+            DateFormatObject(data.user_data[0]?.created_at).formatDateTime() ||
             '--',
         },
       ]) ||
@@ -53,16 +53,17 @@ const UserStats = ({ data }: UserStatsProps): JSX.Element => {
         {
           labels: t(cs['num_of_cats']),
           data_values:
-            (data.user_stats[0] && data.user_stats[0].count_of_cats) || '--',
+            (data.user_stats[0] && data.user_stats[0]?.count_of_cats) || '--',
         },
         {
           labels: t(cs['num_of_reviews']),
           data_values:
-            (data.user_stats[0] && data.user_stats[0].count_of_reviews) || '--',
+            (data.user_stats[0] && data.user_stats[0]?.count_of_reviews) ||
+            '--',
         },
         {
           labels: t(cs['my_eshop']),
-          data_values: data.user_data[0].prefered_eshop || 'Zoohit',
+          data_values: data.user_data[0]?.prefered_eshop || 'Zoohit',
         },
       ]) ||
       []

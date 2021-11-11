@@ -14,7 +14,7 @@ const UserBanner = ({ data }: UserBannerProps): JSX.Element => {
     <div className="flex pt-4 pb-2 pr-10 bg-gray-light border-rounded-base border-gray_lightest">
       <div className="mb-5 mt-3 ml-6 leading-tight">
         <h4 className="mb-3 text-purple font-medium text-2xl">
-          {t(cs['greeting'])} {getUsername(data.user_data[0].email)}!
+          {t(cs['greeting'])} {data && getUsername(data.user_data[0]?.email)}!
         </h4>
         <div className="flex flex-col xl-custom:flex-row justify-between items-center">
           <p className="small-purple-text font-light text-sm pr-4">
