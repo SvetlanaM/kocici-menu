@@ -1,4 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document';
+import Meta from '../components/Meta';
 
 export default function MyDocument(): JSX.Element {
   return (
@@ -21,6 +22,7 @@ export default function MyDocument(): JSX.Element {
           `,
           }}
         />
+        <Meta />
       </Head>
       <body>
         <Main />

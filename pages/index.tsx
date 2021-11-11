@@ -8,13 +8,11 @@ import FeatureWrapper from '../components/Homepage/FeatureWrapper';
 import AboutWrapper from '../components/Homepage/AboutWrapper';
 import ProsWrapper from '../components/Homepage/ProsWrapper';
 import Footer from '../components/Homepage/Footer';
-import Meta from '../components/Meta';
 
 export default function HomePage(): JSX.Element {
   const pageTitle = getTitle('');
   return (
     <div>
-      <Meta />
       <Header title={pageTitle} />
       <HomepageWrapper>
         <HomepageLeftContainer />
