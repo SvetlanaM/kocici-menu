@@ -304,5 +304,6 @@
     "reg_pros4": "Kontaktuj kočičího doktora s předvyplněnými údaji o kočce",
     "reg_pros5": "Sleduj novinky a kvalitu jídla koček",
     "cancel": "Zrušit",
-    "delete": "Vymazat"
+    "delete": "Vymazat",
+    "failed_to_handle_signup_webhook": "Registrace neúspěšná. Zkuste to prosím později."
 }
