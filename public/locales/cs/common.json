@@ -305,5 +305,6 @@
     "reg_pros5": "Sleduj novinky a kvalitu jídla koček",
     "cancel": "Zrušit",
     "delete": "Vymazat",
-    "failed_to_handle_signup_webhook": "Registrace neúspěšná. Zkuste to prosím později."
+    "failed_to_handle_signup_webhook": "Registrace neúspěšná. Zkuste to prosím později.",
+    "signup_requires_a_valid_password": "Password chyba"
 }

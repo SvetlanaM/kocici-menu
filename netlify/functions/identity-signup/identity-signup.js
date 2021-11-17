@@ -96,8 +96,10 @@ exports.handler = async function (event) {
 
   for (let i = 0; i < 2; i++) {
     const result = await createUser();
+
     if (result.ok) {
       const { errors } = result.json();
+
       if (!errors) {
         return {
           statusCode: 200,
@@ -115,14 +117,14 @@ exports.handler = async function (event) {
               };
             } else {
               return {
-                statusCode: 500,
+                statusCode: 200,
                 body: 'error',
               };
             }
           } else {
             if (i === 2) {
               return {
-                statusCode: 500,
+                statusCode: 200,
                 body: 'error',
               };
             }
@@ -130,14 +132,14 @@ exports.handler = async function (event) {
         }
       } else {
         return {
-          statusCode: 500,
+          statusCode: 200,
           body: 'error',
         };
       }
     } else {
       if (i === 2) {
         return {
-          statusCode: 500,
+          statusCode: 200,
           body: 'error',
         };
       }
