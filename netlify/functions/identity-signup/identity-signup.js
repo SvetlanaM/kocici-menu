@@ -68,6 +68,8 @@ exports.handler = async function (event) {
   );
   const { errors } = await result.json();
 
+  console.log(result.json());
+
   if (errors) {
     process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT,
       {
@@ -95,6 +97,7 @@ exports.handler = async function (event) {
           'x-hasura-admin-secret': process.env.HASURA_PASSWORD,
         },
       };
+    console.log(errors);
     return {
       statusCode: 500,
       body: 'Something is wrong',
