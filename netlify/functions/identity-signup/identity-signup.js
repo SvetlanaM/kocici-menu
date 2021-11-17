@@ -42,46 +42,29 @@ exports.handler = async function (event) {
 
   const responseBodyString = JSON.stringify({
     query: `
-    mutation InsertUser($email: String!, $id: String) {
-        insert_User_one(object:{id: $id, email: $email}) {
-          id
-          email
-        }
-    }
-  `,
-    variables: {
-      id: user.id,
-      email: user.email,
-    },
-  });
-
-  const updateUserFetch = async () => {
-    const updateUser = JSON.stringify({
-      query: `
-    mutation UpdateUser($email: String, $id: String) {
-      update_User(where: {email: {_eq: $email}}, _set: {id: $id}) {
-      returning {
+    mutation AddOrUpdateUser($user: [User_insert_input!]!) {
+    insert_User(
+      objects: $user
+      on_conflict: {
+        constraint: User_email_key,
+        update_columns: [id, email]
+      }
+      ) {
+        returning {
         id
       }
-      affected_rows
     }
   }
   `,
-      variables: {
-        email: user.email,
-        id: user.id,
-      },
-    });
-
-    await fetch(process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT, {
-      method: 'POST',
-      body: updateUser,
-      headers: {
-        'Content-Type': 'application/json',
-        'x-hasura-admin-secret': process.env.HASURA_PASSWORD,
-      },
-    });
-  };
+    variables: {
+      user: [
+        {
+          id: user.id,
+          email: user.email,
+        },
+      ],
+    },
+  });
 
   const createUser = async () => {
     return await fetch(process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT, {
@@ -94,52 +77,20 @@ exports.handler = async function (event) {
     });
   };
 
-  for (let i = 0; i < 2; i++) {
+  for (let i = 0; i < 3; i++) {
     const result = await createUser();
-
     if (result.ok) {
       const { errors } = result.json();
-
       if (!errors) {
         return {
           statusCode: 200,
           body: JSON.stringify(responseBody),
         };
-      } else if (errors[0]['extensions']['code'] === 'constraint-violation') {
-        for (let i = 0; i < 2; i++) {
-          const result = await updateUserFetch();
-          if (result.ok) {
-            const { errors } = result.json();
-            if (!errors) {
-              return {
-                statusCode: 200,
-                body: JSON.stringify(responseBody),
-              };
-            } else {
-              return {
-                statusCode: 200,
-                body: 'error',
-              };
-            }
-          } else {
-            if (i === 2) {
-              return {
-                statusCode: 200,
-                body: 'error',
-              };
-            }
-          }
-        }
-      } else {
-        return {
-          statusCode: 200,
-          body: 'error',
-        };
       }
     } else {
       if (i === 2) {
         return {
-          statusCode: 200,
+          statusCode: 500,
           body: 'error',
         };
       }
