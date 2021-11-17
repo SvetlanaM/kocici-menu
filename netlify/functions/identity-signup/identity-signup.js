@@ -40,8 +40,35 @@ exports.handler = async function (event) {
     },
   };
 
-  const responseBodyString = JSON.stringify({
-    query: `
+  await fetch(process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT, {
+    method: 'POST',
+    body: JSON.stringify({
+      query: `
+            mutation Log($user_id: String, $error_type: String, $error_message: String) {
+              insert_Logging(objects: {user_id: $user_id, error_type: $error_type, error_message: $error_message}) {
+                affected_rows
+                returning {
+                error_message
+                error_type
+              }
+              }
+            }
+          `,
+      variables: {
+        user_id: user.id,
+        error_type: 'error',
+        error_message: responseBody,
+      },
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+      'x-hasura-admin-secret': process.env.HASURA_PASSWORD,
+    },
+  });
+
+  if (responseBody['code'] !== 422) {
+    const responseBodyString = JSON.stringify({
+      query: `
     mutation InsertUser($email: String!, $id: String) {
         insert_User_one(object:{id: $id, email: $email}) {
           id
@@ -49,30 +76,29 @@ exports.handler = async function (event) {
         }
     }
   `,
-    variables: {
-      id: user.id,
-      email: user.email,
-    },
-  });
-
-  const result = await fetch(
-    process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT,
-    {
-      method: 'POST',
-      body: responseBodyString,
-      headers: {
-        'Content-Type': 'application/json',
-        'x-hasura-admin-secret': process.env.HASURA_PASSWORD,
+      variables: {
+        id: user.id,
+        email: user.email,
       },
-    }
-  );
-  const { errors } = await result.json();
+    });
 
-  console.log(result.json());
-
-  if (errors) {
-    process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT,
+    const result = await fetch(
+      process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT,
       {
+        method: 'POST',
+        body: responseBodyString,
+        headers: {
+          'Content-Type': 'application/json',
+          'x-hasura-admin-secret': process.env.HASURA_PASSWORD,
+        },
+      }
+    );
+    const { errors } = await result.json();
+
+    console.log(result.json());
+
+    if (errors) {
+      await fetch(process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT, {
         method: 'POST',
         body: JSON.stringify({
           query: `
@@ -96,16 +122,17 @@ exports.handler = async function (event) {
           'Content-Type': 'application/json',
           'x-hasura-admin-secret': process.env.HASURA_PASSWORD,
         },
+      });
+      console.log(errors);
+      return {
+        statusCode: 500,
+        body: 'Something is wrong',
       };
-    console.log(errors);
-    return {
-      statusCode: 500,
-      body: 'Something is wrong',
-    };
-  } else {
-    return {
-      statusCode: 200,
-      body: JSON.stringify(responseBody),
-    };
+    } else {
+      return {
+        statusCode: 200,
+        body: JSON.stringify(responseBody),
+      };
+    }
   }
 };
