@@ -69,6 +69,32 @@ exports.handler = async function (event) {
   const { errors } = await result.json();
 
   if (errors) {
+    process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          query: `
+            mutation Log($user_id: String, $error_type: String, $error_message: String) {
+              insert_Logging(objects: {user_id: $user_id, error_type: $error_type, error_message: $error_message}) {
+                affected_rows
+                returning {
+                error_message
+                error_type
+              }
+              }
+            }
+          `,
+          variables: {
+            user_id: user.id,
+            error_type: 'error',
+            error_message: errors,
+          },
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-hasura-admin-secret': process.env.HASURA_PASSWORD,
+        },
+      };
     return {
       statusCode: 500,
       body: 'Something is wrong',
