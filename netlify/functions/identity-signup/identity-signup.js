@@ -67,7 +67,7 @@ exports.handler = async function (event) {
   });
 
   const createUser = async () => {
-    return fetch(process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT, {
+    return await fetch(process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT, {
       method: 'POST',
       body: responseBodyString,
       headers: {
@@ -77,23 +77,23 @@ exports.handler = async function (event) {
     });
   };
 
-  for (let i = 0; i < 3; i++) {
-    const result = await createUser();
-    if (result.ok) {
-      const { errors } = result.json();
-      if (!errors) {
-        return {
-          statusCode: 200,
-          body: JSON.stringify(responseBody),
-        };
-      }
-    } else {
-      if (i === 2) {
-        return {
-          statusCode: 500,
-          body: 'error',
-        };
-      }
+  const result = await createUser();
+  if (result.ok) {
+    const { errors } = result.json();
+    if (!errors) {
+      return {
+        statusCode: 200,
+        body: JSON.stringify(responseBody),
+      };
     }
+    return {
+      statusCode: 500,
+      body: 'error',
+    };
   }
+
+  return {
+    statusCode: 500,
+    body: 'error',
+  };
 };
