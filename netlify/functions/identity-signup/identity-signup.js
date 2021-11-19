@@ -69,21 +69,22 @@ exports.handler = async function (event) {
     },
   });
 
-  const createUser = async () => {
-    return await fetch(process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT, {
+  const resultFetch = await fetch(
+    process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT,
+    {
       method: 'POST',
       body: responseBodyString,
       headers: {
         'Content-Type': 'application/json',
         'x-hasura-admin-secret': process.env.HASURA_PASSWORD,
       },
-    });
-  };
+    }
+  );
 
-  const result = await createUser();
+  const result = await resultFetch.json();
   if (result.ok) {
     console.log(result);
-    const { errors } = result.json();
+    const { errors } = result;
 
     console.log(errors);
     if (errors) {
