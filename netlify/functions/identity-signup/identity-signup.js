@@ -26,6 +26,7 @@ const createJWT = (user_id) => {
 exports.handler = async function (event) {
   const { user } = JSON.parse(event.body);
 
+  console.log('event', event);
   const responseBody = {
     app_metadata: {
       roles:
@@ -78,13 +79,15 @@ exports.handler = async function (event) {
   };
 
   const result = await createUser();
+  console.log('result_ok', result.ok);
   if (result.ok) {
     const { errors } = await result.json();
-    console.log(errors);
-    if (!errors) {
+    console.log('errors', errors);
+    console.log('result', result.json());
+    if (errors) {
       return {
-        statusCode: 200,
-        body: JSON.stringify(responseBody),
+        statusCode: 500,
+        body: 'error',
       };
     }
     return {
