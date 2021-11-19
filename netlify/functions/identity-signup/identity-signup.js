@@ -80,15 +80,16 @@ exports.handler = async function (event) {
   const result = await createUser();
   if (result.ok) {
     const { errors } = result.json();
-    if (!errors) {
+
+    if (errors) {
       return {
-        statusCode: 200,
-        body: JSON.stringify(responseBody),
+        statusCode: 500,
+        body: 'error',
       };
     }
     return {
-      statusCode: 500,
-      body: 'error',
+      statusCode: 200,
+      body: JSON.stringify(responseBody),
     };
   }
 
