@@ -42,43 +42,59 @@ exports.handler = async function (event) {
 
   const responseBodyString = JSON.stringify({
     query: `
-    mutation InsertUser($email: String!, $id: String) {
-        insert_User_one(object:{id: $id, email: $email}) {
-          id
-          email
-        }
+    mutation AddOrUpdateUser($user: [User_insert_input!]!) {
+    insert_User(
+      objects: $user
+      on_conflict: {
+        constraint: User_email_key,
+        update_columns: [id, email]
+      }
+      ) {
+        returning {
+        id
+      }
     }
+  }
   `,
     variables: {
-      id: user.id,
-      email: user.email,
+      user: [
+        {
+          id: user.id,
+          email: user.email,
+        },
+      ],
     },
   });
 
-  const result = await fetch(
-    process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT,
-    {
+  const createUser = async () => {
+    return await fetch(process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT, {
       method: 'POST',
       body: responseBodyString,
       headers: {
         'Content-Type': 'application/json',
         'x-hasura-admin-secret': process.env.HASURA_PASSWORD,
       },
+    });
+  };
+
+  const result = await createUser();
+  if (result.ok) {
+    const { errors } = await result.json();
+    console.log(errors);
+    if (!errors) {
+      return {
+        statusCode: 200,
+        body: JSON.stringify(responseBody),
+      };
     }
-  );
-  const { errors } = await result.json();
-
-  console.log(errors);
-
-  if (errors) {
-    return {
-      statusCode: 200,
-      body: JSON.stringify(responseBody),
-    };
-  } else {
     return {
       statusCode: 200,
       body: JSON.stringify(responseBody),
     };
   }
+
+  return {
+    statusCode: 500,
+    body: 'Error',
+  };
 };
