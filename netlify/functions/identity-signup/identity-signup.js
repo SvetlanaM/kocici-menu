@@ -26,9 +26,6 @@ const createJWT = (user_id) => {
 exports.handler = async function (event) {
   const { user } = JSON.parse(event.body);
 
-  console.log(user);
-  console.log(event);
-
   const responseBody = {
     app_metadata: {
       roles:
@@ -45,31 +42,20 @@ exports.handler = async function (event) {
 
   const responseBodyString = JSON.stringify({
     query: `
-    mutation AddOrUpdateUser($user: [User_insert_input!]!) {
-    insert_User(
-      objects: $user
-      on_conflict: {
-        constraint: User_email_key,
-        update_columns: [id, email]
-      }
-      ) {
-        returning {
-        id
-      }
+    mutation InsertUser($email: String!, $id: String) {
+        insert_User_one(object:{id: $id, email: $email}) {
+          id
+          email
+        }
     }
-  }
   `,
     variables: {
-      user: [
-        {
-          id: user.id,
-          email: user.email,
-        },
-      ],
+      id: user.id,
+      email: user.email,
     },
   });
 
-  const resultFetch = await fetch(
+  const result = await fetch(
     process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT,
     {
       method: 'POST',
@@ -80,28 +66,17 @@ exports.handler = async function (event) {
       },
     }
   );
+  const { errors } = await result.json();
 
-  const result = await resultFetch.json();
-  if (result.ok) {
-    console.log(result);
-    const { errors } = result;
-
-    console.log(errors);
-    if (errors) {
-      return {
-        statusCode: 500,
-        body: 'error',
-      };
-    }
+  if (errors) {
+    return {
+      statusCode: 500,
+      body: 'Something is wrong',
+    };
+  } else {
     return {
       statusCode: 200,
       body: JSON.stringify(responseBody),
     };
   }
-
-  console.log('last_run');
-  return {
-    statusCode: 500,
-    body: 'error',
-  };
 };
