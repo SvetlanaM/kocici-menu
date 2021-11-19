@@ -81,6 +81,7 @@ exports.handler = async function (event) {
   if (result.ok) {
     const { errors } = result.json();
 
+    console.log(errors);
     if (errors) {
       return {
         statusCode: 500,
