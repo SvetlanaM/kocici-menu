@@ -68,10 +68,12 @@ exports.handler = async function (event) {
   );
   const { errors } = await result.json();
 
+  console.log(errors);
+
   if (errors) {
     return {
-      statusCode: 500,
-      body: 'Something is wrong',
+      statusCode: 200,
+      body: JSON.stringify(responseBody),
     };
   } else {
     return {
