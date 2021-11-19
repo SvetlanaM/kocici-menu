@@ -78,22 +78,32 @@ exports.handler = async function (event) {
     });
   };
 
-  const result = await createUser();
-  console.log('result_ok', result.ok);
+  let result;
+  try {
+    result = await createUser();
+  } catch (error) {
+    console.log("Error while fetching", error)
+    return {
+      statusCode: 500,
+      body: 'Error',
+    };
+  }
 
   if (result.ok) {
     const { errors } = await result.json();
-    console.log('errors', errors);
     if (errors) {
+      console.log('Hasura errors', errors);
       return {
         statusCode: 500,
-        body: 'error',
+        body: 'Error',
       };
     }
     return {
       statusCode: 200,
       body: JSON.stringify(responseBody),
     };
+  } else {
+    console.log("Error response code", result.status)
   }
 
   return {
