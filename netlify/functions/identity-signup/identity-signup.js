@@ -95,25 +95,25 @@ exports.handler = async function (event) {
 
   console.log(myResponseBody)
 
-  // if (result.ok) {
-  //   const { errors } = await result.json();
-  //   if (errors) {
-  //     console.log('Hasura errors', errors);
-  //     return {
-  //       statusCode: 500,
-  //       body: 'Error',
-  //     };
-  //   }
-  //   return {
-  //     statusCode: 500,
-  //     body: JSON.stringify(myResponseBody),
-  //   };
-  // } else {
-  //   console.log("Error response code", result.status)
-  // }
+  if (result.ok) {
+    const { errors } = await result.json();
+    if (errors) {
+      console.log('Hasura errors', errors);
+      return {
+        statusCode: 500,
+        body: 'Error',
+      };
+    }
+    return {
+      statusCode: 500,
+      body: JSON.stringify(myResponseBody),
+    };
+  } else {
+    console.log("Error response code", result.status)
+  }
 
-  // return {
-  //   statusCode: 500,
-  //   body: 'Error',
-  // };
+  return {
+    statusCode: 500,
+    body: 'Error',
+  };
 };
