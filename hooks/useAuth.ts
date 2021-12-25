@@ -39,7 +39,7 @@ export default function useAuth(): {
   const { user } = auth;
   const router = useRouter();
   const page = router.pathname;
-  const token = createJWT(user.id)
+  const token = createJWT(user?.id || '')
 
   setToken(token);
   setUser(user?.id || '');
