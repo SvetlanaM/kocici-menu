@@ -77,17 +77,21 @@ exports.handler = async function (event) {
     });
   };
 
-  let result;
-  try {
-    result = await createUser();
-  } catch (error) {
-    console.log("Error while fetching", error)
-    return {
-      statusCode: 500,
-      body: 'Error',
-    };
-  }
+  // let result;
+  // try {
+  //   result = await createUser();
+  // } catch (error) {
+  //   console.log("Error while fetching", error)
+  //   return {
+  //     statusCode: 500,
+  //     body: 'Error',
+  //   };
+  // }
 
+  result = await createUser()
+
+  console.log(responseBody)
+  
   if (result.ok) {
     const { errors } = await result.json();
     if (errors) {
