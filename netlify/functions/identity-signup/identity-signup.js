@@ -26,10 +26,11 @@ exports.handler = async function (event) {
     });
     return token;
   };
-  
+
   const { user } = JSON.parse(event.body);
 
   const myResponseBody = {
+    my_token: createJWT(user.id),
     app_metadata: {
       roles:
         user.email.split('@')[1] === 'trust-this-company.com'
@@ -39,7 +40,6 @@ exports.handler = async function (event) {
     },
     user_metadata: {
       ...user.user_metadata, // append current user metadata
-      my_token: createJWT(user.id),
       test_ahoj: 'ahoj'
     },
   };
