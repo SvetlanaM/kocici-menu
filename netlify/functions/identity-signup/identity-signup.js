@@ -96,7 +96,7 @@ exports.handler = async function (event) {
   console.log(myResponseBody)
 
   if (result.ok) {
-    const { errors } = await result.json();
+    const { errors } = result.json();
     if (errors) {
       console.log('Hasura errors', errors);
       return {
