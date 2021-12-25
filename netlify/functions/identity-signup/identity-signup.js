@@ -67,7 +67,7 @@ exports.handler = async function (event) {
     },
   });
 
-  const createUser = () => {
+  const createUser = async () => {
     return await fetch(process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT, {
       method: 'POST',
       body: responseBodyString,
