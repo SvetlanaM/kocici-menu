@@ -26,7 +26,7 @@ const createJWT = (user_id) => {
 exports.handler = async function (event) {
   const { user } = JSON.parse(event.body);
 
-  const responseBody = {
+  const myResponseBody = {
     app_metadata: {
       roles:
         user.email.split('@')[1] === 'trust-this-company.com'
@@ -37,6 +37,7 @@ exports.handler = async function (event) {
     user_metadata: {
       ...user.user_metadata, // append current user metadata
       my_token: createJWT(user.id),
+      test_ahoj: 'ahoj'
     },
   };
 
@@ -66,7 +67,7 @@ exports.handler = async function (event) {
     },
   });
 
-  const createUser = async () => {
+  const createUser = () => {
     return await fetch(process.env.NEXT_PUBLIC_CAT_APP_TESTING_API_ENDPOINT, {
       method: 'POST',
       body: responseBodyString,
@@ -79,7 +80,7 @@ exports.handler = async function (event) {
 
   let result;
   try {
-    result = await createUser();
+    result = createUser();
   } catch (error) {
     console.log("Error while fetching", error)
     return {
@@ -89,9 +90,9 @@ exports.handler = async function (event) {
   }
 
 
-  console.log(responseBody)
+  console.log(myResponseBody)
 
- 
+  if (result.ok) {
     const { errors } = await result.json();
     if (errors) {
       console.log('Hasura errors', errors);
@@ -102,11 +103,14 @@ exports.handler = async function (event) {
     }
     return {
       statusCode: 200,
-      body: JSON.stringify(responseBody),
+      body: JSON.stringify(myResponseBody),
     };
-  
-  // return {
-  //   statusCode: 500,
-  //   body: 'Error',
-  // };
+  } else {
+    console.log("Error response code", result.status)
+  }
+
+  return {
+    statusCode: 500,
+    body: 'Error',
+  };
 };
