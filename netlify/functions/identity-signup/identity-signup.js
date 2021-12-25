@@ -80,7 +80,7 @@ exports.handler = async function (event) {
 
   let result;
   try {
-    result = createUser();
+    result = await createUser();
   } catch (error) {
     console.log("Error while fetching", error)
     return {
