@@ -55,7 +55,7 @@ function MyApp({ Component, pageProps, router }: AppProps): JSX.Element {
   return (
     <>
       <IdentityContextProvider url={process.env.NEXT_PUBLIC_WEBSITE_URL}>
-      <Meta />
+        <Meta />
         <ProtectedRoutes router={router}>
           <ApolloProvider client={ApiClient}>
             <Component {...pageProps} />

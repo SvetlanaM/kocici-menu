@@ -22,7 +22,7 @@ export default function useAuth(): {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      console.log(user)
+      console.log(auth)
       setToken(String(user?.user_metadata.my_token));
       setUser(user?.id || '');
     }

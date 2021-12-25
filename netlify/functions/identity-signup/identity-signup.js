@@ -26,11 +26,10 @@ exports.handler = async function (event) {
     });
     return token;
   };
-
+  
   const { user } = JSON.parse(event.body);
 
   const myResponseBody = {
-    my_token: createJWT(user.id),
     app_metadata: {
       roles:
         user.email.split('@')[1] === 'trust-this-company.com'
@@ -40,6 +39,7 @@ exports.handler = async function (event) {
     },
     user_metadata: {
       ...user.user_metadata, // append current user metadata
+      my_token: createJWT(user.id),
       test_ahoj: 'ahoj'
     },
   };
@@ -95,25 +95,25 @@ exports.handler = async function (event) {
 
   console.log(myResponseBody)
 
-  if (result.ok) {
-    const { errors } = await result.json();
-    if (errors) {
-      console.log('Hasura errors', errors);
-      return {
-        statusCode: 500,
-        body: 'Error',
-      };
-    }
-    return {
-      statusCode: 200,
-      body: JSON.stringify(myResponseBody),
-    };
-  } else {
-    console.log("Error response code", result.status)
-  }
+  // if (result.ok) {
+  //   const { errors } = await result.json();
+  //   if (errors) {
+  //     console.log('Hasura errors', errors);
+  //     return {
+  //       statusCode: 500,
+  //       body: 'Error',
+  //     };
+  //   }
+  //   return {
+  //     statusCode: 500,
+  //     body: JSON.stringify(myResponseBody),
+  //   };
+  // } else {
+  //   console.log("Error response code", result.status)
+  // }
 
-  return {
-    statusCode: 500,
-    body: 'Error',
-  };
+  // return {
+  //   statusCode: 500,
+  //   body: 'Error',
+  // };
 };
