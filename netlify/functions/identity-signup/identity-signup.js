@@ -105,7 +105,7 @@ exports.handler = async function (event) {
       };
     }
     return {
-      statusCode: 500,
+      statusCode: 200,
       body: JSON.stringify(myResponseBody),
     };
   } else {
