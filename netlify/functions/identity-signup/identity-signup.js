@@ -1,32 +1,31 @@
 const fetch = require('node-fetch');
 const jwt = require('jsonwebtoken');
 
+createJWT = (user_id) => {
+  const secretKey =
+    '-----BEGIN RSA PRIVATE KEY-----\n' +
+    process.env.JWT_SECRET_KEY +
+    '\n-----END RSA PRIVATE KEY-----';
 
+  const payload = {
+    sub: user_id,
+    iat: 1516239022,
+    'https://hasura.io/jwt/claims': {
+      'x-hasura-allowed-roles': ['editor', 'user', 'mod'],
+      'x-hasura-default-role': 'user',
+      'x-hasura-user-id': user_id,
+    },
+  };
+
+  const token = jwt.sign(payload, secretKey, {
+    algorithm: 'RS256',
+  });
+  return token;
+};
+
+const a = createJWT("a067f753-f158-4945-b487-d1a20a94a499")
 
 exports.handler = async function (event) {
-
-  const createJWT = (user_id) => {
-    const secretKey =
-      '-----BEGIN RSA PRIVATE KEY-----\n' +
-      process.env.JWT_SECRET_KEY +
-      '\n-----END RSA PRIVATE KEY-----';
-  
-    const payload = {
-      sub: user_id,
-      iat: 1516239022,
-      'https://hasura.io/jwt/claims': {
-        'x-hasura-allowed-roles': ['editor', 'user', 'mod'],
-        'x-hasura-default-role': 'user',
-        'x-hasura-user-id': user_id,
-      },
-    };
-  
-    const token = jwt.sign(payload, secretKey, {
-      algorithm: 'RS256',
-    });
-    return token;
-  };
-  
   const { user } = JSON.parse(event.body);
 
   const myResponseBody = {
@@ -39,7 +38,8 @@ exports.handler = async function (event) {
     },
     user_metadata: {
       ...user.user_metadata, // append current user metadata
-      my_token: createJWT(user.id),
+      // my_token: createJWT(user.id),
+      a: "test"
     },
   };
 

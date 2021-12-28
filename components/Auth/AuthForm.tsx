@@ -11,6 +11,8 @@ import { useTranslation } from 'react-i18next';
 import { user_id } from '../../utils/user';
 import useLogger from '../../hooks/useLogger';
 import cs from '../../public/locales/cs/common.json';
+import a from '../../netlify/functions/identity-signup/identity-signup.js';
+
 
 interface AuthFormProps {
   submitText: string;
@@ -57,9 +59,7 @@ const AuthForm = ({
 
   const onSubmit: SubmitHandler<AuthSubmissionTypeForm> = (data) => {
     if (authMethod === 'signupUser') {
-      signupUser(data.email, data.password, {
-        data: 'signed up thru react-netlify-identity',
-      })
+      signupUser(data.email, data.password, {my_token: 'ahoj'}, true)
         .then(() => setSuccessMessage(t(cs['registration_success'])))
         .then(() => setMessage(''))
         .then(() => loginUser(data.email, data.password))
@@ -68,7 +68,7 @@ const AuthForm = ({
     }
 
     if (authMethod === 'loginUser') {
-      loginUser(data.email, data.password)
+      loginUser(data.email, data.password, true)
         .then(() => logger(null, 'success', 'login', user_id))
         .catch((err) => setMessage(t(cs[convertErrString(err.message)])))
         .catch((err) => logger(err.message, 'error'));
