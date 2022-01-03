@@ -6,7 +6,8 @@ const Meta = (): JSX.Element => {
     <Head>
       <CookieHubBanner 
         googleTrackingId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}
-        cookieHubId="08ab8c3e"/>
+        cookieHubId="08ab8c3e"
+      />
       <script 
         async 
         src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`} 

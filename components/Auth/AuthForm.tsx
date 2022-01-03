@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { user_id } from '../../utils/user';
 import useLogger from '../../hooks/useLogger';
 import cs from '../../public/locales/cs/common.json';
-import a from '../../netlify/functions/identity-signup/identity-signup.js';
+
 
 
 interface AuthFormProps {
