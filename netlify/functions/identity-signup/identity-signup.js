@@ -93,7 +93,7 @@ exports.handler = async function (event) {
   }
 
 
-  console.log(myResponseBody)
+  console.log(JSON.stringify(myResponseBody))
 
   if (result.ok) {
     const { errors } = result.json();
