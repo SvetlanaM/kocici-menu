@@ -29,7 +29,7 @@ exports.handler = async function (event) {
 
   my_token = createJWT(user.id)
   console.log("my_token", my_token)
-  
+
   const myResponseBody = {
     app_metadata: {
       roles:
@@ -40,7 +40,7 @@ exports.handler = async function (event) {
     },
     user_metadata: {
       ...user.user_metadata, // append current user metadata
-      // my_token: createJWT(user.id),
+      my_token: my_token,
       a: "test"
     },
   };
