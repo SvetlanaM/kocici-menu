@@ -23,9 +23,13 @@ createJWT = (user_id) => {
   return token;
 };
 
+
 exports.handler = async function (event) {
   const { user } = JSON.parse(event.body);
 
+  my_token = createJWT(user.id)
+  console.log("my_token", my_token)
+  
   const myResponseBody = {
     app_metadata: {
       roles:

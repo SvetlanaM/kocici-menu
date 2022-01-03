@@ -12,8 +12,6 @@ import { user_id } from '../../utils/user';
 import useLogger from '../../hooks/useLogger';
 import cs from '../../public/locales/cs/common.json';
 
-
-
 interface AuthFormProps {
   submitText: string;
   passwordPlaceholder: string;
