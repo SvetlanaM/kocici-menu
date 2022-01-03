@@ -57,7 +57,7 @@ const AuthForm = ({
 
   const onSubmit: SubmitHandler<AuthSubmissionTypeForm> = (data) => {
     if (authMethod === 'signupUser') {
-      signupUser(data.email, data.password, {my_token: 'ahoj'}, true)
+      signupUser(data.email, data.password, {}, true)
         .then(() => setSuccessMessage(t(cs['registration_success'])))
         .then(() => setMessage(''))
         .then(() => loginUser(data.email, data.password))

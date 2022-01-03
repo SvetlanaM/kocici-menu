@@ -41,7 +41,6 @@ exports.handler = async function (event) {
     user_metadata: {
       ...user.user_metadata, // append current user metadata
       my_token: my_token,
-      a: "test"
     },
   };
 
