@@ -23,8 +23,6 @@ createJWT = (user_id) => {
   return token;
 };
 
-const a = createJWT("a067f753-f158-4945-b487-d1a20a94a499")
-
 exports.handler = async function (event) {
   const { user } = JSON.parse(event.body);
 
