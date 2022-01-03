@@ -60,7 +60,7 @@ const AuthForm = ({
       signupUser(data.email, data.password, {}, true)
         .then(() => setSuccessMessage(t(cs['registration_success'])))
         .then(() => setMessage(''))
-        .then(() => loginUser(data.email, data.password))
+        .then(() => loginUser(data.email, data.password, true))
         .catch((err) => setMessage(t(cs[convertErrString(err.message)])))
         .catch((err) => logger(err.message, 'error'));
     }
