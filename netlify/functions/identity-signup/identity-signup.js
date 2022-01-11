@@ -27,7 +27,7 @@ createJWT = (user_id) => {
 exports.handler = async function (event) {
   const { user } = JSON.parse(event.body);
 
-  let tokenArray = createJWT(user.id).match(/.{1,32}/g)
+  let token = createJWT(user.id)
 
   const myResponseBody = {
     app_metadata: {
@@ -35,12 +35,10 @@ exports.handler = async function (event) {
         user.email.split('@')[1] === 'trust-this-company.com'
           ? ['editor']
           : ['visitor'],
-      my_user_info: 'this is some user info',
-      hasura_token: tokenArray[0]
+      hasura_token: token
     },
     user_metadata: {
-      ...user.user_metadata, // append current user metadata
-      hasura_token: tokenArray[0]
+      ...user.user_metadata // append current user metadata
     },
   };
 
