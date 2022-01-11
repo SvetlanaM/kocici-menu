@@ -18,20 +18,20 @@ export default function useAuth(): {
   const router = useRouter();
   const page = router.pathname;
 
-  setToken(String(user?.app_metadata.token.join("")));
+  setToken(String(user?.app_metadata?.token?.join("")));
   setUser(user?.id || '');
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       console.log(auth)
-      setToken(String(user?.app_metadata.token.join("")));
+      setToken(String(user?.app_metadata?.token?.join("")));
       setUser(user?.id || '');
     }
   }, [auth, user, page, isBrowser]);
   return {
     isAuthenticated: auth && auth.isLoggedIn && auth.isConfirmedUser,
     user: user?.id,
-    token: user?.app_metadata.token.join(""),
+    token: user?.app_metadata?.token?.join(""),
     user_data: user,
   };
 }
