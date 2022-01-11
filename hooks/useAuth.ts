@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { setToken } from '../utils/token';
 import { setUser } from '../utils/user';
+const LZString = require('lz-string')
 
 const isBrowser = () => typeof window !== 'undefined';
 
@@ -18,21 +19,24 @@ export default function useAuth(): {
   const router = useRouter();
   const page = router.pathname;
 
-  setToken(String(user?.app_metadata?.hasura_token));
+  const token = user?.app_metadata?.hasura_token && LZString.decompress(String(user?.app_metadata?.hasura_token))
+
+  setToken(token);
   setUser(user?.id || '');
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       console.log(auth)
       console.log(user?.app_metadata?.hasura_token)
-      setToken(String(user?.app_metadata?.hasura_token));
+      const token = LZString.decompress(String(user?.app_metadata?.hasura_token))
+      setToken(token);
       setUser(user?.id || '');
     }
   }, [auth, user, page, isBrowser]);
   return {
     isAuthenticated: auth && auth.isLoggedIn && auth.isConfirmedUser,
     user: user?.id,
-    token: user?.app_metadata?.hasura_token,
+    token: token,
     user_data: user,
   };
 }

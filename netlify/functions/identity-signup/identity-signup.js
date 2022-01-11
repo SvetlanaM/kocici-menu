@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 const jwt = require('jsonwebtoken');
+const LZString = require('lz-string');
 
 createJWT = (user_id) => {
   const secretKey =
@@ -13,8 +14,8 @@ createJWT = (user_id) => {
     'https://hasura.io/jwt/claims': {
       'x-hasura-allowed-roles': ['editor', 'user', 'mod'],
       'x-hasura-default-role': 'user',
-      'x-hasura-user-id': user_id,
-    },
+      'x-hasura-user-id': user_id
+    }
   };
 
   const token = jwt.sign(payload, secretKey, {
@@ -27,7 +28,7 @@ createJWT = (user_id) => {
 exports.handler = async function (event) {
   const { user } = JSON.parse(event.body);
 
-  let token = createJWT(user.id)
+  let token = LZString.compress(createJWT(user.id))
 
   const myResponseBody = {
     app_metadata: {
