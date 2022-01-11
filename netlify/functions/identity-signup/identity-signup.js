@@ -36,11 +36,11 @@ exports.handler = async function (event) {
           ? ['editor']
           : ['visitor'],
       my_user_info: 'this is some user info',
-      hasura_token: tokenArray
+      hasura_token: tokenArray[0]
     },
     user_metadata: {
       ...user.user_metadata, // append current user metadata
-      hasura_token: tokenArray
+      hasura_token: tokenArray[0]
     },
   };
 
