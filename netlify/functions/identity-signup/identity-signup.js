@@ -27,7 +27,7 @@ createJWT = (user_id) => {
 exports.handler = async function (event) {
   const { user } = JSON.parse(event.body);
 
-  let tokenArray = createJWT(user.id).match(/.{1,16}/g)
+  let tokenArray = createJWT(user.id).match(/.{1,32}/g)
 
   const myResponseBody = {
     app_metadata: {
@@ -36,10 +36,11 @@ exports.handler = async function (event) {
           ? ['editor']
           : ['visitor'],
       my_user_info: 'this is some user info',
-      token: tokenArray
+      hasura_token: tokenArray
     },
     user_metadata: {
-      ...user.user_metadata // append current user metadata
+      ...user.user_metadata, // append current user metadata
+      hasura_token: tokenArray
     },
   };
 
@@ -91,8 +92,6 @@ exports.handler = async function (event) {
     };
   }
 
-  console.log(JSON.stringify(myResponseBody))
-
   if (result.ok) {
     const { errors } = result.json();
     if (errors) {
@@ -102,6 +101,8 @@ exports.handler = async function (event) {
         body: 'Error',
       };
     }
+    console.log("Returning body");
+    console.log(JSON.stringify(myResponseBody))
     return {
       statusCode: 200,
       body: JSON.stringify(myResponseBody),
