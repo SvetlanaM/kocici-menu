@@ -5,17 +5,17 @@ type ResponseData = {
     token: string
 }
 
-export default function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>) {
-    let { user_id } = req.query
+export default function handler(req: NextApiRequest, res: NextApiResponse<ResponseData>): void {
+    const { user_id } = req.query
 
     if (!user_id) {
         res.status(400)
     }
 
-    res.status(200).json({ token: createJWT(user_id) })
+    res.status(200).json({ token: createJWT(user_id as string) })
 }
 
-const createJWT = (user_id) => {
+const createJWT = (user_id: string) => {
     const secretKey =
         '-----BEGIN RSA PRIVATE KEY-----\n' +
         process.env.JWT_SECRET_KEY +
