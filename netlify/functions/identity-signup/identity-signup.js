@@ -1,42 +1,14 @@
 const fetch = require('node-fetch');
-const jwt = require('jsonwebtoken');
-const LZString = require('lz-string');
-
-createJWT = (user_id) => {
-  const secretKey =
-    '-----BEGIN RSA PRIVATE KEY-----\n' +
-    process.env.JWT_SECRET_KEY +
-    '\n-----END RSA PRIVATE KEY-----';
-
-  const payload = {
-    sub: user_id,
-    iat: 1516239022,
-    'https://hasura.io/jwt/claims': {
-      'x-hasura-allowed-roles': ['editor', 'user', 'mod'],
-      'x-hasura-default-role': 'user',
-      'x-hasura-user-id': user_id
-    }
-  };
-
-  const token = jwt.sign(payload, secretKey, {
-    algorithm: 'RS256',
-  });
-  return token;
-};
-
 
 exports.handler = async function (event) {
   const { user } = JSON.parse(event.body);
-
-  let token = LZString.compress(createJWT(user.id))
 
   const myResponseBody = {
     app_metadata: {
       roles:
         user.email.split('@')[1] === 'trust-this-company.com'
           ? ['editor']
-          : ['visitor'],
-      hasura_token: token
+          : ['visitor']
     },
     user_metadata: {
       ...user.user_metadata // append current user metadata
@@ -100,8 +72,6 @@ exports.handler = async function (event) {
         body: 'Error',
       };
     }
-    console.log("Returning body");
-    console.log(JSON.stringify(myResponseBody))
     return {
       statusCode: 200,
       body: JSON.stringify(myResponseBody),

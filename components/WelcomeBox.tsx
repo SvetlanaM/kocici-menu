@@ -9,7 +9,8 @@ import { useEffect, useState } from 'react';
 
 export default function WelcomeBox(): JSX.Element {
   const { t } = useTranslation();
-  const email = UseAuth().user_data && UseAuth().user_data.email;
+  const auth = UseAuth()
+  const email = auth.user_data && auth.user_data.email;
   const [greeting, setGreeting] = useState(`${t(cs['greeting'])}!`);
 
   useEffect(() => {
