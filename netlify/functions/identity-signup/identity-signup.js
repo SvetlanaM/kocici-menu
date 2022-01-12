@@ -3,8 +3,6 @@ const fetch = require('node-fetch');
 exports.handler = async function (event) {
   const { user } = JSON.parse(event.body);
 
-  console.log(user);
-
   const myResponseBody = {
     app_metadata: {
       roles:
@@ -37,8 +35,7 @@ exports.handler = async function (event) {
       user: [
         {
           id: user.id,
-          email: user.email,
-          hash: "TBI"
+          email: user.email
         },
       ],
     },
