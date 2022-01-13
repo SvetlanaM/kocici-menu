@@ -18,7 +18,7 @@ export default function useAuth(): {
   const page = router.pathname;
 
   const getToken = (userID: string): string => {
-    const json = fetch(`/api/token/${userID}`).json()
+    const json = fetch(`api/token/${userID}`).json()
     let token = json['token'] as string
     if (!token) console.log(Error("Token missing"))
     return token
