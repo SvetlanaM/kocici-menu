@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { setToken } from '../utils/token'
 import { setUser } from '../utils/user'
+const fetch = require('sync-fetch')
 
 const isBrowser = () => typeof window !== 'undefined';
 
@@ -16,23 +17,21 @@ export default function useAuth(): {
   const router = useRouter();
   const page = router.pathname;
 
-  const getToken = async (userID: string): Promise<string> => {
-    return fetch(`api/token/${userID}`)
-        .then(res => res.json())
-        .then(data => {
-          let token = data['token'] as string
-          if (!token) throw new Error("Token missing")
-          return token
-        })
+  const getToken = (userID: string): string => {
+    const json = fetch(`api/token/${userID}`).json()
+    let token = json['token'] as string
+    if (!token) console.log(Error("Token missing"))
+    return token
   }
 
+  let token = user?.id && getToken(user.id)
+  setToken(token)
   setUser(user?.id || '');
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      user?.id && getToken(user.id)
-          .then(token => setToken(token))
-          .catch(err => console.log(err))
+      const token = user?.id && getToken(user.id)
+      setToken(token)
       setUser(user?.id || '');
     }
   }, [auth, user, page, isBrowser]);
