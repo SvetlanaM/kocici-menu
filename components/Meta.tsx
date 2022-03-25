@@ -4,6 +4,9 @@ import CookieHubBanner from './CookieHubBanner';
 const Meta = (): JSX.Element => {
   return (
     <Head>
+      <CookieHubBanner 
+        cookieHubId="08ab8c3e"
+      />
       <script 
         async 
         src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`} 
@@ -135,9 +138,6 @@ const Meta = (): JSX.Element => {
       />
       <meta name="application-name" content="Kočičí menu" />
       <link rel="canonical" href="https://kocicimenu.cz/" />
-      <CookieHubBanner 
-        cookieHubId="08ab8c3e"
-      />
     </Head>
   );
 };
