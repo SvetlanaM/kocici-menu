@@ -8,6 +8,24 @@ const Meta = (): JSX.Element => {
         cookieHubId="08ab8c3e"
       />
       <script 
+        dangerouslySetInnerHTML={{
+        __html: `
+        var cpm = {
+          cookie: {
+            sameSite: 'Strict',
+            secure: true
+          }
+        };
+        (function(h,u,b){
+        var d=h.getElementsByTagName("script")[0],e=h.createElement("script");
+        e.async=true;e.src='https://cookiehub.net/c2/08ab8c3e.js';
+        e.onload=function(){u.cookiehub.load(b);}
+        d.parentNode.insertBefore(e,d);
+        })(document,window,cpm);;
+      `,
+        }} 
+      />
+      <script 
         async 
         src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`} 
       />
