@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import CookieHubBanner from "react-cookiehub-banner";
+import CookieHubBanner from './CookieHubBanner';
 
 const Meta = (): JSX.Element => {
   return (
@@ -136,7 +136,6 @@ const Meta = (): JSX.Element => {
       <meta name="application-name" content="Kočičí menu" />
       <link rel="canonical" href="https://kocicimenu.cz/" />
       <CookieHubBanner 
-        googleTrackingId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}
         cookieHubId="08ab8c3e"
       />
     </Head>
