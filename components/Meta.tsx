@@ -1,12 +1,9 @@
 import Head from 'next/head';
-import CookieHubBanner from './CookieHubBanner';
+
 
 const Meta = (): JSX.Element => {
   return (
     <Head>
-      <CookieHubBanner 
-        cookieHubId="08ab8c3e"
-      />
       <script 
         dangerouslySetInnerHTML={{
         __html: `
