@@ -39,7 +39,7 @@
         "react-dom": "17.0.1",
         "react-helmet": "^6.1.0",
         "react-hook-form": "^7.1.0",
-        "react-i18next": "^11.8.12",
+        "react-i18next": "^11.16.7",
         "react-modal": "^3.13.1",
         "react-netlify-identity": "^0.2.5",
         "react-range": "^1.8.11",
