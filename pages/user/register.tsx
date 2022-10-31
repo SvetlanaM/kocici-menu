@@ -51,12 +51,12 @@ export default function Register(): JSX.Element {
           </h2>
           <ul className="pt-6 text-white font-light">
             {registerProItems.map((item) => (
-              <li key={item.key} className="mb-7">
+              <li key={item.key} className="mb-7 flex items-center">
                 <Image
                   src="/icons/checked-white.svg"
                   height={15}
                   width={15}
-                  className="inline mr-3 -mt-1"
+                  className="inline mr-3"
                 />
                 {t(cs[item.value])}
               </li>
