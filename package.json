@@ -13,7 +13,7 @@
         "introspect": "gq $HASURA_ENDPOINT -H \"X-Hasura-Admin-Secret: $HASURA_PASSWORD\" --introspect > schema.graphql"
     },
     "dependencies": {
-        "@apollo/client": "^3.6.0",
+        "@apollo/client": "^3.7.0",
         "@auth0/auth0-react": "^1.4.0",
         "@svgr/webpack": "^5.5.0",
         "@tailwindcss/forms": "^0.3.4",
